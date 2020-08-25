@@ -1,0 +1,21 @@
+.auth {
+    background-image: url(../images/auth/bg.png), url(../images/auth/circles.svg), url(../images/auth/waves.svg);
+    background-size: auto 70%, contain, cover;
+    background-position: center right 100px, top right, center;
+    background-repeat: no-repeat;
+    animation-duration: 2s;
+    animation-name: oscillate1;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+@keyframes oscillate1 {
+    0% {
+        background-position: center right 100px, top right, center;
+    }
+    100% {
+        background-position: center right 100px, top right -30px, center;
+    }
+}
