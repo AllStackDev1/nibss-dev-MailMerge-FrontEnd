@@ -1,0 +1,14 @@
+.sidebar-links {
+    width: 20%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.sidebar-links>div:first-of-type {
+    height: 100%;
+    background: #FFF;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
