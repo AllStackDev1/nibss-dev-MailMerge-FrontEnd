@@ -1,10 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import InviteUsers from './steps/inviteUsers';
 import SaveSignature from './steps/saveSignature';
 import OnboardingSuccessful from './steps/onboardingSuccessful';
+import { useSelector, useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 
 const Onboarding = props => {
     const [step, setStep] = useState(1);
+    let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+
+    const dispatch = useDispatch();
+
+    const auth = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        if (userLocal !== undefined) {
+            if (userLocal.data.status === "active") {
+                setStep(2);
+            }
+        }
+    }, [userLocal]);
+
+    useEffect(() => {
+        if (auth.uploading === false && auth.uploaded === 1) {
+            if (userLocal.data.role === "administrator") {
+                setStep(step => step + 1);
+            } else {
+                setStep(3);
+            }
+        }
+    }, [auth.uploading, auth.uploaded, userLocal]);
+
+    useEffect(() => {
+        if (user.invitingUsers === false && user.users) {
+            if (userLocal.data.status === "active") {
+                dispatch(push(`/dashboard/index`));
+            } else {
+                setStep(step => step + 1);
+            }
+        }
+    }, [user.invitingUsers, user.users, userLocal.data.status, dispatch]);
 
     return (
         <div className="full-height-vh full-width display-flex light-brown">
@@ -24,23 +60,19 @@ const Onboarding = props => {
             <div className={`${step === 3 ? 'display-flex align-items-center' : ''} full-width full-height overflow-scroll-y custom-scrollbar`}>
                 <div className={`${step === 3 ? 'height-60-percent bottom-padding-50' : 'onboarding bottom-padding-150'} smooth overflow-hidden width-70-percent margin-auto top-margin-70 bottom-margin-5-percent border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
                     {step === 1 ?
-                        <InviteUsers />
+                        <SaveSignature
+                            step={step}
+                            setStep={setStep} />
                         : ""}
                     {step === 2 ?
-                        <SaveSignature />
+                        <InviteUsers
+                            step={step}
+                            setStep={setStep} />
                         : ""}
                     {step === 3 ?
-
                         <OnboardingSuccessful />
                         : ""}
-                    {step <= 2 ?
-                        <div className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-80 border-box display-flex align-items-center space-between">
-                            <p className="size-pointnine-rem mustard-color no-select cursor-pointer bold">SKIP</p>
-                            <button onClick={() => setStep(step => step + 1)} className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                                {step === 2 ? 'SAVE' : 'NEXT'}
-                            </button>
-                        </div>
-                        : ""}
+
                 </div>
             </div>
         </div>

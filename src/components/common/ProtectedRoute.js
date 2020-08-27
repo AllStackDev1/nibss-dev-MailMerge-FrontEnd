@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { userService } from 'services'
-import { userActions } from 'actions'
+import { authService } from 'services'
+import { authActions } from 'actions'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 
@@ -9,12 +9,12 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     const dispatch = useDispatch();
 
     const logout = () => {
-        dispatch(userActions.logout());
+        dispatch(authActions.logout());
         dispatch(push(`/`));
     }
 
     return (
-        <Route {...rest} render={props => userService.loggedIn() ? <Component {...props} /> : logout()} />
+        <Route {...rest} render={props => authService.loggedIn() ? <Component {...props} /> : logout()} />
     )
 }
 

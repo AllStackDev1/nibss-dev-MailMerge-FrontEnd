@@ -9,7 +9,7 @@ const PageTitle = ({ title, breadcrumb }) => {
             </Title>
             <BreadCrumbs className="display-flex align-items-center">
                 <span className="right-margin-5">Dashboard</span>
-                <span class="material-icons">chevron_right</span>
+                <span className="material-icons">chevron_right</span>
                 <span className="left-margin-5">{breadcrumb ? breadcrumb : title}</span>
             </BreadCrumbs>
         </>

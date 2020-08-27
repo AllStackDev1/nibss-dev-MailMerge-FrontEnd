@@ -4,14 +4,14 @@ import styled from 'styled-components'
 const Pagination = () => {
     return (
         <div className="full-width display-flex height-50 align-items-center justify-center bottom-padding-30 top-padding-20 no-select">
-            <span class="material-icons light-gray-color right-margin-5 cursor-pointer">chevron_left</span>
-            <span class="light-gray-color right-margin-30 size-pointeight-rem cursor-pointer">Previous</span>
+            <span className="material-icons light-gray-color right-margin-5 cursor-pointer">chevron_left</span>
+            <span className="light-gray-color right-margin-30 size-pointeight-rem cursor-pointer">Previous</span>
             <Page className="border-radius-100-percent active-page">1</Page>
             <Page className="border-radius-100-percent">2</Page>
             <Page className="border-radius-100-percent">3</Page>
             <Page className="border-radius-100-percent">4</Page>
-            <span class="light-gray-color left-margin-30 size-pointeight-rem cursor-pointer">Next</span>
-            <span class="material-icons light-gray-color left-margin-5 cursor-pointer">chevron_right</span>
+            <span className="light-gray-color left-margin-30 size-pointeight-rem cursor-pointer">Next</span>
+            <span className="material-icons light-gray-color left-margin-5 cursor-pointer">chevron_right</span>
         </div>
     );
 }

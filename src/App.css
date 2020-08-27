@@ -2581,6 +2581,10 @@ button {
     background: #FFF;
 }
 
+button:disabled {
+    opacity: 0.5;
+}
+
 button .icon {
     width: 0;
     height: 13px;
