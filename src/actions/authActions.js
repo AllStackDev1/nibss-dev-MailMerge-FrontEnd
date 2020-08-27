@@ -8,7 +8,8 @@ import Axios from 'axios';
 export const authActions = {
     login,
     logout,
-    saveSignature
+    saveSignature,
+    reset
 };
 
 function login(user) {
@@ -52,6 +53,10 @@ function logout() {
     authService.logout();
 
     return { type: authConstants.LOGOUT };
+}
+
+function reset() {
+    return { type: authConstants.RESET_UPLOAD };
 }
 
 function saveSignature(file) {

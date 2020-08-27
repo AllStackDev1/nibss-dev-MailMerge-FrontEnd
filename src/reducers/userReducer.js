@@ -23,6 +23,11 @@ export default function user(state = initialState, action) {
                 ...state,
                 invitingUsers: false
             };
+        case userConstants.INVITE_RESET:
+            return {
+                ...state,
+                users: false
+            };
         default:
             return state;
     }
