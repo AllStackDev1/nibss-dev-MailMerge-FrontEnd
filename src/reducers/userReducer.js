@@ -1,28 +1,26 @@
 import { userConstants } from '../constants';
 
 const initialState = {
-    loggingIn: false
+    invitingUsers: false
 };
 
 export default function user(state = initialState, action) {
     switch (action.type) {
-        case userConstants.LOGIN_REQUEST:
+        case userConstants.INVITE_REQUEST:
             return {
                 ...state,
-                loggingIn: true,
-                user: action.user
+                invitingUsers: true
             };
-        case userConstants.LOGIN_SUCCESS:
+        case userConstants.INVITE_SUCCESS:
             return {
                 ...state,
-                loggedIn: true,
-                loggingIn: false,
-                user: action.user
+                invitingUsers: false,
+                users: action.users
             };
-        case userConstants.LOGIN_FAILURE:
+        case userConstants.INVITE_FAILURE:
             return {
                 ...state,
-                loggingIn: false
+                invitingUsers: false
             };
         default:
             return state;

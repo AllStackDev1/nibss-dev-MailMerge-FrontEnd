@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import { push } from "connected-react-router";
 import AddUser from "components/Dashboard/AddUser";
 import UserProfile from "components/Dashboard/UserProfile";
-import { userActions } from "actions";
+import { authActions } from "actions";
 
 class DashboardLayout extends React.Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class DashboardLayout extends React.Component {
     };
 
     logout = () => {
-        this.props.userActions.logout();
+        this.props.authActions.logout();
         this.props.push("/");
     }
 
@@ -81,7 +81,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         push: bindActionCreators(push, dispatch),
-        userActions: bindActionCreators(userActions, dispatch)
+        authActions: bindActionCreators(authActions, dispatch)
     }
 }
 

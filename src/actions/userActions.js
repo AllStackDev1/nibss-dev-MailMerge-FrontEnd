@@ -1,48 +1,31 @@
+import { userService } from '../services';
 import { userConstants } from '../constants';
-import { userService } from 'services';
-import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
 
 export const userActions = {
-    login,
-    logout
+    invite
 };
 
-function login(user) {
-    let data = {
-        ...user,
-        email: user.email_input
-    }
-
-    delete data.email_input;
-
+function invite(users) {
     return dispatch => {
         dispatch(request());
 
-        userService.login(data)
+        userService.invite(users)
             .then(
-                user => {
-                    dispatch(success(user.user));
+                users => {
+                    dispatch(success(users));
 
-                    dispatch(push(`/dashboard/index`));
+                    toast.success(users.message);
                 },
                 error => {
                     if (error.message) {
-                        toast.error(error.message);
-
                         dispatch(failure(error.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: userConstants.LOGIN_REQUEST }; }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error }; }
-}
-
-function logout() {
-    userService.logout();
-
-    return { type: userConstants.LOGOUT };
+    function request() { return { type: userConstants.INVITE_REQUEST }; }
+    function success(users) { return { type: userConstants.INVITE_SUCCESS, users }; }
+    function failure(error) { return { type: userConstants.INVITE_FAILURE, error }; }
 }

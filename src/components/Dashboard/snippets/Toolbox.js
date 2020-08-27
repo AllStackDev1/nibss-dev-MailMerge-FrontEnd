@@ -18,7 +18,7 @@ const Toolbox = ({ tag, exportButton, addButtonText, addButtonUrl }) => {
         <ToolBox className="full-width top-margin-30 bottom-margin-5 display-flex space-between">
             <div className="width-40-percent display-flex align-items-center">
                 <input type="text" name="search" onChange={onChange} value={filter.search} className={`${filter.search !== undefined && filter.search !== "" ? "has-value" : ""} toolbox-input no-border no-outline no_bg smooth`} placeholder="Search" />
-                <span class="material-icons smooth">search</span>
+                <span className="material-icons smooth">search</span>
                 <div className="smooth"></div>
             </div>
             <div className="display-flex no-select">
@@ -29,7 +29,7 @@ const Toolbox = ({ tag, exportButton, addButtonText, addButtonUrl }) => {
                 {exportButton === true ?
                     <div className="display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50">
                         Export as
-                        <span class="material-icons mustard-color left-margin-0">arrow_drop_down</span>
+                        <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>
                     </div>
                     : ""}
                 {tag === true ?

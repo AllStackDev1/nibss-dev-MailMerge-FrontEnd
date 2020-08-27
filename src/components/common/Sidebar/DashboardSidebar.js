@@ -22,7 +22,7 @@ const DashboardSidebar = ({ routes, logout, location }) => {
                 </div>
                 {routes.map((route, index) =>
                     route.support === true ?
-                        <div className="top-margin-70 top-padding-30 border-top-gray">
+                        <div key={index} className="top-margin-70 top-padding-30 border-top-gray">
                             <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
                                 <RouteLink className={`${location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}` ? 'active-link' : ''} display-flex align-items-center border-box dash-link overflow-hidden left-padding-10`}>
                                     <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>

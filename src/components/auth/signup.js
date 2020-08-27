@@ -11,7 +11,7 @@ const Signup = props => (
             </p>
             <div className="left-padding-30 right-padding-30 border-box mustard height-55 cursor-pointer width-85-percent white-color size-pointnine-rem bold display-flex align-items-center space-between">
                 <p>SIGN UP WITH NIBBS</p>
-                <span class="material-icons">
+                <span className="material-icons">
                     arrow_forward
                 </span>
             </div>
