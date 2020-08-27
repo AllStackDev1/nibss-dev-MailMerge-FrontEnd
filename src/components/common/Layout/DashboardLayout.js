@@ -11,6 +11,7 @@ import { bindActionCreators } from "redux";
 import { push } from "connected-react-router";
 import AddUser from "components/Dashboard/AddUser";
 import UserProfile from "components/Dashboard/UserProfile";
+import { userActions } from "actions";
 
 class DashboardLayout extends React.Component {
     constructor(props) {
@@ -39,8 +40,8 @@ class DashboardLayout extends React.Component {
     };
 
     logout = () => {
-        // this.props.userActions.logout();
-        // this.props.push("/login");
+        this.props.userActions.logout();
+        this.props.push("/");
     }
 
     render() {
@@ -70,7 +71,7 @@ class DashboardLayout extends React.Component {
 }
 
 function mapStateToProps(state) {
-    let user = JSON.parse(localStorage.getItem('admin'));
+    let user = JSON.parse(localStorage.getItem('nibss-user'));
 
     return {
         user
@@ -79,7 +80,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        push: bindActionCreators(push, dispatch)
+        push: bindActionCreators(push, dispatch),
+        userActions: bindActionCreators(userActions, dispatch)
     }
 }
 

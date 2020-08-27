@@ -1,0 +1,13 @@
+.input-group input:focus, .input-group input.with-data {
+    border: 1px solid #9E7D0A !important;
+    background: #FFF !important;
+}
+.input-group input:focus ~ label, .input-group input.with-data ~ label {
+    top: 0;
+    font-size: 0.7rem;
+    background: #FFF;
+    color: #9E7D0A;
+    padding: 2px 10px;
+    z-index: 1;
+    border-radius: 10px;
+}
