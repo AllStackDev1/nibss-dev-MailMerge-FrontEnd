@@ -6,7 +6,7 @@ import Signature from "./snippets/Signature";
 const UserProfile = () => {
     const [tab, setTab] = useState(1);
 
-    const [user, setUser] = useState({
+    const [user] = useState({
         firstname: "Oluwatobi",
         lastname: "Amusan",
         phone: "08130943976",
