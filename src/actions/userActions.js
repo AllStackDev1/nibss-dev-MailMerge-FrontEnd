@@ -3,7 +3,8 @@ import { userConstants } from '../constants';
 import { toast } from 'react-toastify';
 
 export const userActions = {
-    invite
+    invite,
+    reset
 };
 
 function invite(users) {
@@ -28,4 +29,8 @@ function invite(users) {
     function request() { return { type: userConstants.INVITE_REQUEST }; }
     function success(users) { return { type: userConstants.INVITE_SUCCESS, users }; }
     function failure(error) { return { type: userConstants.INVITE_FAILURE, error }; }
+}
+
+function reset() {
+    return { type: userConstants.INVITE_RESET };
 }

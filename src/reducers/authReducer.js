@@ -49,6 +49,12 @@ export default function auth(state = initialState, action) {
                 uploading: false,
                 uploadProgress: 0
             };
+        case authConstants.RESET_UPLOAD:
+            return {
+                ...state,
+                uploading: false,
+                uploaded: 0
+            };
         default:
             return state;
     }

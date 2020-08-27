@@ -4,6 +4,7 @@ import SaveSignature from './steps/saveSignature';
 import OnboardingSuccessful from './steps/onboardingSuccessful';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
+import { authActions, userActions } from 'actions';
 
 const Onboarding = props => {
     const [step, setStep] = useState(1);
@@ -13,6 +14,13 @@ const Onboarding = props => {
 
     const auth = useSelector(state => state.auth);
     const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        return(() => {
+            dispatch(userActions.reset());
+            dispatch(authActions.reset());
+        });
+    }, [dispatch]);
 
     useEffect(() => {
         if (userLocal !== undefined) {
