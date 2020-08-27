@@ -1,6 +1,6 @@
 .auth {
     background-image: url(../images/auth/bg.png), url(../images/auth/circles.svg), url(../images/auth/waves.svg);
-    background-size: auto 70%, contain, cover;
+    background-size: auto 75%, contain, cover;
     background-position: center right 100px, top right, center;
     background-repeat: no-repeat;
     animation-duration: 2s;
