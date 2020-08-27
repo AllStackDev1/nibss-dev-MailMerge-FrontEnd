@@ -28,7 +28,8 @@ export default function auth(state = initialState, action) {
         case authConstants.UPLOAD_START:
             return {
                 ...state,
-                uploading: true
+                uploading: true,
+                uploaded: 0
             };
         case authConstants.UPLOAD_PROGRESS:
             return {
