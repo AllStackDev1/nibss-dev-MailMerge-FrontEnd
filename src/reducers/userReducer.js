@@ -9,7 +9,8 @@ export default function user(state = initialState, action) {
         case userConstants.INVITE_REQUEST:
             return {
                 ...state,
-                invitingUsers: true
+                invitingUsers: true,
+                users: false
             };
         case userConstants.INVITE_SUCCESS:
             return {
