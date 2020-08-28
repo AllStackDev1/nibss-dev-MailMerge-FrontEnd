@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 export const userActions = {
     invite,
+    fetch,
     reset
 };
 
@@ -29,6 +30,28 @@ function invite(users) {
     function request() { return { type: userConstants.INVITE_REQUEST }; }
     function success(users) { return { type: userConstants.INVITE_SUCCESS, users }; }
     function failure(error) { return { type: userConstants.INVITE_FAILURE, error }; }
+}
+
+function fetch() {
+    return dispatch => {
+        dispatch(request());
+
+        userService.fetch()
+            .then(
+                users => {
+                    dispatch(success(users));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.FETCH_REQUEST }; }
+    function success(users) { return { type: userConstants.FETCH_SUCCESS, users }; }
+    function failure(error) { return { type: userConstants.FETCH_FAILURE, error }; }
 }
 
 function reset() {
