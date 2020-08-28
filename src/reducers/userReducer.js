@@ -28,6 +28,22 @@ export default function user(state = initialState, action) {
                 ...state,
                 users: false
             };
+        case userConstants.FETCH_REQUEST:
+            return {
+                ...state,
+                fetchingUsers: true
+            };
+        case userConstants.FETCH_SUCCESS:
+            return {
+                ...state,
+                fetchingUsers: false,
+                platformUsers: action.users
+            };
+        case userConstants.FETCH_FAILURE:
+            return {
+                ...state,
+                fetchingUsers: false
+            };
         default:
             return state;
     }

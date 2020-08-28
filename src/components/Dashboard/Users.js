@@ -1,10 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
 import User from "./snippets/User"
 import Pagination from "./snippets/Pagination"
 import Toolbox from "./snippets/Toolbox"
 import PageTitle from "./snippets/PageTitle"
+import EmptyUser from "./empty-states/User"
+import { useDispatch, useSelector } from "react-redux"
+import { userActions } from "actions"
 
 const Users = () => {
+    const dispatch = useDispatch();
+    const users = useSelector(state => state.user);
+
+    useEffect(() => {
+        dispatch(userActions.fetch());
+        console.log("Here");
+    }, [dispatch]);
+
     return (
         <div className="full-width border-box left-padding-30 right-padding-30">
             <PageTitle
@@ -31,15 +42,17 @@ const Users = () => {
                     </div>
                     <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                 </div>
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <User />
-                <Pagination />
+                {users.platformUsers === undefined ?
+                    <EmptyUser />
+                    :
+                    <>
+                        {users.platformUsers.map((user, index) =>
+                            <User
+                                user={user} />
+                        )}
+                        <Pagination />
+                    </>
+                }
             </div>
         </div>
     )

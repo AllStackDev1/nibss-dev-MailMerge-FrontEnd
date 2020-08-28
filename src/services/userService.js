@@ -2,7 +2,8 @@ import Config from '../config/config';
 import { authService } from './authService';
 
 export const userService = {
-    invite
+    invite,
+    fetch
 };
 
 function invite(users) {
@@ -33,5 +34,17 @@ function invite(users) {
         .then(authService.handleResponse)
         .then(users => {
             return users;
+        });
+}
+
+function fetch() {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/users`, requestOptions)
+        .then(authService.handleResponse)
+        .then(users => {
+            return users.data;
         });
 }
