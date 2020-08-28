@@ -2,7 +2,8 @@ import { authConstants } from '../constants';
 
 const initialState = {
     loggingIn: false,
-    uploading: false
+    uploading: false,
+    updatingProfile: false
 };
 
 export default function auth(state = initialState, action) {
@@ -24,6 +25,22 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 loggingIn: false
+            };
+        case authConstants.START_UPDATE_PROFILE:
+            return {
+                ...state,
+                updatingProfile: true
+            };
+        case authConstants.UPDATE_PROFILE_SUCCESS:
+            return {
+                ...state,
+                updatingProfile: false,
+                user: action.user
+            };
+        case authConstants.UPDATE_PROFILE_FAILURE:
+            return {
+                ...state,
+                updatingProfile: false
             };
         case authConstants.UPLOAD_START:
             return {
