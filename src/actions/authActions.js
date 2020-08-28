@@ -9,7 +9,9 @@ export const authActions = {
     login,
     logout,
     saveSignature,
-    reset
+    reset,
+    fetchProfile,
+    updateProfile
 };
 
 function login(user) {
@@ -104,4 +106,53 @@ function saveSignature(file) {
     function update(loaded) { return { type: authConstants.UPLOAD_PROGRESS, loaded }; }
     function success(response) { return { type: authConstants.UPLOAD_SUCCESS, response }; }
     function error() { return { type: authConstants.UPLOAD_ERROR }; }
+}
+
+function fetchProfile() {
+    return dispatch => {
+        dispatch(request());
+
+        authService.fetchProfile()
+            .then(
+                profile => {
+                    dispatch(success(profile));
+                },
+                error => {
+                    if (error.message) {
+                        toast.error(error.message);
+
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: authConstants.START_FETCH_PROFILE }; }
+    function success(profile) { return { type: authConstants.FETCH_PROFILE_SUCCESS, profile }; }
+    function failure(error) { return { type: authConstants.FETCH_PROFILE_FAILURE, error }; }
+}
+
+function updateProfile(user) {
+    return dispatch => {
+        dispatch(request());
+
+        authService.updateProfile(user)
+            .then(
+                profile => {
+                    toast.success(profile.message);
+                    dispatch(success(profile));
+                },
+                error => {
+                    if (error.message) {
+                        toast.error(error.message);
+
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: authConstants.START_UPDATE_PROFILE }; }
+    function success(profile) { return { type: authConstants.UPDATE_PROFILE_SUCCESS, profile }; }
+    function failure(error) { return { type: authConstants.UPDATE_PROFILE_FAILURE, error }; }
 }

@@ -1,17 +1,43 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PageTitle from "./snippets/PageTitle"
 import styled from "styled-components"
 import Signature from "./snippets/Signature";
+import { authActions } from "actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserProfile = () => {
     const [tab, setTab] = useState(1);
+    const dispatch = useDispatch();
 
-    const [user] = useState({
-        firstname: "Oluwatobi",
-        lastname: "Amusan",
-        phone: "08130943976",
-        email: "amusantobi@gmail.com",
-    });
+    const [user, setUser] = useState({});
+    const auth = useSelector(state => state.auth);
+
+    useEffect(() => {
+        dispatch(authActions.fetchProfile());
+    }, [dispatch]);
+
+    useEffect(() => {
+        let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+
+        if (userLocal !== undefined) {
+            setUser(userLocal.data);
+        }
+    }, []);
+
+    const onChange = event => {
+        const { name, value } = event.target;
+
+        setUser({
+            ...user,
+            [name]: value
+        });
+    }
+
+    const updateProfile = e => {
+        e.preventDefault();
+
+        dispatch(authActions.updateProfile(user));
+    }
 
     return (
         <div className="full-width border-box left-padding-30 right-padding-30">
@@ -30,26 +56,31 @@ const UserProfile = () => {
                     </Tab>
                 </Tabs>
                 {tab === 1 ?
-                    <form>
+                    <form onSubmit={updateProfile}>
                         <div className="width-50-percent top-margin-20">
-                            <input type="text" value={user.firstname || ""} placeholder="First Name" className="bottom-margin-20" required />
-                            <input type="text" value={user.lastname || ""} placeholder="Last Name" className="bottom-margin-20" required />
-                            <input type="text" value={user.phone || ""} placeholder="Phone" className="bottom-margin-20" required />
-                            <input type="email" value={user.email || ""} placeholder="Email address" className="bottom-margin-20" required />
-                            <button type="submit" className="uppercase left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                                UPDATE PROFILE
-                        </button>
+                            <input type="text" name="name" value={user.name || ""} onChange={onChange} placeholder="First Name" className="bottom-margin-20" required />
+                            <input type="text" name="mobile" value={user.mobile || ""} onChange={onChange} placeholder="Phone" className="bottom-margin-20" required />
+                            <input type="email" name="email" value={user.email || ""} onChange={onChange} placeholder="Email address" className="bottom-margin-20" required />
+                            <button type="submit" disabled={auth.updatingProfile} className="uppercase left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                                {auth.updatingProfile ?
+                                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                    :
+                                    <p>UPDATE PROFILE</p>}
+                            </button>
                         </div>
                     </form>
                     : ""}
                 {tab === 2 ?
                     <div className="full-width display-flex space-between flex-wrap top-padding-30">
-                        <Signature />
-                        <Signature />
-                        <Signature />
-                        <Signature />
-                        <Signature />
-                        <Signature />
+                        {user.signatures ?
+                            user.signatures.length > 0 ?
+                                user.signatures.map((signature, index) =>
+                                    <Signature
+                                        signature={signature}
+                                        key={index} />
+                                )
+                                : ""
+                            : ""}
                     </div>
                     : ""}
             </div>

@@ -7,7 +7,9 @@ export const authService = {
     loggedIn,
     fetchFrom,
     getProfile,
-    getToken
+    getToken,
+    fetchProfile,
+    updateProfile
 };
 
 function login(user) {
@@ -67,7 +69,6 @@ function loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = getToken(); // Getting token from localstorage
 
-    console.log(!!token && !isTokenExpired(token));
     return !!token && !isTokenExpired(token); // handwaiving here
 }
 
@@ -108,4 +109,55 @@ function handleResponse(response) {
 
         return data;
     });
+}
+
+function fetchProfile() {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        }
+    };
+
+    let url = `${Config.API_URL}/users`;
+
+    return fetchFrom(url, requestOptions)
+        .then(this.handleResponse)
+        .then(user => {
+            let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+
+            userLocal.data = user.user;
+
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem(`nibss-user`, JSON.stringify(userLocal));
+
+            return user;
+        });
+}
+
+function updateProfile(user) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(user)
+    };
+
+    let url = `${Config.API_URL}/users`;
+
+    return fetchFrom(url, requestOptions)
+        .then(this.handleResponse)
+        .then(user => {
+            let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+
+            userLocal.data = user.user;
+
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem(`nibss-user`, JSON.stringify(userLocal));
+
+            return user;
+        });
 }

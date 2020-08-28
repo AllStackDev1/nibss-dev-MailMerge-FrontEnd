@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Signature = () => {
+const Signature = ({ signature }) => {
     return (
-        <SignatureContainer url={require(`images/icons/dashboard/signature.svg`)} className="bottom-margin-20 display-flex flex-direction-column">
+        <SignatureContainer url={signature} className="bottom-margin-20 display-flex flex-direction-column">
             <div className="full-width full-height"></div>
             <div className="full-width height-40 no-shrink display-flex align-items-center justify-center">
                 <img src={require(`images/icons/dashboard/delete.svg`)} className="height-15 right-margin-10" alt="NIBSS Empty" />
@@ -21,6 +21,7 @@ const SignatureContainer = styled.div`
                             background-image: url(${props => props.url});
                             background-repeat: no-repeat;
                             background-position: center;
+                            background-size: contain;
                         }
                         &>div:nth-of-type(2) {
                             color: #F82E2E;
