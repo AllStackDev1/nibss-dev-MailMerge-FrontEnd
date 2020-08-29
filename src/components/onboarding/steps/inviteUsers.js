@@ -43,6 +43,36 @@ const InviteUsers = ({ step, setStep }) => {
         dispatch(userActions.invite(invited));
     }
 
+    const parseCSV = file => {
+        var reader = new FileReader();
+        reader.readAsText(file.target.files[0], "UTF-8");
+
+        reader.onload = function (e) {
+            var csv = e.target.result;
+            var allTextLines = csv.split('\n');
+
+            let invitedArr = [];
+
+            for (var i = 0; i < allTextLines.length; i++) {
+                var data = allTextLines[i].split(',');
+
+                var row = {
+                    name: data[0],
+                    email: data[1],
+                    role: data[2].toLowerCase()
+                };
+
+                if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
+                    row.administrator = true;
+                }
+
+                invitedArr.push(row);
+            }
+
+            setInvited(invitedArr);
+        }
+    }
+
     return (
         <>
             <div className="left-padding-80 right-padding-80">
@@ -102,10 +132,11 @@ const InviteUsers = ({ step, setStep }) => {
                             <img src={require(`images/icons/email-send.svg`)} className="height-15" alt="Invite users" />
                             <span className="mustard-color bold size-pointeightfive-rem left-padding-10">INVITE</span>
                         </button>
-                        <button type="button" onClick={() => setInvite({})} className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
+                        <button type="button" onClick={() => { document.getElementById('csv_file').click() }} className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
                             <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
                             <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
                         </button>
+                        <input type="file" name="csv_file" id="csv_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
                     </div>
                 </form>
 

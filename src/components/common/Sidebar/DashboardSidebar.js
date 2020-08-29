@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import styled from 'styled-components';
 
-const DashboardSidebar = ({ routes, logout, location }) => {
+const DashboardSidebar = ({ routes, logout, location, user }) => {
     return (
         <div className={`sidebar-links full-height no-shrink border-box no-repeat-bg sidebar above-2 border-topright-50`}>
             <div>
@@ -17,8 +17,8 @@ const DashboardSidebar = ({ routes, logout, location }) => {
                             <img src={require(`images/icons/dashboard/settings.svg`)} className="height-18" alt="NIBSS Empty" />
                         </Link>
                     </Profile>
-                    <p className="size-pointeightfive-rem top-margin-10 bold">Martha A. Willson</p>
-                    <Gray className="size-pointseven-rem">Martha@hotmail.com</Gray>
+                    <p className="size-pointeightfive-rem top-margin-10 bold">{user.data.name}</p>
+                    <Gray className="size-pointseven-rem">{user.data.email}</Gray>
                 </div>
                 {routes.map((route, index) =>
                     route.support === true ?

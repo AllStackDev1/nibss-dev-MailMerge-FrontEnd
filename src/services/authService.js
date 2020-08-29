@@ -9,7 +9,8 @@ export const authService = {
     getProfile,
     getToken,
     fetchProfile,
-    updateProfile
+    updateProfile,
+    deleteSignature
 };
 
 function login(user) {
@@ -147,6 +148,34 @@ function updateProfile(user) {
     };
 
     let url = `${Config.API_URL}/users`;
+
+    return fetchFrom(url, requestOptions)
+        .then(this.handleResponse)
+        .then(user => {
+            let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+
+            userLocal.data = user.user;
+
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem(`nibss-user`, JSON.stringify(userLocal));
+
+            return user;
+        });
+}
+
+function deleteSignature(signature) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify({
+            signature
+        })
+    };
+
+    let url = `${Config.API_URL}/users/remove/signature`;
 
     return fetchFrom(url, requestOptions)
         .then(this.handleResponse)

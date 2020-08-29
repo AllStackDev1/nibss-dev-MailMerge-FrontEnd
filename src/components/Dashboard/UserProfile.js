@@ -4,6 +4,7 @@ import styled from "styled-components"
 import Signature from "./snippets/Signature";
 import { authActions } from "actions";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
     const [tab, setTab] = useState(1);
@@ -14,15 +15,23 @@ const UserProfile = () => {
 
     useEffect(() => {
         dispatch(authActions.fetchProfile());
+
+        return (() => {
+            dispatch(authActions.reset());
+        })
     }, [dispatch]);
 
     useEffect(() => {
-        let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
-
-        if (userLocal !== undefined) {
-            setUser(userLocal.data);
+        if (auth.add) {
+            setTab(2);
         }
-    }, []);
+    }, [auth.add]);
+
+    useEffect(() => {
+        if (auth.fetchingProfile === false && auth.profile) {
+            setUser(auth.profile);
+        }
+    }, [auth]);
 
     const onChange = event => {
         const { name, value } = event.target;
@@ -71,16 +80,28 @@ const UserProfile = () => {
                     </form>
                     : ""}
                 {tab === 2 ?
-                    <div className="full-width display-flex space-between flex-wrap top-padding-30">
-                        {user.signatures ?
-                            user.signatures.length > 0 ?
-                                user.signatures.map((signature, index) =>
-                                    <Signature
-                                        signature={signature}
-                                        key={index} />
-                                )
+                    <div className="full-width display-flex flex-wrap top-padding-30">
+                        <div className="full-width bottom-margin-30 display-flex flex-end">
+                            <div className="display-flex no-select">
+                                <Link to="/dashboard/add-signature">
+                                    <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                                        ADD SIGNATURE
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                        {auth.profile ?
+                            auth.profile.signatures ?
+                                auth.profile.signatures.length > 0 ?
+                                    auth.profile.signatures.map((signature, index) =>
+                                        <Signature
+                                            signature={signature}
+                                            key={index} />
+                                    )
+                                    : ""
                                 : ""
-                            : ""}
+                            : ""
+                        }
                     </div>
                     : ""}
             </div>

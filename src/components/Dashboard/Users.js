@@ -13,7 +13,6 @@ const Users = () => {
 
     useEffect(() => {
         dispatch(userActions.fetch());
-        console.log("Here");
     }, [dispatch]);
 
     return (
