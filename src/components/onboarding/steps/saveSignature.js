@@ -4,7 +4,7 @@ import { toFile } from 'helpers/toFile';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from 'actions';
 
-const SaveSignature = ({ step, setStep }) => {
+const SaveSignature = ({ add }) => {
     const [signuatureType, setSignatureType] = useState('draw');
     const signatureCanvas = useRef(null);
     const auth = useSelector(state => state.auth);
@@ -16,8 +16,8 @@ const SaveSignature = ({ step, setStep }) => {
 
     const saveSignature = () => {
         let signature = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
-        console.log(signature);
-        dispatch(authActions.saveSignature(toFile(signature, `signature${Date.now()}.svg`)));
+
+        dispatch(authActions.saveSignature(toFile(signature, `signature${Date.now()}.svg`), add));
     }
 
     return (

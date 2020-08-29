@@ -42,6 +42,38 @@ export default function auth(state = initialState, action) {
                 ...state,
                 updatingProfile: false
             };
+        case authConstants.START_FETCH_PROFILE:
+            return {
+                ...state,
+                fetchingProfile: true
+            };
+        case authConstants.FETCH_PROFILE_SUCCESS:
+            return {
+                ...state,
+                fetchingProfile: false,
+                profile: action.profile
+            };
+        case authConstants.FETCH_PROFILE_FAILURE:
+            return {
+                ...state,
+                fetchingProfile: false
+            };
+        case authConstants.START_DELETE_SIGNATURE:
+            return {
+                ...state,
+                deletingSignature: action.signature
+            };
+        case authConstants.DELETE_SIGNATURE_SUCCESS:
+            return {
+                ...state,
+                deletingSignature: false,
+                profile: action.profile
+            };
+        case authConstants.DELETE_SIGNATURE_FAILURE:
+            return {
+                ...state,
+                deletingSignature: false
+            };
         case authConstants.UPLOAD_START:
             return {
                 ...state,
@@ -58,7 +90,8 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 uploading: false,
-                uploaded: 1
+                uploaded: 1,
+                add: action.add
             };
         case authConstants.UPLOAD_ERROR:
             return {
@@ -70,7 +103,8 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 uploading: false,
-                uploaded: 0
+                uploaded: 0,
+                add: false
             };
         default:
             return state;

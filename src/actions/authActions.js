@@ -9,6 +9,7 @@ export const authActions = {
     login,
     logout,
     saveSignature,
+    deleteSignature,
     reset,
     fetchProfile,
     updateProfile
@@ -61,15 +62,14 @@ function reset() {
     return { type: authConstants.RESET_UPLOAD };
 }
 
-function saveSignature(file) {
-
+function saveSignature(file, add) {
     return dispatch => {
         dispatch(startUpload());
 
         const data = new FormData();
         data.append('media', file);
 
-        let uploadendpoint = `${Config.API_URL}/users/invite/complete`;
+        let uploadendpoint = add ? `${Config.API_URL}/users/add/signature` : `${Config.API_URL}/users/invite/complete`;
         let headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + authService.getToken()
@@ -84,11 +84,13 @@ function saveSignature(file) {
                 headers
             })
             .then(res => {
-                toast.success(res.message);
+                toast.success(res.data.message);
 
-                console.log(res);
+                if(add) {
+                    dispatch(push(`/dashboard/user-profile`));
+                }
 
-                dispatch(success(res));
+                dispatch(success(res, add));
             })
             .catch(err => {
                 dispatch(error());
@@ -104,8 +106,33 @@ function saveSignature(file) {
 
     function startUpload() { return { type: authConstants.UPLOAD_START }; }
     function update(loaded) { return { type: authConstants.UPLOAD_PROGRESS, loaded }; }
-    function success(response) { return { type: authConstants.UPLOAD_SUCCESS, response }; }
+    function success(response, add) { return { type: authConstants.UPLOAD_SUCCESS, response, add }; }
     function error() { return { type: authConstants.UPLOAD_ERROR }; }
+}
+
+function deleteSignature(signature) {
+    return dispatch => {
+        dispatch(request(signature));
+
+        authService.deleteSignature(signature)
+            .then(
+                profile => {
+                    toast.success(profile.message);
+                    dispatch(success(profile.user));
+                },
+                error => {
+                    if (error.message) {
+                        toast.error(error.message);
+
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request(signature) { return { type: authConstants.START_DELETE_SIGNATURE, signature }; }
+    function success(profile) { return { type: authConstants.DELETE_SIGNATURE_SUCCESS, profile }; }
+    function failure(error) { return { type: authConstants.DELETE_SIGNATURE_FAILURE, error }; }
 }
 
 function fetchProfile() {
@@ -115,7 +142,7 @@ function fetchProfile() {
         authService.fetchProfile()
             .then(
                 profile => {
-                    dispatch(success(profile));
+                    dispatch(success(profile.user));
                 },
                 error => {
                     if (error.message) {

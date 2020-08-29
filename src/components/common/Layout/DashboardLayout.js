@@ -12,6 +12,7 @@ import { push } from "connected-react-router";
 import AddUser from "components/Dashboard/AddUser";
 import UserProfile from "components/Dashboard/UserProfile";
 import { authActions } from "actions";
+import AddSignature from "components/Dashboard/AddSignature";
 
 class DashboardLayout extends React.Component {
     constructor(props) {
@@ -62,6 +63,7 @@ class DashboardLayout extends React.Component {
                         {this.getRoutes(routes)}
                         <Redirect exact from="/dashboard" to="/dashboard/index" />
                         <Route path="/dashboard/add-user" render={withRouter(AddUser)} />
+                        <Route path="/dashboard/add-signature" render={withRouter(AddSignature)} />
                         <Route path="/dashboard/user-profile" render={withRouter(UserProfile)} />
                     </Switch>
                 </div>

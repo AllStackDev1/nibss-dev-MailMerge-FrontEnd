@@ -25,8 +25,6 @@ const Onboarding = props => {
     useEffect(() => {
         if (userLocal !== undefined) {
             if (userLocal.data.status === "active") {
-                console.log(1);
-                
                 setStep(2);
             }
         }
@@ -34,8 +32,6 @@ const Onboarding = props => {
 
     useEffect(() => {
         if (auth.uploading === false && auth.uploaded === 1) {
-            console.log(2);
-
             if (userLocal.data.role === "administrator") {
                 setStep(step => step + 1);
             } else {
@@ -46,8 +42,6 @@ const Onboarding = props => {
 
     useEffect(() => {
         if (user.invitingUsers === false && user.users) {
-            console.log(3);
-
             if (userLocal.data.status === "active") {
                 dispatch(push(`/dashboard/index`));
             } else {
