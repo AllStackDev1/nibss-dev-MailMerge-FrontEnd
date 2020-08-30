@@ -6,7 +6,7 @@ const EmptyUser = () => {
     return (
         <>
             {[...Array(8)].map((item, index) =>
-                <UserInstance className="smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between">
+                <UserInstance key={index} className="smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between">
                     <div className="no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10 light-gray"></div>
                     <div className="no-shrink width-25-percent size-pointeight-rem bold">
                         <div className="height-25 width-90-percent border-radius-10 light-gray"></div>

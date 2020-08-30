@@ -17,8 +17,8 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                             <img src={require(`images/icons/dashboard/settings.svg`)} className="height-18" alt="NIBSS Empty" />
                         </Link>
                     </Profile>
-                    <p className="size-pointeightfive-rem top-margin-10 bold">{user.data.name}</p>
-                    <Gray className="size-pointseven-rem">{user.data.email}</Gray>
+                    <p className="size-pointeightfive-rem top-margin-10 bold">{user ? user.data.name : ""}</p>
+                    <Gray className="size-pointseven-rem">{user ? user.data.email : ""}</Gray>
                 </div>
                 {routes.map((route, index) =>
                     route.support === true ?

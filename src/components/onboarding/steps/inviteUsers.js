@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from 'actions/userActions';
 import { Link } from 'react-router-dom';
 
-const InviteUsers = ({ step, setStep }) => {
+const InviteUsers = ({ add }) => {
     const [invite, setInvite] = useState({});
     const [invited, setInvited] = useState([]);
 
@@ -40,7 +40,7 @@ const InviteUsers = ({ step, setStep }) => {
     }
 
     const sendInvites = () => {
-        dispatch(userActions.invite(invited));
+        dispatch(userActions.invite(invited, add));
     }
 
     const parseCSV = file => {
@@ -141,10 +141,12 @@ const InviteUsers = ({ step, setStep }) => {
                 </form>
 
             </div>
-            <div className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center space-between">
-                <Link to="/dashboard/index">
-                    <p className="size-pointnine-rem mustard-color no-select cursor-pointer bold">SKIP</p>
-                </Link>
+            <div className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center ${add ? 'flex-end' : 'space-between'}`}>
+                {!add ?
+                    <Link to="/dashboard/index">
+                        <p className="size-pointnine-rem mustard-color no-select cursor-pointer bold">SKIP</p>
+                    </Link>
+                    : ""}
                 <button disabled={user.invitingUsers} onClick={sendInvites} className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {user.invitingUsers ?
                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
