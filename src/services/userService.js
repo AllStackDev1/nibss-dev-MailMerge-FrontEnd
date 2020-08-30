@@ -16,7 +16,7 @@ function invite(users) {
             user.role = "administrator"
         }
 
-        delete user.administrator;
+        // delete user.administrator;
 
         return user;
     });

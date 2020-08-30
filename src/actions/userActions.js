@@ -1,6 +1,7 @@
 import { userService } from '../services';
 import { userConstants } from '../constants';
 import { toast } from 'react-toastify';
+import { push } from 'connected-react-router';
 
 export const userActions = {
     invite,
@@ -8,7 +9,7 @@ export const userActions = {
     reset
 };
 
-function invite(users) {
+function invite(users, add) {
     return dispatch => {
         dispatch(request());
 
@@ -16,6 +17,10 @@ function invite(users) {
             .then(
                 users => {
                     dispatch(success(users));
+
+                    if (add) {
+                        dispatch(push(`/dashboard/users`));
+                    }
 
                     toast.success(users.message);
                 },
