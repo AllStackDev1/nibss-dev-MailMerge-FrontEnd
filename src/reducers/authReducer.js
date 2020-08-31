@@ -35,7 +35,7 @@ export default function auth(state = initialState, action) {
             return {
                 ...state,
                 updatingProfile: false,
-                user: action.user
+                profile: action.profile
             };
         case authConstants.UPDATE_PROFILE_FAILURE:
             return {

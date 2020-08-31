@@ -167,7 +167,7 @@ function updateProfile(user) {
             .then(
                 profile => {
                     toast.success(profile.message);
-                    dispatch(success(profile));
+                    dispatch(success(profile.user));
                 },
                 error => {
                     if (error.message) {
