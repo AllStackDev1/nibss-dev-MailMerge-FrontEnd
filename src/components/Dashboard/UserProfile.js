@@ -28,7 +28,7 @@ const UserProfile = () => {
     }, [auth.add]);
 
     useEffect(() => {
-        if (auth.fetchingProfile === false && auth.profile) {
+        if (auth.fetchingProfile === false && auth.profile && auth.updatingProfile === false) {
             setUser(auth.profile);
         }
     }, [auth]);

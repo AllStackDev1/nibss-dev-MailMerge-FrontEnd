@@ -46,7 +46,7 @@ const Tag = styled.p`
                         }
                     `;
 
-const Status = styled.div`background: #C5FCDF;
+const Status = styled.div`background: #85D9BF;
                         display: flex;
                         align-items: center;
                         justify-content: center;

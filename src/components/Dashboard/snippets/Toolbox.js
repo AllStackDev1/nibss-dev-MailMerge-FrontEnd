@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
-const Toolbox = ({ tag, exportButton, addButtonText, addButtonUrl }) => {
+const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl }) => {
     const [filter, setFilter] = useState({});
 
     const onChange = event => {
@@ -33,9 +33,9 @@ const Toolbox = ({ tag, exportButton, addButtonText, addButtonUrl }) => {
                     </div>
                     : ""}
                 {tag === true ?
-                    <div className="display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50">
+                    <ActionButton onClick={viewingTags ? closeTags : viewTags} className={`${viewingTags ? 'active-button' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
                         View Tags
-                    </div>
+                    </ActionButton>
                     : ""}
                 <Link to={addButtonUrl}>
                     <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
@@ -65,6 +65,13 @@ const ToolBox = styled.div`
                                 height: 1px;
                                 background: #9E7D0A;
                                 bottom: 0;
+                            }
+                        `;
+
+const ActionButton = styled.div`
+                            &.active-button {
+                                background: #9E7D0A !important;
+                                color: #FFF !important;
                             }
                         `;
 
