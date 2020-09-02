@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
-const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl }) => {
+const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal }) => {
     const [filter, setFilter] = useState({});
 
     const onChange = event => {
@@ -33,15 +33,20 @@ const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButto
                     </div>
                     : ""}
                 {tag === true ?
-                    <ActionButton onClick={viewingTags ? closeTags : viewTags} className={`${viewingTags ? 'active-button' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
+                    <ActionButton onClick={() => { viewingTags ? closeTags() : viewTags() }} className={`${viewingTags ? 'active-button' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
                         View Tags
                     </ActionButton>
                     : ""}
-                <Link to={addButtonUrl}>
-                    <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                {addButtonUrl ?
+                    <Link to={addButtonUrl}>
+                        <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                            {addButtonText}
+                        </button>
+                    </Link>
+                    :
+                    <button onClick={() => setModal("add-recipient")} className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                         {addButtonText}
-                    </button>
-                </Link>
+                    </button>}
             </div>
         </ToolBox>
     )

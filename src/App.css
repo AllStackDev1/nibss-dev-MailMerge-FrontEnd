@@ -601,6 +601,10 @@ html, body {
     min-height: 450px;
 }
 
+.min-height-500 {
+    min-height: 500px;
+}
+
 .min-height-600 {
     min-height: 600px;
 }
@@ -1157,6 +1161,10 @@ html, body {
 
 .deep-green {
     background: #14be01 !important;
+}
+
+.red {
+    background: #c11111 !important;
 }
 
 .pale-gray {
@@ -1773,6 +1781,10 @@ html, body {
 
 .right-margin-70-negative {
     margin-right: -70px;
+}
+
+.right-margin-40-percent-negative {
+    margin-right: -40%;;
 }
 
 .right-margin-20 {
