@@ -82,6 +82,31 @@ const Recipients = () => {
         dispatch(recipientActions.addTag(tag));
     }
 
+    const parseCSV = file => {
+        var reader = new FileReader();
+        reader.readAsText(file.target.files[0], "UTF-8");
+
+        reader.onload = function (e) {
+            var csv = e.target.result;
+            var allTextLines = csv.split('\n');
+
+            let recipientArr = [];
+
+            for (var i = 0; i < allTextLines.length; i++) {
+                var data = allTextLines[i].split(',');
+
+                var row = {
+                    name: data[0],
+                    email: data[1]
+                };
+
+                recipientArr.push(row);
+            }
+
+            dispatch(recipientActions.add(recipientArr, true));
+        }
+    }
+
     return (
         <>
             {modal !== false ?
@@ -110,8 +135,11 @@ const Recipients = () => {
                 />
                 <Toolbox
                     tag={true}
+                    upload={true}
+                    parseCSV={parseCSV}
                     viewTags={viewTags}
                     closeTags={closeTags}
+                    adding={recipients.addingRecipient}
                     viewingTags={viewingTags}
                     setModal={setModal}
                     addButtonText="Add Recipient" />

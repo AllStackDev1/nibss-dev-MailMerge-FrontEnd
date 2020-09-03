@@ -9,11 +9,11 @@ export const recipientActions = {
     fetchTags
 };
 
-function add(recipients) {
+function add(recipients, multiple) {
     return dispatch => {
         dispatch(request());
 
-        recipientService.add(recipients)
+        recipientService.add(recipients, multiple)
             .then(
                 recipient => {
                     recipientService.fetch()

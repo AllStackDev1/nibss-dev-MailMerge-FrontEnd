@@ -8,13 +8,19 @@ export const recipientService = {
     fetchTags
 };
 
-function add(recipient) {
+function add(recipient, multiple) {
+    if (multiple) {
+        recipient = {
+            data: recipient
+        }
+    }
+    
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(recipient)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient`, requestOptions)
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient${multiple ? '/multiple' : ""}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
