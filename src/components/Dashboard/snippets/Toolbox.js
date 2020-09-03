@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
-const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal }) => {
+const Toolbox = ({ tag, upload, adding, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal, parseCSV }) => {
     const [filter, setFilter] = useState({});
 
     const onChange = event => {
@@ -33,9 +33,20 @@ const Toolbox = ({ tag, viewTags, closeTags, viewingTags, exportButton, addButto
                     </div>
                     : ""}
                 {tag === true ?
-                    <ActionButton onClick={() => { viewingTags ? closeTags() : viewTags() }} className={`${viewingTags ? 'active-button' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
+                    <ActionButton onClick={() => { viewingTags ? closeTags() : viewTags() }} className={`${viewingTags ? 'active-button' : ''} ${upload === true ? 'right-margin-20' : 'right-margin-50'} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color`}>
                         View Tags
                     </ActionButton>
+                    : ""}
+                {upload === true ?
+                    <>
+                        <ActionButton onClick={() => { document.getElementById('csv_file').click() }} className={`${adding ? 'active-button width-80' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
+                            {adding ?
+                                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                :
+                                'Upload CSV'}
+                        </ActionButton>
+                        <input type="file" name="csv_file" id="csv_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
+                    </>
                     : ""}
                 {addButtonUrl ?
                     <Link to={addButtonUrl}>
@@ -63,7 +74,7 @@ const ToolBox = styled.div`
                             & input:focus::placeholder {
                                 color: #CCC;
                             }
-                            & div:first-of-type > div {
+                            & > div:first-of-type > div {
                                 width: 0;
                                 position: absolute;
                                 left: 30px;
