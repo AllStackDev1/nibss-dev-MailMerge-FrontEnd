@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 const Recipients = () => {
     const [recipient, setRecipient] = useState({});
     const [tag, setTag] = useState({});
+    const [toAddTag, setToAddTag] = useState(false);
+    const [toAddTags, setToAddTags] = useState([]);
     const [viewingTags, setViewingTags] = useState(false);
     const [modal, setModal] = useState(false);
 
@@ -44,6 +46,12 @@ const Recipients = () => {
         }
     }, [recipients.addingRecipient]);
 
+    useEffect(() => {
+        if (recipients.addingTagToRecipient === false) {
+            closeTags();
+        }
+    }, [recipients.addingTagToRecipient]);
+
     const onChangeRecipient = event => {
         const { name, value } = event.target;
 
@@ -68,6 +76,8 @@ const Recipients = () => {
 
     const closeTags = () => {
         setViewingTags(false);
+        setToAddTag(false);
+        setToAddTags([]);
     }
 
     const addRecipient = e => {
@@ -80,6 +90,17 @@ const Recipients = () => {
         e.preventDefault();
 
         dispatch(recipientActions.addTag(tag));
+    }
+
+    const addTagsToRecipient = () => {
+        dispatch(recipientActions.addTagsToRecipient(toAddTag, toAddTags));
+    }
+
+    const initiateEdit = recipient => {
+        setToAddTag(recipient);
+        setToAddTags(recipients.recipients.find(rec => rec._id === recipient).tag);
+
+        setViewingTags(true);
     }
 
     const parseCSV = file => {
@@ -145,11 +166,16 @@ const Recipients = () => {
                     addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
                     <ViewTag
-                        fetching={recipients.fetchingTags}
+                        recipients={recipients.recipients}
                         tags={recipients.tags}
+                        updating={recipients.addingTagToRecipient}
+                        toAddTag={toAddTag}
+                        toAddTags={toAddTags}
                         closeTags={closeTags}
                         setModal={setModal}
                         viewingTags={viewingTags}
+                        setToAddTags={setToAddTags}
+                        addTagsToRecipient={addTagsToRecipient}
                     />
                     <div className="full-width display-flex space-between top-padding-30">
                         <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
@@ -174,7 +200,9 @@ const Recipients = () => {
                             {recipients.recipients.map((recipient, index) =>
                                 <Recipient
                                     key={index}
-                                    recipient={recipient} />
+                                    recipient={recipient}
+                                    toAddTag={toAddTag}
+                                    initiateEdit={initiateEdit} />
                             )}
                             <Pagination />
                         </>

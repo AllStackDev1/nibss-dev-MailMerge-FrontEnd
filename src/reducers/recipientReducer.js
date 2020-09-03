@@ -39,9 +39,6 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 fetchingTags: false
             };
-        
-        
-        
         case recipientConstants.ADD_RECIPIENT_REQUEST:
             return {
                 ...state,
@@ -73,6 +70,27 @@ export default function recipient(state = initialState, action) {
             return {
                 ...state,
                 addingTag: false
+            };
+        case recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST:
+            return {
+                ...state,
+                addingTagToRecipient: true
+            };
+        case recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS:
+            if (state.recipients) {
+                state.recipients[state.recipients.findIndex(recipient => recipient._id === action.recipient._id)] = {
+                    ...action.recipient
+                }
+            }
+
+            return {
+                ...state,
+                addingTagToRecipient: false
+            };
+        case recipientConstants.ADD_TAG_TO_RECIPIENT_FAILURE:
+            return {
+                ...state,
+                addingTagToRecipient: false
             };
         default:
             return state;

@@ -16,7 +16,7 @@ const CreateTag = ({ tag, onChange, onSubmit, creating }) => {
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50">
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Create Tag</p>
                     <input type="text" name="name" value={tag.name || ""} onChange={onChange} placeholder="Enter Tag Name" className="bottom-margin-20" required />
-                    <button type="submit" disabled={creating} className="full-width bottom-margin-30 left-padding-30 right-padding-30 border-box border-radius-10 mustard height-55 cursor-pointer white-color size-pointnine-rem bold display-flex align-items-center justify-center">
+                    <button type="submit" disabled={creating} className="width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
                         {creating ?
                             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                             :

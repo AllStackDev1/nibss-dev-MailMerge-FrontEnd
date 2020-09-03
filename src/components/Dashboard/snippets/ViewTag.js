@@ -1,13 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 
-const ViewTag = ({ viewingTags, setModal, closeTags, fetching, tags }) => {
+const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, addTagsToRecipient, tags, recipients, toAddTag, toAddTags }) => {
     return (
         <Overlay onClick={closeTags} className={`${viewingTags ? 'view-tags' : ''} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">
-                <p className="top-padding-50 bottom-padding-30 text-right no-shrink right-padding-30 border-box bold no-select">
+                <p className="top-padding-50 bottom-padding-20 text-right no-shrink right-padding-30 border-box bold no-select">
                     <span className="cursor-pointer" onClick={() => setModal("create-tag")}>Create New Tag</span>
                 </p>
+                {toAddTag ?
+                    <p className="bottom-padding-20 no-shrink size-pointeight-rem left-padding-30 border-box bold no-select">
+                        ADD TAGS FOR {recipients.find(recipient => recipient._id === toAddTag).name}
+                    </p>
+                    : ""}
                 <div className="display-flex top-padding-10 flex-wrap full-height overflow-auto-y custom-scrollbar left-padding-30 border-box flex-start-content">
                     {tags === undefined ?
                         <div className="full-height full-width display-flex align-items-center justify-center right-padding-10 bottom-padding-50 border-box">
@@ -16,15 +21,27 @@ const ViewTag = ({ viewingTags, setModal, closeTags, fetching, tags }) => {
                         :
                         tags ?
                             tags.map((tag, index) =>
-                                <Tag key={index} className="no-select uppercase">
+                                <Tag key={index} onClick={() => setToAddTags([...toAddTags, tag.name])} className={`${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
                                     {tag.name}
-                                    <span className="material-icons">remove_circle</span>
+                                    {toAddTag === false ?
+                                        <span className="material-icons">remove_circle</span>
+                                        : ""}
                                 </Tag>
                             )
                             :
                             ""
                     }
                 </div>
+                {toAddTag ?
+                    <div className="full-width height-70 absolute display-flex align-items-center flex-end bottom border-top-lightgray border-box no-shrink">
+                        <button type="submit" onClick={addTagsToRecipient} className="border-box mustard height-40 no-border cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center right-margin-30">
+                            {updating ?
+                                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                :
+                                'UPDATE TAGS'}
+                        </button>
+                    </div>
+                    : ""}
             </div>
         </Overlay>
     )
@@ -41,7 +58,7 @@ const Overlay = styled.div`background: rgba(24, 37, 56, 0);
                                 transform: translateX(100%);
                                 transition: transform 200ms linear;
                             }
-                            & > div:first-of-type > p {
+                            & > div:first-of-type > p:first-of-type {
                                 color: #9E7D0A;
                                 font-size: 0.9rem;
                             }
@@ -65,6 +82,7 @@ const Tag = styled.p`
                     color: #182538;
                     margin-right: 30px;
                     margin-bottom: 30px;
+                    cursor: pointer;
                     & > span {
                         font-size: 1.2rem;
                         position: absolute;
@@ -72,6 +90,10 @@ const Tag = styled.p`
                         right: -0.5rem;
                         cursor: pointer;
                         color: #E94848;
+                    }
+                    &.active-tag {
+                        background: #919AA3;
+                        color: #FFF;
                     }
                 `;
 

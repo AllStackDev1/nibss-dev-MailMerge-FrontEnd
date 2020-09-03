@@ -4,6 +4,7 @@ import { authService } from './authService';
 export const recipientService = {
     add,
     addTag,
+    addTagsToRecipient,
     fetch,
     fetchTags
 };
@@ -34,6 +35,23 @@ function addTag(tag) {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/admin/recipient/tag`, requestOptions)
+        .then(authService.handleResponse)
+        .then(tag => {
+            return tag;
+        });
+}
+
+function addTagsToRecipient(recipient, tags) {
+    tags = {
+        tag: tags
+    };
+
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(tags)
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient}`, requestOptions)
         .then(authService.handleResponse)
         .then(tag => {
             return tag;
