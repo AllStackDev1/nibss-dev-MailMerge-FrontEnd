@@ -6,7 +6,8 @@ export const recipientActions = {
     add,
     addTag,
     fetch,
-    fetchTags
+    fetchTags,
+    addTagsToRecipient
 };
 
 function add(recipients, multiple) {
@@ -63,6 +64,30 @@ function addTag(tag) {
     function request() { return { type: recipientConstants.ADD_TAG_REQUEST }; }
     function success(tags) { return { type: recipientConstants.ADD_TAG_SUCCESS, tags }; }
     function failure(error) { return { type: recipientConstants.ADD_TAG_FAILURE, error }; }
+}
+
+function addTagsToRecipient(recipient, tags) {
+    return dispatch => {
+        dispatch(request());
+
+        recipientService.addTagsToRecipient(recipient, tags)
+            .then(
+                recipient => {
+                    dispatch(success(recipient.data));
+
+                    toast.success(recipient.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST }; }
+    function success(recipient) { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS, recipient }; }
+    function failure(error) { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_FAILURE, error }; }
 }
 
 function fetch() {
