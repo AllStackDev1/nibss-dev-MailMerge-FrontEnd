@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const DashboardSidebar = ({ routes, logout, location, user }) => {
     return (
-        <div className={`sidebar-links full-height no-shrink border-box no-repeat-bg sidebar above-2 border-topright-50`}>
+        <div className={`no-select sidebar-links full-height no-shrink border-box no-repeat-bg sidebar above-2 border-topright-50`}>
             <div>
                 <div className="bottom-padding-10 border-bottom bottom-margin-20">
                     <img src={require(`images/logo.svg`)} className="height-60" alt="NIBSS Empty" />

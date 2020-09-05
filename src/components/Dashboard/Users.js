@@ -47,6 +47,7 @@ const Users = () => {
                     <>
                         {users.platformUsers.map((user, index) =>
                             <User
+                                key={index}
                                 user={user} />
                         )}
                         <Pagination />

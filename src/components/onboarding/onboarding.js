@@ -16,7 +16,7 @@ const Onboarding = props => {
     const user = useSelector(state => state.user);
 
     useEffect(() => {
-        return(() => {
+        return (() => {
             dispatch(userActions.reset());
             dispatch(authActions.reset());
         });
@@ -25,6 +25,7 @@ const Onboarding = props => {
     useEffect(() => {
         if (userLocal !== undefined) {
             if (userLocal.data.status === "active") {
+                console.log(1);
                 setStep(2);
             }
         }
@@ -33,8 +34,10 @@ const Onboarding = props => {
     useEffect(() => {
         if (auth.uploading === false && auth.uploaded === 1) {
             if (userLocal.data.role === "administrator") {
+                console.log(2);
                 setStep(step => step + 1);
             } else {
+                console.log(3);
                 setStep(3);
             }
         }
@@ -42,13 +45,17 @@ const Onboarding = props => {
 
     useEffect(() => {
         if (user.invitingUsers === false && user.users) {
-            if (userLocal.data.status === "active") {
-                dispatch(push(`/dashboard/index`));
-            } else {
-                setStep(step => step + 1);
+            if (userLocal.data.role === "administrator") {
+                if (userLocal.data.status === "active") {
+                    console.log(4);
+                    dispatch(push(`/dashboard/index`));
+                } else {
+                    console.log(5);
+                    setStep(step => step + 1);
+                }
             }
         }
-    }, [user.invitingUsers, user.users, userLocal.data.status, dispatch]);
+    }, [user.invitingUsers, user.users, userLocal.data, dispatch]);
 
     return (
         <div className="full-height-vh full-width display-flex light-brown">
