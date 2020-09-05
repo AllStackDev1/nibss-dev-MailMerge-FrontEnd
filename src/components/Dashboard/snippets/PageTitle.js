@@ -4,10 +4,10 @@ import styled from "styled-components"
 const PageTitle = ({ title, breadcrumb }) => {
     return (
         <>
-            <Title className="top-padding-70 size-onepointthree-rem bold">
+            <Title className="no-select top-padding-70 size-onepointthree-rem bold">
                 {title}
             </Title>
-            <BreadCrumbs className="display-flex align-items-center">
+            <BreadCrumbs className="no-select display-flex align-items-center">
                 <span className="right-margin-5">Dashboard</span>
                 <span className="material-icons">chevron_right</span>
                 <span className="left-margin-5">{breadcrumb ? breadcrumb : title}</span>
