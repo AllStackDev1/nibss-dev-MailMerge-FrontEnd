@@ -1,0 +1,72 @@
+ul {
+	list-style: none;
+}
+
+a {
+	outline: 0 !important;
+	text-decoration: none !important;
+}
+
+
+
+
+input[type='checkbox'] {
+	opacity: 0;
+    z-index: -1;
+    display: none;
+}
+
+input[type='checkbox']+label {
+	width: 25px;
+	height: 25px;
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-indent: -999px;
+	overflow: hidden;
+	border: 1px solid #DDD;
+	cursor: pointer;
+}
+
+/*------------------- #checkbox-s style ------------------*/
+
+input[type='checkbox'].checkbox-s+label {
+	border: 1px solid #CCC;
+	background: tranparent;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    margin-right: 5px;
+}
+
+input[type='checkbox'].checkbox-s+label:before {
+	content: '';
+	width: 15px;
+	height: 15px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	margin: auto;
+	background: #FFF;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	transition: 0.4s ease all;
+	-moz-transition: 0.4s ease all;
+	-webkit-transition: 0.4s ease all;
+}
+
+input[type='checkbox'].checkbox-s:checked+label {
+    border: 1px solid #1152FB;
+}
+
+input[type='checkbox'].checkbox-s:checked+label:before {
+	background: #1152FB;
+	border-radius: 20%;
+	-moz-border-radius: 20%;
+	-webkit-border-radius: 20%;
+}
