@@ -1919,6 +1919,10 @@ html, body {
     padding-left: 50px;
 }
 
+.left-padding-60 {
+    padding-left: 60px;
+}
+
 .left-padding-70 {
     padding-left: 70px;
 }
@@ -3401,14 +3405,14 @@ textarea {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    /* -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3); */
     border-radius: 10px;
     background-color: #F5F5F5;
     padding-right: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-    width: 12px;
+    width: 9px;
     background-color: #F5F5F5;
 }
 

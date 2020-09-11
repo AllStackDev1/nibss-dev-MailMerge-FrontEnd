@@ -7,6 +7,7 @@ import 'styles/material-icons.css'
 import 'styles/toggle.css'
 import 'styles/input.css'
 import 'styles/loader.css'
+import 'styles/checkbox.css'
 
 import { Route } from 'react-router-dom'
 import Login from './components/auth/login'

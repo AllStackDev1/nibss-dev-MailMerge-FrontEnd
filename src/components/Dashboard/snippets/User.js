@@ -9,7 +9,7 @@ const User = ({user}) => {
                 {user.name}
             </div>
             <div className="no-shrink width-20-percent size-pointeight-rem">
-                <p className="size-pointeight-rem light-gray-color">{user.email}</p>
+                <p className="size-pointeight-rem light-gray-color truncate">{user.email}</p>
             </div>
             <div className="no-shrink width-20-percent size-pointeight-rem capitalize">
                 <p className="size-pointeight-rem light-gray-color">{user.role}</p>
