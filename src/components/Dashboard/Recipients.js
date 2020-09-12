@@ -197,7 +197,7 @@ const Recipients = () => {
                         <EmptyRecipient />
                         :
                         <>
-                            {recipients.recipients.map((recipient, index) =>
+                            {recipients.recipients.data.map((recipient, index) =>
                                 <Recipient
                                     key={index}
                                     recipient={recipient}

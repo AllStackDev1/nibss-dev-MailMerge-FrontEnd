@@ -23,6 +23,28 @@ export default function user(state = initialState, action) {
                 ...state,
                 invitingUsers: false
             };
+        case userConstants.SEARCH_REQUEST:
+            return {
+                ...state,
+                searchingUsers: true
+            };
+        case userConstants.SEARCH_SUCCESS:
+            return {
+                ...state,
+                searchingUsers: false,
+                searchResults: action.users
+            };
+        case userConstants.SEARCH_FAILURE:
+            return {
+                ...state,
+                searchingUsers: false
+            };
+        case userConstants.CLEAR_SEARCH_RESULTS:
+            return {
+                ...state,
+                searchingUsers: false,
+                searchResults: null
+            };
         case userConstants.INVITE_RESET:
             return {
                 ...state,

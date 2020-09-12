@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { getColor } from 'helpers/getColor';
+import { getInitials } from 'helpers/getInitials';
 
-const User = ({user}) => {
+const User = ({ user }) => {
     return (
         <UserInstance className="smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between">
-            <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10"></Profile>
+            <Profile style={{ backgroundColor: getColor(user.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10">
+                {getInitials(user.name)}
+            </Profile>
             <div className="no-shrink width-25-percent size-pointeight-rem bold capitalize">
                 {user.name}
             </div>

@@ -6,12 +6,41 @@ import PageTitle from "./snippets/PageTitle";
 import ModalContainer from "./modals/ModalContainer";
 import CreateDocument from "./modals/CreateDocument";
 import DocumentCreationSuccessful from "./snippets/documents/DocumentCreationSuccessful";
+import SetupSignatories from "./snippets/documents/SetupSignatories";
+import SetupRecipients from "./snippets/documents/SetupRecipients";
 
 const Documents = () => {
+    const [document, setDocument] = useState({
+        signatories: [],
+        recipients: []
+    });
     const [tab, setTab] = useState(1);
     const [step, setStep] = useState(1);
     const [uploadingDocument, setUploadingDocument] = useState(false);
     const [modal, setModal] = useState(false);
+
+    const selectUser = (user, nibss) => {
+        setDocument({
+            ...document,
+            signatories: [
+                ...document.signatories,
+                {
+                    ...user,
+                    nibss: nibss ? nibss : false
+                }
+            ]
+        });
+    }
+
+    const addRecipient = recipient => {
+        setDocument(document => {
+            document.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ? document.recipients.splice(document.recipients.findIndex(rec => rec._id === recipient._id), 1) : document.recipients.push(recipient);
+
+            return {
+                ...document
+            }
+        });
+    }
 
     return (
         uploadingDocument ?
@@ -43,150 +72,15 @@ const Documents = () => {
                         </div>
                         : ""}
                     {step === 1 ?
-                        <>
-                            <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Setup Signatories</p>
-                            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who is signing this documents</p>
-                            <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
-                            <div className="display-flex full-height overflow-hidden width-85-percent top-margin-40 border-box">
-                                <div className="width-50-percent border-box left-padding-10 overflow-auto-y custom-scrollbar border-right-gray-1 right-padding-60">
-                                    <p className="size-pointnine-rem bold bottom-margin-20">NIBSS members</p>
-                                    <form>
-                                        <input type="text" name="name" placeholder="Full Name" className="height-50" required />
-                                        <DocumentButton type="submit" className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
-                                            <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
-                                        </DocumentButton>
-                                    </form>
-                                </div>
-                                <div className="width-50-percent right-padding-10 overflow-auto-y custom-scrollbar left-padding-60 border-box">
-                                    <p className="size-pointnine-rem bold bottom-margin-20">External members</p>
-                                    <form>
-                                        <input type="text" name="name" placeholder="Full Name" className="height-50 bottom-margin-10" required />
-                                        <input type="email" name="email" placeholder="Email address" className="height-50" required />
-                                        <DocumentButton type="submit" className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
-                                            <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
-                                        </DocumentButton>
-                                    </form>
-                                </div>
-                            </div>
-                        </>
+                        <SetupSignatories
+                            document={document}
+                            selectUser={selectUser} />
                         : ""}
                     {step === 2 ?
-                        <>
-                            <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Select Recipients</p>
-                            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who will be getting this documenmts</p>
-                            <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
-                            <div className="display-flex width-85-percent space-between top-margin-30">
-                                <input type="text" name="name" placeholder="search name" className="height-40 width-250" required />
-                                <div className="display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-20">
-                                    <img src={require(`images/icons/dashboard/filter.svg`)} className={`height-15 right-margin-10`} alt="Filter" />
-                                    Filter By
-                                    <span className="material-icons">
-                                        arrow_drop_down
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="full-height width-85-percent top-margin-40 border-box overflow-auto-y custom-scrollbar">
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests" className="checkbox-s" />
-                                    <label htmlFor="charter-requests" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests2" className="checkbox-s" />
-                                    <label htmlFor="charter-requests2" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests3" className="checkbox-s" />
-                                    <label htmlFor="charter-requests3" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests4" className="checkbox-s" />
-                                    <label htmlFor="charter-requests4" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests5" className="checkbox-s" />
-                                    <label htmlFor="charter-requests5" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests6" className="checkbox-s" />
-                                    <label htmlFor="charter-requests6" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests7" className="checkbox-s" />
-                                    <label htmlFor="charter-requests7" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests8" className="checkbox-s" />
-                                    <label htmlFor="charter-requests8" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                                    <input type="checkbox" id="charter-requests9" className="checkbox-s" />
-                                    <label htmlFor="charter-requests9" className="no-shrink"></label>
-                                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20"></Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        Oluwatobi Amusan
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">amusantobi@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </>
+                        <SetupRecipients
+                            document={document}
+                            addRecipient={addRecipient}
+                        />
                         : ""}
                     {step === 3 ?
                         <>
@@ -219,11 +113,11 @@ const Documents = () => {
                                     </div>
                                     <p className="size-pointeight-rem bold">Assigned To</p>
                                     <Assignees className="top-margin-10">
-                                        <div className="display-flex align-items-center bottom-margin-10">
+                                        <div draggable={true} className="display-flex align-items-center bottom-margin-10">
                                             <Blue className="height-20 width-20 right-margin-10"></Blue>
                                             <p className="size-pointseven-rem">Lois Genesis</p>
                                         </div>
-                                        <div className="display-flex align-items-center">
+                                        <div draggable={true} className="display-flex align-items-center">
                                             <Orange className="height-20 width-20 right-margin-10"></Orange>
                                             <p className="size-pointseven-rem">Rulo Digital</p>
                                         </div>
@@ -267,6 +161,7 @@ const Documents = () => {
                         {modal === "create-document" ?
                             <CreateDocument
                                 setModal={setModal}
+                                setStep={setStep}
                                 closeModal={() => setModal(false)}
                                 setUploadingDocument={setUploadingDocument} />
                             : ""}
@@ -374,10 +269,6 @@ const Container = styled.div`
                         }
                     `;
 
-const DocumentButton = styled.button`
-                        min-width: 50px;
-                    `;
-
 const BottomNav = styled.div`
                         left: calc(15% / 2);
                     `;
@@ -399,9 +290,5 @@ const BackButton = styled.div`
                                 margin-right: 10px;
                             }
                         `;
-
-const Profile = styled.div`background-image: url(${props => props.url});
-                        background-position: center;
-                        background-size: cover;`;
 
 export default Documents;

@@ -1784,7 +1784,8 @@ html, body {
 }
 
 .right-margin-40-percent-negative {
-    margin-right: -40%;;
+    margin-right: -40%;
+    ;
 }
 
 .right-margin-20 {
@@ -2295,7 +2296,8 @@ html, body {
 input {
     width: 100%;
     height: 55px;
-    border: 2px solid rgba(24, 37, 56, 0.1);;
+    border: 2px solid rgba(24, 37, 56, 0.1);
+    ;
     border-radius: 5px;
     outline: none;
     color: #666;
@@ -2318,7 +2320,7 @@ input.size-three-rem::placeholder {
     font-size: 3rem;
 }
 
-.toolbox-input + span {
+.toolbox-input+span {
     order: 1;
 }
 
@@ -2327,11 +2329,11 @@ input.size-three-rem::placeholder {
     height: 35px;
 }
 
-.toolbox-input:focus ~ span {
+.toolbox-input:focus~span {
     color: #9E7D0A !important;
 }
 
-.toolbox-input:focus ~ div, .toolbox-input.has-value ~ div {
+.toolbox-input:focus~div, .toolbox-input.has-value~div {
     width: calc(100% - 40px) !important;
 }
 
@@ -3429,4 +3431,8 @@ textarea {
 .invited:not(:last-of-type) {
     padding-bottom: 20px;
     border-bottom: 1px solid #E0E0E0 !important;
+}
+
+[draggable=true] {
+    cursor: move;
 }

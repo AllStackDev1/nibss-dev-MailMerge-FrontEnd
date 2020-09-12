@@ -66,7 +66,7 @@ function fetch() {
     return authService.fetchFrom(`${Config.API_URL}/admin/recipient`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
-            return recipients.data;
+            return recipients;
         });
 }
 
