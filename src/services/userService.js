@@ -3,7 +3,8 @@ import { authService } from './authService';
 
 export const userService = {
     invite,
-    fetch
+    fetch,
+    search
 };
 
 function invite(users) {
@@ -43,6 +44,18 @@ function fetch() {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/admin/users`, requestOptions)
+        .then(authService.handleResponse)
+        .then(users => {
+            return users.data;
+        });
+}
+
+function search(param) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/users/search?search=${param}`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
             return users.data;

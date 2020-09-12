@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-const CreateDocument = ({ tag, onChange, onSubmit, creating, setUploadingDocument, setModal }) => {
+const CreateDocument = ({ tag, onChange, onSubmit, creating, setUploadingDocument, setModal, setStep }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent">
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
@@ -18,7 +18,7 @@ const CreateDocument = ({ tag, onChange, onSubmit, creating, setUploadingDocumen
                         Drag and drop documents directly from your computer.<br />
                         You can upload multiple .pdf, .doc, .docx, .jpg, .jpeg, .png, .csv, .xls, .xlsx, .xlsm, .txt
                     </Gray>
-                    <button onClick={() => {setUploadingDocument(true); setModal(false);}} type="button" className="margin-auto top-margin-30 width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button onClick={() => {setUploadingDocument(true); setModal(false); setStep(1);}} type="button" className="margin-auto top-margin-30 width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
                         CHOOSE FILE
                     </button>
                 </Container>
