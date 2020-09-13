@@ -593,6 +593,10 @@ html, body {
     min-height: 300px;
 }
 
+.min-height-350 {
+    min-height: 350px;
+}
+
 .min-height-400 {
     min-height: 400px;
 }
@@ -748,6 +752,10 @@ html, body {
 
 .opacity-1 {
     opacity: 1;
+}
+
+.opacity-0-8 {
+    opacity: 0.8;
 }
 
 .opacity-0-5 {
@@ -2733,6 +2741,10 @@ button.invert {
     border-radius: 10px;
 }
 
+.border-radius-15 {
+    border-radius: 15px;
+}
+
 .border-radius-20 {
     border-radius: 20px;
 }
@@ -2916,7 +2928,7 @@ a:-webkit-any-link {
     margin-top: -150px;
 }
 
-.feedback {
+.border-white {
     border: 1px solid #FFF;
 }
 
@@ -3435,4 +3447,8 @@ textarea {
 
 [draggable=true] {
     cursor: move;
+}
+
+.DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
+    height: auto !important;
 }

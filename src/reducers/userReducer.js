@@ -66,6 +66,22 @@ export default function user(state = initialState, action) {
                 ...state,
                 fetchingUsers: false
             };
+        case userConstants.FETCH_PAGE_REQUEST:
+            return {
+                ...state,
+                fetchingUsersPage: true
+            };
+        case userConstants.FETCH_PAGE_SUCCESS:
+            return {
+                ...state,
+                fetchingUsersPage: false,
+                platformUsers: action.users
+            };
+        case userConstants.FETCH_PAGE_FAILURE:
+            return {
+                ...state,
+                fetchingUsersPage: false
+            };
         default:
             return state;
     }

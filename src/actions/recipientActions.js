@@ -6,6 +6,7 @@ export const recipientActions = {
     add,
     addTag,
     fetch,
+    fetchPage,
     fetchTags,
     addTagsToRecipient
 };
@@ -90,14 +91,14 @@ function addTagsToRecipient(recipient, tags) {
     function failure(error) { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_FAILURE, error }; }
 }
 
-function fetch() {
+function fetch(src) {
     return dispatch => {
         dispatch(request());
 
-        recipientService.fetch()
+        recipientService.fetch(src)
             .then(
                 recipients => {
-                    dispatch(success(recipients));
+                    dispatch(success(recipients, src));
                 },
                 error => {
                     if (error.message) {
@@ -108,8 +109,30 @@ function fetch() {
     };
 
     function request() { return { type: recipientConstants.FETCH_REQUEST }; }
-    function success(recipients) { return { type: recipientConstants.FETCH_SUCCESS, recipients }; }
+    function success(recipients, src) { return { type: recipientConstants.FETCH_SUCCESS, recipients, src }; }
     function failure(error) { return { type: recipientConstants.FETCH_FAILURE, error }; }
+}
+
+function fetchPage(page, src) {
+    return dispatch => {
+        dispatch(request());
+
+        recipientService.fetchPage(page)
+            .then(
+                recipients => {
+                    dispatch(success(recipients, src));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: recipientConstants.FETCH_PAGE_REQUEST }; }
+    function success(recipients, src) { return { type: recipientConstants.FETCH_PAGE_SUCCESS, recipients, src }; }
+    function failure(error) { return { type: recipientConstants.FETCH_PAGE_FAILURE, error }; }
 }
 
 function fetchTags() {

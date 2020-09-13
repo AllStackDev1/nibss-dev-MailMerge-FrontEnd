@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
+import { useDropzone } from 'react-dropzone'
 
-const CreateDocument = ({ tag, onChange, onSubmit, creating, setUploadingDocument, setModal, setStep }) => {
+const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => {
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent">
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
@@ -12,13 +15,20 @@ const CreateDocument = ({ tag, onChange, onSubmit, creating, setUploadingDocumen
                 <p className="white-color bold">Upload Document</p>
                 <p className="white-color size-pointeight-rem">Create and save your signature</p>
             </div>
-            <div className="action-modal no-select white full-width border-box padding-30 border-radius-10">
+            <div {...getRootProps()} className="no-outline action-modal no-select white full-width border-box padding-30 border-radius-10">
+                <input {...getInputProps()} />
+                {isDragActive ?
+                    <div className="opacity-0-8 full-width full-height white absolute left top display-flex align-items-center justify-center above border-radius-10">
+                        Drop image here
+                    </div>
+                    : ""
+                }
                 <Container url={require(`images/document-bg.svg`)} className="full-width full-height">
                     <Gray className="text-center size-pointeight-rem">
                         Drag and drop documents directly from your computer.<br />
                         You can upload multiple .pdf, .doc, .docx, .jpg, .jpeg, .png, .csv, .xls, .xlsx, .xlsm, .txt
                     </Gray>
-                    <button onClick={() => {setUploadingDocument(true); setModal(false); setStep(1);}} type="button" className="margin-auto top-margin-30 width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button type="button" className="margin-auto top-margin-30 width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
                         CHOOSE FILE
                     </button>
                 </Container>

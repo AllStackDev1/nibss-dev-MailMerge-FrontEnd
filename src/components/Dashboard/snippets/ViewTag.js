@@ -10,7 +10,7 @@ const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, add
                 </p>
                 {toAddTag ?
                     <p className="bottom-padding-20 no-shrink size-pointeight-rem left-padding-30 border-box bold no-select">
-                        ADD TAGS FOR {recipients.find(recipient => recipient._id === toAddTag).name}
+                        ADD TAGS FOR {recipients.data.find(recipient => recipient._id === toAddTag).name}
                     </p>
                     : ""}
                 <div className="display-flex top-padding-10 flex-wrap full-height overflow-auto-y custom-scrollbar left-padding-30 border-box flex-start-content">

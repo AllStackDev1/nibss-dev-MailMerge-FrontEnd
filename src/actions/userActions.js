@@ -6,6 +6,7 @@ import { push } from 'connected-react-router';
 export const userActions = {
     invite,
     fetch,
+    fetchPage,
     reset,
     search,
     clearSearch
@@ -59,6 +60,28 @@ function fetch() {
     function request() { return { type: userConstants.FETCH_REQUEST }; }
     function success(users) { return { type: userConstants.FETCH_SUCCESS, users }; }
     function failure(error) { return { type: userConstants.FETCH_FAILURE, error }; }
+}
+
+function fetchPage(page) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.fetchPage(page)
+            .then(
+                users => {
+                    dispatch(success(users));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.FETCH_PAGE_REQUEST }; }
+    function success(users) { return { type: userConstants.FETCH_PAGE_SUCCESS, users }; }
+    function failure(error) { return { type: userConstants.FETCH_PAGE_FAILURE, error }; }
 }
 
 function search(param) {

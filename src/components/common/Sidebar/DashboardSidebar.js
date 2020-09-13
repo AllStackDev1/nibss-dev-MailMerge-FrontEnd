@@ -3,6 +3,8 @@ import 'styles/sidebar.css';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import styled from 'styled-components';
+import { getColor } from 'helpers/getColor';
+import { getInitials } from 'helpers/getInitials';
 
 const DashboardSidebar = ({ routes, logout, location, user }) => {
     return (
@@ -12,7 +14,8 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                     <img src={require(`images/logo.svg`)} className="height-60" alt="NIBSS Empty" />
                 </div>
                 <div className="display-flex flex-direction-column align-items-center bottom-margin-30">
-                    <Profile url={require(`images/icons/dashboard/profile.png`)} className="width-70 height-70 black border-radius-100-percent">
+                    <Profile style={{backgroundColor: getColor(user ? user.data.name : "")}} className="width-70 height-70 border-radius-100-percent">
+                        <span className="size-onepointone-rem white-color">{user ? user.data.name ? getInitials(user.data.name) : "" : ""}</span>
                         <Link to="/dashboard/user-profile" className="white border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/settings.svg`)} className="height-18" alt="NIBSS Empty" />
                         </Link>
@@ -102,9 +105,9 @@ const RouteLink = styled.div`border-radius: 10px;
                                 color: #9E7D0A;
                             }`;
 
-const Profile = styled.div`background-image: url(${props => props.url});
-                            background-position: center;
-                            background-size: cover;
+const Profile = styled.div`display: flex;
+                            align-items: center;
+                            justify-content: center;
                             &>a {
                                 width: 30px;
                                 height: 30px;

@@ -13,19 +13,19 @@ var routes = [
         height: 18
     },
     {
-        path: "/documents",
+        path: "/documents/:pageId?",
         name: "Documents",
         component: Documents,
         icon: 'documents'
     },
     {
-        path: "/users",
+        path: "/users/:pageId?",
         name: "Users",
         component: Users,
         icon: 'users'
     },
     {
-        path: "/recipients",
+        path: "/recipients/:pageId?",
         name: "Recipients",
         component: Recipients,
         icon: 'recipients'
