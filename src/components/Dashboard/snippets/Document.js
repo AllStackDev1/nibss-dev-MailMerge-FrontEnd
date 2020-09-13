@@ -1,18 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
+import Moment from 'react-moment'
 
-const Document = () => {
+const Document = ({ document }) => {
     return (
         <div className="height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
             <div className="no-shrink width-70">
                 <img src={require(`images/icons/dashboard/document.svg`)} className="height-25 top-margin-3 right-margin-20 left-margin-30" alt="NIBSS PDF" />
             </div>
             <div className="no-shrink width-25-percent size-pointnine-rem bold">
-                Letter of intent
+                {document.documentTitle}
             </div>
             <div className="no-shrink width-15-percent size-pointnine-rem bold">
                 <p className="size-pointseven-rem light">Created at</p>
-                <p className="size-pointeight-rem bold">20 May 2020</p>
+                <p className="size-pointeight-rem bold">
+                    <Moment format="h:mma Do MMM, YYYY">{document.createdAt}</Moment>
+                </p>
             </div>
             <div className="no-shrink width-15-percent size-pointnine-rem bold">
                 <p className="size-pointseven-rem light">Owner</p>

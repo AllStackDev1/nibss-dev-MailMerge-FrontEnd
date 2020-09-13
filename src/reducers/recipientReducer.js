@@ -12,16 +12,32 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 fetching: true
             };
-        case recipientConstants.FETCH_SUCCESS:
+        case recipientConstants.FETCH_SUCCESS: 
             return {
                 ...state,
                 fetching: false,
-                recipients: action.recipients
+                [`${action.src === "document" ? 'documentRecipients' : 'recipients'}`]: action.recipients
             };
         case recipientConstants.FETCH_FAILURE:
             return {
                 ...state,
                 fetching: false
+            };
+        case recipientConstants.FETCH_PAGE_REQUEST:
+            return {
+                ...state,
+                fetchingPage: true
+            };
+        case recipientConstants.FETCH_PAGE_SUCCESS: 
+            return {
+                ...state,
+                fetchingPage: false,
+                [`${action.src === "document" ? 'documentRecipients' : 'recipients'}`]: action.src !== "document" ? action.recipients : { ...action.recipients, data: [...state.documentRecipients.data, ...action.recipients.data]}
+            };
+        case recipientConstants.FETCH_PAGE_FAILURE:
+            return {
+                ...state,
+                fetchingPage: false
             };
         case recipientConstants.FETCH_TAGS_REQUEST:
             return {
@@ -77,8 +93,8 @@ export default function recipient(state = initialState, action) {
                 addingTagToRecipient: true
             };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS:
-            if (state.recipients) {
-                state.recipients[state.recipients.findIndex(recipient => recipient._id === action.recipient._id)] = {
+            if (state.recipients.data) {
+                state.recipients.data[state.recipients.data.findIndex(recipient => recipient._id === action.recipient._id)] = {
                     ...action.recipient
                 }
             }

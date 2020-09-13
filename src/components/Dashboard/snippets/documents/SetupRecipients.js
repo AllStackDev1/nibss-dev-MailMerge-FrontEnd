@@ -12,8 +12,17 @@ const SetupRecipients = ({ document, addRecipient }) => {
     const recipients = useSelector(state => state.recipient);
 
     useEffect(() => {
-        dispatch(recipientActions.fetch());
+        dispatch(recipientActions.fetch('document'));
     }, [dispatch]);
+
+    const fetchMoreRecipients = e => {
+        if((e.target.scrollHeight - e.target.scrollTop) - e.target.clientHeight < 20){
+            if(recipients.fetching === false && (recipients.documentRecipients.pagination.current !== recipients.documentRecipients.pagination.number_of_pages)) {
+                console.log('Fetching more data');
+                dispatch(recipientActions.fetchPage(recipients.documentRecipients.pagination.next, 'document'));
+            }
+        }
+    }
 
     return (
         <>
@@ -33,11 +42,11 @@ const SetupRecipients = ({ document, addRecipient }) => {
                     </span>
                 </div>
             </div>
-            <div className="full-height width-85-percent top-margin-40 border-box overflow-auto-y custom-scrollbar">
-                {recipients.recipients ?
-                    recipients.recipients.data.map((recipient, index) =>
+            <div className="full-height width-85-percent top-margin-40 border-box overflow-auto-y custom-scrollbar" onScroll={fetchMoreRecipients}>
+                {recipients.documentRecipients ?
+                    recipients.documentRecipients.data.map((recipient, index) =>
                         <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
-                            <input type="checkbox" id="charter-requests" className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                            <input readOnly type="checkbox" id="charter-requests" className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
                             <label htmlFor="charter-requests" className="no-shrink"></label>
                             <Profile style={{ backgroundColor: getColor(recipient.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20">
                                 {getInitials(recipient.name)}

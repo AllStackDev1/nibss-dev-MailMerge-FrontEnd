@@ -6,6 +6,7 @@ export const recipientService = {
     addTag,
     addTagsToRecipient,
     fetch,
+    fetchPage,
     fetchTags
 };
 
@@ -64,6 +65,18 @@ function fetch() {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/admin/recipient`, requestOptions)
+        .then(authService.handleResponse)
+        .then(recipients => {
+            return recipients;
+        });
+}
+
+function fetchPage(page) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient?page=${page}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import User from "./snippets/User"
 import Pagination from "./snippets/Pagination"
 import Toolbox from "./snippets/Toolbox"
@@ -6,17 +6,32 @@ import PageTitle from "./snippets/PageTitle"
 import EmptyUser from "./empty-states/User"
 import { useDispatch, useSelector } from "react-redux"
 import { userActions } from "actions"
+import { useParams } from "react-router-dom"
+import { push } from "connected-react-router"
 
 const Users = () => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.user);
+    let { pageId } = useParams();
+    const page = useRef(null);
 
     useEffect(() => {
-        dispatch(userActions.fetch());
-    }, [dispatch]);
+        if (pageId) {
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            dispatch(userActions.fetchPage(pageId));
+        } else {
+            dispatch(userActions.fetch());
+        }
+    }, [dispatch, pageId]);
+
+    const viewPage = page => {
+        if (page <= users.platformUsers.pagination.number_of_pages && page !== users.platformUsers.pagination.current) {
+            dispatch(push(`/dashboard/users/${page}`));
+        }
+    }
 
     return (
-        <div className="full-width border-box left-padding-30 right-padding-30">
+        <div ref={page} className="full-width full-height border-box left-padding-30 right-padding-30 custom-scrollbar overflow-auto-y">
             <PageTitle
                 title="Users"
             />
@@ -45,12 +60,15 @@ const Users = () => {
                     <EmptyUser />
                     :
                     <>
-                        {users.platformUsers.map((user, index) =>
+                        {users.platformUsers.data.map((user, index) =>
                             <User
                                 key={index}
                                 user={user} />
                         )}
-                        <Pagination />
+                        <Pagination
+                            data={users.platformUsers}
+                            viewPage={viewPage}
+                        />
                     </>
                 }
             </div>

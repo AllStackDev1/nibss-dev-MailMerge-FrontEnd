@@ -4,6 +4,7 @@ import { authService } from './authService';
 export const userService = {
     invite,
     fetch,
+    fetchPage,
     search
 };
 
@@ -46,7 +47,19 @@ function fetch() {
     return authService.fetchFrom(`${Config.API_URL}/admin/users`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
-            return users.data;
+            return users;
+        });
+}
+
+function fetchPage(page) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/users?page=${page}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(users => {
+            return users;
         });
 }
 

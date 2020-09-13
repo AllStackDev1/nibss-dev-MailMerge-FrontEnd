@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Recipient from "./snippets/Recipient";
 import Pagination from "./snippets/Pagination";
 import Toolbox from "./snippets/Toolbox";
@@ -10,6 +10,8 @@ import CreateTag from "./modals/CreateTag";
 import EmptyRecipient from "./empty-states/Recipient";
 import { recipientActions } from "actions/recipientActions";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { push } from "connected-react-router";
 
 const Recipients = () => {
     const [recipient, setRecipient] = useState({});
@@ -22,9 +24,17 @@ const Recipients = () => {
     const dispatch = useDispatch();
     const recipients = useSelector(state => state.recipient);
 
+    let { pageId } = useParams();
+    const page = useRef(null);
+
     useEffect(() => {
-        dispatch(recipientActions.fetch());
-    }, [dispatch]);
+        if (pageId) {
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            dispatch(recipientActions.fetchPage(pageId));
+        } else {
+            dispatch(recipientActions.fetch());
+        }
+    }, [dispatch, pageId]);
 
     useEffect(() => {
         if (viewingTags === true) {
@@ -98,7 +108,7 @@ const Recipients = () => {
 
     const initiateEdit = recipient => {
         setToAddTag(recipient);
-        setToAddTags(recipients.recipients.find(rec => rec._id === recipient).tag);
+        setToAddTags(recipients.recipients.data.find(rec => rec._id === recipient).tag);
 
         setViewingTags(true);
     }
@@ -128,6 +138,12 @@ const Recipients = () => {
         }
     }
 
+    const viewPage = page => {
+        if (page <= recipients.recipients.pagination.number_of_pages && page !== recipients.recipients.pagination.current) {
+            dispatch(push(`/dashboard/recipients/${page}`));
+        }
+    }
+
     return (
         <>
             {modal !== false ?
@@ -150,7 +166,7 @@ const Recipients = () => {
                         : ""}
                 </ModalContainer>
                 : ""}
-            <div className="full-width border-box left-padding-30 right-padding-30">
+            <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
                 <PageTitle
                     title="Recipients"
                 />
@@ -204,7 +220,10 @@ const Recipients = () => {
                                     toAddTag={toAddTag}
                                     initiateEdit={initiateEdit} />
                             )}
-                            <Pagination />
+                            <Pagination 
+                                data={recipients.recipients}
+                                viewPage={viewPage}
+                            />
                         </>
                     }
                 </div>

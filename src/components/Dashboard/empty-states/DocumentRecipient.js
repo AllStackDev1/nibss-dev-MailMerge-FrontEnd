@@ -5,7 +5,7 @@ const EmptyDocumentRecipient = () => {
     return (
         <>
             {[...Array(8)].map((item, index) =>
-                <div className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
+                <div key={index} className="display-flex full-width align-items-center right-padding-50 border-box bottom-margin-20">
                     <div className="right-margin-5 height-25 width-25 light-gray border-radius-5">
 
                     </div>

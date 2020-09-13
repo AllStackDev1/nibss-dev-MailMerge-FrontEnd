@@ -6,7 +6,7 @@ import PageTitle from "./snippets/PageTitle";
 
 const DashboardIndex = () => {
     return (
-        <div className="full-width border-box left-padding-30 right-padding-30">
+        <div className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
             <PageTitle
                 title="Summary"
                 breadcrumb="Analytics"

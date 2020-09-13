@@ -58,7 +58,7 @@ class DashboardLayout extends React.Component {
                         imgAlt: "..."
                     }}
                 />
-                <div className="flex-grow-1 full-width custom-scrollbar overflow-auto-y">
+                <div className="flex-grow-1 full-width">
                     <Switch>
                         {this.getRoutes(routes)}
                         <Redirect exact from="/dashboard" to="/dashboard/index" />
