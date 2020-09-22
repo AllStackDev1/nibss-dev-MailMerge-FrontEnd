@@ -6,24 +6,24 @@ export const documentService = {
     fetchPage
 };
 
-function fetch() {
+function fetch(type) {
     const requestOptions = {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/documents`, requestOptions)
+    return authService.fetchFrom(`${Config.API_URL}/documents${`${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
         });
 }
 
-function fetchPage(page) {
+function fetchPage(type, page) {
     const requestOptions = {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/documents?page=${page}`, requestOptions)
+    return authService.fetchFrom(`${Config.API_URL}/documents?page=${page}${`${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;

@@ -1,50 +1,34 @@
 /* eslint-disable */
 
-import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux";
-import { documentActions } from "actions/documentActions";
-import { push } from "connected-react-router";
+import React from "react"
 import EmptyDocument from "components/Dashboard/empty-states/Document";
 import Document from "../Document";
 import Pagination from "../Pagination";
 
-const DocumentList = ({page, pageId, dashboard}) => {
-    const dispatch = useDispatch();
-
-    const documents = useSelector(state => state.document);
-
-
-    useEffect(() => {
-        if (pageId) {
-            page.current.scrollTo({ top: 0, behavior: 'smooth' });
-            dispatch(documentActions.fetchPage(pageId));
-        } else {
-            dispatch(documentActions.fetch());
-        }
-    }, [dispatch, pageId]);
-
-    const viewPage = page => {
-        if (page <= documents.documents.pagination.number_of_pages && page !== documents.documents.pagination.current) {
-            dispatch(push(`/dashboard/documents/${page}`));
-        }
-    }
-
+const DocumentList = ({ dashboard, documents, viewPage, fetching, tab }) => {
     return (
-        documents.documents === undefined ?
+        documents.documents === undefined || fetching === true ?
             <EmptyDocument />
             :
             <>
-                {documents.documents.data.map((document, index) =>
+                {documents?.documents?.data?.map((document, index) =>
                     <Document
                         key={index}
                         document={document}
                         dashboard={dashboard}
                     />
-                )}
-                <Pagination
-                    data={documents.documents}
-                    viewPage={viewPage}
-                />
+                ) ||
+                    <div className="height-400 white border-radius-10 box-shadow-less2 display-flex align-items-center justify-center flex-direction-column">
+                        <img src={require(`images/something-went-wrong.svg`)} className="height-100 bottom-margin-30" alt="NIBSS No data" />
+                        You dont have any {tab === 2 ? "Pending " : tab === 3 ? "Signed " : tab === 4 ? "Rejected " : ""}documents
+                    </div>
+                }
+                {documents?.documents?.data ?
+                    <Pagination
+                        data={documents.documents}
+                        viewPage={viewPage}
+                    />
+                    : ""}
             </>
     )
 }

@@ -1,16 +1,41 @@
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import PageTitle from "./snippets/PageTitle";
 import DocumentList from "./snippets/documents/DocumentList";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { documentActions } from "actions/documentActions";
 
 const DashboardIndex = () => {
-    const { pageId } = useParams();
     const documents = useSelector(state => state.document);
+    const [fetching, setFetching] = useState(false);
+    const page = useRef(null);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // if (pageId) {
+        //     page.current.scrollTo({ top: 0, behavior: 'smooth' });
+        //     dispatch(documentActions.fetchPage('', pageId));
+        // } else {
+        dispatch(documentActions.fetch());
+        // }
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (documents.fetching === false) {
+            setFetching(false);
+        }
+    }, [documents.fetching]);
+
+    const viewPage = p => {
+        if (p <= documents.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            dispatch(documentActions.fetchPage('', p));
+            setFetching(true);
+        }
+    }
 
     return (
-        <div className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
+        <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
             <PageTitle
                 title="Summary"
                 breadcrumb="Analytics"
@@ -37,7 +62,7 @@ const DashboardIndex = () => {
                             <span className="bold size-two-rem">{documents.documents.document_stats.archived_document}</span>
                             :
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
-                        
+
                     </div>
                     <p className="absolute bottom-20 left-20 bold size-pointeight-rem">Archived Documents</p>
                 </Card>
@@ -70,8 +95,11 @@ const DashboardIndex = () => {
                 Recently uploaded documents
             </SubSectionTitle>
             <DocumentList
-                pageId={pageId}
+                page={page}
+                fetching={fetching}
+                viewPage={viewPage}
                 dashboard={true}
+                documents={documents}
             />
         </div>
     )
