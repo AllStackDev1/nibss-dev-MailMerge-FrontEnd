@@ -11,7 +11,8 @@ export const userActions = {
     search,
     clearSearch,
     edit,
-    deleteUser
+    deleteUser,
+    updateRole
 };
 
 function invite(users, add) {
@@ -88,6 +89,30 @@ function deleteUser(user) {
     function request(user) { return { type: userConstants.DELETE_REQUEST, user }; }
     function success(user) { return { type: userConstants.DELETE_SUCCESS, user }; }
     function failure(error) { return { type: userConstants.DELETE_FAILURE, error }; }
+}
+
+function updateRole(user) {
+    return dispatch => {
+        dispatch(request(user));
+
+        userService.updateRole(user)
+            .then(
+                user => {
+                    dispatch(success(user));
+
+                    toast.success(user.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.ASSIGN_AS_ADMIN_REQUEST, user }; }
+    function success(user) { return { type: userConstants.ASSIGN_AS_ADMIN_SUCCESS, user }; }
+    function failure(error) { return { type: userConstants.ASSIGN_AS_ADMIN_FAILURE, error }; }
 }
 
 function fetch() {

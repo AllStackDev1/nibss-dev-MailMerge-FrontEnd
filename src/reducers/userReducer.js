@@ -77,6 +77,37 @@ export default function user(state = initialState, action) {
                 ...state,
                 editing: false
             };
+        case userConstants.ASSIGN_AS_ADMIN_REQUEST:
+            return {
+                ...state,
+                updatingRole: action.user
+            };
+        case userConstants.ASSIGN_AS_ADMIN_SUCCESS:
+            if (state.platformUsers) {
+                if (state.platformUsers.data) {
+                    state.platformUsers.data[state.platformUsers.data.findIndex(user => user._id === action.user.user._id)] = {
+                        ...action.user.user
+                    }
+                }
+            }
+
+            if (state.searchResults) {
+                if (state.searchResults.data) {
+                    state.searchResults.data[state.searchResults.data.findIndex(user => user._id === action.user.user._id)] = {
+                        ...action.user.user
+                    }
+                }
+            }
+
+            return {
+                ...state,
+                updatingRole: false
+            };
+        case userConstants.ASSIGN_AS_ADMIN_FAILURE:
+            return {
+                ...state,
+                updatingRole: false
+            };
         case userConstants.SEARCH_REQUEST:
             return {
                 ...state,

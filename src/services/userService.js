@@ -8,7 +8,8 @@ export const userService = {
     fetchPage,
     search,
     edit,
-    deleteUser
+    deleteUser,
+    updateRole
 };
 
 function invite(users) {
@@ -61,6 +62,21 @@ function deleteUser(user) {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/admin/users/${user._id}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(user => {
+            return user;
+        });
+}
+
+function updateRole(user) {
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify({
+            role: user.role === "administrator" ? "user" : "administrator"
+        })
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/users/role/${user._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(user => {
             return user;
