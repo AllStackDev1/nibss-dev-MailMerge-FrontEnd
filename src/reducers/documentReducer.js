@@ -21,7 +21,8 @@ export default function document(state = initialState, action) {
         case documentConstants.FETCH_FAILURE:
             return {
                 ...state,
-                fetching: false
+                fetching: false,
+                documents: {}
             };
         case documentConstants.FETCH_PAGE_REQUEST:
             return {
@@ -37,7 +38,8 @@ export default function document(state = initialState, action) {
         case documentConstants.FETCH_PAGE_FAILURE:
             return {
                 ...state,
-                fetchingPage: false
+                fetchingPage: false,
+                documents: {}
             };
         default:
             return state;

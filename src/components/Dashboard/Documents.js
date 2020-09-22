@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useRef } from "react"
+/* eslint-disable */
+
+import React, { useState, useCallback, useRef, useEffect } from "react"
 import styled from "styled-components"
 import PageTitle from "./snippets/PageTitle";
 import ModalContainer from "./modals/ModalContainer";
@@ -8,17 +10,21 @@ import SetupSignatories from "./snippets/documents/SetupSignatories";
 import SetupRecipients from "./snippets/documents/SetupRecipients";
 import SigningSetup from "./snippets/documents/SigningSetup";
 import RTE from "./snippets/documents/Preview";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { documentActions } from "actions/documentActions";
 import DocumentList from "./snippets/documents/DocumentList";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
+import qs from 'qs';
+import { push } from "connected-react-router";
 
-const Documents = () => {
+const Documents = withRouter(({ location }) => {
+    const documents = useSelector(state => state.document);
     const [document, setDocument] = useState({
         signatories: [],
         recipients: []
     });
     const [tab, setTab] = useState(1);
+    const [fetching, setFetching] = useState(false);
     const [step, setStep] = useState(1);
     const [uploadingDocument, setUploadingDocument] = useState(false);
     const [modal, setModal] = useState(false);
@@ -27,6 +33,26 @@ const Documents = () => {
     const dispatch = useDispatch();
     const page = useRef(null);
     let { pageId } = useParams();
+
+    useEffect(() => {
+        let type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
+
+        if (type)
+            setTab(type === "pending" ? 2 : type === "signed" ? 3 : type === "rejected" ? 4 : "");
+
+        if (pageId) {
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            dispatch(documentActions.fetchPage(type ? type : '', pageId));
+        } else {
+            dispatch(documentActions.fetch(type));
+        }
+    }, [dispatch, pageId]);
+
+    useEffect(() => {
+        if (documents.fetching === false) {
+            setFetching(false);
+        }
+    }, [documents.fetching]);
 
     const selectUser = (user, nibss) => {
         setDocument({
@@ -67,6 +93,24 @@ const Documents = () => {
         dispatch(documentActions.prepare(document));
     };
 
+    const fetch = type => {
+        setFetching(true);
+        
+        dispatch(documentActions.fetch(type ? type : ''));
+
+        if (type) {
+            dispatch(push(`/dashboard/documents?type=${type}`));
+        } else {
+            dispatch(push(`/dashboard/documents`));
+        }
+    };
+
+    const viewPage = page => {
+        if (page <= documents.documents.pagination.number_of_pages && page !== documents.documents.pagination.current) {
+            dispatch(push(`/dashboard/documents/${page}`));
+        }
+    }
+
     return (
         <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y">
             {uploadingDocument ?
@@ -82,19 +126,19 @@ const Documents = () => {
                             <div className="display-flex align-items-center justify-center no-select">
                                 <Step className={`${step === 1 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
                                     1
-                            </Step>
+                                </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step className={`${step === 2 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
                                     2
-                            </Step>
+                                </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step className={`${step === 3 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
                                     3
-                            </Step>
+                                </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step className={`${step === 4 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
                                     4
-                            </Step>
+                                </Step>
                             </div>
                             : ""}
                         {step === 1 ?
@@ -140,8 +184,8 @@ const Documents = () => {
                                 </p>
                                 <button onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }} className="left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                                     {/* <div className="lds-ring"><div></div><div></div><div></div><div></div></div> */}
-                                NEXT
-                            </button>
+                                    NEXT
+                                </button>
                             </BottomNav>
                             : ""}
                     </Container>
@@ -165,20 +209,20 @@ const Documents = () => {
                             title="Documents"
                         />
                         <Tabs className="height-60 full-width display-flex no-select">
-                            <Tab onClick={() => setTab(1)} className={`${tab === 1 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
-                                All Documents (20)
+                            <Tab onClick={() => { fetch(); setTab(1) }} className={`${tab === 1 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                All Documents {tab === 1 && fetching === false ? documents?.documents ? `(${documents?.documents?.total_documents || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => setTab(2)} className={`${tab === 2 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
-                                Pending Documents
+                            <Tab onClick={() => { fetch("pending"); setTab(2) }} className={`${tab === 2 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                Pending Documents {tab === 2 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.pending_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => setTab(3)} className={`${tab === 3 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
-                                Signed Documents
+                            <Tab onClick={() => { fetch("signed"); setTab(3) }} className={`${tab === 3 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                Signed Documents {tab === 3 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.signed_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => setTab(4)} className={`${tab === 4 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
-                                Rejected Documents
+                            <Tab onClick={() => { fetch("rejected"); setTab(4) }} className={`${tab === 4 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                Rejected Documents {tab === 4 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.rejected_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                         </Tabs>
@@ -188,12 +232,15 @@ const Documents = () => {
                         </UploadButton>
                         <DocumentList
                             page={page}
-                            pageId={pageId} />
+                            viewPage={viewPage}
+                            documents={documents}
+                            fetching={fetching}
+                            tab={tab} />
                     </div>
                 </>}
         </div>
     )
-}
+});
 
 const UploadButton = styled.div`
                                 border: 2px dashed rgba(145, 154, 163, 0.2);

@@ -6,7 +6,7 @@ const EmptyDocument = () => {
     return (
         <>
             {[...Array(8)].map((item, index) =>
-                <div className="height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
+                <div key={index} className="height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
                     <div className="no-shrink width-70">
                         <img src={require(`images/icons/dashboard/document.svg`)} className="height-25 top-margin-3 right-margin-20 left-margin-30" alt="NIBSS PDF" />
                     </div>

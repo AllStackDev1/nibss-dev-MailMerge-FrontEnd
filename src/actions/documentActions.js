@@ -10,11 +10,11 @@ export const documentActions = {
     prepare
 };
 
-function fetch() {
+function fetch(type) {
     return dispatch => {
         dispatch(request());
 
-        documentService.fetch()
+        documentService.fetch(type)
             .then(
                 documents => {
                     dispatch(success(documents, ));
@@ -32,11 +32,11 @@ function fetch() {
     function failure(error) { return { type: documentConstants.FETCH_FAILURE, error }; }
 }
 
-function fetchPage(page) {
+function fetchPage(type, page) {
     return dispatch => {
         dispatch(request());
 
-        documentService.fetchPage(page)
+        documentService.fetchPage(type, page)
             .then(
                 documents => {
                     dispatch(success(documents));
