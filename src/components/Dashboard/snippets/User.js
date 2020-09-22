@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
-const User = ({ user, setUser, userBeingDeleted, deleteUser, setModal }) => {
+const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModal }) => {
     return (
-        <UserInstance className={`${userBeingDeleted?._id === user._id ? "opacity-0-5" : ""} smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
+        <UserInstance className={`${userBeingUpdated?._id === user._id ? "opacity-0-5" : ""} smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
             <Profile style={{ backgroundColor: getColor(user.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10">
                 {getInitials(user.name)}
             </Profile>
@@ -26,12 +26,12 @@ const User = ({ user, setUser, userBeingDeleted, deleteUser, setModal }) => {
                 <div className="box-shadow-less2 border-radius-10 padding-10 white">
                     <div onClick={() => { setModal("edit-user"); setUser(user); }} className="smooth display-flex align-items-center">
                         <div className="width-30 height-35"></div>
-                            Edit User
-                        </div>
-                    <div className="smooth display-flex align-items-center">
+                        Edit User
+                    </div>
+                    <div className="smooth display-flex align-items-center" onClick={() => updateRole(user)}>
                         <div className="width-30 height-35"></div>
-                            Assign as admin
-                        </div>
+                        Assign as {user.role === "administrator" ? "user" : "admin"}
+                    </div>
                     <Delete onClick={() => deleteUser(user)} className="smooth display-flex align-items-center">
                         <div className="width-30 height-35 display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />

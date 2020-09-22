@@ -93,6 +93,10 @@ const Users = () => {
         dispatch(userActions.deleteUser(user));
     }
 
+    const updateRole = user => {
+        dispatch(userActions.updateRole(user));
+    }
+
     return (
         <>
             {modal !== false ?
@@ -148,7 +152,8 @@ const Users = () => {
                                         setModal={setModal}
                                         setUser={setUser}
                                         deleteUser={deleteUser}
-                                        userBeingDeleted={users.deleting}
+                                        updateRole={updateRole}
+                                        userBeingUpdated={users.deleting || users.updatingRole}
                                         user={user} />
                                 )}
                                 <Pagination
@@ -164,7 +169,8 @@ const Users = () => {
                                         setModal={setModal}
                                         setUser={setUser}
                                         deleteUser={deleteUser}
-                                        userBeingDeleted={users.deleting}
+                                        updateRole={updateRole}
+                                        userBeingUpdated={users.deleting || users.updatingRole}
                                         user={user} />
                                 )}
                                 <Pagination
