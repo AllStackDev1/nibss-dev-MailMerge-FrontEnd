@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect, useRef } from "react"
 import Recipient from "./snippets/Recipient";
 import Pagination from "./snippets/Pagination";
@@ -15,11 +17,17 @@ import { push } from "connected-react-router";
 
 const Recipients = () => {
     const [recipient, setRecipient] = useState({});
+    const [editRecipient, setEditRecipient] = useState({});
     const [tag, setTag] = useState({});
     const [toAddTag, setToAddTag] = useState(false);
     const [toAddTags, setToAddTags] = useState([]);
     const [viewingTags, setViewingTags] = useState(false);
     const [modal, setModal] = useState(false);
+    const [search, setSearch] = useState({
+        search: ""
+    });
+    const [filter, setFilter] = useState([]);
+    const [timer, setTimer] = useState();
 
     const dispatch = useDispatch();
     const recipients = useSelector(state => state.recipient);
@@ -37,6 +45,12 @@ const Recipients = () => {
     }, [dispatch, pageId]);
 
     useEffect(() => {
+        if (filter.length > 0 || search.search !== "") {
+            dispatch(recipientActions.search(search.search, filter));
+        }
+    }, [dispatch, filter]);
+
+    useEffect(() => {
         if (viewingTags === true) {
             dispatch(recipientActions.fetchTags());
         }
@@ -50,11 +64,11 @@ const Recipients = () => {
     }, [recipients.addingTag]);
 
     useEffect(() => {
-        if (recipients.addingRecipient === false) {
+        if (recipients.addingRecipient === false || recipients.editingRecipient === false) {
             setModal(false);
             setRecipient({});
         }
-    }, [recipients.addingRecipient]);
+    }, [recipients.addingRecipient, recipients.editingRecipient]);
 
     useEffect(() => {
         if (recipients.addingTagToRecipient === false) {
@@ -62,11 +76,41 @@ const Recipients = () => {
         }
     }, [recipients.addingTagToRecipient]);
 
+    const onChangeSearch = event => {
+        const { name, value } = event.target;
+
+        setSearch({
+            ...search,
+            [name]: value
+        });
+
+        if (event.target.value !== "") {
+            if (timer) {
+                clearTimeout(timer);
+            }
+
+            setTimer(() => {
+                return setTimeout(() => {
+                    dispatch(recipientActions.search(value));
+                }, 1000);
+            });
+        }
+    }
+
     const onChangeRecipient = event => {
         const { name, value } = event.target;
 
         setRecipient({
             ...recipient,
+            [name]: value
+        });
+    }
+
+    const onChangeRecipientEdit = event => {
+        const { name, value } = event.target;
+
+        setEditRecipient({
+            ...editRecipient,
             [name]: value
         });
     }
@@ -93,7 +137,15 @@ const Recipients = () => {
     const addRecipient = e => {
         e.preventDefault();
 
-        dispatch(recipientActions.add(recipient));
+        if (modal === "edit-recipient") {
+            dispatch(recipientActions.edit(editRecipient));
+        } else {
+            dispatch(recipientActions.add(recipient));
+        }
+    }
+
+    const deleteRecipient = recipient => {
+        dispatch(recipientActions.deleteRecipient(recipient));
     }
 
     const addTag = e => {
@@ -148,13 +200,16 @@ const Recipients = () => {
         <>
             {modal !== false ?
                 <ModalContainer closeModal={() => setModal(false)}>
-                    {modal === "add-recipient" ?
+                    {modal === "add-recipient" || modal === "edit-recipient" ?
                         <AddRecipient
                             recipient={recipient}
-                            creating={recipients.addingRecipient}
+                            editRecipient={editRecipient}
+                            modal={modal}
+                            creating={recipients.addingRecipient || recipients.editingRecipient}
                             onChange={onChangeRecipient}
+                            onChangeEdit={onChangeRecipientEdit}
                             onSubmit={addRecipient}
-                            closeModal={() => setModal(false)} />
+                            closeModal={() => { setModal(false); setEditRecipient({}); setRecipient({}); }} />
                         : ""}
                     {modal === "create-tag" ?
                         <CreateTag
@@ -179,6 +234,11 @@ const Recipients = () => {
                     adding={recipients.addingRecipient}
                     viewingTags={viewingTags}
                     setModal={setModal}
+                    onChange={onChangeSearch}
+                    search={search}
+                    filter={filter}
+                    addFilter={f => { setFilter(filter => ([...filter, f])) }}
+                    removeFilter={f => { setFilter(filter => (filter.filter(item => item !== f))) }}
                     addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
                     <ViewTag
@@ -209,22 +269,45 @@ const Recipients = () => {
                         </div>
                         <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                     </div>
-                    {recipients.recipients === undefined ?
+                    {recipients.recipients === undefined || (recipients.searching) ?
                         <EmptyRecipient />
                         :
-                        <>
-                            {recipients.recipients.data.map((recipient, index) =>
-                                <Recipient
-                                    key={index}
-                                    recipient={recipient}
-                                    toAddTag={toAddTag}
-                                    initiateEdit={initiateEdit} />
-                            )}
-                            <Pagination 
-                                data={recipients.recipients}
-                                viewPage={viewPage}
-                            />
-                        </>
+                        search.search !== "" && recipients.searchRecipients ?
+                            <>
+                                {recipients.searchRecipients.data.map((recipient, index) =>
+                                    <Recipient
+                                        key={index}
+                                        setModal={setModal}
+                                        setEditRecipient={setEditRecipient}
+                                        deleteRecipient={deleteRecipient}
+                                        recipient={recipient}
+                                        toAddTag={toAddTag}
+                                        initiateEdit={initiateEdit}
+                                        recipientBeingDeleted={recipients.deleting} />
+                                )}
+                                <Pagination
+                                    data={recipients.searchRecipients}
+                                    viewPage={viewPage}
+                                />
+                            </>
+                            :
+                            <>
+                                {recipients.recipients.data.map((recipient, index) =>
+                                    <Recipient
+                                        key={index}
+                                        setModal={setModal}
+                                        setEditRecipient={setEditRecipient}
+                                        deleteRecipient={deleteRecipient}
+                                        recipient={recipient}
+                                        toAddTag={toAddTag}
+                                        initiateEdit={initiateEdit}
+                                        recipientBeingDeleted={recipients.deleting} />
+                                )}
+                                <Pagination
+                                    data={recipients.recipients}
+                                    viewPage={viewPage}
+                                />
+                            </>
                     }
                 </div>
             </div>

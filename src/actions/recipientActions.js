@@ -4,11 +4,14 @@ import { toast } from 'react-toastify';
 
 export const recipientActions = {
     add,
+    edit,
     addTag,
     fetch,
     fetchPage,
     fetchTags,
-    addTagsToRecipient
+    addTagsToRecipient,
+    search,
+    deleteRecipient
 };
 
 function add(recipients, multiple) {
@@ -37,6 +40,54 @@ function add(recipients, multiple) {
     function request() { return { type: recipientConstants.ADD_RECIPIENT_REQUEST }; }
     function success(recipients) { return { type: recipientConstants.ADD_RECIPIENT_SUCCESS, recipients }; }
     function failure(error) { return { type: recipientConstants.ADD_RECIPIENT_FAILURE, error }; }
+}
+
+function deleteRecipient(recipient) {
+    return dispatch => {
+        dispatch(request(recipient));
+
+        recipientService.deleteRecipient(recipient)
+            .then(
+                recipient => {
+                    dispatch(success(recipient));
+
+                    toast.success(recipient.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient }; }
+    function success(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient }; }
+    function failure(error) { return { type: recipientConstants.DELETE_RECIPIENT_FAILURE, error }; }
+}
+
+function edit(recipient) {
+    return dispatch => {
+        dispatch(request());
+
+        recipientService.edit(recipient)
+            .then(
+                recipient => {
+                    dispatch(success(recipient));
+
+                    toast.success(recipient.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: recipientConstants.EDIT_RECIPIENT_REQUEST }; }
+    function success(recipient) { return { type: recipientConstants.EDIT_RECIPIENT_SUCCESS, recipient }; }
+    function failure(error) { return { type: recipientConstants.EDIT_RECIPIENT_FAILURE, error }; }
 }
 
 function addTag(tag) {
@@ -111,6 +162,28 @@ function fetch(src) {
     function request() { return { type: recipientConstants.FETCH_REQUEST }; }
     function success(recipients, src) { return { type: recipientConstants.FETCH_SUCCESS, recipients, src }; }
     function failure(error) { return { type: recipientConstants.FETCH_FAILURE, error }; }
+}
+
+function search(searchTerm, filter, src) {
+    return dispatch => {
+        dispatch(request());
+
+        recipientService.search(searchTerm, filter)
+            .then(
+                recipients => {
+                    dispatch(success(recipients));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: recipientConstants.SEARCH_REQUEST }; }
+    function success(recipients, src) { return { type: recipientConstants.SEARCH_SUCCESS, recipients, src }; }
+    function failure(error) { return { type: recipientConstants.SEARCH_FAILURE, error }; }
 }
 
 function fetchPage(page, src) {

@@ -12,7 +12,7 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 fetching: true
             };
-        case recipientConstants.FETCH_SUCCESS: 
+        case recipientConstants.FETCH_SUCCESS:
             return {
                 ...state,
                 fetching: false,
@@ -23,16 +23,32 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 fetching: false
             };
+        case recipientConstants.SEARCH_REQUEST:
+            return {
+                ...state,
+                searching: true
+            };
+        case recipientConstants.SEARCH_SUCCESS:
+            return {
+                ...state,
+                searching: false,
+                [`${action.src === "document" ? 'documentSearchRecipients' : 'searchRecipients'}`]: action.recipients
+            };
+        case recipientConstants.SEARCH_FAILURE:
+            return {
+                ...state,
+                searching: false
+            };
         case recipientConstants.FETCH_PAGE_REQUEST:
             return {
                 ...state,
                 fetchingPage: true
             };
-        case recipientConstants.FETCH_PAGE_SUCCESS: 
+        case recipientConstants.FETCH_PAGE_SUCCESS:
             return {
                 ...state,
                 fetchingPage: false,
-                [`${action.src === "document" ? 'documentRecipients' : 'recipients'}`]: action.src !== "document" ? action.recipients : { ...action.recipients, data: [...state.documentRecipients.data, ...action.recipients.data]}
+                [`${action.src === "document" ? 'documentRecipients' : 'recipients'}`]: action.src !== "document" ? action.recipients : { ...action.recipients, data: [...state.documentRecipients.data, ...action.recipients.data] }
             };
         case recipientConstants.FETCH_PAGE_FAILURE:
             return {
@@ -71,6 +87,38 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 addingRecipient: false
             };
+        case recipientConstants.EDIT_RECIPIENT_REQUEST:
+            return {
+                ...state,
+                editingRecipient: true
+            };
+        case recipientConstants.EDIT_RECIPIENT_SUCCESS: {
+            if (state.recipients) {
+                if (state.recipients.data) {
+                    state.recipients.data[state.recipients.data.findIndex(recipient => recipient._id === action.recipient.data._id)] = {
+                        ...action.recipient.data
+                    }
+                }
+            }
+
+            if (state.searchRecipients) {
+                if (state.searchRecipients.data) {
+                    state.searchRecipients.data[state.searchRecipients.data.findIndex(recipient => recipient._id === action.recipient.data._id)] = {
+                        ...action.recipient.data
+                    }
+                }
+            }
+
+            return {
+                ...state,
+                editingRecipient: false
+            };
+        }
+        case recipientConstants.EDIT_RECIPIENT_FAILURE:
+            return {
+                ...state,
+                editingRecipient: false
+            };
         case recipientConstants.ADD_TAG_REQUEST:
             return {
                 ...state,
@@ -86,6 +134,29 @@ export default function recipient(state = initialState, action) {
             return {
                 ...state,
                 addingTag: false
+            };
+        case recipientConstants.DELETE_RECIPIENT_REQUEST:
+            return {
+                ...state,
+                deleting: action.recipient
+            };
+        case recipientConstants.DELETE_RECIPIENT_SUCCESS:
+            if (state.recipients) {
+                if (state.recipients.data) {
+                    state.recipients.data = [
+                        ...state.recipients.data.filter((recipient) => recipient._id !== action.recipient.recipient._id)
+                    ];
+                }
+            }
+
+            return {
+                ...state,
+                deleting: false
+            };
+        case recipientConstants.DELETE_RECIPIENT_FAILURE:
+            return {
+                ...state,
+                deleting: false
             };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST:
             return {

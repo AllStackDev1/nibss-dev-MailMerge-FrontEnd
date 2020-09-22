@@ -1304,7 +1304,7 @@ html, body {
 }
 
 .absolute {
-    position: absolute;
+    position: absolute !important;
 }
 
 .fixed {
@@ -1417,6 +1417,14 @@ html, body {
 
 .top {
     top: 0;
+}
+
+.top-5 {
+    top: 5px;
+}
+
+.top-5 {
+    top: 5px;
 }
 
 .top-10 {

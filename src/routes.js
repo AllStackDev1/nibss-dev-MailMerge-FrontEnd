@@ -6,7 +6,7 @@ import Help from "components/Dashboard/Help";
 
 var routes = [
     {
-        path: "/index",
+        path: "/index/:pageId?",
         name: "Dashboard",
         component: DashboardIndex,
         icon: 'dashboard',

@@ -23,26 +23,83 @@ export default function user(state = initialState, action) {
                 ...state,
                 invitingUsers: false
             };
+        case userConstants.DELETE_REQUEST:
+            return {
+                ...state,
+                deleting: action.user
+            };
+        case userConstants.DELETE_SUCCESS:
+            if (state.platformUsers) {
+                if (state.platformUsers.data) {
+                    state.platformUsers.data = [
+                        ...state.platformUsers.data.filter((user) => user._id !== action.user.user._id)
+                    ];
+                }
+            }
+
+            return {
+                ...state,
+                deleting: false
+            };
+        case userConstants.DELETE_FAILURE:
+            return {
+                ...state,
+                deleting: false
+            };
+        case userConstants.EDIT_REQUEST:
+            return {
+                ...state,
+                editing: true
+            };
+        case userConstants.EDIT_SUCCESS:
+            if (state.platformUsers) {
+                if (state.platformUsers.data) {
+                    state.platformUsers.data[state.platformUsers.data.findIndex(user => user._id === action.user.user._id)] = {
+                        ...action.user.user
+                    }
+                }
+            }
+
+            if (state.searchResults) {
+                if (state.searchResults.data) {
+                    state.searchResults.data[state.searchResults.data.findIndex(user => user._id === action.user.user._id)] = {
+                        ...action.user.user
+                    }
+                }
+            }
+
+            return {
+                ...state,
+                editing: false
+            };
+        case userConstants.EDIT_FAILURE:
+            return {
+                ...state,
+                editing: false
+            };
         case userConstants.SEARCH_REQUEST:
             return {
                 ...state,
-                searchingUsers: true
+                searching: true
             };
         case userConstants.SEARCH_SUCCESS:
             return {
                 ...state,
-                searchingUsers: false,
+                searching: false,
                 searchResults: action.users
             };
         case userConstants.SEARCH_FAILURE:
             return {
                 ...state,
-                searchingUsers: false
+                searching: false,
+                searchResults: {
+                    data: []
+                }
             };
         case userConstants.CLEAR_SEARCH_RESULTS:
             return {
                 ...state,
-                searchingUsers: false,
+                searching: false,
                 searchResults: null
             };
         case userConstants.INVITE_RESET:

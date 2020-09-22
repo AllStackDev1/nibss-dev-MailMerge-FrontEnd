@@ -2,11 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import Moment from 'react-moment'
 
-const Document = ({ document }) => {
+const Document = ({ document, dashboard }) => {
     return (
         <div className="height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
             <div className="no-shrink width-70">
-                <img src={require(`images/icons/dashboard/document.svg`)} className="height-25 top-margin-3 right-margin-20 left-margin-30" alt="NIBSS PDF" />
+                {dashboard ?
+                    <img src={require(`images/icons/dashboard/pdf.svg`)} className="height-30 right-margin-20 left-margin-30" alt="NIBSS PDF" />
+                    :
+                    <img src={require(`images/icons/dashboard/document.svg`)} className="height-25 top-margin-3 right-margin-20 left-margin-30" alt="NIBSS PDF" />
+                }
             </div>
             <div className="no-shrink width-25-percent size-pointnine-rem bold">
                 {document.documentTitle}
