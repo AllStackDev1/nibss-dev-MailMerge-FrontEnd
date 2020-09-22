@@ -1,11 +1,15 @@
 import Config from '../config/config';
 import { authService } from './authService';
+import { buildQuery } from 'helpers/buildQuery';
 
 export const recipientService = {
     add,
+    edit,
+    deleteRecipient,
     addTag,
     addTagsToRecipient,
     fetch,
+    search,
     fetchPage,
     fetchTags
 };
@@ -23,6 +27,19 @@ function add(recipient, multiple) {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/admin/recipient${multiple ? '/multiple' : ""}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(recipient => {
+            return recipient;
+        });
+}
+
+function edit(recipient) {
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(recipient)
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
@@ -68,6 +85,30 @@ function fetch() {
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;
+        });
+}
+
+function search(search, filter) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/search?${buildQuery({search, filter: filter?.length > 0 ? JSON.stringify(filter) : ''})}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(recipients => {
+            return recipients;
+        });
+}
+
+function deleteRecipient(recipient) {
+    const requestOptions = {
+        method: 'DELETE'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient._id}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(recipient => {
+            return recipient;
         });
 }
 

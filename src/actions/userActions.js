@@ -9,7 +9,9 @@ export const userActions = {
     fetchPage,
     reset,
     search,
-    clearSearch
+    clearSearch,
+    edit,
+    deleteUser
 };
 
 function invite(users, add) {
@@ -38,6 +40,54 @@ function invite(users, add) {
     function request() { return { type: userConstants.INVITE_REQUEST }; }
     function success(users) { return { type: userConstants.INVITE_SUCCESS, users }; }
     function failure(error) { return { type: userConstants.INVITE_FAILURE, error }; }
+}
+
+function edit(user) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.edit(user)
+            .then(
+                user => {
+                    dispatch(success(user));
+
+                    toast.success(user.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: userConstants.EDIT_REQUEST }; }
+    function success(user) { return { type: userConstants.EDIT_SUCCESS, user }; }
+    function failure(error) { return { type: userConstants.EDIT_FAILURE, error }; }
+}
+
+function deleteUser(user) {
+    return dispatch => {
+        dispatch(request(user));
+
+        userService.deleteUser(user)
+            .then(
+                user => {
+                    dispatch(success(user));
+
+                    toast.success(user.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.DELETE_REQUEST, user }; }
+    function success(user) { return { type: userConstants.DELETE_SUCCESS, user }; }
+    function failure(error) { return { type: userConstants.DELETE_FAILURE, error }; }
 }
 
 function fetch() {
@@ -84,11 +134,11 @@ function fetchPage(page) {
     function failure(error) { return { type: userConstants.FETCH_PAGE_FAILURE, error }; }
 }
 
-function search(param) {
+function search(search, filter) {
     return dispatch => {
         dispatch(request());
 
-        userService.search(param)
+        userService.search(search, filter)
             .then(
                 users => {
                     dispatch(success(users));

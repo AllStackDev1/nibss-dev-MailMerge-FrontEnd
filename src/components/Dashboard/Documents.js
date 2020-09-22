@@ -1,7 +1,5 @@
-import React, { useState, useCallback, useRef, useEffect } from "react"
+import React, { useState, useCallback, useRef } from "react"
 import styled from "styled-components"
-import Document from "./snippets/Document";
-import Pagination from "./snippets/Pagination";
 import PageTitle from "./snippets/PageTitle";
 import ModalContainer from "./modals/ModalContainer";
 import CreateDocument from "./modals/CreateDocument";
@@ -10,11 +8,10 @@ import SetupSignatories from "./snippets/documents/SetupSignatories";
 import SetupRecipients from "./snippets/documents/SetupRecipients";
 import SigningSetup from "./snippets/documents/SigningSetup";
 import RTE from "./snippets/documents/Preview";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { documentActions } from "actions/documentActions";
+import DocumentList from "./snippets/documents/DocumentList";
 import { useParams } from "react-router-dom";
-import { push } from "connected-react-router";
-import EmptyDocument from "./empty-states/Document";
 
 const Documents = () => {
     const [document, setDocument] = useState({
@@ -28,25 +25,8 @@ const Documents = () => {
     const [placeholders, setPlaceholders] = useState([]);
 
     const dispatch = useDispatch();
-
-    const documents = useSelector(state => state.document);
-    let { pageId } = useParams();
     const page = useRef(null);
-
-    useEffect(() => {
-        if (pageId) {
-            page.current.scrollTo({ top: 0, behavior: 'smooth' });
-            dispatch(documentActions.fetchPage(pageId));
-        } else {
-            dispatch(documentActions.fetch());
-        }
-    }, [dispatch, pageId]);
-
-    const viewPage = page => {
-        if (page <= documents.documents.pagination.number_of_pages && page !== documents.documents.pagination.current) {
-            dispatch(push(`/dashboard/documents/${page}`));
-        }
-    }
+    let { pageId } = useParams();
 
     const selectUser = (user, nibss) => {
         setDocument({
@@ -206,23 +186,9 @@ const Documents = () => {
                             <img src={require(`images/icons/dashboard/upload.svg`)} className="height-20 right-margin-10" alt="NIBSS Upload Document" />
                             Upload a document
                         </UploadButton>
-                        {documents.documents === undefined ?
-                            <EmptyDocument />
-                            :
-                            <>
-                                {documents.documents.data.map((document, index) =>
-                                    <Document
-                                        key={index}
-                                        document={document}
-                                    />
-                                )}
-                                <Pagination
-                                    data={documents.documents}
-                                    viewPage={viewPage}
-                                />
-                            </>
-                        }
-
+                        <DocumentList
+                            page={page}
+                            pageId={pageId} />
                     </div>
                 </>}
         </div>

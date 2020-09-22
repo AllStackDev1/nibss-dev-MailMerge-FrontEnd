@@ -7,12 +7,15 @@ const Pagination = ({ data, viewPage }) => {
             <span className="material-icons light-gray-color right-margin-5 cursor-pointer">chevron_left</span>
             <span className="light-gray-color right-margin-30 size-pointeight-rem cursor-pointer">Previous</span>
             {data ?
-                data.pagination.number_of_pages !== undefined ?
-                    [...Array(data.pagination.number_of_pages < 3 ? 3 : data.pagination.number_of_pages)].map((item, index) =>
-                        <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
-                    )
+                data.pagination ?
+                    data.pagination.number_of_pages !== undefined ?
+                        [...Array(data.pagination.number_of_pages < 3 ? 3 : data.pagination.number_of_pages)].map((item, index) =>
+                            <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
+                        )
+                        : ''
                     : ''
-                : ''}
+                : ''
+            }
             <span className="light-gray-color left-margin-30 size-pointeight-rem cursor-pointer">Next</span>
             <span className="material-icons light-gray-color left-margin-5 cursor-pointer">chevron_right</span>
         </div>

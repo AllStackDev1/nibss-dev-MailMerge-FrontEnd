@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
-const Recipient = ({ recipient, initiateEdit, toAddTag }) => {
+const Recipient = ({ setModal, setEditRecipient, deleteRecipient, recipientBeingDeleted, recipient, initiateEdit, toAddTag }) => {
     return (
-        <RecipientInstance className="smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between">
+        <RecipientInstance className={`${recipientBeingDeleted?._id === recipient._id ? "opacity-0-5" : ""} smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
             <Profile style={{ backgroundColor: getColor(recipient.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10">
                 {getInitials(recipient.name)}
             </Profile>
@@ -33,7 +33,7 @@ const Recipient = ({ recipient, initiateEdit, toAddTag }) => {
                 <img src={require(`images/icons/dashboard/more.svg`)} className="height-5" alt="NIBSS PDF" />
                 {recipient._id !== toAddTag ?
                     <div className="box-shadow-less2 border-radius-10 padding-10 white">
-                        <div className="smooth display-flex align-items-center">
+                        <div onClick={() => {setModal("edit-recipient"); setEditRecipient(recipient);}} className="smooth display-flex align-items-center">
                             <div className="width-30 height-35"></div>
                             Edit Recipient
                         </div>
@@ -41,7 +41,7 @@ const Recipient = ({ recipient, initiateEdit, toAddTag }) => {
                             <div className="width-30 height-35"></div>
                             Add Tags
                         </div>
-                        <Delete className="smooth display-flex align-items-center">
+                        <Delete onClick={() => deleteRecipient(recipient)} className="smooth display-flex align-items-center">
                             <div className="width-30 height-35 display-flex align-items-center justify-center">
                                 <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />
                             </div>

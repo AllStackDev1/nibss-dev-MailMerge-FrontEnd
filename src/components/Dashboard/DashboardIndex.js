@@ -1,10 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import DashboardDocument from "./snippets/DashboardDocument";
-import Pagination from "./snippets/Pagination";
 import PageTitle from "./snippets/PageTitle";
+import DocumentList from "./snippets/documents/DocumentList";
+import { useParams } from "react-router-dom";
 
 const DashboardIndex = () => {
+    const { pageId } = useParams();
+
     return (
         <div className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
             <PageTitle
@@ -52,15 +54,10 @@ const DashboardIndex = () => {
             <SubSectionTitle className="top-margin-50 bold size-pointnine-rem bottom-margin-20">
                 Recently uploaded documents
             </SubSectionTitle>
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <DashboardDocument />
-            <Pagination />
+            <DocumentList
+                pageId={pageId}
+                dashboard={true}
+            />
         </div>
     )
 }
