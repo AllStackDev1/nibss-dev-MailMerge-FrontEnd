@@ -41,6 +41,24 @@ export default function document(state = initialState, action) {
                 fetchingPage: false,
                 documents: {}
             };
+        case documentConstants.PREPARE_DOCUMENT_START:
+            return {
+                ...state,
+                preparing: true,
+                document: {}
+            };
+        case documentConstants.PREPARE_DOCUMENT_SUCCESS:
+            return {
+                ...state,
+                preparing: false,
+                document: action.response
+            };
+        case documentConstants.PREPARE_DOCUMENT_ERROR:
+            return {
+                ...state,
+                preparing: false,
+                document: {}
+            };
         default:
             return state;
     }

@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react"
 import { getColor } from "helpers/getColor";
 import Draggable from "./Draggable";
 
-const SigningSetup = ({ signatories, placeholders, setPlaceholders }) => {
+const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFiles }) => {
     const [hovering, setHovering] = useState(false);
     const [signatoryDragged, setSignatoryDragged] = useState(false);
 
@@ -40,12 +40,16 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders }) => {
             <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
 
             <div className="full-height display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
-                <div ref={documentContainer} className={`width-75-percent right-margin-50 ${hovering ? "border-gray-dashed" : "border-white"}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
-                    <img src={require(`images/document.svg`)} className="full-width right-margin-10" alt="NIBSS Upload Document" />
-                    {placeholders.map((placeholder, index) =>
-                        <div className="width-180 height-40 absolute" style={{ left: placeholder.x_coordinate, top: placeholder.y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
-                    )}
-                </div>
+                {documentFiles ?
+                    documentFiles.map((documentFile, index) =>
+                        <div ref={documentContainer} className={`width-75-percent right-margin-50 ${hovering ? "border-gray-dashed" : "border-white"}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
+                            <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                            {placeholders.map((placeholder, index) =>
+                                <div className="width-180 height-40 absolute" style={{ left: placeholder.x_coordinate, top: placeholder.y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
+                            )}
+                        </div>
+                    )
+                    : ""}
                 <div className="width-25-percent">
                     <div className="display-flex align-items-center">
                         <div className="width-40 height-40 display-flex align-items-center">

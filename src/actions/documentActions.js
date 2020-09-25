@@ -17,7 +17,7 @@ function fetch(type) {
         documentService.fetch(type)
             .then(
                 documents => {
-                    dispatch(success(documents, ));
+                    dispatch(success(documents,));
                 },
                 error => {
                     if (error.message) {
@@ -62,8 +62,8 @@ function prepare(document) {
         data.append('media', document.file);
         data.append('documentTitle', document.file.name);
         data.append('documentBody', document.documentBody);
-        data.append('recipients', document.recipients);
-        data.append('signatories', document.signatories);
+        data.append('recipients', JSON.stringify(document.recipients));
+        data.append('signatories', JSON.stringify(document.signatories));
 
         let uploadendpoint = `${Config.API_URL}/documents/prepare`;
         let headers = {
