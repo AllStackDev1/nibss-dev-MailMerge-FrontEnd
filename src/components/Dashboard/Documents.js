@@ -23,6 +23,7 @@ const Documents = withRouter(({ location }) => {
         signatories: [],
         recipients: []
     });
+    const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);
     const [fetching, setFetching] = useState(false);
     const [step, setStep] = useState(1);
@@ -54,6 +55,24 @@ const Documents = withRouter(({ location }) => {
         }
     }, [documents.fetching]);
 
+    useEffect(() => {
+        if (documents.preparing === false) {
+            setDocument({
+                signatories: [],
+                recipients: []
+            });
+            setDocumentFiles([]);
+            setTab(1);
+            setStep(1);
+            setUploadingDocument(false);
+            setPlaceholders([]);
+
+            dispatch(documentActions.fetch());
+
+            console.log("Here");
+        }
+    }, [documents.preparing]);
+
     const selectUser = (user, nibss) => {
         setDocument({
             ...document,
@@ -78,6 +97,19 @@ const Documents = withRouter(({ location }) => {
     }
 
     const onDrop = useCallback(acceptedFiles => {
+        console.log(acceptedFiles);
+
+        var r = new FileReader();
+
+        r.onloadend = function (e) {
+            setDocumentFiles(documentFiles => [
+                ...documentFiles,
+                e.target.result
+            ]);
+        }
+
+        r.readAsDataURL(acceptedFiles[0], "UTF-8");
+
         // Do something with the files
         setDocument(document => ({
             ...document,
@@ -95,7 +127,7 @@ const Documents = withRouter(({ location }) => {
 
     const fetch = type => {
         setFetching(true);
-        
+
         dispatch(documentActions.fetch(type ? type : ''));
 
         if (type) {
@@ -156,6 +188,7 @@ const Documents = withRouter(({ location }) => {
                             <SigningSetup
                                 signatories={document.signatories}
                                 placeholders={placeholders}
+                                documentFiles={documentFiles}
                                 setPlaceholders={setPlaceholders}
                             />
                             : ""}
@@ -170,7 +203,11 @@ const Documents = withRouter(({ location }) => {
                                         onChange={documentBody => setDocument({ ...document, documentBody })} />
                                 </Gray>
                                 <p className="bottom-margin-20 top-margin-30 size-pointnine-rem bold">Document Attachment</p>
-                                <img src={require(`images/document.svg`)} className="height-100 bottom-margin-30" alt="NIBSS Upload Document" />
+                                {documentFiles ?
+                                    documentFiles.map((documentFile, index) =>
+                                        <img src={documentFile} key={index} className="height-100 bottom-margin-30" alt="NIBSS Upload Document" />
+                                    )
+                                    : ""}
                             </div>
                             : ""}
                         {step === 5 ?
@@ -183,8 +220,11 @@ const Documents = withRouter(({ location }) => {
                                     {step > 2 ? 'PREVIOUS' : 'SKIP'}
                                 </p>
                                 <button onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }} className="left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                                    {/* <div className="lds-ring"><div></div><div></div><div></div><div></div></div> */}
-                                    NEXT
+                                    {documents.preparing ?
+                                        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                        :
+                                        'NEXT'
+                                    }
                                 </button>
                             </BottomNav>
                             : ""}
