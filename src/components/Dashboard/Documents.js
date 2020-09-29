@@ -68,8 +68,6 @@ const Documents = withRouter(({ location }) => {
             setPlaceholders([]);
 
             dispatch(documentActions.fetch());
-
-            console.log("Here");
         }
     }, [documents.preparing]);
 
@@ -122,7 +120,7 @@ const Documents = withRouter(({ location }) => {
     }, []);
 
     const prepareDocument = () => {
-        dispatch(documentActions.prepare(document));
+        dispatch(documentActions.prepare(document, placeholders));
     };
 
     const fetch = type => {
