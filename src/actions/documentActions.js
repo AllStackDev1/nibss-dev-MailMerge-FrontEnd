@@ -54,7 +54,7 @@ function fetchPage(type, page) {
     function failure(error) { return { type: documentConstants.FETCH_PAGE_FAILURE, error }; }
 }
 
-function prepare(document) {
+function prepare(document, signatories) {
     return dispatch => {
         dispatch(startUpload());
 
@@ -63,7 +63,7 @@ function prepare(document) {
         data.append('documentTitle', document.file.name);
         data.append('documentBody', document.documentBody);
         data.append('recipients', JSON.stringify(document.recipients));
-        data.append('signatories', JSON.stringify(document.signatories));
+        data.append('signatories', JSON.stringify(signatories));
 
         let uploadendpoint = `${Config.API_URL}/documents/prepare`;
         let headers = {
