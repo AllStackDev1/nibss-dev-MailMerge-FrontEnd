@@ -2,6 +2,7 @@ import { documentConstants } from '../constants';
 
 const initialState = {
     fetching: false,
+    fetchingSingle: false,
     fetchingPage: false
 };
 
@@ -23,6 +24,22 @@ export default function document(state = initialState, action) {
                 ...state,
                 fetching: false,
                 documents: {}
+            };
+        case documentConstants.SIGN_DOCUMENT_REQUEST:
+            return {
+                ...state,
+                signingDocument: true
+            };
+        case documentConstants.SIGN_DOCUMENT_SUCCESS:
+            return {
+                ...state,
+                signingDocument: false,
+                document: action.document
+            };
+        case documentConstants.SIGN_DOCUMENT_FAILURE:
+            return {
+                ...state,
+                signingDocument: false
             };
         case documentConstants.FETCH_PAGE_REQUEST:
             return {
@@ -58,6 +75,22 @@ export default function document(state = initialState, action) {
                 ...state,
                 preparing: false,
                 document: {}
+            };
+        case documentConstants.FETCH_SINGLE_REQUEST:
+            return {
+                ...state,
+                fetchingSingle: true
+            };
+        case documentConstants.FETCH_SINGLE_SUCCESS:
+            return {
+                ...state,
+                fetchingSingle: false,
+                document: action.document
+            };
+        case documentConstants.FETCH_SINGLE_FAILURE:
+            return {
+                ...state,
+                fetchingSingle: false
             };
         default:
             return state;

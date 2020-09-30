@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import Moment from 'react-moment'
 
-const Document = ({ document, dashboard }) => {
+const Document = ({ document, dashboard, viewDocument }) => {
     return (
-        <div className="height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
+        <Container onClick={() => viewDocument(document)} className="cursor-pointer smooth-slow height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
             <div className="no-shrink width-70">
                 {dashboard ?
                     <img src={require(`images/icons/dashboard/pdf.svg`)} className="height-30 right-margin-20 left-margin-30" alt="NIBSS PDF" />
@@ -29,28 +29,44 @@ const Document = ({ document, dashboard }) => {
                 <p className="size-pointseven-rem light">Sent to</p>
                 <p className="size-pointeight-rem bold">Me & Other</p>
             </div>
-            <Status className="no-shrink height-35 width-100 right-margin-50 border-box border-radius-5">
+            <Status className={`${document.signed ? 'active-status' : ''} no-shrink height-35 width-100 right-margin-50 border-box border-radius-5`}>
                 <div></div>
-                <p>Signed</p>
+                <p>{document.signed ? 'Signed' : 'Pending'}</p>
             </Status>
-        </div>
+        </Container>
     )
 }
 
-const Status = styled.div`background: #C5FCDF;
+const Container = styled.div`
+    &:hover {
+        opacity: 0.6;
+    }
+`;
+
+const Status = styled.div`background: #CCC;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        &.active-status {
+                            background: #C5FCDF;
+                            color:
+                        }
                         &>div {
                             border-radius: 100%;
-                            background: #1ADC76;
+                            background: #FFF;
                             width: 8px;
                             height: 8px;
                             margin-right: 10px;
                         }
+                        &.active-status>div {
+                            background: #1ADC76;
+                        }
                         &>p {
-                            color: #1ADC76;
+                            color: #FFF;
                             font-size: 0.8rem;
+                        }
+                        &.active-status>p {
+                            color: #1ADC76;
                         }
                         `;
 

@@ -3,7 +3,9 @@ import { authService } from './authService';
 
 export const documentService = {
     fetch,
-    fetchPage
+    fetchSingle,
+    fetchPage,
+    signDocument
 };
 
 function fetch(type) {
@@ -12,6 +14,18 @@ function fetch(type) {
     };
 
     return authService.fetchFrom(`${Config.API_URL}/documents${`${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(documents => {
+            return documents;
+        });
+}
+
+function fetchSingle(id) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/documents/${id}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -27,5 +41,18 @@ function fetchPage(type, page) {
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
+        });
+}
+
+function signDocument(data) {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(data)
+    };
+
+    return authService.fetchFrom(`${Config.API_URL}/documents/sign`, requestOptions)
+        .then(authService.handleResponse)
+        .then(document => {
+            return document;
         });
 }

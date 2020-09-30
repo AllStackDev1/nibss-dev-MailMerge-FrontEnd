@@ -3,11 +3,15 @@ import { authService, documentService } from 'services';
 import { toast } from 'react-toastify';
 import Config from 'config/config';
 import Axios from 'axios';
+import { push } from 'connected-react-router';
 
 export const documentActions = {
     fetch,
+    fetchSingle,
     fetchPage,
-    prepare
+    prepare,
+    setDocument,
+    signDocument
 };
 
 function fetch(type) {
@@ -17,7 +21,7 @@ function fetch(type) {
         documentService.fetch(type)
             .then(
                 documents => {
-                    dispatch(success(documents,));
+                    dispatch(success(documents));
                 },
                 error => {
                     if (error.message) {
@@ -30,6 +34,28 @@ function fetch(type) {
     function request() { return { type: documentConstants.FETCH_REQUEST }; }
     function success(documents) { return { type: documentConstants.FETCH_SUCCESS, documents }; }
     function failure(error) { return { type: documentConstants.FETCH_FAILURE, error }; }
+}
+
+function fetchSingle(id) {
+    return dispatch => {
+        dispatch(request());
+
+        documentService.fetchSingle(id)
+            .then(
+                document => {
+                    dispatch(success(document));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: documentConstants.FETCH_SINGLE_REQUEST }; }
+    function success(document) { return { type: documentConstants.FETCH_SINGLE_SUCCESS, document }; }
+    function failure(error) { return { type: documentConstants.FETCH_SINGLE_FAILURE, error }; }
 }
 
 function fetchPage(type, page) {
@@ -52,6 +78,31 @@ function fetchPage(type, page) {
     function request() { return { type: documentConstants.FETCH_PAGE_REQUEST }; }
     function success(documents) { return { type: documentConstants.FETCH_PAGE_SUCCESS, documents }; }
     function failure(error) { return { type: documentConstants.FETCH_PAGE_FAILURE, error }; }
+}
+
+function signDocument(data) {
+    return dispatch => {
+        dispatch(request());
+
+        documentService.signDocument(data)
+            .then(
+                document => {
+                    dispatch(success(document.document));
+
+                    toast.success(document.message);
+                    dispatch(push(`/dashboard/documents`));
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }
+    function success(document) { return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document }; }
+    function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
 }
 
 function prepare(document, signatories) {
@@ -101,4 +152,8 @@ function prepare(document, signatories) {
     function update(loaded) { return { type: documentConstants.PREPARE_DOCUMENT_PROGRESS, loaded }; }
     function success(response) { return { type: documentConstants.PREPARE_DOCUMENT_SUCCESS, response }; }
     function error() { return { type: documentConstants.PREPARE_DOCUMENT_ERROR }; }
+}
+
+function setDocument(document) {
+    return { type: documentConstants.FETCH_SINGLE_SUCCESS, document: { document } };
 }
