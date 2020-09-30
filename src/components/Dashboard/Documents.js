@@ -141,6 +141,16 @@ const Documents = withRouter(({ location }) => {
         }
     }
 
+    const viewDocument = (document) => {
+        dispatch(documentActions.setDocument(document));
+
+        if(document.signed) {
+            dispatch(push(`/dashboard/document/${document._id}`));
+        } else {
+            dispatch(push(`/dashboard/append-signature/${document._id}`));
+        }
+    }
+
     return (
         <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y">
             {uploadingDocument ?
@@ -273,6 +283,7 @@ const Documents = withRouter(({ location }) => {
                             viewPage={viewPage}
                             documents={documents}
                             fetching={fetching}
+                            viewDocument={viewDocument}
                             tab={tab} />
                     </div>
                 </>}

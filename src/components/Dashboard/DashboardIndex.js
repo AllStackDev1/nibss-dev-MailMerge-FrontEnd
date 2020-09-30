@@ -4,6 +4,7 @@ import PageTitle from "./snippets/PageTitle";
 import DocumentList from "./snippets/documents/DocumentList";
 import { useDispatch, useSelector } from "react-redux";
 import { documentActions } from "actions/documentActions";
+import { push } from "connected-react-router";
 
 const DashboardIndex = () => {
     const documents = useSelector(state => state.document);
@@ -31,6 +32,16 @@ const DashboardIndex = () => {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(documentActions.fetchPage('', p));
             setFetching(true);
+        }
+    }
+
+    const viewDocument = (document) => {
+        dispatch(documentActions.setDocument(document));
+
+        if(document.signed) {
+            dispatch(push(`/dashboard/document/${document._id}`));
+        } else {
+            dispatch(push(`/dashboard/append-signature/${document._id}`));
         }
     }
 
@@ -100,6 +111,7 @@ const DashboardIndex = () => {
                 viewPage={viewPage}
                 dashboard={true}
                 documents={documents}
+                viewDocument={viewDocument}
             />
         </div>
     )
