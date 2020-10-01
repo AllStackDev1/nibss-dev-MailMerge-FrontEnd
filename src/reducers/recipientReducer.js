@@ -28,12 +28,15 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 searching: true
             };
-        case recipientConstants.SEARCH_SUCCESS:
+        case recipientConstants.SEARCH_SUCCESS: {
+            console.log(action.src);
+
             return {
                 ...state,
                 searching: false,
                 [`${action.src === "document" ? 'documentSearchRecipients' : 'searchRecipients'}`]: action.recipients
             };
+        }
         case recipientConstants.SEARCH_FAILURE:
             return {
                 ...state,

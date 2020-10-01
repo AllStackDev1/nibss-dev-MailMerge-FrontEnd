@@ -182,7 +182,7 @@ function search(searchTerm, filter, src) {
     };
 
     function request() { return { type: recipientConstants.SEARCH_REQUEST }; }
-    function success(recipients, src) { return { type: recipientConstants.SEARCH_SUCCESS, recipients, src }; }
+    function success(recipients) { return { type: recipientConstants.SEARCH_SUCCESS, recipients, src }; }
     function failure(error) { return { type: recipientConstants.SEARCH_FAILURE, error }; }
 }
 

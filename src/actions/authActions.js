@@ -32,7 +32,7 @@ function login(user) {
                     dispatch(success(user));
 
                     if ((user.data.role === "user" && user.data.status === "active")) {
-                        dispatch(push(`/dashboard/index`));
+                        dispatch(push(`/dashboard/documents`));
                     } else {
                         dispatch(push(`/onboarding`));
                     }

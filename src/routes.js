@@ -16,7 +16,8 @@ var routes = [
         path: "/documents/:pageId?",
         name: "Documents",
         component: Documents,
-        icon: 'documents'
+        icon: 'documents',
+        user: true
     },
     {
         path: "/users/:pageId?",
