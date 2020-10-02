@@ -5,7 +5,7 @@ import { getInitials } from 'helpers/getInitials';
 
 const Recipient = ({ setModal, setEditRecipient, deleteRecipient, recipientBeingDeleted, recipient, initiateEdit, toAddTag }) => {
     return (
-        <RecipientInstance className={`${recipientBeingDeleted?._id === recipient._id ? "opacity-0-5" : ""} smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
+        <RecipientInstance className={`${recipientBeingDeleted?._id === recipient._id ? "opacity-0-5" : ""} smooth min-height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
             <Profile style={{ backgroundColor: getColor(recipient.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10">
                 {getInitials(recipient.name)}
             </Profile>
