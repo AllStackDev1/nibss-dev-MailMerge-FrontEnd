@@ -585,6 +585,10 @@ html, body {
     min-height: 55px;
 }
 
+.min-height-80 {
+    min-height: 80px;
+}
+
 .min-height-150 {
     min-height: 150px !important;
 }

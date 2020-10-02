@@ -272,7 +272,7 @@ const Recipients = () => {
                     {recipients.recipients === undefined || (recipients.searching) ?
                         <EmptyRecipient />
                         :
-                        search.search !== "" && recipients.searchRecipients ?
+                        (search.search !== "" || filter.length > 0) && recipients.searchRecipients ?
                             <>
                                 {recipients.searchRecipients.data.map((recipient, index) =>
                                     <Recipient

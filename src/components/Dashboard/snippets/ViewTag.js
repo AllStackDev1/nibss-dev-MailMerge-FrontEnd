@@ -34,7 +34,7 @@ const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, add
                 </div>
                 {toAddTag ?
                     <div className="full-width height-70 absolute display-flex align-items-center flex-end bottom border-top-lightgray border-box no-shrink">
-                        <button type="submit" onClick={addTagsToRecipient} className="border-box mustard height-40 no-border cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center right-margin-30">
+                        <button disabled={updating} type="submit" onClick={addTagsToRecipient} className="border-box mustard height-40 no-border cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center right-margin-30">
                             {updating ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :

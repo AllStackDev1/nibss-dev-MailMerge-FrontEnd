@@ -23,13 +23,15 @@ var routes = [
         path: "/users/:pageId?",
         name: "Users",
         component: Users,
-        icon: 'users'
+        icon: 'users',
+        user: true
     },
     {
         path: "/recipients/:pageId?",
         name: "Recipients",
         component: Recipients,
-        icon: 'recipients'
+        icon: 'recipients',
+        user: true
     },
     {
         path: "/help",
