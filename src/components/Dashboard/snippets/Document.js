@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Moment from 'react-moment'
 
-const Document = ({ document, dashboard, viewDocument }) => {
+const Document = ({ document, dashboard, viewDocument, viewStats }) => {
     return (
         <Container onClick={() => viewDocument(document)} className="cursor-pointer smooth-slow height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
             <div className="no-shrink width-70">
@@ -25,14 +25,17 @@ const Document = ({ document, dashboard, viewDocument }) => {
                 <p className="size-pointseven-rem light">Owner</p>
                 <p className="size-pointeight-rem bold">You</p>
             </div>
-            <div className="no-shrink width-15-percent size-pointnine-rem bold">
+            <div className="width-15-percent size-pointnine-rem bold">
                 <p className="size-pointseven-rem light">Sent to</p>
                 <p className="size-pointeight-rem bold">Me & Other</p>
             </div>
-            <Status className={`${document.signed ? 'active-status' : ''} no-shrink height-35 width-100 right-margin-50 border-box border-radius-5`}>
+            <Status className={`${document.signed ? 'active-status' : ''} no-shrink height-35 width-100 right-margin-20 border-box border-radius-5`}>
                 <div></div>
                 <p>{document.signed ? 'Signed' : 'Pending'}</p>
             </Status>
+            <ViewDocumentButton onClick={e => viewStats(e, document)} className="no-shrink height-35 right-margin-40 border-box border-radius-5 size-pointeight-rem no-wrap display-flex align-items-center justify-center">
+                VIEW DOCUMENT
+            </ViewDocumentButton>
         </Container>
     )
 }
@@ -43,13 +46,20 @@ const Container = styled.div`
     }
 `;
 
+const ViewDocumentButton = styled.div`
+    background: #C5FCDF;
+    color: #1ADC76;
+    min-width: 100px;
+    padding-left: 15px;
+    padding-right: 15px;
+`;
+
 const Status = styled.div`background: #CCC;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         &.active-status {
                             background: #C5FCDF;
-                            color:
                         }
                         &>div {
                             border-radius: 100%;

@@ -16,6 +16,8 @@ import DocumentList from "./snippets/documents/DocumentList";
 import { useParams, withRouter } from "react-router-dom";
 import qs from 'qs';
 import { push } from "connected-react-router";
+import imageFile from "./imageFile";
+import pdfFile from "./pdfFile";
 
 const Documents = withRouter(({ location }) => {
     const documents = useSelector(state => state.document);
@@ -23,6 +25,7 @@ const Documents = withRouter(({ location }) => {
         signatories: [],
         recipients: []
     });
+    // const [documentFiles, setDocumentFiles] = useState([pdfFile]);
     const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);
     const [fetching, setFetching] = useState(false);
@@ -144,11 +147,18 @@ const Documents = withRouter(({ location }) => {
     const viewDocument = (document) => {
         dispatch(documentActions.setDocument(document));
 
-        if(document.signed) {
+        if (document.signed) {
             dispatch(push(`/dashboard/document/${document._id}`));
         } else {
             dispatch(push(`/dashboard/append-signature/${document._id}`));
         }
+    }
+
+    const viewStats = (e, document) => {
+        e.stopPropagation();
+        dispatch(documentActions.setDocument(document));
+
+        dispatch(push(`/dashboard/document/${document._id}`));
     }
 
     return (
@@ -158,8 +168,8 @@ const Documents = withRouter(({ location }) => {
                     {step < 5 ?
                         <BackButton onClick={() => setUploadingDocument(false)} className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
-                        BACK
-                    </BackButton>
+                            BACK
+                        </BackButton>
                         : ""}
                     <Container className={`${step === 3 || step === 4 ? 'height-auto bottom-margin-50' : ''} ${step === 5 ? "complete" : ""} onboarding width-80-percent bottom-padding-80 display-flex flex-direction-column align-items-center margin-auto top-margin-25 border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
                         {step < 5 ?
@@ -284,6 +294,7 @@ const Documents = withRouter(({ location }) => {
                             documents={documents}
                             fetching={fetching}
                             viewDocument={viewDocument}
+                            viewStats={viewStats}
                             tab={tab} />
                     </div>
                 </>}

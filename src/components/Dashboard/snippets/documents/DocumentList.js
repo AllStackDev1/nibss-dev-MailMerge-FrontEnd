@@ -5,7 +5,7 @@ import EmptyDocument from "components/Dashboard/empty-states/Document";
 import Document from "../Document";
 import Pagination from "../Pagination";
 
-const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocument }) => {
+const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocument, viewStats }) => {
     return (
         documents.documents === undefined || fetching === true ?
             <EmptyDocument />
@@ -16,6 +16,7 @@ const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocum
                         key={index}
                         document={document}
                         viewDocument={viewDocument}
+                        viewStats={viewStats}
                         dashboard={dashboard}
                     />
                 ) ||
