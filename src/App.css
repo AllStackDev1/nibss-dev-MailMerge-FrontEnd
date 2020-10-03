@@ -625,6 +625,10 @@ html, body {
     min-height: 90% !important;
 }
 
+.min-height-100-percent {
+    min-height: 100% !important;
+}
+
 .max-height-0 {
     max-height: 0px;
 }

@@ -14,6 +14,7 @@ import UserProfile from "components/Dashboard/UserProfile";
 import { authActions } from "actions";
 import AddSignature from "components/Dashboard/AddSignature";
 import AppendSignature from "components/Dashboard/AppendSignature";
+import DocumentInstance from "components/Dashboard/DocumentInstance";
 
 class DashboardLayout extends React.Component {
     constructor(props) {
@@ -71,6 +72,9 @@ class DashboardLayout extends React.Component {
                         </Route>
                         <Route path="/dashboard/append-signature/:documentId?/:userToken?">
                             <AppendSignature user={this.props.user} />
+                        </Route>
+                        <Route path="/dashboard/document/:documentId?">
+                            <DocumentInstance user={this.props.user} />
                         </Route>
                         <Route path="/dashboard/user-profile">
                             <UserProfile user={this.props.user} />
