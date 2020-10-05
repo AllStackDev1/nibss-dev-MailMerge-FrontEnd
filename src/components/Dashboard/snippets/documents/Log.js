@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import styled from 'styled-components';
 
 const Log = ({ log }) => {
@@ -7,11 +8,13 @@ const Log = ({ log }) => {
             <Circle className="width-20 height-20 border-radius-100-percent right-margin-30 no-shrink top-margin-5"></Circle>
             <div className="full-width bottom-padding-30">
                 <p className="size-one-rem">{log.log}</p>
-                <p className="size-pointeightfive-rem bold top-margin-10">Office Desk Officer</p>
+                <p className="size-pointeightfive-rem bold top-margin-10">
+                    <Moment format={'dddd, Do MMM, YYYY'}>{log.createdAt}</Moment>
+                </p>
                 <Link></Link>
             </div>
             <Ago className="width-100 no-shrink text-right size-pointeight-rem">
-                20 mins ago
+                <Moment fromNow>{log.createdAt}</Moment>
             </Ago>
         </Container>
     );
