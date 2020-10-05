@@ -1,6 +1,7 @@
 import { documentActions } from "actions/documentActions";
 import { push } from "connected-react-router";
 import React, { useEffect, useState } from "react"
+import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -55,55 +56,79 @@ const DocumentInstance = ({ user }) => {
                             : "Loading ...."
                         :
                         <div className="full-width">
-                            <div className="full-width display-flex">
-                                <div className="width-70-percent border-box right-margin-50 display-flex">
-                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
-                                        <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
-                                        <p className="size-one-rem bold bottom-margin-30">Emails</p>
-                                        <Status className="border-radius-20 size-pointeight-rem">
-                                            Total
+                            {document.document ?
+                                <>
+                                    <div className="full-width display-flex">
+                                        <div className="width-70-percent border-box right-margin-50 display-flex">
+                                            <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                                <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
+                                                <p className="size-one-rem bold bottom-margin-30">Emails</p>
+                                                <Status className="border-radius-20 size-pointeight-rem">
+                                                    Total
                                         </Status>
-                                    </BorderGray>
-                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
-                                        <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
-                                        <p className="size-one-rem bold bottom-margin-30">100%</p>
-                                        <Status className="delivered border-radius-20 size-pointeight-rem">
-                                            Delivered
+                                            </BorderGray>
+                                            <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                                <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
+                                                <p className="size-one-rem bold bottom-margin-30">100%</p>
+                                                <Status className="delivered border-radius-20 size-pointeight-rem">
+                                                    Delivered
                                         </Status>
-                                    </BorderGray>
-                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
-                                        <p className="mustard-color bold size-pointnine">{document?.document?.stats?.open || 0}</p>
-                                        <p className="size-one-rem bold bottom-margin-30">90%</p>
-                                        <Status className="border-radius-20 size-pointeight-rem">
-                                            Opened
+                                            </BorderGray>
+                                            <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                                <p className="mustard-color bold size-pointnine">{document?.document?.stats?.open || 0}</p>
+                                                <p className="size-one-rem bold bottom-margin-30">90%</p>
+                                                <Status className="border-radius-20 size-pointeight-rem">
+                                                    Opened
                                         </Status>
-                                    </BorderGray>
-                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 text-center">
-                                        <p className="mustard-color bold size-pointnine">{document?.document?.stats?.clicked || 0}</p>
-                                        <p className="size-one-rem bold bottom-margin-30">90%</p>
-                                        <Status className="border-radius-20 size-pointeight-rem">
-                                            Clicked
-                                        </Status>
-                                    </BorderGray>
-                                </div>
-                                <BorderGray className="width-30-percent border-box no-shrink padding-30 display-flex flex-direction-column space-between">
-                                    <div className="full-width display-flex size-pointnine-rem">
-                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.blocked || 0}</div>
-                                        <div className="full-width height-30">(0%) Blocked</div>
+                                            </BorderGray>
+                                            <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 text-center">
+                                                <p className="mustard-color bold size-pointnine">{document?.document?.stats?.clicked || 0}</p>
+                                                <p className="size-one-rem bold bottom-margin-30">90%</p>
+                                                <Status className="border-radius-20 size-pointeight-rem">
+                                                    Clicked
+                                                </Status>
+                                            </BorderGray>
+                                        </div>
+                                        <BorderGray className="width-30-percent border-box no-shrink padding-30 display-flex flex-direction-column space-between">
+                                            <div className="full-width display-flex size-pointnine-rem">
+                                                <div className="width-50 no-shrink height-30">{document?.document?.stats?.blocked || 0}</div>
+                                                <div className="full-width height-30">(0%) Blocked</div>
+                                            </div>
+                                            <div className="full-width display-flex size-pointnine-rem">
+                                                <div className="width-50 no-shrink height-30">{document?.document?.stats?.bounced || 0}</div>
+                                                <div className="full-width height-30">(0%) Bounced</div>
+                                            </div>
+                                            <div className="full-width display-flex size-pointnine-rem">
+                                                <div className="width-50 no-shrink height-30">{document?.document?.stats?.spam || 0}</div>
+                                                <div className="full-width height-30">(0%) Marked as spam</div>
+                                            </div>
+                                        </BorderGray>
                                     </div>
-                                    <div className="full-width display-flex size-pointnine-rem">
-                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.bounced || 0}</div>
-                                        <div className="full-width height-30">(0%) Bounced</div>
+                                    <div className="full-width top-margin-50">
+                                        <div className="full-width display-flex bottom-margin-10">
+                                            <div className="width-30-percent size-pointnine-rem no-shrink bold">Recipient Name</div>
+                                            <div className="width-30-percent size-pointnine-rem no-shrink bold">Email</div>
+                                            <div className="width-20-percent size-pointnine-rem no-shrink bold">Status</div>
+                                            <div className="width-20-percent size-pointnine-rem no-shrink bold">Date</div>
+                                        </div>
+                                        {document.document?.recipients?.map((recipient, index) =>
+                                            <div className="full-width display-flex" key={index}>
+                                                <div className="width-30-percent size-pointeight-rem no-shrink capitalize">{recipient.name}</div>
+                                                <div className="width-30-percent size-pointeight-rem no-shrink">{recipient.email}</div>
+                                                <div className="width-20-percent size-pointeight-rem no-shrink">
+                                                    <Status className={`${!recipient.open ? 'delivered' : ''} border-radius-20 size-pointeight-rem`}>
+                                                        {recipient.open ? 'Opened' : 'Pending'}
+                                                    </Status>
+                                                </div>
+                                                <div className="width-20-percent size-pointeight-rem no-shrink">
+                                                    <Moment format={'Do MMM, YYYY'}>{Date.now()}</Moment>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-                                    <div className="full-width display-flex size-pointnine-rem">
-                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.spam || 0}</div>
-                                        <div className="full-width height-30">(0%) Marked as spam</div>
-                                    </div>
-                                </BorderGray>
-                            </div>
-                            <div>
-                                <div></div>
-                            </div>
+                                </>
+                                : "Loading ..."
+                            }
                         </div>
                     }
                 </div>
