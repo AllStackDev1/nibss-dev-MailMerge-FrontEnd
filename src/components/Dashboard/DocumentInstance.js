@@ -48,10 +48,64 @@ const DocumentInstance = ({ user }) => {
                     </Tab>
                 </div>
                 <div className="padding-30 full-width border-box">
-                    {document.logs ?
-                        document.logs?.map((log, index) =>
-                            <Log log={log} />)
-                        : "Loading ...."}
+                    {tab === 1 ?
+                        document.logs ?
+                            document.logs?.map((log, index) =>
+                                <Log log={log} />)
+                            : "Loading ...."
+                        :
+                        <div className="full-width">
+                            <div className="full-width display-flex">
+                                <div className="width-70-percent border-box right-margin-50 display-flex">
+                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                        <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
+                                        <p className="size-one-rem bold bottom-margin-30">Emails</p>
+                                        <Status className="border-radius-20 size-pointeight-rem">
+                                            Total
+                                        </Status>
+                                    </BorderGray>
+                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                        <p className="mustard-color bold size-pointnine">{document?.document?.recipients?.length || 0}</p>
+                                        <p className="size-one-rem bold bottom-margin-30">100%</p>
+                                        <Status className="delivered border-radius-20 size-pointeight-rem">
+                                            Delivered
+                                        </Status>
+                                    </BorderGray>
+                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
+                                        <p className="mustard-color bold size-pointnine">{document?.document?.stats?.open || 0}</p>
+                                        <p className="size-one-rem bold bottom-margin-30">90%</p>
+                                        <Status className="border-radius-20 size-pointeight-rem">
+                                            Opened
+                                        </Status>
+                                    </BorderGray>
+                                    <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 text-center">
+                                        <p className="mustard-color bold size-pointnine">{document?.document?.stats?.clicked || 0}</p>
+                                        <p className="size-one-rem bold bottom-margin-30">90%</p>
+                                        <Status className="border-radius-20 size-pointeight-rem">
+                                            Clicked
+                                        </Status>
+                                    </BorderGray>
+                                </div>
+                                <BorderGray className="width-30-percent border-box no-shrink padding-30 display-flex flex-direction-column space-between">
+                                    <div className="full-width display-flex size-pointnine-rem">
+                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.blocked || 0}</div>
+                                        <div className="full-width height-30">(0%) Blocked</div>
+                                    </div>
+                                    <div className="full-width display-flex size-pointnine-rem">
+                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.bounced || 0}</div>
+                                        <div className="full-width height-30">(0%) Bounced</div>
+                                    </div>
+                                    <div className="full-width display-flex size-pointnine-rem">
+                                        <div className="width-50 no-shrink height-30">{document?.document?.stats?.spam || 0}</div>
+                                        <div className="full-width height-30">(0%) Marked as spam</div>
+                                    </div>
+                                </BorderGray>
+                            </div>
+                            <div>
+                                <div></div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -67,6 +121,20 @@ const BackButton = styled.div`
                                 margin-right: 10px;
                             }
                         `;
+
+const BorderGray = styled.div`
+    border: 1px solid #EDEDED;
+`;
+
+const Status = styled.span`
+    background: #CFFFE1;
+    color: #00B946;
+    padding: 5px 20px;
+    &.delivered {
+        background: #F7F7F7;
+        color: #BDBDBD;
+    }
+`;
 
 const Tab = styled.div`
                             &.active-tab {
