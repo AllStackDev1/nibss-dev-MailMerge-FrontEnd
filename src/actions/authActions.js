@@ -34,7 +34,11 @@ function login(user) {
                     if ((user.data.role === "user" && user.data.status === "active")) {
                         dispatch(push(`/dashboard/documents`));
                     } else {
-                        dispatch(push(`/onboarding`));
+                        if (user.data.userCount > 1) {
+                            dispatch(push(`/dashboard`));
+                        } else {
+                            dispatch(push(`/onboarding`));
+                        }
                     }
                 },
                 error => {
@@ -86,7 +90,7 @@ function saveSignature(file, add) {
             .then(res => {
                 toast.success(res.data.message);
 
-                if(add) {
+                if (add) {
                     dispatch(push(`/dashboard/user-profile`));
                 }
 
