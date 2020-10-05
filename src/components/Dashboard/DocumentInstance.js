@@ -16,22 +16,14 @@ const DocumentInstance = ({ user }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        function setDocumentData(document) {
-            setDocument(document);
-        }
+        dispatch(documentActions.fetchSingle(documentId));
+    }, [dispatch, documentId]);
 
-        if (document._id === undefined) {
-            if (documents.document) {
-                if (JSON.stringify(documents.document) !== JSON.stringify(document)) {
-                    setDocumentData(documents.document);
-                }
-            } else {
-                if (documents.fetchingSingle === false) {
-                    dispatch(documentActions.fetchSingle(documentId));
-                }
-            }
+    useEffect(() => {
+        if (documents.fetchingSingle === false && documents.document) {
+            setDocument(documents.document);
         }
-    });
+    }, [documents.fetchingSingle, documents.document]);
 
     const goBack = () => {
         dispatch(push('/dashboard/documents'));
@@ -57,8 +49,8 @@ const DocumentInstance = ({ user }) => {
                 </div>
                 <div className="padding-30 full-width border-box">
                     {document.logs ?
-                    document.logs?.map((log, index) =>
-                        <Log log={log} />)
+                        document.logs?.map((log, index) =>
+                            <Log log={log} />)
                         : "Loading ...."}
                 </div>
             </div>
