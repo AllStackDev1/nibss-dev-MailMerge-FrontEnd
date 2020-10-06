@@ -86,7 +86,7 @@ const AppendSignature = ({ user }) => {
                         <>
                             <b className="size-pointnine-rem">Sign this document</b>
                             <div ref={documentContainer} className="max-width-90-percent top-margin-30">
-                                <img onLoad={calculateOffset} src={document.document.file} className="max-height-700 full-width" alt="NIBSS Document" />
+                                <img onLoad={calculateOffset} src={document.document.file} className="full-width" alt="NIBSS Document" />
                                 {document.document.signatories.filter(signatory => signatory.email === user.data.email).map((signatory, index) =>
                                     signatory.absolute_x_coordinate !== undefined ?
                                         <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user.data.name) }}></div>

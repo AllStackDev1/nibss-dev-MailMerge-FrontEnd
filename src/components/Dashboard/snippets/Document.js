@@ -12,7 +12,7 @@ const Document = ({ document, dashboard, viewDocument, viewStats }) => {
                     <img src={require(`images/icons/dashboard/document.svg`)} className="height-25 top-margin-3 right-margin-20 left-margin-30" alt="NIBSS PDF" />
                 }
             </div>
-            <div className="no-shrink width-25-percent size-pointnine-rem bold">
+            <div className="no-shrink width-25-percent size-pointnine-rem bold word-wrap">
                 {document.documentTitle}
             </div>
             <div className="no-shrink width-15-percent size-pointnine-rem bold">
