@@ -22,11 +22,16 @@ function fetch(type) {
 
 function fetchSingle(id, userToken) {
     const requestOptions = {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + userToken
-        }
+        method: 'GET'
     };
+
+    if (userToken) {
+        requestOptions.headers = {
+            'Authorization': 'Bearer ' + userToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
 
     return authService.fetchFrom(`${Config.API_URL}/documents/${id}`, requestOptions)
         .then(authService.handleResponse)
@@ -47,11 +52,19 @@ function fetchPage(type, page) {
         });
 }
 
-function signDocument(data) {
+function signDocument(data, userToken) {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(data)
     };
+
+    if (userToken) {
+        requestOptions.headers = {
+            'Authorization': 'Bearer ' + userToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
 
     return authService.fetchFrom(`${Config.API_URL}/documents/sign`, requestOptions)
         .then(authService.handleResponse)
