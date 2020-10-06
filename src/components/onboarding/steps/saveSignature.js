@@ -16,6 +16,7 @@ const SaveSignature = ({ add }) => {
         signatureCanvas.current.clear();
     }
 
+    
     const saveSignature = () => {
         if (signatureCanvas?.current?.isEmpty() && signature.signature === "") {
             toast.warning("Please sign to proceed");
