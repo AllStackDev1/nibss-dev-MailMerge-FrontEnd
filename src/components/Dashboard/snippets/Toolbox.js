@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipientActions } from 'actions/recipientActions';
 
-const Toolbox = ({ search, onChange, filter, setFilter, filterList, addFilter, removeFilter, tag, upload, adding, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal, parseCSV }) => {
+const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFilter, removeFilter, tag, upload, adding, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal, parseCSV }) => {
     const dispatch = useDispatch();
 
     const recipients = useSelector(state => state.recipient);
@@ -58,7 +58,7 @@ const Toolbox = ({ search, onChange, filter, setFilter, filterList, addFilter, r
                     </div>
                 </Menu>
                 {exportButton === true ?
-                    <div className="display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50">
+                    <div className={`display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color ${user?.data?.role !== "user" ? "right-margin-50" : ""}`}>
                         Export as
                         <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>
                     </div>
@@ -70,7 +70,7 @@ const Toolbox = ({ search, onChange, filter, setFilter, filterList, addFilter, r
                     : ""}
                 {upload === true ?
                     <>
-                        <ActionButton onClick={() => { document.getElementById('csv_file').click() }} className={`${adding ? 'active-button width-80' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-50`}>
+                        <ActionButton onClick={() => { document.getElementById('csv_file').click() }} className={`${adding ? 'active-button width-80' : ''} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color ${user?.data?.role !== "user" ? "right-margin-50" : ""}`}>
                             {adding ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :
@@ -79,16 +79,18 @@ const Toolbox = ({ search, onChange, filter, setFilter, filterList, addFilter, r
                         <input type="file" name="csv_file" id="csv_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
                     </>
                     : ""}
-                {addButtonUrl ?
-                    <Link to={addButtonUrl}>
-                        <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                {user?.data?.role !== "user" ?
+                    addButtonUrl ?
+                        <Link to={addButtonUrl}>
+                            <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                                {addButtonText}
+                            </button>
+                        </Link>
+                        :
+                        <button onClick={() => setModal("add-recipient")} className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                             {addButtonText}
                         </button>
-                    </Link>
-                    :
-                    <button onClick={() => setModal("add-recipient")} className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                        {addButtonText}
-                    </button>}
+                    : ""}
             </div>
         </ToolBox>
     )
