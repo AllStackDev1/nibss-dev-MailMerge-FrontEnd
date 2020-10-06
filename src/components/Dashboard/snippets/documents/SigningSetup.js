@@ -2,10 +2,14 @@ import React, { useState, useRef } from "react"
 import { getColor } from "helpers/getColor";
 import Draggable from "./Draggable";
 import { getImageSize } from "helpers";
+import { isFileImage } from "helpers/isFileImage";
+import { Document, Page, pdfjs } from "react-pdf";
+import styled from "styled-components";
+pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFiles }) => {
-    const [hovering, setHovering] = useState(false);
     const [signatoryDragged, setSignatoryDragged] = useState(false);
+    const [numPages, setNumPages] = useState(null);
 
     const documentContainer = useRef(null);
 
@@ -32,7 +36,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 ];
             }
         });
-            
+
         let imageSize = await getImageSize(documentContainer.current.querySelector('img'));
 
         setPlaceholders(placeholders => {
@@ -60,6 +64,10 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
         });
     }
 
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
     return (
         <>
             <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Signing Setup</p>
@@ -69,12 +77,27 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
             <div className="full-height display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
                 {documentFiles ?
                     documentFiles.map((documentFile, index) =>
-                        <div key={index} ref={documentContainer} className={`width-75-percent right-margin-50 ${hovering ? "border-gray-dashed" : "border-white"}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
-                            <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                        <React.Fragment key={index}>
+                            {isFileImage(documentFile) ?
+                                <PageContainer key={index} ref={documentContainer} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''} right-margin-50`}>
+                                    <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                                </PageContainer>
+                                :
+                                <Document
+                                    file={documentFile}
+                                    onLoadSuccess={onDocumentLoadSuccess}
+                                >
+                                    {Array.from(new Array(numPages), (el, index) => (
+                                        <PageContainer key={index} ref={documentContainer} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''}right-margin-50 bottom-margin-20`}>
+                                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                                        </PageContainer>
+                                    ))}
+                                </Document>
+                            }
                             {placeholders.map((placeholder, index) =>
                                 <div key={index} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
                             )}
-                        </div>
+                        </React.Fragment>
                     )
                     : ""}
                 <div className="width-25-percent">
@@ -112,5 +135,12 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
         </>
     )
 }
+
+const PageContainer = styled.div`
+    border: 1px solid #CCC !important;
+    &:hover {
+        border: 1px dashed #d8d8d8 !important;
+    }
+`;
 
 export default SigningSetup;

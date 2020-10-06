@@ -25,6 +25,7 @@ const Documents = withRouter(({ location }) => {
         signatories: [],
         recipients: []
     });
+
     // const [documentFiles, setDocumentFiles] = useState([pdfFile]);
     const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);

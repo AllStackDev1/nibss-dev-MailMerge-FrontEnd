@@ -8,9 +8,13 @@ import styled from "styled-components";
 import ModalContainer from "./modals/ModalContainer";
 import SignDocument from "./modals/SignDocument";
 import decode from 'jwt-decode';
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [document, setDocument] = useState({});
+    const [numPages, setNumPages] = useState(null);
+    const [imageError, setImageError] = useState(false);
     const [documentSignature, setDocumentSignature] = useState("");
     const [modal, setModal] = useState(false);
     const documents = useSelector(state => state.document);
@@ -19,9 +23,9 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const dispatch = useDispatch();
     const documentContainer = useRef(null);
 
-    // useEffect(() => {
-    //     console.log(user?.data?.email || decode(userToken));
-    // }, []);
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
 
     useEffect(() => {
         function setDocumentData(document) {
@@ -45,7 +49,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         dispatch(documentActions.signDocument({
             documentId: document.document._id,
             signature: documentSignature
-        }));
+        }, userToken));
     }
 
     const calculateOffset = async e => {
@@ -87,8 +91,26 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                         :
                         <>
                             <b className="size-pointnine-rem">Sign this document</b>
-                            <div ref={documentContainer} className="max-width-90-percent top-margin-30">
-                                <img onLoad={calculateOffset} src={document.document.file} className="full-width" alt="NIBSS Document" />
+                            <div className="max-width-90-percent top-margin-30">
+                                {
+                                    imageError === false ?
+                                        <PageContainer className={`${numPages === undefined ? 'width-75-percent' : ''}`}>
+                                            <img ref={documentContainer} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file} on className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                                        </PageContainer>
+                                        :
+                                        <Document
+                                            file={document.document.file}
+                                            onLoadSuccess={onDocumentLoadSuccess}
+                                        >
+                                            {Array.from(new Array(numPages), (el, index) => (
+                                                <PageContainer className={`${numPages === undefined ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
+                                                    <Page style={{ width: '100%' }} key={`page_${index + 1}`} pageNumber={index + 1} />
+                                                </PageContainer>
+                                            ))}
+                                        </Document>
+                                }
+
+                                {/* <img onLoad={calculateOffset} src={document.document.file} className="full-width" alt="NIBSS Document" /> */}
                                 {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, index) =>
                                     signatory.absolute_x_coordinate !== undefined ?
                                         <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
@@ -112,5 +134,12 @@ const Loader = styled.div`
                         border-color: #9E7D0A transparent transparent transparent
                     }
                 `;
+
+const PageContainer = styled.div`
+                border: 1px solid #CCC !important;
+                &:hover {
+                    border: 1px dashed #d8d8d8 !important;
+                }
+            `;
 
 export default AppendSignature;

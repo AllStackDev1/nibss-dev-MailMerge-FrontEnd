@@ -80,11 +80,11 @@ function fetchPage(type, page) {
     function failure(error) { return { type: documentConstants.FETCH_PAGE_FAILURE, error }; }
 }
 
-function signDocument(data) {
+function signDocument(data, userToken) {
     return dispatch => {
         dispatch(request());
 
-        documentService.signDocument(data)
+        documentService.signDocument(data, userToken)
             .then(
                 document => {
                     dispatch(success(document.document));
@@ -94,6 +94,7 @@ function signDocument(data) {
                 },
                 error => {
                     if (error.message) {
+                        toast.error(error.message);
                         dispatch(failure(error.message));
                     }
                 }
