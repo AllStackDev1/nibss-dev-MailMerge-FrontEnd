@@ -7,8 +7,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ModalContainer from "./modals/ModalContainer";
 import SignDocument from "./modals/SignDocument";
+import decode from 'jwt-decode';
 
-const AppendSignature = ({ user }) => {
+const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [document, setDocument] = useState({});
     const [documentSignature, setDocumentSignature] = useState("");
     const [modal, setModal] = useState(false);
@@ -17,6 +18,10 @@ const AppendSignature = ({ user }) => {
     const { documentId } = useParams();
     const dispatch = useDispatch();
     const documentContainer = useRef(null);
+
+    // useEffect(() => {
+    //     console.log(user?.data?.email || decode(userToken));
+    // }, []);
 
     useEffect(() => {
         function setDocumentData(document) {
@@ -30,7 +35,7 @@ const AppendSignature = ({ user }) => {
                 }
             } else {
                 if (documents.fetchingSingle === false) {
-                    dispatch(documentActions.fetchSingle(documentId));
+                    dispatch(documentActions.fetchSingle(urlDocumentId ? urlDocumentId : documentId, userToken));
                 }
             }
         }
@@ -45,9 +50,6 @@ const AppendSignature = ({ user }) => {
 
     const calculateOffset = async e => {
         let imageSize = await getImageSize(e.target);
-
-        console.log(imageSize);
-
 
         document.document.signatories.forEach((signatory, i) => {
             let documentCopy = Object.assign({}, document);
@@ -68,7 +70,7 @@ const AppendSignature = ({ user }) => {
                 <ModalContainer closeModal={() => setModal(false)}>
                     {modal === "sign-document" ?
                         <SignDocument
-                            user={user}
+                            user={user || decode(userToken)}
                             setModal={setModal}
                             closeModal={() => setModal(false)}
                             signingDocument={documents.signingDocument}
@@ -87,9 +89,9 @@ const AppendSignature = ({ user }) => {
                             <b className="size-pointnine-rem">Sign this document</b>
                             <div ref={documentContainer} className="max-width-90-percent top-margin-30">
                                 <img onLoad={calculateOffset} src={document.document.file} className="full-width" alt="NIBSS Document" />
-                                {document.document.signatories.filter(signatory => signatory.email === user.data.email).map((signatory, index) =>
+                                {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, index) =>
                                     signatory.absolute_x_coordinate !== undefined ?
-                                        <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user.data.name) }}></div>
+                                        <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
                                         : ""
                                 )}
                             </div>

@@ -17,6 +17,7 @@ import Onboarding from './components/onboarding/onboarding';
 import DashboardLayout from 'components/common/Layout/DashboardLayout';
 import ProtectedAuth from 'components/common/ProtectedAuth';
 import ProtectedRoute from 'components/common/ProtectedRoute';
+import AppendSignatureOpen from 'components/append-sginature-open/append-signature-open';
 
 const App = () => (
     <main>
@@ -24,6 +25,9 @@ const App = () => (
         <ProtectedAuth exact path="/signup" component={Signup} />
         <Route exact path="/about-us" component={About} />
         <Route exact path="/onboarding" component={Onboarding} />
+        <Route exact path="/append-document-open/:documentId?/:userToken?">
+            <AppendSignatureOpen />
+        </Route>
         <ProtectedRoute path="/dashboard" component={DashboardLayout} />
     </main>
 )
