@@ -1,5 +1,5 @@
 import { documentActions } from "actions/documentActions";
-import { getImageSize } from "helpers";
+import { getImageSize, toFile } from "helpers";
 import { getColor } from "helpers/getColor";
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import ModalContainer from "./modals/ModalContainer";
 import SignDocument from "./modals/SignDocument";
 import decode from 'jwt-decode';
 import { Document, Page, pdfjs } from "react-pdf";
+import { toast } from "react-toastify";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
@@ -16,12 +17,16 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [numPages, setNumPages] = useState(null);
     const [imageError, setImageError] = useState(false);
     const [documentSignature, setDocumentSignature] = useState("");
+    const [signature, setSignature] = useState({ signature: "" });
+    const [signatureType, setSignatureType] = useState("draw");
+
     const [modal, setModal] = useState(false);
     const documents = useSelector(state => state.document);
 
     const { documentId } = useParams();
     const dispatch = useDispatch();
     const documentContainer = useRef(null);
+    const signatureCanvas = useRef(null);
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
@@ -46,10 +51,39 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     });
 
     const signDocument = () => {
-        dispatch(documentActions.signDocument({
-            documentId: document.document._id,
-            signature: documentSignature
-        }, userToken));
+        if (signatureCanvas?.current?.isEmpty() && signature.signature === "" && documentSignature === "") {
+            toast.warning("Please sign to proceed");
+        } else {
+            if (signatureCanvas?.current?.isEmpty() === false || signature.signature !== "") {
+                console.log("Upload signature");
+
+                let signatureImage;
+
+                if (signatureType === "draw") {
+                    signatureImage = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
+                } else {
+                    var style = {
+                        font: 'Poppins',
+                        align: 'center',
+                        color: 'black',
+                        size: 30,
+                        background: 'transparent',
+                        stroke: 1,
+                        strokeColor: 'rgba(0, 0, 0, 1)'
+                    };
+    
+                    var textImage = window.TextImage(style);
+                    signatureImage = textImage.toDataURL(signature.signature);
+                }
+    
+                dispatch(documentActions.signDocumentNew(toFile(signatureImage, `signature${Date.now()}.svg`), document.document._id));
+            } else {
+                dispatch(documentActions.signDocument({
+                    documentId: document.document._id,
+                    signature: documentSignature
+                }, userToken));
+            }
+        }
     }
 
     const calculateOffset = async e => {
@@ -80,6 +114,11 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                             signingDocument={documents.signingDocument}
                             documentSignature={documentSignature}
                             setDocumentSignature={setDocumentSignature}
+                            signatureCanvas={signatureCanvas}
+                            signature={signature}
+                            setSignature={setSignature}
+                            signatureType={signatureType}
+                            setSignatureType={setSignatureType}
                             signDocument={signDocument} />
                         : ""}
                 </ModalContainer>

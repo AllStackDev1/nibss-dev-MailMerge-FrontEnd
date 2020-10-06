@@ -11,7 +11,8 @@ export const documentActions = {
     fetchPage,
     prepare,
     setDocument,
-    signDocument
+    signDocument,
+    signDocumentNew
 };
 
 function fetch(type) {
@@ -99,6 +100,53 @@ function signDocument(data, userToken) {
                     }
                 }
             );
+    };
+
+    function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }
+    function success(document) { return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document }; }
+    function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
+}
+
+function signDocumentNew(file, documentId) {
+    return dispatch => {
+        dispatch(request());
+
+        const data = new FormData();
+        data.append('media', file);
+        data.append('documentId', documentId);
+
+        let uploadendpoint = `${Config.API_URL}/documents/sign`;
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authService.getToken()
+        }
+
+        Axios
+            .post(uploadendpoint, data, {
+                onUploadProgress: ProgressEvent => {
+                    let loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
+                    console.log(loaded);
+                },
+                headers
+            })
+            .then(res => {
+                toast.success(res.data.message);
+
+                console.log(res);
+
+                dispatch(success(res.data.data));
+                dispatch(push(`/dashboard/documents`));
+            })
+            .catch(err => {
+                dispatch(failure());
+
+                if (err.response) {
+                    if (err.response.data) {
+                        toast.error(err.response.data.message);
+                    }
+                }
+            });
+
     };
 
     function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }

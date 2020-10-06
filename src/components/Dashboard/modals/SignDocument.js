@@ -1,13 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import SignatureCanvas from 'react-signature-canvas'
 
-const SignDocument = ({ user, signingDocument, documentSignature, setDocumentSignature, signDocument, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
-    const [signatureType, setSignatureType] = useState("draw");
+const SignDocument = ({ signatureType, setSignatureType, signature, setSignature, signatureCanvas, user, signingDocument, documentSignature, setDocumentSignature, signDocument, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
     const [legal, setLegal] = useState({ legal: false });
-    const [signature, setSignature] = useState({ signature: "" });
-
-    const signatureCanvas = useRef(null);
 
     const clearCanvas = () => {
         signatureCanvas.current.clear();
@@ -61,7 +57,7 @@ const SignDocument = ({ user, signingDocument, documentSignature, setDocumentSig
                                 I understand this is a legal representation of my signature.
                             </label>
                         </div>
-                        <button onClick={signDocument} disabled={documentSignature === "" || legal.legal === false} className="left-margin-50 no-shrink left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                        <button onClick={signDocument} disabled={legal.legal === false} className="left-margin-50 no-shrink left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                             {signingDocument ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :
