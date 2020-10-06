@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react"
 import { getColor } from "helpers/getColor";
 import Draggable from "./Draggable";
+import { getImageSize } from "helpers";
 
 const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFiles }) => {
     const [hovering, setHovering] = useState(false);
@@ -8,14 +9,14 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
 
     const documentContainer = useRef(null);
 
-    const mouseUp = (x, y) => {
+    const mouseUp = async (x, y) => {
         setPlaceholders(placeholders => {
             let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
             if (userSigned !== -1) {
                 placeholders[userSigned] = {
                     ...placeholders[userSigned],
-                    x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
-                    y_coordinate: y - documentContainer.current.getBoundingClientRect().top
+                    absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
+                    absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
                 }
 
                 return placeholders;
@@ -23,8 +24,34 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 return [
                     ...placeholders,
                     {
-                        x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
-                        y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
+                        absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
+                        absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
+                        name: signatoryDragged.name,
+                        email: signatoryDragged.email
+                    }
+                ];
+            }
+        });
+            
+        let imageSize = await getImageSize(documentContainer.current.querySelector('img'));
+
+        setPlaceholders(placeholders => {
+            let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+
+            if (userSigned !== -1) {
+                placeholders[userSigned] = {
+                    ...placeholders[userSigned],
+                    x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
+                    y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height
+                }
+
+                return placeholders;
+            } else {
+                return [
+                    ...placeholders,
+                    {
+                        x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
+                        y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height,
                         name: signatoryDragged.name,
                         email: signatoryDragged.email
                     }
@@ -42,10 +69,10 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
             <div className="full-height display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
                 {documentFiles ?
                     documentFiles.map((documentFile, index) =>
-                        <div ref={documentContainer} className={`width-75-percent right-margin-50 ${hovering ? "border-gray-dashed" : "border-white"}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
+                        <div key={index} ref={documentContainer} className={`width-75-percent right-margin-50 ${hovering ? "border-gray-dashed" : "border-white"}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
                             <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
                             {placeholders.map((placeholder, index) =>
-                                <div className="width-180 height-40 absolute" style={{ left: placeholder.x_coordinate, top: placeholder.y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
+                                <div key={index} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
                             )}
                         </div>
                     )

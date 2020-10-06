@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { push } from "connected-react-router";
 
-const Recipients = () => {
+const Recipients = ({ user }) => {
     const [recipient, setRecipient] = useState({});
     const [editRecipient, setEditRecipient] = useState({});
     const [tag, setTag] = useState({});
@@ -226,6 +226,7 @@ const Recipients = () => {
                     title="Recipients"
                 />
                 <Toolbox
+                    user={user}
                     tag={true}
                     upload={true}
                     parseCSV={parseCSV}

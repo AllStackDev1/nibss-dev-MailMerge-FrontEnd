@@ -1,3 +1,4 @@
+import React from "react";
 import DashboardIndex from "components/Dashboard/DashboardIndex.js";
 import Documents from "components/Dashboard/Documents.js";
 import Users from "components/Dashboard/Users.js";
@@ -8,35 +9,35 @@ var routes = [
     {
         path: "/index/:pageId?",
         name: "Dashboard",
-        component: DashboardIndex,
+        component: (props) => <DashboardIndex {...props} />,
         icon: 'dashboard',
         height: 18
     },
     {
         path: "/documents/:pageId?",
         name: "Documents",
-        component: Documents,
+        component: (props) => <Documents {...props} />,
         icon: 'documents',
         user: true
     },
     {
         path: "/users/:pageId?",
         name: "Users",
-        component: Users,
+        component: (props) => <Users {...props} />,
         icon: 'users',
         user: true
     },
     {
         path: "/recipients/:pageId?",
         name: "Recipients",
-        component: Recipients,
+        component: (props) => <Recipients {...props} />,
         icon: 'recipients',
         user: true
     },
     {
         path: "/help",
         name: "Help",
-        component: Help,
+        component: (props) => <Help {...props} />,
         icon: 'help',
         support: true
     }

@@ -13,7 +13,7 @@ import { push } from "connected-react-router"
 import ModalContainer from "./modals/ModalContainer"
 import EditUser from "./modals/EditUser"
 
-const Users = () => {
+const Users = ({ user: localUser }) => {
     const [search, setSearch] = useState({});
     const [filter, setFilter] = useState(false);
     const [timer, setTimer] = useState();
@@ -115,6 +115,7 @@ const Users = () => {
                     title="Users"
                 />
                 <Toolbox
+                    user={localUser}
                     search={search}
                     onChange={onChange}
                     exportButton={true}

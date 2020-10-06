@@ -1,6 +1,7 @@
 import { documentActions } from "actions/documentActions";
+import { getImageSize } from "helpers";
 import { getColor } from "helpers/getColor";
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -15,6 +16,7 @@ const AppendSignature = ({ user }) => {
 
     const { documentId } = useParams();
     const dispatch = useDispatch();
+    const documentContainer = useRef(null);
 
     useEffect(() => {
         function setDocumentData(document) {
@@ -41,6 +43,25 @@ const AppendSignature = ({ user }) => {
         }));
     }
 
+    const calculateOffset = async e => {
+        let imageSize = await getImageSize(e.target);
+
+        console.log(imageSize);
+
+
+        document.document.signatories.forEach((signatory, i) => {
+            let documentCopy = Object.assign({}, document);
+
+            documentCopy.document.signatories[i] = {
+                ...signatory,
+                absolute_x_coordinate: (signatory.x_coordinate / imageSize.width) * documentContainer.current.offsetWidth,
+                absolute_y_coordinate: (signatory.y_coordinate / imageSize.height) * documentContainer.current.offsetHeight
+            }
+
+            setDocument(documentCopy);
+        })
+    }
+
     return (
         <>
             {modal !== false ?
@@ -64,10 +85,12 @@ const AppendSignature = ({ user }) => {
                         :
                         <>
                             <b className="size-pointnine-rem">Sign this document</b>
-                            <div className="max-width-90-percent top-margin-30">
-                                <img src={document.document.file} className="max-height-700 full-width" alt="NIBSS Document" />
+                            <div ref={documentContainer} className="max-width-90-percent top-margin-30">
+                                <img onLoad={calculateOffset} src={document.document.file} className="max-height-700 full-width" alt="NIBSS Document" />
                                 {document.document.signatories.filter(signatory => signatory.email === user.data.email).map((signatory, index) =>
-                                    <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.x_coordinate, top: signatory.y_coordinate, backgroundColor: getColor(user.data.name) }}></div>
+                                    signatory.absolute_x_coordinate !== undefined ?
+                                        <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user.data.name) }}></div>
+                                        : ""
                                 )}
                             </div>
                         </>}

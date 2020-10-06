@@ -6,7 +6,7 @@ import Sidebar from "components/common/Sidebar/DashboardSidebar.js";
 
 import routes from 'routes';
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 import { bindActionCreators } from "redux";
 import { push } from "connected-react-router";
 import AddUser from "components/Dashboard/AddUser";
@@ -35,9 +35,12 @@ class DashboardLayout extends React.Component {
             return (
                 <Route
                     path={'/dashboard' + prop.path}
-                    render={withRouter(prop.component)}
                     key={key}
-                />
+                >
+                    {prop.component({
+                        user: this.props.user
+                    })}
+                </Route>
             );
         });
     };
