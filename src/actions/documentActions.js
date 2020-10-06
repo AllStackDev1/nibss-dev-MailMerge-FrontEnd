@@ -36,11 +36,11 @@ function fetch(type) {
     function failure(error) { return { type: documentConstants.FETCH_FAILURE, error }; }
 }
 
-function fetchSingle(id) {
+function fetchSingle(id, userToken) {
     return dispatch => {
         dispatch(request());
 
-        documentService.fetchSingle(id)
+        documentService.fetchSingle(id, userToken)
             .then(
                 document => {
                     dispatch(success(document));

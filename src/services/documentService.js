@@ -20,9 +20,12 @@ function fetch(type) {
         });
 }
 
-function fetchSingle(id) {
+function fetchSingle(id, userToken) {
     const requestOptions = {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + userToken
+        }
     };
 
     return authService.fetchFrom(`${Config.API_URL}/documents/${id}`, requestOptions)
