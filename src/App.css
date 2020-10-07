@@ -645,6 +645,10 @@ html, body {
     max-height: 700px;
 }
 
+.min-width-70-percent {
+    min-width: 70%;
+}
+
 .min-width-200 {
     min-width: 200px;
 }
