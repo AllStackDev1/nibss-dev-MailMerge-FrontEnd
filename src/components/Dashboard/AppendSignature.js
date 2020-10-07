@@ -121,14 +121,16 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         document.document.signatories.forEach((signatory, i) => {
             let documentCopy = Object.assign({}, document);
 
-            if (refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current) {
-                documentCopy.document.signatories[i] = {
-                    ...signatory,
-                    absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetWidth,
-                    absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetHeight
-                }
+            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]) {
+                if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current) {
+                    documentCopy.document.signatories[i] = {
+                        ...signatory,
+                        absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
+                        absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
+                    }
 
-                setDocument(documentCopy);
+                    setDocument(documentCopy);
+                }
             }
         })
     }
