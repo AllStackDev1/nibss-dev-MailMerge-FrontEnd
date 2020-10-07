@@ -91,7 +91,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     signatureImage = textImage.toDataURL(signature.signature);
                 }
 
-                dispatch(documentActions.signDocumentNew(toFile(signatureImage, `signature${Date.now()}.svg`), document.document._id));
+                dispatch(documentActions.signDocumentNew(toFile(signatureImage, `signature${Date.now()}.svg`), document.document._id, userToken));
             } else {
                 dispatch(documentActions.signDocument({
                     documentId: document.document._id,
