@@ -71,8 +71,6 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
             });
         } else {
             let info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
-            console.log(refsFull.current[info.page].current.offsetWidth)
-            console.log(refsFull.current[info.page].current.offsetHeight)
 
             setPlaceholders(placeholders => {
                 let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
@@ -164,11 +162,6 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                                 {Array.from(new Array(numPages), (el, index) => (
                                                     <PageContainer ref={refsFull.current[index]} key={index} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
                                                         <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                                                        {placeholders.map((placeholder, i) =>
-                                                            placeholder.page === (index + 1) ?
-                                                                <div key={i} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
-                                                                : ""
-                                                        )}
                                                     </PageContainer>
                                                 ))}
                                             </Document>

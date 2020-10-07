@@ -22,22 +22,7 @@ import { push } from "connected-react-router";
 const Documents = withRouter(({ location }) => {
     const documents = useSelector(state => state.document);
     const [document, setDocument] = useState({
-        signatories: [
-            {
-                status: "active",
-                signatures: [
-                    "https://res.cloudinary.com/comestibles/image/upload/v1601656196/signatures/seth%40mailinator.com/signature1601656195142.svg.png",
-                    "https://res.cloudinary.com/comestibles/image/upload/v1601149908/signatures/seth%40mailinator.com/signature1601149897831.svg.png"
-                ],
-                name: "Seth",
-                role: "user",
-                _id: "5f5e6e775b68706fc74eda52",
-                email: "seth@mailinator.com",
-                createdAt: "2020-09-13T19:09:43.617Z",
-                updatedAt: "2020-10-02T16:29:56.656Z",
-                __v: 0
-            }
-        ],
+        signatories: [],
         recipients: []
     });
 
