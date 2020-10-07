@@ -147,7 +147,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                                 <PageContainer ref={refs.current[index]} key={index} className={`${index} ${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50 ${hovering ? 'one' : ''}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
                                                     <Page width={550} key={`page_${index + 1}`} pageNumber={index + 1} />
                                                     {placeholders.map((placeholder, i) =>
-                                                        placeholder.page === (index + 1) ?
+                                                        placeholder.page === (index) ?
                                                             <div key={i} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
                                                             : ""
                                                     )}
