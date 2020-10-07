@@ -107,7 +107,7 @@ function signDocument(data, userToken) {
     function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
 }
 
-function signDocumentNew(file, documentId) {
+function signDocumentNew(file, documentId, userToken) {
     return dispatch => {
         dispatch(request());
 
@@ -118,7 +118,7 @@ function signDocumentNew(file, documentId) {
         let uploadendpoint = `${Config.API_URL}/documents/sign`;
         let headers = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + authService.getToken()
+            'Authorization': `Bearer ${userToken ? userToken : authService.getToken()}`
         }
 
         Axios
@@ -139,6 +139,8 @@ function signDocumentNew(file, documentId) {
             })
             .catch(err => {
                 dispatch(failure());
+
+                console.log(err);
 
                 if (err.response) {
                     if (err.response.data) {
