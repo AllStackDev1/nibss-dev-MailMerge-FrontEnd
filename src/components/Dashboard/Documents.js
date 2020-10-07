@@ -22,16 +22,30 @@ import pdfFile from "./pdfFile";
 const Documents = withRouter(({ location }) => {
     const documents = useSelector(state => state.document);
     const [document, setDocument] = useState({
-        signatories: [],
+        signatories: [
+            {
+                status: "active",
+                signatures: [
+                    "https://res.cloudinary.com/comestibles/image/upload/v1601656196/signatures/seth%40mailinator.com/signature1601656195142.svg.png",
+                    "https://res.cloudinary.com/comestibles/image/upload/v1601149908/signatures/seth%40mailinator.com/signature1601149897831.svg.png"
+                ],
+                name: "Seth",
+                role: "user",
+                _id: "5f5e6e775b68706fc74eda52",
+                email: "seth@mailinator.com",
+                createdAt: "2020-09-13T19:09:43.617Z",
+                updatedAt: "2020-10-02T16:29:56.656Z",
+                __v: 0
+            }
+        ],
         recipients: []
     });
-
-    // const [documentFiles, setDocumentFiles] = useState([pdfFile]);
-    const [documentFiles, setDocumentFiles] = useState([]);
+    const [documentFiles, setDocumentFiles] = useState([pdfFile]);
+    // const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);
     const [fetching, setFetching] = useState(false);
-    const [step, setStep] = useState(1);
-    const [uploadingDocument, setUploadingDocument] = useState(false);
+    const [step, setStep] = useState(3);
+    const [uploadingDocument, setUploadingDocument] = useState(true);
     const [modal, setModal] = useState(false);
     const [placeholders, setPlaceholders] = useState([]);
 
@@ -67,7 +81,7 @@ const Documents = withRouter(({ location }) => {
             });
             setDocumentFiles([]);
             setTab(1);
-            setStep(1);
+            setStep(3);
             setUploadingDocument(false);
             setPlaceholders([]);
 
@@ -99,8 +113,6 @@ const Documents = withRouter(({ location }) => {
     }
 
     const onDrop = useCallback(acceptedFiles => {
-        console.log(acceptedFiles);
-
         var r = new FileReader();
 
         r.onloadend = function (e) {
@@ -120,7 +132,7 @@ const Documents = withRouter(({ location }) => {
 
         setUploadingDocument(true);
         setModal(false);
-        setStep(1);
+        setStep(3);
     }, []);
 
     const prepareDocument = () => {

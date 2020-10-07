@@ -143,7 +143,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                                         >
                                             {Array.from(new Array(numPages), (el, index) => (
                                                 <PageContainer className={`${numPages === undefined ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
-                                                    <Page style={{ width: '100%' }} key={`page_${index + 1}`} pageNumber={index + 1} />
+                                                    <Page width={'700'} key={`page_${index + 1}`} pageNumber={index + 1} />
                                                 </PageContainer>
                                             ))}
                                         </Document>
