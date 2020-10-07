@@ -16,8 +16,8 @@ import DocumentList from "./snippets/documents/DocumentList";
 import { useParams, withRouter } from "react-router-dom";
 import qs from 'qs';
 import { push } from "connected-react-router";
-import imageFile from "./imageFile";
-import pdfFile from "./pdfFile";
+// import imageFile from "./imageFile";
+// import pdfFile from "./pdfFile";
 
 const Documents = withRouter(({ location }) => {
     const documents = useSelector(state => state.document);
@@ -40,12 +40,13 @@ const Documents = withRouter(({ location }) => {
         ],
         recipients: []
     });
-    const [documentFiles, setDocumentFiles] = useState([pdfFile]);
-    // const [documentFiles, setDocumentFiles] = useState([]);
+
+    // const [documentFiles, setDocumentFiles] = useState([pdfFile]);
+    const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);
     const [fetching, setFetching] = useState(false);
-    const [step, setStep] = useState(3);
-    const [uploadingDocument, setUploadingDocument] = useState(true);
+    const [step, setStep] = useState(1);
+    const [uploadingDocument, setUploadingDocument] = useState(false);
     const [modal, setModal] = useState(false);
     const [placeholders, setPlaceholders] = useState([]);
 
@@ -81,7 +82,7 @@ const Documents = withRouter(({ location }) => {
             });
             setDocumentFiles([]);
             setTab(1);
-            setStep(3);
+            setStep(1);
             setUploadingDocument(false);
             setPlaceholders([]);
 
@@ -132,7 +133,7 @@ const Documents = withRouter(({ location }) => {
 
         setUploadingDocument(true);
         setModal(false);
-        setStep(3);
+        setStep(1);
     }, []);
 
     const prepareDocument = () => {
