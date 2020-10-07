@@ -78,7 +78,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 if (userSigned !== -1) {
                     placeholders[userSigned] = {
                         ...placeholders[userSigned],
-                        page: info.page + 1,
+                        page: info.page,
                         absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
                         absolute_y_coordinate: info.offset,
                         x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) / refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
@@ -90,7 +90,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                     return [
                         ...placeholders,
                         {
-                            page: info.page + 1,
+                            page: info.page,
                             absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
                             absolute_y_coordinate: info.offset,
                             x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) / refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,

@@ -182,7 +182,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                                                     <PageContainer key={index} ref={refs.current[index]} className={`${index} ${numPages === undefined ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
                                                         <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
                                                         {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, i) =>
-                                                            signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index + 1) ?
+                                                            signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
                                                                 <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
                                                                 : ""
                                                         )}
