@@ -27,9 +27,24 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const dispatch = useDispatch();
     const documentContainer = useRef(null);
     const signatureCanvas = useRef(null);
+    const refs = useRef([React.createRef(), React.createRef()]);
+    const refsFull = useRef([React.createRef(), React.createRef()]);
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
+        refs.current = refs.current.splice(0, numPages);
+        for (let i = 0; i < numPages; i++) {
+            refs.current[i] = refs.current[i] || React.createRef();
+        }
+        refs.current = refs.current.map((item) => item || React.createRef());
+
+        refsFull.current = refsFull.current.splice(0, numPages);
+        for (let i = 0; i < numPages; i++) {
+            refsFull.current[i] = refsFull.current[i] || React.createRef();
+        }
+        refsFull.current = refsFull.current.map((item) => item || React.createRef());
+
+        setTimeout(calculateOffsetPDF, 1000);
     }
 
     useEffect(() => {
@@ -71,11 +86,11 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                         stroke: 1,
                         strokeColor: 'rgba(0, 0, 0, 1)'
                     };
-    
+
                     var textImage = window.TextImage(style);
                     signatureImage = textImage.toDataURL(signature.signature);
                 }
-    
+
                 dispatch(documentActions.signDocumentNew(toFile(signatureImage, `signature${Date.now()}.svg`), document.document._id));
             } else {
                 dispatch(documentActions.signDocument({
@@ -99,6 +114,22 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
             }
 
             setDocument(documentCopy);
+        })
+    }
+
+    const calculateOffsetPDF = e => {
+        document.document.signatories.forEach((signatory, i) => {
+            let documentCopy = Object.assign({}, document);
+
+            if (refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current) {
+                documentCopy.document.signatories[i] = {
+                    ...signatory,
+                    absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetWidth,
+                    absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) - 1 : 0].current.offsetHeight
+                }
+
+                setDocument(documentCopy);
+            }
         })
     }
 
@@ -134,27 +165,44 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                                 {
                                     imageError === false ?
                                         <PageContainer className={`${numPages === undefined ? 'width-75-percent' : ''}`}>
-                                            <img ref={documentContainer} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file} on className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                                            <img ref={documentContainer} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                                            {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, index) =>
+                                                signatory.absolute_x_coordinate !== undefined ?
+                                                    <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
+                                                    : ""
+                                            )}
                                         </PageContainer>
                                         :
-                                        <Document
-                                            file={document.document.file}
-                                            onLoadSuccess={onDocumentLoadSuccess}
-                                        >
-                                            {Array.from(new Array(numPages), (el, index) => (
-                                                <PageContainer className={`${numPages === undefined ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
-                                                    <Page width={'700'} key={`page_${index + 1}`} pageNumber={index + 1} />
-                                                </PageContainer>
-                                            ))}
-                                        </Document>
+                                        <>
+                                            <Document
+                                                file={document.document.file}
+                                                onLoadSuccess={onDocumentLoadSuccess}
+                                            >
+                                                {Array.from(new Array(numPages), (el, index) => (
+                                                    <PageContainer key={index} ref={refs.current[index]} className={`${index} ${numPages === undefined ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
+                                                        <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
+                                                        {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, i) =>
+                                                            signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index + 1) ?
+                                                                <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
+                                                                : ""
+                                                        )}
+                                                    </PageContainer>
+                                                ))}
+                                            </Document>
+                                            <div className="hide height-0 overflow-hidden">
+                                                <Document
+                                                    file={document.document.file}
+                                                    onLoadSuccess={onDocumentLoadSuccess}
+                                                >
+                                                    {Array.from(new Array(numPages), (el, index) => (
+                                                        <PageContainer ref={refsFull.current[index]} key={index} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50`}>
+                                                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                                                        </PageContainer>
+                                                    ))}
+                                                </Document>
+                                            </div>
+                                        </>
                                 }
-
-                                {/* <img onLoad={calculateOffset} src={document.document.file} className="full-width" alt="NIBSS Document" /> */}
-                                {document.document.signatories.filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email)).map((signatory, index) =>
-                                    signatory.absolute_x_coordinate !== undefined ?
-                                        <div onClick={() => setModal("sign-document")} key={index} className="width-150 height-35 absolute cursor-pointer" style={{ left: signatory.absolute_x_coordinate, top: signatory.absolute_y_coordinate, backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email) }}></div>
-                                        : ""
-                                )}
                             </div>
                         </>}
                 </div>

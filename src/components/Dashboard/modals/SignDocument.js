@@ -43,7 +43,7 @@ const SignDocument = ({ signatureType, setSignatureType, signature, setSignature
                         <input type="text" name="signature" value={signature.signature} onChange={e => setSignature({ signature: e.target.value })} placeholder="Type here" className={`${signatureType === 'draw' ? 'hide' : ''} text-center top-margin-30 height-200 gray width-600 size-three-rem`} required />
                         <div className="display-flex flex-wrap top-margin-20">
                             {user?.data?.signatures?.map((signature, index) =>
-                                <SignatureContainer onClick={() => setDocumentSignature(s => s !== signature ? signature : "")} url={signature} className={`${documentSignature === signature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
+                                <SignatureContainer key={index} onClick={() => setDocumentSignature(s => s !== signature ? signature : "")} url={signature} className={`${documentSignature === signature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
                                     <div className="width-80-percent height-60-percent"></div>
                                 </SignatureContainer>
                             ) || ""}
