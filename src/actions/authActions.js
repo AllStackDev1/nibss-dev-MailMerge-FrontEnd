@@ -2,7 +2,6 @@ import { authConstants } from '../constants';
 import { authService } from 'services';
 import { push } from 'connected-react-router';
 import { toast } from 'react-toastify';
-import Config from 'config/config';
 import Axios from 'axios';
 
 export const authActions = {
@@ -73,7 +72,7 @@ function saveSignature(file, add) {
         const data = new FormData();
         data.append('media', file);
 
-        let uploadendpoint = add ? `${Config.API_URL}/users/add/signature` : `${Config.API_URL}/users/invite/complete`;
+        let uploadendpoint = add ? `${process.env.REACT_APP_API_URL}/users/add/signature` : `${process.env.REACT_APP_API_URL}/users/invite/complete`;
         let headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + authService.getToken()

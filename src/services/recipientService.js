@@ -1,4 +1,3 @@
-import Config from '../config/config';
 import { authService } from './authService';
 import { buildQuery } from 'helpers/buildQuery';
 
@@ -26,7 +25,7 @@ function add(recipient, multiple) {
         body: JSON.stringify(recipient)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient${multiple ? '/multiple' : ""}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient${multiple ? '/multiple' : ""}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
@@ -39,7 +38,7 @@ function edit(recipient) {
         body: JSON.stringify(recipient)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient._id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/${recipient._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
@@ -52,7 +51,7 @@ function addTag(tag) {
         body: JSON.stringify(tag)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/tag`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/tag`, requestOptions)
         .then(authService.handleResponse)
         .then(tag => {
             return tag;
@@ -69,7 +68,7 @@ function addTagsToRecipient(recipient, tags) {
         body: JSON.stringify(tags)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/${recipient}`, requestOptions)
         .then(authService.handleResponse)
         .then(tag => {
             return tag;
@@ -81,7 +80,7 @@ function fetch() {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;
@@ -93,7 +92,7 @@ function search(search, filter) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/search?${buildQuery({search, filter: filter?.length > 0 ? JSON.stringify(filter) : ''})}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/search?${buildQuery({search, filter: filter?.length > 0 ? JSON.stringify(filter) : ''})}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;
@@ -105,7 +104,7 @@ function deleteRecipient(recipient) {
         method: 'DELETE'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/${recipient._id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/${recipient._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
@@ -117,7 +116,7 @@ function fetchPage(page) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient?page=${page}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient?page=${page}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;
@@ -129,7 +128,7 @@ function fetchTags() {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/recipient/tag`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/tag`, requestOptions)
         .then(authService.handleResponse)
         .then(tags => {
             return tags.data;

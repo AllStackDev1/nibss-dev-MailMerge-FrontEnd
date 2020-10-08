@@ -1,4 +1,3 @@
-import Config from '../config/config';
 import { authService } from './authService';
 import { buildQuery } from 'helpers/buildQuery';
 
@@ -36,7 +35,7 @@ function invite(users) {
         body: JSON.stringify(obj)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/invite`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/invite`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
             return users;
@@ -49,7 +48,7 @@ function edit(user) {
         body: JSON.stringify(user)
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users/${user._id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/${user._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(user => {
             return user;
@@ -61,7 +60,7 @@ function deleteUser(user) {
         method: 'DELETE'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users/${user._id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/${user._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(user => {
             return user;
@@ -76,7 +75,7 @@ function updateRole(user) {
         })
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users/role/${user._id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/role/${user._id}`, requestOptions)
         .then(authService.handleResponse)
         .then(user => {
             return user;
@@ -88,7 +87,7 @@ function fetch() {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
             return users;
@@ -100,7 +99,7 @@ function fetchPage(page) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users?page=${page}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users?page=${page}`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
             return users;
@@ -112,7 +111,7 @@ function search(search, filter) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/admin/users/search?${buildQuery({ search, filter })}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/search?${buildQuery({ search, filter })}`, requestOptions)
         .then(authService.handleResponse)
         .then(users => {
             return users;
