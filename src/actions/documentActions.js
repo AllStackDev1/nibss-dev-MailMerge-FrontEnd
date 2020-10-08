@@ -1,7 +1,6 @@
 import { documentConstants } from '../constants';
 import { authService, documentService } from 'services';
 import { toast } from 'react-toastify';
-import Config from 'config/config';
 import Axios from 'axios';
 import { push } from 'connected-react-router';
 
@@ -115,7 +114,7 @@ function signDocumentNew(file, documentId, userToken) {
         data.append('media', file);
         data.append('documentId', documentId);
 
-        let uploadendpoint = `${Config.API_URL}/documents/sign`;
+        let uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/sign`;
         let headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userToken ? userToken : authService.getToken()}`
@@ -167,7 +166,7 @@ function prepare(document, signatories) {
         data.append('recipients', JSON.stringify(document.recipients));
         data.append('signatories', JSON.stringify(signatories));
 
-        let uploadendpoint = `${Config.API_URL}/documents/prepare`;
+        let uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/prepare`;
         let headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + authService.getToken()

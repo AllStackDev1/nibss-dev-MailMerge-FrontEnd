@@ -1,5 +1,4 @@
 import decode from 'jwt-decode';
-import Config from '../config/config';
 
 export const authService = {
     login,
@@ -20,7 +19,7 @@ function login(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${Config.API_URL}/auth/login`, requestOptions)
+    return fetch(`${process.env.REACT_APP_API_URL}/auth/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             user.account = decode(user._token);
@@ -121,7 +120,7 @@ function fetchProfile() {
         }
     };
 
-    let url = `${Config.API_URL}/users`;
+    let url = `${process.env.REACT_APP_API_URL}/users`;
 
     return fetchFrom(url, requestOptions)
         .then(this.handleResponse)
@@ -147,7 +146,7 @@ function updateProfile(user) {
         body: JSON.stringify(user)
     };
 
-    let url = `${Config.API_URL}/users`;
+    let url = `${process.env.REACT_APP_API_URL}/users`;
 
     return fetchFrom(url, requestOptions)
         .then(this.handleResponse)
@@ -175,7 +174,7 @@ function deleteSignature(signature) {
         })
     };
 
-    let url = `${Config.API_URL}/users/remove/signature`;
+    let url = `${process.env.REACT_APP_API_URL}/users/remove/signature`;
 
     return fetchFrom(url, requestOptions)
         .then(this.handleResponse)

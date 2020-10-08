@@ -1,4 +1,3 @@
-import Config from '../config/config';
 import { authService } from './authService';
 
 export const documentService = {
@@ -13,7 +12,7 @@ function fetch(type) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/documents${`${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents${`${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -33,7 +32,7 @@ function fetchSingle(id, userToken) {
         }
     }
 
-    return authService.fetchFrom(`${Config.API_URL}/documents/${id}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents/${id}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -45,7 +44,7 @@ function fetchPage(type, page) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${Config.API_URL}/documents?page=${page}${`${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents?page=${page}${`${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -66,7 +65,7 @@ function signDocument(data, userToken) {
         }
     }
 
-    return authService.fetchFrom(`${Config.API_URL}/documents/sign`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents/sign`, requestOptions)
         .then(authService.handleResponse)
         .then(document => {
             return document;
