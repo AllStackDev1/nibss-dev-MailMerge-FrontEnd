@@ -57,9 +57,9 @@ const InviteUsers = ({ add }) => {
                 var data = allTextLines[i].split(',');
 
                 var row = {
-                    name: data[0],
-                    email: data[1],
-                    role: data[2].toLowerCase()
+                    name: data[0].replace( /[\r\n]+/gm, "" ),
+                    email: data[1].replace( /[\r\n]+/gm, "" ),
+                    role: data[2].toLowerCase().replace( /[\r\n]+/gm, "" )
                 };
 
                 if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
@@ -71,6 +71,8 @@ const InviteUsers = ({ add }) => {
 
             setInvited(invitedArr);
         }
+
+        file.target.value = null;
     }
 
     return (

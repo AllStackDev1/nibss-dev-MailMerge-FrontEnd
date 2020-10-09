@@ -4,6 +4,7 @@ import { toFile } from 'helpers/toFile';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from 'actions';
 import { toast } from 'react-toastify';
+import { push } from 'connected-react-router';
 
 const SaveSignature = ({ add }) => {
     const [signatureType, setSignatureType] = useState('draw');
@@ -14,6 +15,11 @@ const SaveSignature = ({ add }) => {
 
     const clearCanvas = () => {
         signatureCanvas.current.clear();
+    }
+
+    const logout = () => {
+        dispatch(authActions.logout());
+        dispatch(push("/"));
     }
 
     const saveSignature = () => {
@@ -71,7 +77,8 @@ const SaveSignature = ({ add }) => {
                     <input type="text" name="signature" value={signature.signature} onChange={e => setSignature({ signature: e.target.value })} placeholder="Type here" className={`${signatureType === 'draw' ? 'hide' : ''} text-center top-margin-30 height-200 gray width-600 size-three-rem`} required />
                 </div>
             </div>
-            <div className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center flex-end">
+            <div className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center space-between">
+                <p onClick={logout} className="mustard-color size-pointeight-rem bold cursor-pointer">LOGOUT</p>
                 <button onClick={saveSignature} className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {auth.uploading ?
                         auth.uploadProgress ?

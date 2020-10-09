@@ -30,10 +30,15 @@ function login(user) {
                 user => {
                     dispatch(success(user));
 
-                    if ((user.data.role === "user" && user.data.status === "active")) {
+                    // 235tegre@gmail.com
+                    console.log(user.data.role, user.data.status);
+
+                    if (user.data.role === "user" && user.data.status === "active") {
                         dispatch(push(`/dashboard/documents`));
+                    } else if (user.data.role === "user") {
+                        dispatch(push(`/onboarding`));
                     } else {
-                        if (user.data.userCount > 1) {
+                        if (user.data.userCount > 1 && user.data.status === "active") {
                             dispatch(push(`/dashboard`));
                         } else {
                             dispatch(push(`/onboarding`));

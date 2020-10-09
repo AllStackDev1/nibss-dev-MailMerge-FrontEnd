@@ -14,14 +14,14 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                     <img src={require(`images/logo.svg`)} className="height-60" alt="NIBSS Empty" />
                 </div>
                 <div className="display-flex flex-direction-column align-items-center bottom-margin-30 no-shrink">
-                    <Profile style={{ backgroundColor: getColor(user ? user.data.name : "") }} className="width-70 height-70 border-radius-100-percent">
-                        <span className="size-onepointone-rem white-color">{user ? user.data.name ? getInitials(user.data.name) : "" : ""}</span>
+                    <Profile style={{ backgroundColor: getColor(user?.data?.name || "") }} className="width-70 height-70 border-radius-100-percent">
+                        <span className="size-onepointone-rem white-color">{getInitials(user?.data?.name || "")}</span>
                         <Link to="/dashboard/user-profile" className="white border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/settings.svg`)} className="height-18" alt="NIBSS Empty" />
                         </Link>
                     </Profile>
-                    <p className="size-pointeightfive-rem top-margin-10 bold">{user ? user.data.name : ""}</p>
-                    <Gray className="size-pointseven-rem">{user ? user.data.email : ""}</Gray>
+                    <p className="size-pointeightfive-rem top-margin-10 bold">{user?.data?.name}</p>
+                    <Gray className="size-pointseven-rem">{user?.data?.email}</Gray>
                 </div>
                 <LinkContainer className="full-height overflow-auto-y custom-scrollbar">
                     {routes.map((route, index) =>
@@ -62,7 +62,7 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                                             </div>
                                         </div>
                                         <div className="smooth height-45 left-padding-10 display-flex align-items-center size-pointeight-rem bold no-wrap">
-                                            {route.name}
+                                            {route?.name}
                                         </div>
                                     </RouteLink>
                                 </Link>
