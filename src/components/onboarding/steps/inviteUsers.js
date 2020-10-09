@@ -138,7 +138,7 @@ const InviteUsers = ({ add }) => {
                             <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
                             <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
                         </button>
-                        <input type="file" name="csv_file" id="csv_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
+                        <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
                     </div>
                 </form>
 
