@@ -32,6 +32,7 @@ function invite(users, add) {
                 },
                 error => {
                     if (error.message) {
+                        toast.error(error.message);
                         dispatch(failure(error.message));
                     }
                 }

@@ -31,6 +31,7 @@ function add(recipients, multiple) {
                 },
                 error => {
                     if (error.message) {
+                        toast.error(error.message);
                         dispatch(failure(error.message));
                     }
                 }

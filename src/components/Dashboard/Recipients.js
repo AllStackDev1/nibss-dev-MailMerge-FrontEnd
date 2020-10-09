@@ -179,8 +179,8 @@ const Recipients = ({ user }) => {
                 var data = allTextLines[i].split(',');
 
                 var row = {
-                    name: data[0],
-                    email: data[1]
+                    name: data[0].replace( /[\r\n]+/gm, "" ),
+                    email: data[1].replace( /[\r\n]+/gm, "" )
                 };
 
                 recipientArr.push(row);
@@ -188,6 +188,8 @@ const Recipients = ({ user }) => {
 
             dispatch(recipientActions.add(recipientArr, true));
         }
+
+        file.target.value = null;
     }
 
     const viewPage = page => {
