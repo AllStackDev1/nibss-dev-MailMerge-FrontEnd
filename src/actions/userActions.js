@@ -1,18 +1,19 @@
-import { userService } from '../services';
+import { authService, userService } from '../services';
 import { userConstants } from '../constants';
 import { toast } from 'react-toastify';
 import { push } from 'connected-react-router';
 
 export const userActions = {
     invite,
-    fetch,
+    fetchUsers,
     fetchPage,
     reset,
     search,
     clearSearch,
     edit,
     deleteUser,
-    updateRole
+    updateRole,
+    exportDocument
 };
 
 function invite(users, add) {
@@ -92,6 +93,35 @@ function deleteUser(user) {
     function failure(error) { return { type: userConstants.DELETE_FAILURE, error }; }
 }
 
+function exportDocument(type) {
+    return dispatch => {
+        dispatch(request());
+
+        fetch(`${process.env.REACT_APP_API_URL}/admin/users/download/${type}`,
+            {
+                method: "GET",
+                headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${authService.getToken()}` }
+            })
+            .then(response => response.blob())
+            .then(response => {
+                dispatch(success());
+
+                let url = window.URL.createObjectURL(response);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = `Users - ${type.toUpperCase()}.${type}`;
+                a.click();
+            }).catch(function(error) {
+                dispatch(failure());
+                console.log(error);
+            });
+    };
+
+    function request() { return { type: userConstants.DOWNLOAD_REQUEST }; }
+    function success() { return { type: userConstants.DOWNLOAD_SUCCESS }; }
+    function failure() { return { type: userConstants.DOWNLOAD_FAILURE }; }
+}
+
 function updateRole(user) {
     return dispatch => {
         dispatch(request(user));
@@ -116,7 +146,7 @@ function updateRole(user) {
     function failure(error) { return { type: userConstants.ASSIGN_AS_ADMIN_FAILURE, error }; }
 }
 
-function fetch() {
+function fetchUsers() {
     return dispatch => {
         dispatch(request());
 
