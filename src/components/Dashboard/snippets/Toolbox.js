@@ -89,7 +89,7 @@ const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFil
                                 :
                                 'Upload CSV'}
                         </ActionButton>
-                        <input type="file" name="csv_file" id="csv_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
+                        <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
                     </>
                     : ""}
                 {user?.data?.role !== "user" ?
