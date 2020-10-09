@@ -73,7 +73,7 @@ const Users = ({ user: localUser }) => {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(userActions.fetchPage(pageId));
         } else {
-            dispatch(userActions.fetch());
+            dispatch(userActions.fetchUsers());
         }
     }, [dispatch, pageId]);
 
@@ -95,6 +95,12 @@ const Users = ({ user: localUser }) => {
 
     const updateRole = user => {
         dispatch(userActions.updateRole(user));
+    }
+
+    const exportDocument = (type) => {
+        if (users.downloading !== true) {
+            dispatch(userActions.exportDocument(type));
+        }
     }
 
     return (
@@ -123,6 +129,8 @@ const Users = ({ user: localUser }) => {
                     search={search}
                     filter={filter}
                     setFilter={setFilter}
+                    exportDocument={exportDocument}
+                    downloading={users.downloading}
                     addButtonText="Add New User"
                     addButtonUrl="/dashboard/add-user" />
                 <div className="white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50">

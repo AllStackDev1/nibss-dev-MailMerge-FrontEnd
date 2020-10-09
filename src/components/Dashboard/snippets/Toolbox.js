@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipientActions } from 'actions/recipientActions';
 
-const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFilter, removeFilter, tag, upload, adding, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal, parseCSV }) => {
+const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFilter, removeFilter, tag, upload, adding, viewTags, closeTags, viewingTags, exportButton, addButtonText, addButtonUrl, setModal, parseCSV, exportDocument, downloading }) => {
     const dispatch = useDispatch();
 
     const recipients = useSelector(state => state.recipient);
@@ -58,10 +58,23 @@ const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFil
                     </div>
                 </Menu>
                 {exportButton === true ?
-                    <div className={`display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color ${user?.data?.role !== "user" ? "right-margin-50" : ""}`}>
+                    <Menu className={`display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color ${user?.data?.role !== "user" ? "right-margin-50" : ""}`}>
                         Export as
-                        <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>
-                    </div>
+                        {downloading ?
+                            <ExportLoader className="lds-ring"><div></div><div></div><div></div><div></div></ExportLoader>
+                            :
+                            <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>}
+                        <div className="top-padding-10">
+                            <div className="box-shadow-less2 border-radius-10 padding-10 white min-width-100">
+                                <div onClick={() => exportDocument('csv')} className="smooth display-flex align-items-center bottom-margin-10">
+                                    CSV
+                                </div>
+                                <div onClick={() => exportDocument('pdf')} className="smooth display-flex align-items-center bottom-margin-10">
+                                    PDF
+                                </div>
+                            </div>
+                        </div>
+                    </Menu>
                     : ""}
                 {tag === true ?
                     <ActionButton onClick={() => { viewingTags ? closeTags() : viewTags() }} className={`${viewingTags ? 'active-button' : ''} ${upload === true ? 'right-margin-20' : 'right-margin-50'} smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color`}>
@@ -96,14 +109,14 @@ const Toolbox = ({ user, search, onChange, filter, setFilter, filterList, addFil
     )
 }
 
-const Menu = styled.div`&>div{
+const Menu = styled.div`&>div:not(.lds-ring){
     display: none;
     position: absolute;
     left: 0;
     top: 30px;
     z-index: 1;
 }
-&>div>div{
+&>div:not(.lds-ring)>div{
     min-width: 200px;
     background: #FFF !important;
     white-space: nowrap;
@@ -112,7 +125,7 @@ const Menu = styled.div`&>div{
 &:hover>div{
     display: block;
 }
-&>div>div>div:hover{
+&>div:not(.lds-ring)>div>div:hover{
     opacity: 0.5
 }
 `;
@@ -152,6 +165,17 @@ const Loader = styled.div`
                         & > div {
                             width: 40px;
                             height: 40px;
+                            border-color: #9E7D0A transparent transparent transparent
+                        }
+                    `;
+
+const ExportLoader = styled.div`
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 10px;
+                        & > div {
+                            width: 20px;
+                            height: 20px;
                             border-color: #9E7D0A transparent transparent transparent
                         }
                     `;

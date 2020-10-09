@@ -170,6 +170,21 @@ export default function user(state = initialState, action) {
                 ...state,
                 fetchingUsersPage: false
             };
+        case userConstants.DOWNLOAD_REQUEST:
+            return {
+                ...state,
+                downloading: true
+            };
+        case userConstants.DOWNLOAD_SUCCESS:
+            return {
+                ...state,
+                downloading: false
+            };
+        case userConstants.DOWNLOAD_FAILURE:
+            return {
+                ...state,
+                downloading: false
+            };
         default:
             return state;
     }
