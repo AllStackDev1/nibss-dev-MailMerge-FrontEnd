@@ -21,7 +21,7 @@ const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, add
                         :
                         tags ?
                             tags.map((tag, index) =>
-                                <Tag key={index} onClick={() => setToAddTags([...toAddTags, tag.name])} className={`${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
+                                <Tag key={index} onClick={() => setToAddTags(setTags => setTags.includes(tag.name) ? setTags.filter(item => item !== tag.name) : [...toAddTags, tag.name])} className={`${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
                                     {tag.name}
                                     {toAddTag === false ?
                                         <span className="material-icons">remove_circle</span>

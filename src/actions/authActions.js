@@ -93,6 +93,7 @@ function saveSignature(file, add) {
             })
             .then(res => {
                 toast.success(res.data.message);
+                console.log(res);
 
                 if (add) {
                     dispatch(push(`/dashboard/user-profile`));
