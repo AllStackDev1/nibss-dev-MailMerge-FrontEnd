@@ -6,6 +6,7 @@ export const recipientActions = {
     add,
     edit,
     addTag,
+    deleteTag,
     fetch,
     fetchPage,
     fetchTags,
@@ -65,6 +66,30 @@ function deleteRecipient(recipient) {
     function request(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient }; }
     function success(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient }; }
     function failure(error) { return { type: recipientConstants.DELETE_RECIPIENT_FAILURE, error }; }
+}
+
+function deleteTag(tag) {
+    return dispatch => {
+        dispatch(request(tag));
+
+        recipientService.deleteTag(tag)
+            .then(
+                tag => {
+                    dispatch(success(tag.tag));
+
+                    toast.success(tag.message);
+                },
+                error => {
+                    if (error.message) {
+                        dispatch(failure(error.message));
+                    }
+                }
+            );
+    };
+
+    function request(tag) { return { type: recipientConstants.DELETE_TAG_REQUEST, tag }; }
+    function success(tag) { return { type: recipientConstants.DELETE_TAG_SUCCESS, tag }; }
+    function failure(error) { return { type: recipientConstants.DELETE_TAG_FAILURE, error }; }
 }
 
 function edit(recipient) {

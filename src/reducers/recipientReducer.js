@@ -161,6 +161,27 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 deleting: false
             };
+        case recipientConstants.DELETE_TAG_REQUEST:
+            return {
+                ...state,
+                deletingTag: action.tag
+            };
+        case recipientConstants.DELETE_TAG_SUCCESS:
+            if (state.tags) {
+                state.tags = [
+                    ...state.tags.filter((tag) => tag._id !== action.tag._id)
+                ];
+            }
+
+            return {
+                ...state,
+                deletingTag: false
+            };
+        case recipientConstants.DELETE_TAG_FAILURE:
+            return {
+                ...state,
+                deletingTag: false
+            };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST:
             return {
                 ...state,

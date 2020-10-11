@@ -5,6 +5,7 @@ export const recipientService = {
     add,
     edit,
     deleteRecipient,
+    deleteTag,
     addTag,
     addTagsToRecipient,
     fetch,
@@ -108,6 +109,18 @@ function deleteRecipient(recipient) {
         .then(authService.handleResponse)
         .then(recipient => {
             return recipient;
+        });
+}
+
+function deleteTag(tag) {
+    const requestOptions = {
+        method: 'DELETE'
+    };
+
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/tag/${tag._id}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(tag => {
+            return tag;
         });
 }
 

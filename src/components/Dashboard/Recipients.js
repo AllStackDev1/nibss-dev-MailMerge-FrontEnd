@@ -158,6 +158,11 @@ const Recipients = ({ user }) => {
         dispatch(recipientActions.addTagsToRecipient(toAddTag, toAddTags));
     }
 
+    const deleteTag = (e, tag) => {
+        e.stopPropagation();
+        dispatch(recipientActions.deleteTag(tag));
+    }
+
     const initiateEdit = recipient => {
         setToAddTag(recipient);
         setToAddTags(recipients.recipients.data.find(rec => rec._id === recipient).tag);
@@ -248,6 +253,7 @@ const Recipients = ({ user }) => {
                         recipients={recipients.recipients}
                         tags={recipients.tags}
                         updating={recipients.addingTagToRecipient}
+                        deleting={recipients.deletingTag}
                         toAddTag={toAddTag}
                         toAddTags={toAddTags}
                         closeTags={closeTags}
@@ -255,6 +261,7 @@ const Recipients = ({ user }) => {
                         viewingTags={viewingTags}
                         setToAddTags={setToAddTags}
                         addTagsToRecipient={addTagsToRecipient}
+                        deleteTag={deleteTag}
                     />
                     <div className="full-width display-flex space-between top-padding-30">
                         <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
