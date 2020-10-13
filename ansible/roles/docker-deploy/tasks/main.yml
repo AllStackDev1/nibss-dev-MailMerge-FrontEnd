@@ -1,0 +1,29 @@
+- name: Enable Firewall
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+
+- name: Copy Compressed Build
+  copy:
+    src: ../../../build.tar.gz
+    dest: /usr/local/
+    force: yes
+
+- name: Extract Build
+  unarchive:
+    src: /usr/local/build.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy built files to nginx serving folder
+  copy:
+    src: /tmp/build/
+    dest: "{{APP_DIR | default('/usr/share/nginx/html')}}"
+    force: yes
+    remote_src: yes
+
+- name: Clean up Files
+  file:
+    path: /tmp/build
+    state: absent

@@ -1,0 +1,5 @@
+---
+#ansible_python_interpreter: "/usr/local/bin/python3"
+APP_NAME: MailMerge-FrontEnd
+IMG_TAG: "{{ lookup('env', 'IMG_TAG') }}"
+APP_DIR: /usr/share/nginx/html
