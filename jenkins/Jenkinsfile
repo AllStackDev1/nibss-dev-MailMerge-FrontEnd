@@ -52,42 +52,42 @@ pipeline {
             }
         }
 
-        stage('Deploy to dev') {
+        stage('Inject to dev') {
             when { branch 'dev#'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-dev', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
                 InjectEnv()
             }
         }
-        stage('Deploy to QA') {
+        stage('Inject to QA') {
             when {branch 'qa'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-qa', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
                 InjectEnv()
             }
         }
-        stage('Deploy to DR') {
+        stage('Inject to DR') {
             when {branch 'dr'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-dr', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
                 InjectEnv()
             }
         }
-        stage('Deploy to Staging') {
+        stage('Inject to Staging') {
             when {branch 'staging'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-staging', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
                 InjectEnv()
             }
         }
-        stage('Deploy to Certification') {
+        stage('Inject to Certification') {
             when {branch 'certification'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-cert', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
                 InjectEnv()
             }
         }
-        stage('Deploy to Prod') {
+        stage('Inject to Prod') {
             when { branch 'master'}
             steps {
                 withCredentials([file(credentialsId: 'mailmerge-prod', variable: 'PIPELINE_ENV')]) { load "$PIPELINE_ENV"}
