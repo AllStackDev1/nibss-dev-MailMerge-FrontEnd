@@ -122,7 +122,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
     return (
         <>
             <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Signing Setup</p>
-            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who is signing this documents</p>
+            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who is signing this document</p>
             <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
 
             <div className="full-height display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
