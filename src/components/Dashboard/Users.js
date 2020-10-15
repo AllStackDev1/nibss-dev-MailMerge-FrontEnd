@@ -138,16 +138,16 @@ const Users = ({ user: localUser }) => {
                         <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
                         <div className="no-shrink width-25-percent size-one-rem bold gray-color opacity-0-5">
                             #
-                    </div>
+                        </div>
                         <div className="no-shrink width-20-percent size-one-rem bold gray-color opacity-0-5">
                             Email address
-                    </div>
+                        </div>
                         <div className="no-shrink width-20-percent size-one-rem bold gray-color opacity-0-5">
                             Role
-                    </div>
+                        </div>
                         <div className="bold no-shrink height-25 width-100 right-margin-50 border-box opacity-0-5">
                             Status
-                    </div>
+                        </div>
                         <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                     </div>
                     {users.platformUsers === undefined || (users.searching) ?

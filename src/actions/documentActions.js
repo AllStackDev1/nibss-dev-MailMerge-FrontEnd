@@ -23,17 +23,23 @@ function fetch(type) {
                 documents => {
                     dispatch(success(documents));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchError => {
+                    if (fetchError.message) {
+                        dispatch(failure(fetchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: documentConstants.FETCH_REQUEST }; }
-    function success(documents) { return { type: documentConstants.FETCH_SUCCESS, documents }; }
-    function failure(error) { return { type: documentConstants.FETCH_FAILURE, error }; }
+    function request() {
+        return { type: documentConstants.FETCH_REQUEST };
+    }
+    function success(documents) {
+        return { type: documentConstants.FETCH_SUCCESS, documents };
+    }
+    function failure(error) {
+        return { type: documentConstants.FETCH_FAILURE, error };
+    }
 }
 
 function fetchSingle(id, userToken) {
@@ -45,17 +51,23 @@ function fetchSingle(id, userToken) {
                 document => {
                     dispatch(success(document));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchSingleError => {
+                    if (fetchSingleError.message) {
+                        dispatch(failure(fetchSingleError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: documentConstants.FETCH_SINGLE_REQUEST }; }
-    function success(document) { return { type: documentConstants.FETCH_SINGLE_SUCCESS, document }; }
-    function failure(error) { return { type: documentConstants.FETCH_SINGLE_FAILURE, error }; }
+    function request() {
+        return { type: documentConstants.FETCH_SINGLE_REQUEST };
+    }
+    function success(document) {
+        return { type: documentConstants.FETCH_SINGLE_SUCCESS, document };
+    }
+    function failure(error) {
+        return { type: documentConstants.FETCH_SINGLE_FAILURE, error };
+    }
 }
 
 function fetchPage(type, page) {
@@ -67,17 +79,23 @@ function fetchPage(type, page) {
                 documents => {
                     dispatch(success(documents));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchPageError => {
+                    if (fetchPageError.message) {
+                        dispatch(failure(fetchPageError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: documentConstants.FETCH_PAGE_REQUEST }; }
-    function success(documents) { return { type: documentConstants.FETCH_PAGE_SUCCESS, documents }; }
-    function failure(error) { return { type: documentConstants.FETCH_PAGE_FAILURE, error }; }
+    function request() {
+        return { type: documentConstants.FETCH_PAGE_REQUEST };
+    }
+    function success(documents) {
+        return { type: documentConstants.FETCH_PAGE_SUCCESS, documents };
+    }
+    function failure(error) {
+        return { type: documentConstants.FETCH_PAGE_FAILURE, error };
+    }
 }
 
 function signDocument(data, userToken) {
@@ -92,18 +110,24 @@ function signDocument(data, userToken) {
                     toast.success(document.message);
                     dispatch(push(`/dashboard/documents`));
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
-                        dispatch(failure(error.message));
+                signError => {
+                    if (signError.message) {
+                        toast.error(signError.message);
+                        dispatch(failure(signError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }
-    function success(document) { return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document }; }
-    function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
+    function request() {
+        return { type: documentConstants.SIGN_DOCUMENT_REQUEST };
+    }
+    function success(document) {
+        return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document };
+    }
+    function failure(error) {
+        return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error };
+    }
 }
 
 function signDocumentNew(file, documentId, userToken) {
@@ -114,8 +138,8 @@ function signDocumentNew(file, documentId, userToken) {
         data.append('media', file);
         data.append('documentId', documentId);
 
-        let uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/sign`;
-        let headers = {
+        const uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/sign`;
+        const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userToken ? userToken : authService.getToken()}`
         }
@@ -123,7 +147,7 @@ function signDocumentNew(file, documentId, userToken) {
         Axios
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
-                    let loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
+                    const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
                     console.log(loaded);
                 },
                 headers
@@ -150,9 +174,15 @@ function signDocumentNew(file, documentId, userToken) {
 
     };
 
-    function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }
-    function success(document) { return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document }; }
-    function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
+    function request() {
+        return { type: documentConstants.SIGN_DOCUMENT_REQUEST };
+    }
+    function success(document) {
+        return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document };
+    }
+    function failure(error) {
+        return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error };
+    }
 }
 
 function prepare(document, signatories) {
@@ -166,8 +196,8 @@ function prepare(document, signatories) {
         data.append('recipients', JSON.stringify(document.recipients));
         data.append('signatories', JSON.stringify(signatories));
 
-        let uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/prepare`;
-        let headers = {
+        const uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/prepare`;
+        const headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + authService.getToken()
         }
@@ -175,13 +205,12 @@ function prepare(document, signatories) {
         Axios
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
-                    let loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
+                    const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
                     dispatch(update(loaded));
                 },
                 headers
             })
             .then(res => {
-                console.log(res);
                 toast.success(res.data.message);
 
                 dispatch(success(res));
@@ -198,10 +227,18 @@ function prepare(document, signatories) {
 
     };
 
-    function startUpload() { return { type: documentConstants.PREPARE_DOCUMENT_START }; }
-    function update(loaded) { return { type: documentConstants.PREPARE_DOCUMENT_PROGRESS, loaded }; }
-    function success(response) { return { type: documentConstants.PREPARE_DOCUMENT_SUCCESS, response }; }
-    function error() { return { type: documentConstants.PREPARE_DOCUMENT_ERROR }; }
+    function startUpload() {
+        return { type: documentConstants.PREPARE_DOCUMENT_START };
+    }
+    function update(loaded) {
+        return { type: documentConstants.PREPARE_DOCUMENT_PROGRESS, loaded };
+    }
+    function success(response) {
+        return { type: documentConstants.PREPARE_DOCUMENT_SUCCESS, response };
+    }
+    function error() {
+        return { type: documentConstants.PREPARE_DOCUMENT_ERROR };
+    }
 }
 
 function setDocument(document) {
