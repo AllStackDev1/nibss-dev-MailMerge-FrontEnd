@@ -4,9 +4,6 @@
     position: relative;
     margin: 0;
     padding: 0;
-}
-
-* {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
 }
@@ -22,13 +19,9 @@ html, body {
     width: 100%;
     padding: 0;
     margin: 0;
-    font-family: "Poppins" !important;
+    font-family: "Poppins", sans-serif !important;
     background: #fff;
-    /* -webkit-font-smoothing: antialiased; */
-}
-
-.maisonneue {
-    font-family: Teko !important;
+    -webkit-font-smoothing: antialiased;
 }
 
 .relative-container {
@@ -85,10 +78,6 @@ html, body {
 
 .space-evenly {
     justify-content: space-evenly;
-}
-
-.space-between {
-    justify-content: space-between;
 }
 
 .flex-end {
@@ -360,10 +349,6 @@ html, body {
     height: auto !important;
 }
 
-.height-120 {
-    height: 120px !important;
-}
-
 .height-60 {
     height: 60px !important;
 }
@@ -530,10 +515,6 @@ html, body {
 }
 
 .height-550 {
-    height: 550px;
-}
-
-.height-600 {
     height: 550px;
 }
 
@@ -820,10 +801,6 @@ html, body {
 
 .width-15 {
     width: 15px;
-}
-
-.width-10 {
-    width: 10px;
 }
 
 .width-20 {
@@ -1179,14 +1156,6 @@ html, body {
     color: #5080FF !important;
 }
 
-.mid-gray-color {
-    color: #666 !important;
-}
-
-.light-gray-color {
-    color: #aaa !important;
-}
-
 .mustard {
     background: #9E7D0A;
 }
@@ -1431,10 +1400,6 @@ html, body {
     top: -100%;
 }
 
-.left-minus-100-percent {
-    left: -100%;
-}
-
 .right-10 {
     right: 10px !important;
 }
@@ -1449,10 +1414,6 @@ html, body {
 
 .top {
     top: 0;
-}
-
-.top-5 {
-    top: 5px;
 }
 
 .top-5 {
@@ -1833,7 +1794,6 @@ html, body {
 
 .right-margin-40-percent-negative {
     margin-right: -40%;
-    ;
 }
 
 .right-margin-20 {
@@ -2180,10 +2140,6 @@ html, body {
     border-left: 1px solid #EFEFEF;
 }
 
-.border-left-gray {
-    border-left: 1px solid #E0E0E0;
-}
-
 .border-bottom {
     border-bottom: 1px solid #d8d8d8;
 }
@@ -2320,10 +2276,6 @@ html, body {
     background-size: cover;
 }
 
-.center-bg {
-    background-position: center;
-}
-
 .no-repeat-bg {
     background-repeat: no-repeat;
 }
@@ -2345,7 +2297,6 @@ input {
     width: 100%;
     height: 55px;
     border: 2px solid rgba(24, 37, 56, 0.1);
-    ;
     border-radius: 5px;
     outline: none;
     color: #666;
@@ -2450,7 +2401,6 @@ input.size-three-rem::placeholder {
 .input-container select {
     width: 100%;
     height: 45px;
-    border: none;
     outline: none;
     font-size: 0.9rem;
     z-index: 1;
@@ -2484,7 +2434,7 @@ input.size-three-rem::placeholder {
     padding: 10px;
     padding-top: 12px;
     resize: none;
-    font-family: "Avenir";
+    font-family: "Avenir", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     box-sizing: border-box;
@@ -2505,7 +2455,7 @@ input.size-three-rem::placeholder {
     z-index: 0;
     transition: all 0.2s;
     font-weight: 300;
-    font-family: "Poppins" !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
 .requirement-status {
@@ -2584,7 +2534,6 @@ input.size-three-rem::placeholder {
 
 .box:hover>div:first-of-type {
     transform: scale(0.94);
-    filter: gray;
     /* IE6-9 */
     -webkit-filter: grayscale(1);
     /* Google Chrome, Safari 6+ & Opera 15+ */
@@ -2618,7 +2567,6 @@ input.size-three-rem::placeholder {
 }
 
 .grayscale {
-    filter: gray;
     /* IE6-9 */
     -webkit-filter: grayscale(1);
     /* Google Chrome, Safari 6+ & Opera 15+ */
@@ -2631,7 +2579,6 @@ input.size-three-rem::placeholder {
 }
 
 .grayscale-hover:hover {
-    filter: gray;
     /* IE6-9 */
     -webkit-filter: grayscale(1);
     /* Google Chrome, Safari 6+ & Opera 15+ */
@@ -2906,9 +2853,7 @@ svg.slant {
     box-sizing: border-box;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s;
     color: #FFF !important;
-    /* border: 1px solid #fff; */
     background: #0067F1;
     transition: all 0.1s;
 }
@@ -2926,9 +2871,6 @@ svg.slant {
 .links>a.login-link li:hover {
     color: #0067F1 !important;
     background: transparent;
-}
-
-.links>a.login-link li:hover {
     font-weight: bold;
 }
 
@@ -2974,9 +2916,6 @@ a:-webkit-any-link {
 
 .feedback:hover {
     background-color: #FFF;
-}
-
-.feedback:hover {
     border: 1px solid #0067F1 !important;
 }
 
@@ -3066,7 +3005,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 .Toastify__toast-body {
     text-align: center;
-    font-family: "Poppins" !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
 .Toastify__toast {
@@ -3427,7 +3366,7 @@ textarea::placeholder {
 textarea {
     border: 2px solid #d8d8d8 !important;
     border-radius: 0 !important;
-    font-family: "Poppins" !important;
+    font-family: "Poppins", sans-serif !important;
 }
 
 .ordered-alphabets {

@@ -15,7 +15,7 @@ export const authActions = {
 };
 
 function login(user) {
-    let data = {
+    const data = {
         ...user,
         email: user.email_input
     }
@@ -27,37 +27,41 @@ function login(user) {
 
         authService.login(data)
             .then(
-                user => {
-                    dispatch(success(user));
+                response => {
+                    dispatch(success(response));
 
-                    // 235tegre@gmail.com
-                    console.log(user.data.role, user.data.status);
 
-                    if (user.data.role === "user" && user.data.status === "active") {
+                    if (response.data.role === "user" && response.data.status === "active") {
                         dispatch(push(`/dashboard/documents`));
-                    } else if (user.data.role === "user") {
+                    } else if (response.data.role === "user") {
                         dispatch(push(`/onboarding`));
                     } else {
-                        if (user.data.userCount > 1 && user.data.status === "active") {
+                        if (response.data.userCount > 1 && response.data.status === "active") {
                             dispatch(push(`/dashboard`));
                         } else {
                             dispatch(push(`/onboarding`));
                         }
                     }
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
+                loginError => {
+                    if (loginError.message) {
+                        toast.error(loginError.message);
 
-                        dispatch(failure(error.message));
+                        dispatch(failure(loginError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: authConstants.LOGIN_REQUEST }; }
-    function success(user) { return { type: authConstants.LOGIN_SUCCESS, user }; }
-    function failure(error) { return { type: authConstants.LOGIN_FAILURE, error }; }
+    function request() { 
+        return { type: authConstants.LOGIN_REQUEST }; 
+    }
+    function success(userSuccess) { 
+        return { type: authConstants.LOGIN_SUCCESS, user: userSuccess }; 
+    }
+    function failure(error) { 
+        return { type: authConstants.LOGIN_FAILURE, error }; 
+    }
 }
 
 function logout() {
@@ -77,8 +81,8 @@ function saveSignature(file, add) {
         const data = new FormData();
         data.append('media', file);
 
-        let uploadendpoint = add ? `${process.env.REACT_APP_API_URL}/users/add/signature` : `${process.env.REACT_APP_API_URL}/users/invite/complete`;
-        let headers = {
+        const uploadendpoint = add ? `${process.env.REACT_APP_API_URL}/users/add/signature` : `${process.env.REACT_APP_API_URL}/users/invite/complete`;
+        const headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + authService.getToken()
         }
@@ -86,17 +90,19 @@ function saveSignature(file, add) {
         Axios
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
-                    let loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
+                    const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
                     dispatch(update(loaded));
                 },
                 headers
             })
             .then(res => {
                 toast.success(res.data.message);
-                console.log(res);
 
                 if (add) {
                     dispatch(push(`/dashboard/user-profile`));
+                // } else {
+                //     console.log(res);
+                //     let user = res.data;
                 }
 
                 dispatch(success(res, add));
@@ -113,10 +119,18 @@ function saveSignature(file, add) {
 
     };
 
-    function startUpload() { return { type: authConstants.UPLOAD_START }; }
-    function update(loaded) { return { type: authConstants.UPLOAD_PROGRESS, loaded }; }
-    function success(response, add) { return { type: authConstants.UPLOAD_SUCCESS, response, add }; }
-    function error() { return { type: authConstants.UPLOAD_ERROR }; }
+    function startUpload() {
+        return { type: authConstants.UPLOAD_START };
+    }
+    function update(loaded) {
+        return { type: authConstants.UPLOAD_PROGRESS, loaded };
+    }
+    function success(response, addSuccess) { 
+        return { type: authConstants.UPLOAD_SUCCESS, response, add: addSuccess }; 
+    }
+    function error() { 
+        return { type: authConstants.UPLOAD_ERROR }; 
+    }
 }
 
 function deleteSignature(signature) {
@@ -129,19 +143,25 @@ function deleteSignature(signature) {
                     toast.success(profile.message);
                     dispatch(success(profile.user));
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
+                deleteError => {
+                    if (deleteError.message) {
+                        toast.error(deleteError.message);
 
-                        dispatch(failure(error.message));
+                        dispatch(failure(deleteError.message));
                     }
                 }
             );
     };
 
-    function request(signature) { return { type: authConstants.START_DELETE_SIGNATURE, signature }; }
-    function success(profile) { return { type: authConstants.DELETE_SIGNATURE_SUCCESS, profile }; }
-    function failure(error) { return { type: authConstants.DELETE_SIGNATURE_FAILURE, error }; }
+    function request(requestSignature) { 
+        return { type: authConstants.START_DELETE_SIGNATURE, signature: requestSignature }; 
+    }
+    function success(profile) { 
+        return { type: authConstants.DELETE_SIGNATURE_SUCCESS, profile }; 
+    }
+    function failure(error) { 
+        return { type: authConstants.DELETE_SIGNATURE_FAILURE, error }; 
+    }
 }
 
 function fetchProfile() {
