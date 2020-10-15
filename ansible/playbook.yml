@@ -1,0 +1,8 @@
+- hosts: serverbox
+  remote_user: deployer
+  become: true
+  vars_files:
+    - ./vars/main.yaml
+  roles:
+#    - system-deps
+    - docker-deploy

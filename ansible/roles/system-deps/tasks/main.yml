@@ -1,0 +1,5 @@
+- name: Install NodeJs & PM2
+  become: yes
+  shell: |
+    curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+    npm i -g pm2
