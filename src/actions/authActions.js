@@ -173,19 +173,25 @@ function fetchProfile() {
                 profile => {
                     dispatch(success(profile.user));
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
+                fetchError => {
+                    if (fetchError.message) {
+                        toast.error(fetchError.message);
 
-                        dispatch(failure(error.message));
+                        dispatch(failure(fetchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: authConstants.START_FETCH_PROFILE }; }
-    function success(profile) { return { type: authConstants.FETCH_PROFILE_SUCCESS, profile }; }
-    function failure(error) { return { type: authConstants.FETCH_PROFILE_FAILURE, error }; }
+    function request() { 
+        return { type: authConstants.START_FETCH_PROFILE }; 
+    }
+    function success(profile) { 
+        return { type: authConstants.FETCH_PROFILE_SUCCESS, profile }; 
+    }
+    function failure(error) { 
+        return { type: authConstants.FETCH_PROFILE_FAILURE, error }; 
+    }
 }
 
 function updateProfile(user) {
@@ -198,17 +204,23 @@ function updateProfile(user) {
                     toast.success(profile.message);
                     dispatch(success(profile.user));
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
+                updateError => {
+                    if (updateError.message) {
+                        toast.error(updateError.message);
 
-                        dispatch(failure(error.message));
+                        dispatch(failure(updateError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: authConstants.START_UPDATE_PROFILE }; }
-    function success(profile) { return { type: authConstants.UPDATE_PROFILE_SUCCESS, profile }; }
-    function failure(error) { return { type: authConstants.UPDATE_PROFILE_FAILURE, error }; }
+    function request() { 
+        return { type: authConstants.START_UPDATE_PROFILE }; 
+    }
+    function success(profile) { 
+        return { type: authConstants.UPDATE_PROFILE_SUCCESS, profile }; 
+    }
+    function failure(error) { 
+        return { type: authConstants.UPDATE_PROFILE_FAILURE, error }; 
+    }
 }
