@@ -6,8 +6,11 @@ const initialState = {
     updatingProfile: false
 };
 
-export default function auth(state = initialState, action) {
-    switch (action.type) {
+export default function auth(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState
+    }
+    switch (action?.type) {
         case authConstants.LOGIN_REQUEST:
             return {
                 ...state,

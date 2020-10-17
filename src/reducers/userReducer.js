@@ -4,8 +4,11 @@ const initialState = {
     invitingUsers: false
 };
 
-export default function user(state = initialState, action) {
-    switch (action.type) {
+export default function user(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState
+    }
+    switch (action?.type) {
         case userConstants.INVITE_REQUEST:
             return {
                 ...state,
@@ -32,7 +35,7 @@ export default function user(state = initialState, action) {
             if (state.platformUsers) {
                 if (state.platformUsers.data) {
                     state.platformUsers.data = [
-                        ...state.platformUsers.data.filter((user) => user._id !== action.user.user._id)
+                        ...state.platformUsers.data.filter((u) => u._id !== action.user.user._id)
                     ];
                 }
             }
@@ -54,7 +57,7 @@ export default function user(state = initialState, action) {
         case userConstants.EDIT_SUCCESS:
             if (state.platformUsers) {
                 if (state.platformUsers.data) {
-                    state.platformUsers.data[state.platformUsers.data.findIndex(user => user._id === action.user.user._id)] = {
+                    state.platformUsers.data[state.platformUsers.data.findIndex(u => u._id === action.user.user._id)] = {
                         ...action.user.user
                     }
                 }
@@ -62,7 +65,7 @@ export default function user(state = initialState, action) {
 
             if (state.searchResults) {
                 if (state.searchResults.data) {
-                    state.searchResults.data[state.searchResults.data.findIndex(user => user._id === action.user.user._id)] = {
+                    state.searchResults.data[state.searchResults.data.findIndex(u => u._id === action.user.user._id)] = {
                         ...action.user.user
                     }
                 }
@@ -85,7 +88,7 @@ export default function user(state = initialState, action) {
         case userConstants.ASSIGN_AS_ADMIN_SUCCESS:
             if (state.platformUsers) {
                 if (state.platformUsers.data) {
-                    state.platformUsers.data[state.platformUsers.data.findIndex(user => user._id === action.user.user._id)] = {
+                    state.platformUsers.data[state.platformUsers.data.findIndex(u => u._id === action.user.user._id)] = {
                         ...action.user.user
                     }
                 }
@@ -93,7 +96,7 @@ export default function user(state = initialState, action) {
 
             if (state.searchResults) {
                 if (state.searchResults.data) {
-                    state.searchResults.data[state.searchResults.data.findIndex(user => user._id === action.user.user._id)] = {
+                    state.searchResults.data[state.searchResults.data.findIndex(u => u._id === action.user.user._id)] = {
                         ...action.user.user
                     }
                 }
@@ -182,8 +185,7 @@ export default function user(state = initialState, action) {
             };
         case userConstants.DOWNLOAD_FAILURE:
             return {
-                ...state,
-                downloading: false
+                ...state, downloading: false
             };
         default:
             return state;

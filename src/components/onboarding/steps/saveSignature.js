@@ -56,11 +56,23 @@ const SaveSignature = ({ add }) => {
                 <p className="size-pointeight-rem light-gray-color text-center bottom-margin-30">Create and save your signatures</p>
                 <div className="height-1 width-150 margin-auto border-top-gray bottom-margin-30"></div>
                 <div className="width-70-percent margin-auto top-margin-30 display-flex">
-                    <div onClick={() => { setSignatureType("draw"); setSignature({ signature: "" }) }} className={`${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
+                    <div
+                        onClick={() => {
+                            setSignatureType("draw");
+                            setSignature({ signature: "" })
+                        }}
+                        className={`
+                            ${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} 
+                            smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
                         <img src={require(`images/icons/draw-signature.svg`)} className="height-30" alt="Invite users" />
                         <p className="bold size-pointeightfive-rem top-margin-10">Draw Signature</p>
                     </div>
-                    <div onClick={() => { setSignatureType("write"); signatureCanvas.current.clear(); }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                    <div onClick={() => {
+                        setSignatureType("write");
+                        signatureCanvas.current.clear();
+                    }} className={`
+                            ${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} 
+                            smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
                         <img src={require(`images/icons/write-signature.svg`)} className="height-30" alt="Invite users" />
                         <p className="bold size-pointeightfive-rem top-margin-10">Write Signature</p>
                     </div>
@@ -74,12 +86,22 @@ const SaveSignature = ({ add }) => {
                             undo
                         </div>
                     </div>
-                    <input type="text" name="signature" value={signature.signature} onChange={e => setSignature({ signature: e.target.value })} placeholder="Type here" className={`${signatureType === 'draw' ? 'hide' : ''} text-center top-margin-30 height-200 gray width-600 size-three-rem`} required />
+                    <input
+                        type="text"
+                        name="signature"
+                        value={signature.signature}
+                        onChange={e => setSignature({ signature: e.target.value })}
+                        placeholder="Type here"
+                        className={`${signatureType === 'draw' ? 'hide' : ''} text-center top-margin-30 height-200 gray width-600 size-three-rem`}
+                        required />
                 </div>
             </div>
-            <div className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center space-between">
+            <div
+                className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center space-between">
                 <p onClick={logout} className="mustard-color size-pointeight-rem bold cursor-pointer">LOGOUT</p>
-                <button onClick={saveSignature} className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                <button
+                    onClick={saveSignature}
+                    className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {auth.uploading ?
                         auth.uploadProgress ?
                             `${auth.uploadProgress}%`
