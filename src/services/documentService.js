@@ -7,12 +7,16 @@ export const documentService = {
     signDocument
 };
 
+const requestFormat = 'application/json';
+
 function fetch(type) {
     const requestOptions = {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents${`${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
+    const filter = `${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`;
+
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents${`${filter}`}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -27,8 +31,8 @@ function fetchSingle(id, userToken) {
     if (userToken) {
         requestOptions.headers = {
             'Authorization': 'Bearer ' + userToken,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Accept': requestFormat,
+            'Content-Type': requestFormat
         }
     }
 
@@ -44,7 +48,9 @@ function fetchPage(type, page) {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents?page=${page}${`${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`}`, requestOptions)
+    const filter = `${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`;
+
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents?page=${page}${filter}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -60,8 +66,8 @@ function signDocument(data, userToken) {
     if (userToken) {
         requestOptions.headers = {
             'Authorization': 'Bearer ' + userToken,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Accept': requestFormat,
+            'Content-Type': requestFormat
         }
     }
 

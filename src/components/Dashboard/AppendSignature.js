@@ -59,6 +59,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                 }
             } else {
                 if (documents.fetchingSingle === false) {
+                    console.log("Fetching single document");
                     dispatch(documentActions.fetchSingle(urlDocumentId ? urlDocumentId : documentId, userToken));
                 }
             }
