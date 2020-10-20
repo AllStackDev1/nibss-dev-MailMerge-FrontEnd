@@ -14,6 +14,8 @@ import { recipientActions } from "actions/recipientActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { push } from "connected-react-router";
+import DeleteTag from "./modals/DeleteTag";
+import DeleteRecipient from "./modals/DeleteRecipient";
 
 const Recipients = ({ user }) => {
     const [recipient, setRecipient] = useState({});
@@ -23,6 +25,8 @@ const Recipients = ({ user }) => {
     const [toAddTags, setToAddTags] = useState([]);
     const [viewingTags, setViewingTags] = useState(false);
     const [modal, setModal] = useState(false);
+    const [tagToDelete, setTagToDelete] = useState({});
+    const [recipientToDelete, setRecipientToDelete] = useState({});
     const [search, setSearch] = useState({
         search: ""
     });
@@ -61,7 +65,15 @@ const Recipients = ({ user }) => {
             setModal(false);
             setTag({});
         }
-    }, [recipients.addingTag]);
+        if (recipients.deletingTag === false) {
+            setModal(false);
+            setTagToDelete({});
+        }
+        if (recipients.deleting === false) {
+            setModal(false);
+            setRecipientToDelete({});
+        }
+    }, [recipients.addingTag, recipients.deleting, recipients.deletingTag]);
 
     useEffect(() => {
         if (recipients.addingRecipient === false || recipients.editingRecipient === false) {
@@ -144,8 +156,13 @@ const Recipients = ({ user }) => {
         }
     }
 
-    const deleteRecipient = recipient => {
-        dispatch(recipientActions.deleteRecipient(recipient));
+    const initiateDeleteRecipient = recipient => {
+        setRecipientToDelete(recipient);
+        setModal("delete-recipient");
+    }
+
+    const deleteRecipient = () => {
+        dispatch(recipientActions.deleteRecipient(recipientToDelete));
     }
 
     const addTag = e => {
@@ -158,9 +175,13 @@ const Recipients = ({ user }) => {
         dispatch(recipientActions.addTagsToRecipient(toAddTag, toAddTags));
     }
 
-    const deleteTag = (e, tag) => {
-        e.stopPropagation();
-        dispatch(recipientActions.deleteTag(tag));
+    const initiateDeleteTag = (tag) => {
+        setTagToDelete(tag);
+        setModal("delete-tag");
+    }
+
+    const deleteTag = () => {
+        dispatch(recipientActions.deleteTag(tagToDelete));
     }
 
     const initiateEdit = recipient => {
@@ -226,6 +247,18 @@ const Recipients = ({ user }) => {
                             onSubmit={addTag}
                             closeModal={() => setModal(false)} />
                         : ""}
+                    {modal === "delete-tag" ?
+                        <DeleteTag
+                            deleting={recipients.deletingTag}
+                            onSubmit={deleteTag}
+                            closeModal={() => { setModal(false); setTagToDelete({}); }} />
+                        : ""}
+                    {modal === "delete-recipient" ?
+                        <DeleteRecipient
+                            deleting={recipients.deleting}
+                            onSubmit={deleteRecipient}
+                            closeModal={() => { setModal(false); setRecipientToDelete({}); }} />
+                        : ""}
                 </ModalContainer>
                 : ""}
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
@@ -261,7 +294,7 @@ const Recipients = ({ user }) => {
                         viewingTags={viewingTags}
                         setToAddTags={setToAddTags}
                         addTagsToRecipient={addTagsToRecipient}
-                        deleteTag={deleteTag}
+                        deleteTag={initiateDeleteTag}
                     />
                     <div className="full-width display-flex space-between top-padding-30">
                         <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
@@ -289,7 +322,7 @@ const Recipients = ({ user }) => {
                                         key={index}
                                         setModal={setModal}
                                         setEditRecipient={setEditRecipient}
-                                        deleteRecipient={deleteRecipient}
+                                        deleteRecipient={initiateDeleteRecipient}
                                         recipient={recipient}
                                         toAddTag={toAddTag}
                                         initiateEdit={initiateEdit}
@@ -307,7 +340,7 @@ const Recipients = ({ user }) => {
                                         key={index}
                                         setModal={setModal}
                                         setEditRecipient={setEditRecipient}
-                                        deleteRecipient={deleteRecipient}
+                                        deleteRecipient={initiateDeleteRecipient}
                                         recipient={recipient}
                                         toAddTag={toAddTag}
                                         initiateEdit={initiateEdit}

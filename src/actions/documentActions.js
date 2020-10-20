@@ -23,21 +23,14 @@ function fetch(type) {
                 documents => {
                     dispatch(success(documents));
                 },
-<<<<<<< HEAD
                 fetchError => {
                     if (fetchError.message) {
                         dispatch(failure(fetchError.message));
-=======
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
                     }
                 }
             );
     };
 
-<<<<<<< HEAD
     function request() {
         return { type: documentConstants.FETCH_REQUEST };
     }
@@ -47,11 +40,6 @@ function fetch(type) {
     function failure(error) {
         return { type: documentConstants.FETCH_FAILURE, error };
     }
-=======
-    function request() { return { type: documentConstants.FETCH_REQUEST }; }
-    function success(documents) { return { type: documentConstants.FETCH_SUCCESS, documents }; }
-    function failure(error) { return { type: documentConstants.FETCH_FAILURE, error }; }
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
 }
 
 function fetchSingle(id, userToken) {
@@ -63,21 +51,14 @@ function fetchSingle(id, userToken) {
                 document => {
                     dispatch(success(document));
                 },
-<<<<<<< HEAD
                 fetchSingleError => {
                     if (fetchSingleError.message) {
                         dispatch(failure(fetchSingleError.message));
-=======
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
                     }
                 }
             );
     };
 
-<<<<<<< HEAD
     function request() {
         return { type: documentConstants.FETCH_SINGLE_REQUEST };
     }
@@ -87,11 +68,6 @@ function fetchSingle(id, userToken) {
     function failure(error) {
         return { type: documentConstants.FETCH_SINGLE_FAILURE, error };
     }
-=======
-    function request() { return { type: documentConstants.FETCH_SINGLE_REQUEST }; }
-    function success(document) { return { type: documentConstants.FETCH_SINGLE_SUCCESS, document }; }
-    function failure(error) { return { type: documentConstants.FETCH_SINGLE_FAILURE, error }; }
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
 }
 
 function fetchPage(type, page) {
@@ -103,21 +79,14 @@ function fetchPage(type, page) {
                 documents => {
                     dispatch(success(documents));
                 },
-<<<<<<< HEAD
                 fetchPageError => {
                     if (fetchPageError.message) {
                         dispatch(failure(fetchPageError.message));
-=======
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
                     }
                 }
             );
     };
 
-<<<<<<< HEAD
     function request() {
         return { type: documentConstants.FETCH_PAGE_REQUEST };
     }
@@ -127,11 +96,6 @@ function fetchPage(type, page) {
     function failure(error) {
         return { type: documentConstants.FETCH_PAGE_FAILURE, error };
     }
-=======
-    function request() { return { type: documentConstants.FETCH_PAGE_REQUEST }; }
-    function success(documents) { return { type: documentConstants.FETCH_PAGE_SUCCESS, documents }; }
-    function failure(error) { return { type: documentConstants.FETCH_PAGE_FAILURE, error }; }
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
 }
 
 function signDocument(data, userToken) {
@@ -146,23 +110,15 @@ function signDocument(data, userToken) {
                     toast.success(document.message);
                     dispatch(push(`/dashboard/documents`));
                 },
-<<<<<<< HEAD
                 signError => {
                     if (signError.message) {
                         toast.error(signError.message);
                         dispatch(failure(signError.message));
-=======
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
-                        dispatch(failure(error.message));
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
                     }
                 }
             );
     };
 
-<<<<<<< HEAD
     function request() {
         return { type: documentConstants.SIGN_DOCUMENT_REQUEST };
     }
@@ -172,11 +128,6 @@ function signDocument(data, userToken) {
     function failure(error) {
         return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error };
     }
-=======
-    function request() { return { type: documentConstants.SIGN_DOCUMENT_REQUEST }; }
-    function success(document) { return { type: documentConstants.SIGN_DOCUMENT_SUCCESS, document }; }
-    function failure(error) { return { type: documentConstants.SIGN_DOCUMENT_FAILURE, error }; }
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
 }
 
 function signDocumentNew(file, documentId, userToken) {
@@ -187,13 +138,8 @@ function signDocumentNew(file, documentId, userToken) {
         data.append('media', file);
         data.append('documentId', documentId);
 
-<<<<<<< HEAD
         const uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/sign`;
         const headers = {
-=======
-        let uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/sign`;
-        let headers = {
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userToken ? userToken : authService.getToken()}`
         }
@@ -201,11 +147,7 @@ function signDocumentNew(file, documentId, userToken) {
         Axios
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
-<<<<<<< HEAD
                     const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
-=======
-                    let loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
->>>>>>> 9359060986d4298b8bb0c95d7fa0a1ab133c4c70
                     console.log(loaded);
                 },
                 headers

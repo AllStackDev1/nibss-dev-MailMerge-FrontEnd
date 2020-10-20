@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom"
 import { push } from "connected-react-router"
 import ModalContainer from "./modals/ModalContainer"
 import EditUser from "./modals/EditUser"
+import DeleteUser from "./modals/DeleteUser"
 
 const Users = ({ user: localUser }) => {
     const [search, setSearch] = useState({});
@@ -19,6 +20,7 @@ const Users = ({ user: localUser }) => {
     const [timer, setTimer] = useState();
     const [modal, setModal] = useState(false);
     const [user, setUser] = useState({});
+    const [toDelete, setToDelete] = useState({});
 
     const dispatch = useDispatch();
     const users = useSelector(state => state.user);
@@ -36,7 +38,11 @@ const Users = ({ user: localUser }) => {
             setModal(false);
             setUser({});
         }
-    }, [users.editing]);
+        if (users.deleting === false) {
+            setModal(false);
+            setToDelete({});
+        }
+    }, [users.editing, users.deleting]);
 
     const onChangeUser = event => {
         const { name, value } = event.target;
@@ -89,8 +95,13 @@ const Users = ({ user: localUser }) => {
         dispatch(userActions.edit(user));
     }
 
-    const deleteUser = user => {
-        dispatch(userActions.deleteUser(user));
+    const initiateDeleteUser = user => {
+        setToDelete(user);
+    }
+
+    const deleteUser = () => {
+        console.log(toDelete);
+        dispatch(userActions.deleteUser(toDelete));
     }
 
     const updateRole = user => {
@@ -113,6 +124,12 @@ const Users = ({ user: localUser }) => {
                             editing={users.editing}
                             onChange={onChangeUser}
                             onSubmit={editUser} />
+                        : ""}
+                    {modal === "delete-user" ?
+                        <DeleteUser
+                            deleting={users.deleting}
+                            onSubmit={deleteUser}
+                            closeModal={() => { setModal(false); setToDelete({}); }} />
                         : ""}
                 </ModalContainer>
                 : ""}
@@ -160,7 +177,7 @@ const Users = ({ user: localUser }) => {
                                         key={index}
                                         setModal={setModal}
                                         setUser={setUser}
-                                        deleteUser={deleteUser}
+                                        deleteUser={initiateDeleteUser}
                                         updateRole={updateRole}
                                         userBeingUpdated={users.deleting || users.updatingRole}
                                         user={user} />
@@ -177,7 +194,7 @@ const Users = ({ user: localUser }) => {
                                         key={index}
                                         setModal={setModal}
                                         setUser={setUser}
-                                        deleteUser={deleteUser}
+                                        deleteUser={initiateDeleteUser}
                                         updateRole={updateRole}
                                         userBeingUpdated={users.deleting || users.updatingRole}
                                         user={user} />

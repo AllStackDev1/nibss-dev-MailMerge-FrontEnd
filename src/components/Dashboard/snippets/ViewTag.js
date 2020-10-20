@@ -21,10 +21,10 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                         :
                         tags ?
                             tags.map((tag, index) =>
-                                <Tag key={index} onClick={() => setToAddTags(setTags => setTags.includes(tag.name) ? setTags.filter(item => item !== tag.name) : [...toAddTags, tag.name])} className={`${deleting === tag ? 'opacity-0-5' : ''} ${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
+                                <Tag key={index} onClick={() => { (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ? setTags.filter(item => item !== tag.name) : [...toAddTags, tag.name]) } } className={`${deleting === tag ? 'opacity-0-5' : ''} ${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
                                     {tag.name}
                                     {toAddTag === false ?
-                                        <span className="material-icons" onClick={e => deleteTag(e, tag)}>remove_circle</span>
+                                        <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
                                         : ""}
                                 </Tag>
                             )
