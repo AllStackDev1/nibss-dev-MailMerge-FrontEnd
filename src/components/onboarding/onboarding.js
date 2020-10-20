@@ -69,7 +69,8 @@ const Onboarding = props => {
                             setStep={setStep} />
                         : ""}
                     {step === 3 ?
-                        <OnboardingSuccessful />
+                        <OnboardingSuccessful
+                            userLocal={userLocal} />
                         : ""}
 
                 </div>

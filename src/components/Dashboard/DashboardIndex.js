@@ -57,8 +57,8 @@ const DashboardIndex = () => {
                         <div className="width-50 height-50 border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/analytics/all-documents.svg`)} className="height-20" alt="NIBSS Empty" />
                         </div>
-                        {documents?.documents?.total_documents ?
-                            <span className="bold size-two-rem">{documents.documents.total_documents}</span>
+                        {documents?.documents && documents.fetching !== true ?
+                            <span className="bold size-two-rem">{documents?.documents?.total_documents || 0}</span>
                             :
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
                     </div>
@@ -69,8 +69,8 @@ const DashboardIndex = () => {
                         <div className="width-50 height-50 border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/analytics/archived-documents.svg`)} className="height-20" alt="NIBSS Empty" />
                         </div>
-                        {documents?.documents?.document_stats ?
-                            <span className="bold size-two-rem">{documents.documents.document_stats.archived_document}</span>
+                        {documents?.documents && documents.fetching !== true ?
+                            <span className="bold size-two-rem">{documents?.documents?.document_stats?.archived_document || 0}</span>
                             :
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
 
@@ -82,8 +82,8 @@ const DashboardIndex = () => {
                         <div className="width-50 height-50 border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/analytics/signed-documents.svg`)} className="height-25" alt="NIBSS Empty" />
                         </div>
-                        {documents?.documents?.document_stats ?
-                            <span className="bold size-two-rem">{documents.documents.document_stats.signed_document}</span>
+                        {documents?.documents && documents.fetching !== true ?
+                            <span className="bold size-two-rem">{documents?.documents?.document_stats?.signed_document || 0}</span>
                             :
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
                     </div>
@@ -94,8 +94,8 @@ const DashboardIndex = () => {
                         <div className="width-50 height-50 border-radius-100-percent display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/analytics/pending-documents.svg`)} className="height-25" alt="NIBSS Empty" />
                         </div>
-                        {documents?.documents?.document_stats ?
-                            <span className="bold size-two-rem">{documents.documents.document_stats.pending_document}</span>
+                        {documents?.documents && documents.fetching !== true ?
+                            <span className="bold size-two-rem">{documents?.documents?.document_stats?.pending_document || 0}</span>
                             :
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
                     </div>

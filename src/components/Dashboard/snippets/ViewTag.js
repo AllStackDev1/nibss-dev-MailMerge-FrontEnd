@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, addTagsToRecipient, tags, recipients, toAddTag, toAddTags }) => {
+const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, closeTags, addTagsToRecipient, tags, recipients, toAddTag, toAddTags, deleteTag }) => {
     return (
         <Overlay onClick={closeTags} className={`${viewingTags ? 'view-tags' : ''} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">
@@ -21,10 +21,10 @@ const ViewTag = ({ viewingTags, updating, setModal, setToAddTags, closeTags, add
                         :
                         tags ?
                             tags.map((tag, index) =>
-                                <Tag key={index} onClick={() => setToAddTags([...toAddTags, tag.name])} className={`${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
+                                <Tag key={index} onClick={() => { (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ? setTags.filter(item => item !== tag.name) : [...toAddTags, tag.name]) } } className={`${deleting === tag ? 'opacity-0-5' : ''} ${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
                                     {tag.name}
                                     {toAddTag === false ?
-                                        <span className="material-icons">remove_circle</span>
+                                        <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
                                         : ""}
                                 </Tag>
                             )

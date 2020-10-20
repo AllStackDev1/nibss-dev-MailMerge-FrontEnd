@@ -6,7 +6,10 @@ const initialState = {
     fetchingPage: false
 };
 
-export default function document(state = initialState, action) {
+export default function document(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState
+    }
     switch (action.type) {
         case documentConstants.FETCH_REQUEST:
             return {

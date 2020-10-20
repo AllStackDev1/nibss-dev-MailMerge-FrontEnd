@@ -24,7 +24,7 @@ const SetupSignatories = ({ selectUser, document }) => {
     return (
         <>
             <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Setup Signatories</p>
-            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who is signing this documents</p>
+            <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who is signing this document</p>
             <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
             <div className="display-flex full-height overflow-hidden width-85-percent top-margin-40 border-box">
                 <div className="width-50-percent border-box left-padding-10 overflow-auto-y custom-scrollbar border-right-gray-1 right-padding-60">

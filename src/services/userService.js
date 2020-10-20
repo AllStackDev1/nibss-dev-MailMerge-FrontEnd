@@ -12,7 +12,7 @@ export const userService = {
 };
 
 function invite(users) {
-    let data = [...users];
+    const data = [...users];
 
     data.map(user => {
         if (!user.administrator) {
@@ -21,12 +21,10 @@ function invite(users) {
             user.role = "administrator"
         }
 
-        // delete user.administrator;
-
         return user;
     });
 
-    let obj = {
+    const obj = {
         data: data
     }
 
@@ -37,8 +35,8 @@ function invite(users) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/invite`, requestOptions)
         .then(authService.handleResponse)
-        .then(users => {
-            return users;
+        .then(inviteUsers => {
+            return inviteUsers;
         });
 }
 
@@ -50,8 +48,8 @@ function edit(user) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/${user._id}`, requestOptions)
         .then(authService.handleResponse)
-        .then(user => {
-            return user;
+        .then(editUser => {
+            return editUser;
         });
 }
 
@@ -62,8 +60,8 @@ function deleteUser(user) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/${user._id}`, requestOptions)
         .then(authService.handleResponse)
-        .then(user => {
-            return user;
+        .then(deletedUser => {
+            return deletedUser;
         });
 }
 
@@ -77,8 +75,8 @@ function updateRole(user) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/role/${user._id}`, requestOptions)
         .then(authService.handleResponse)
-        .then(user => {
-            return user;
+        .then(updateUser => {
+            return updateUser;
         });
 }
 
@@ -89,8 +87,8 @@ function fetch() {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users`, requestOptions)
         .then(authService.handleResponse)
-        .then(users => {
-            return users;
+        .then(fetchUsers => {
+            return fetchUsers;
         });
 }
 
@@ -106,14 +104,14 @@ function fetchPage(page) {
         });
 }
 
-function search(search, filter) {
+function search(searchParam, filter) {
     const requestOptions = {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/search?${buildQuery({ search, filter })}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/users/search?${buildQuery({ search: searchParam, filter })}`, requestOptions)
         .then(authService.handleResponse)
-        .then(users => {
-            return users;
+        .then(searchUsers => {
+            return searchUsers;
         });
 }

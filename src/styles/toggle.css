@@ -87,22 +87,14 @@
 .vc-switch-label:before {
     content: attr(data-off);
     color: var(--vc-on-font-color);
+    right: var(--vc-label-position-off);
 }
 
 .vc-switch-label:after {
     content: attr(data-on);
     color: var(--vc-off-font-color);
     opacity: 0;
-}
-
-.vc-switch-label:before {
-    right: var(--vc-label-position-off);
-    ;
-}
-
-.vc-switch-label:after {
     left: var(--vc-label-position-on);
-    ;
 }
 
 .vc-switch-input:checked~.vc-switch-label {
@@ -124,9 +116,6 @@
     background: var(--vc-handle-color);
     border-radius: var(--vc-handle-border-radius);
     box-shadow: var(--vc-handle-shadow);
-}
-
-.vc-handle {
     width: var(--vc-handle-width);
     height: var(--vc-handle-height);
 }

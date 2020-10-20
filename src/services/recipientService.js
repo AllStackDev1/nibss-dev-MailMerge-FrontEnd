@@ -5,6 +5,7 @@ export const recipientService = {
     add,
     edit,
     deleteRecipient,
+    deleteTag,
     addTag,
     addTagsToRecipient,
     fetch,
@@ -19,7 +20,7 @@ function add(recipient, multiple) {
             data: recipient
         }
     }
-    
+
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(recipient)
@@ -27,8 +28,8 @@ function add(recipient, multiple) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient${multiple ? '/multiple' : ""}`, requestOptions)
         .then(authService.handleResponse)
-        .then(recipient => {
-            return recipient;
+        .then(addRecipient => {
+            return addRecipient;
         });
 }
 
@@ -40,8 +41,8 @@ function edit(recipient) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/${recipient._id}`, requestOptions)
         .then(authService.handleResponse)
-        .then(recipient => {
-            return recipient;
+        .then(editRecipient => {
+            return editRecipient;
         });
 }
 
@@ -53,8 +54,8 @@ function addTag(tag) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/tag`, requestOptions)
         .then(authService.handleResponse)
-        .then(tag => {
-            return tag;
+        .then(addTagResponse => {
+            return addTagResponse;
         });
 }
 
@@ -87,12 +88,15 @@ function fetch() {
         });
 }
 
-function search(search, filter) {
+function search(searchParam, filter) {
     const requestOptions = {
         method: 'GET'
     };
 
-    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/search?${buildQuery({search, filter: filter?.length > 0 ? JSON.stringify(filter) : ''})}`, requestOptions)
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/search?${buildQuery({
+        search: searchParam, 
+        filter: filter?.length > 0 ? JSON.stringify(filter) : ''
+    })}`, requestOptions)
         .then(authService.handleResponse)
         .then(recipients => {
             return recipients;
@@ -106,8 +110,20 @@ function deleteRecipient(recipient) {
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/${recipient._id}`, requestOptions)
         .then(authService.handleResponse)
-        .then(recipient => {
-            return recipient;
+        .then(deleteRecipientResponse => {
+            return deleteRecipientResponse;
+        });
+}
+
+function deleteTag(tag) {
+    const requestOptions = {
+        method: 'DELETE'
+    };
+
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/tag/${tag._id}`, requestOptions)
+        .then(authService.handleResponse)
+        .then(deleteTagResponse => {
+            return deleteTagResponse;
         });
 }
 

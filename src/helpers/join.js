@@ -1,5 +1,5 @@
 export function join(values) {
-    let valuesArray = []
+    const valuesArray = []
 
     values.forEach(element => {
         if (element) {

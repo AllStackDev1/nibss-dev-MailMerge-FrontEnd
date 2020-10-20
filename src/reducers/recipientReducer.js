@@ -5,8 +5,11 @@ const initialState = {
     fetchingTags: false
 };
 
-export default function recipient(state = initialState, action) {
-    switch (action.type) {
+export default function recipient(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState
+    }
+    switch (action?.type) {
         case recipientConstants.FETCH_REQUEST:
             return {
                 ...state,
@@ -51,7 +54,9 @@ export default function recipient(state = initialState, action) {
             return {
                 ...state,
                 fetchingPage: false,
-                [`${action.src === "document" ? 'documentRecipients' : 'recipients'}`]: action.src !== "document" ? action.recipients : { ...action.recipients, data: [...state.documentRecipients.data, ...action.recipients.data] }
+                [`${action.src === "document" ?
+                    'documentRecipients' :
+                    'recipients'}`]: action.src !== "document" ? action.recipients : { ...action.recipients, data: [...state.documentRecipients.data, ...action.recipients.data] }
             };
         case recipientConstants.FETCH_PAGE_FAILURE:
             return {
@@ -98,7 +103,7 @@ export default function recipient(state = initialState, action) {
         case recipientConstants.EDIT_RECIPIENT_SUCCESS: {
             if (state.recipients) {
                 if (state.recipients.data) {
-                    state.recipients.data[state.recipients.data.findIndex(recipient => recipient._id === action.recipient.data._id)] = {
+                    state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
                         ...action.recipient.data
                     }
                 }
@@ -106,7 +111,7 @@ export default function recipient(state = initialState, action) {
 
             if (state.searchRecipients) {
                 if (state.searchRecipients.data) {
-                    state.searchRecipients.data[state.searchRecipients.data.findIndex(recipient => recipient._id === action.recipient.data._id)] = {
+                    state.searchRecipients.data[state.searchRecipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
                         ...action.recipient.data
                     }
                 }
@@ -147,7 +152,7 @@ export default function recipient(state = initialState, action) {
             if (state.recipients) {
                 if (state.recipients.data) {
                     state.recipients.data = [
-                        ...state.recipients.data.filter((recipient) => recipient._id !== action.recipient.recipient._id)
+                        ...state.recipients.data.filter((r) => r._id !== action.recipient.recipient._id)
                     ];
                 }
             }
@@ -161,6 +166,27 @@ export default function recipient(state = initialState, action) {
                 ...state,
                 deleting: false
             };
+        case recipientConstants.DELETE_TAG_REQUEST:
+            return {
+                ...state,
+                deletingTag: action.tag
+            };
+        case recipientConstants.DELETE_TAG_SUCCESS:
+            if (state.tags) {
+                state.tags = [
+                    ...state.tags.filter((tag) => tag._id !== action.tag._id)
+                ];
+            }
+
+            return {
+                ...state,
+                deletingTag: false
+            };
+        case recipientConstants.DELETE_TAG_FAILURE:
+            return {
+                ...state,
+                deletingTag: false
+            };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST:
             return {
                 ...state,
@@ -168,7 +194,7 @@ export default function recipient(state = initialState, action) {
             };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS:
             if (state.recipients.data) {
-                state.recipients.data[state.recipients.data.findIndex(recipient => recipient._id === action.recipient._id)] = {
+                state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient._id)] = {
                     ...action.recipient
                 }
             }
