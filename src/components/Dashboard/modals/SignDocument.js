@@ -4,6 +4,7 @@ import SignatureCanvas from 'react-signature-canvas'
 
 const SignDocument = ({ signatureType, setSignatureType, signature, setSignature, signatureCanvas, user, signingDocument, documentSignature, setDocumentSignature, signDocument, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
     const [legal, setLegal] = useState({ legal: false });
+    const [signatureSource, setSignatureSource] = useState("saved");
 
     const clearCanvas = () => {
         signatureCanvas.current.clear();
@@ -21,37 +22,67 @@ const SignDocument = ({ signatureType, setSignatureType, signature, setSignature
                     <p className="white-color size-pointeight-rem">Append signature to document</p>
                 </div>
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50 bottom-margin-50">
-                    <div className="width-70-percent margin-auto display-flex">
-                        <div onClick={() => { setSignatureType("draw"); setSignature({ signature: "" }) }} className={`${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
-                            <img src={require(`images/icons/draw-signature.svg`)} className="height-25" alt="Invite users" />
-                            <p className="bold size-pointeightfive-rem top-margin-10">Draw Signature</p>
-                        </div>
-                        <div onClick={() => { setSignatureType("write"); signatureCanvas.current.clear(); }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
-                            <img src={require(`images/icons/write-signature.svg`)} className="height-25" alt="Invite users" />
-                            <p className="bold size-pointeightfive-rem top-margin-10">Write Signature</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div className={`${signatureType === 'write' ? 'hide' : ''} display-flex flex-direction-column cursor-pointer no-select justify-center`}>
-                            <SignatureCanvas ref={signatureCanvas} penColor='green'
-                                canvasProps={{ width: 600, height: 180, className: 'gray top-margin-30 margin-auto' }} />
-                            <div onClick={() => clearCanvas()} className="display-inline-flex margin-auto top-margin-20 align-items-center red-color bold">
-                                <img src={require(`images/icons/undo.svg`)} className="height-10 right-margin-10" alt="Invite users" />
-                                undo
+                    {signatureSource === "new" ?
+                        <>
+                            <div className="full-width display-flex space-between bottom-margin-50">
+                                <div>
+                                    <p className="size-onepointone-rem bold">New Signature</p>
+                                    <p className="size-pointnine-rem">Draw or write a new signature</p>
+                                </div>
+                                <button onClick={() => setSignatureSource("saved")} className="no-shrink left-padding-20 right-padding-20 height-40 white mustard-color border-mustard border-width-2 border-radius-2 display-flex justify-center align-items-center">
+                                    USED SAVED SIGNATURE
+                                </button>
+                            </div>
+                            <div className="width-70-percent margin-auto display-flex">
+                                <div onClick={() => { setSignatureType("draw"); setSignature({ signature: "" }) }} className={`${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
+                                    <img src={require(`images/icons/draw-signature.svg`)} className="height-25" alt="Invite users" />
+                                    <p className="bold size-pointeightfive-rem top-margin-10">Draw Signature</p>
+                                </div>
+                                <div onClick={() => { setSignatureType("write"); signatureCanvas.current.clear(); }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                                    <img src={require(`images/icons/write-signature.svg`)} className="height-25" alt="Invite users" />
+                                    <p className="bold size-pointeightfive-rem top-margin-10">Write Signature</p>
+                                </div>
+                            </div>
+                            <div>
+                                {signatureType === 'draw' ?
+                                    <div className={`display-flex flex-direction-column cursor-pointer no-select justify-center`}>
+                                        <SignatureCanvas ref={signatureCanvas} penColor='green'
+                                            canvasProps={{ width: 600, height: 180, className: 'gray top-margin-30 margin-auto' }} />
+                                        <div onClick={() => clearCanvas()} className="display-inline-flex margin-auto top-margin-20 align-items-center red-color bold">
+                                            <img src={require(`images/icons/undo.svg`)} className="height-10 right-margin-10" alt="Invite users" />
+                                            undo
+                                        </div>
+                                    </div>
+                                    : ""}
+                                {signatureType === 'write' ?
+                                    <input type="text" name="signature" value={signature.signature} onChange={e => setSignature({ signature: e.target.value })} placeholder="Type here" className={`text-center top-margin-30 height-200 gray width-600 size-three-rem`} required />
+                                    : ""}
+                            </div>
+                        </>
+                        : ""}
+                    {signatureSource === "saved" ?
+                        <div className="top-margin-20 min-height-300">
+                            <div className="full-width display-flex space-between bottom-margin-30">
+                                <div>
+                                    <p className="size-onepointone-rem bold">Saved Signatures</p>
+                                    <p className="size-pointnine-rem">These are signatures you frequently used</p>
+                                </div>
+                                <button onClick={() => setSignatureSource("new")} className="no-shrink left-padding-20 right-padding-20 height-40 white mustard-color border-mustard border-width-2 border-radius-2 display-flex justify-center align-items-center">
+                                    ADD NEW
+                                </button>
+                            </div>
+                            <div className="display-flex flex-wrap">
+                                {user?.data?.signatures?.map((signature, index) =>
+                                    <SignatureContainer key={index} onClick={() => setDocumentSignature(s => s !== signature ? signature : "")} url={signature} className={`${documentSignature === signature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
+                                        <div className="width-80-percent height-60-percent"></div>
+                                    </SignatureContainer>
+                                ) || ""}
                             </div>
                         </div>
-                        <input type="text" name="signature" value={signature.signature} onChange={e => setSignature({ signature: e.target.value })} placeholder="Type here" className={`${signatureType === 'draw' ? 'hide' : ''} text-center top-margin-30 height-200 gray width-600 size-three-rem`} required />
-                        <div className="display-flex flex-wrap top-margin-20">
-                            {user?.data?.signatures?.map((signature, index) =>
-                                <SignatureContainer key={index} onClick={() => setDocumentSignature(s => s !== signature ? signature : "")} url={signature} className={`${documentSignature === signature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
-                                    <div className="width-80-percent height-60-percent"></div>
-                                </SignatureContainer>
-                            ) || ""}
-                        </div>
-                    </div>
+                        : ""}
                     <div className="display-flex top-margin-20 align-items-center space-between">
                         <div className="display-flex align-items-center">
-                            <input type="checkbox" name="legal" id={`legal`} onChange={e => setLegal({legal: e.target.checked})} className="checkbox-s" />
+                            <input type="checkbox" name="legal" id={`legal`} onChange={e => setLegal({ legal: e.target.checked })} className="checkbox-s" />
                             <label htmlFor={`legal`} className="no-shrink absolute left center-item-vertically"></label>
                             <label htmlFor={`legal`} className="left-padding-50 size-pointeight-rem">
                                 I understand this is a legal representation of my signature.
