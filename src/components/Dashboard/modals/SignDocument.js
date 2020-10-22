@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import SignatureCanvas from 'react-signature-canvas'
 
-const SignDocument = ({ signatureType, setSignatureType, signature, setSignature, signatureCanvas, user, signingDocument, documentSignature, setDocumentSignature, signDocument, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
+const SignDocument = ({ signatureType, setSignatureType, uploadSignatureFile, signature, setSignature, signatureCanvas, user, signingDocument, documentSignature, setDocumentSignature, signDocument, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
     const [legal, setLegal] = useState({ legal: false });
     const [signatureSource, setSignatureSource] = useState("saved");
 
@@ -34,14 +34,19 @@ const SignDocument = ({ signatureType, setSignatureType, signature, setSignature
                                 </button>
                             </div>
                             <div className="width-70-percent margin-auto display-flex">
-                                <div onClick={() => { setSignatureType("draw"); setSignature({ signature: "" }) }} className={`${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
+                                <div onClick={() => { setSignatureType("draw"); setSignature({ signature: "" }) }} className={`${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
                                     <img src={require(`images/icons/draw-signature.svg`)} className="height-25" alt="Invite users" />
-                                    <p className="bold size-pointeightfive-rem top-margin-10">Draw Signature</p>
+                                    <p className="bold size-pointeight-rem top-margin-10">Draw Signature</p>
                                 </div>
-                                <div onClick={() => { setSignatureType("write"); signatureCanvas.current.clear(); }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-50-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                                <div onClick={() => { setSignatureType("write"); signatureCanvas.current.clear(); }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
                                     <img src={require(`images/icons/write-signature.svg`)} className="height-25" alt="Invite users" />
-                                    <p className="bold size-pointeightfive-rem top-margin-10">Write Signature</p>
+                                    <p className="bold size-pointeight-rem top-margin-10">Write Signature</p>
                                 </div>
+                                <div onClick={() => { document.getElementById('signature_file').click() }} className={`${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} smooth border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                                    <i className="material-icons">cloud_upload</i>
+                                    <p className="bold size-pointeight-rem top-margin-10">Upload Signature</p>
+                                </div>
+                                <input type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
                             </div>
                             <div>
                                 {signatureType === 'draw' ?
