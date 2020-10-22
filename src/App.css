@@ -2416,6 +2416,22 @@ input.size-three-rem::placeholder {
     background-position: right 10px bottom 17px !important;
 }
 
+select.select-role {
+    height: 35px;
+    outline: none;
+    font-size: 0.9rem;
+    z-index: 1;
+    border: 2px solid #ddd;
+    -webkit-appearance: none;
+    padding-left: 10px;
+    padding-right: 30px;
+    color: #666;
+    background-image: url(images/dropdown-inactive.svg) !important;
+    background-size: 18px auto !important;
+    background-repeat: no-repeat !important;
+    background-position: right 6px bottom 8px !important;
+}
+
 .input-container select:focus {
     background-image: url(images/dropdown-active.svg) !important;
 }

@@ -10,7 +10,9 @@ const Pagination = ({ data, viewPage }) => {
                 data.pagination ?
                     data.pagination.number_of_pages !== undefined ?
                         [...Array(data.pagination.number_of_pages < 3 ? 3 : data.pagination.number_of_pages)].map((item, index) =>
-                            <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
+                            index + 1 <= data.pagination.number_of_pages ?
+                                <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
+                                : ""
                         )
                         : ''
                     : ''

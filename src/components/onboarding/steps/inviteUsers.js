@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const InviteUsers = ({ add }) => {
     const [invite, setInvite] = useState({});
+    const [role, setRole] = useState('user');
     const [invited, setInvited] = useState([]);
 
     const dispatch = useDispatch();
@@ -40,7 +41,9 @@ const InviteUsers = ({ add }) => {
     }
 
     const sendInvites = () => {
-        dispatch(userActions.invite(invited, add));
+        const invitedUsers = invited.map((i, index) => ({ ...i, role }));
+
+        dispatch(userActions.invite(invitedUsers, add));
     }
 
     const parseCSV = file => {
@@ -57,9 +60,9 @@ const InviteUsers = ({ add }) => {
                 var data = allTextLines[i].split(',');
 
                 var row = {
-                    name: data[0].replace( /[\r\n]+/gm, "" ),
-                    email: data[1].replace( /[\r\n]+/gm, "" ),
-                    role: data[2].toLowerCase().replace( /[\r\n]+/gm, "" )
+                    name: data[0].replace(/[\r\n]+/gm, ""),
+                    email: data[1].replace(/[\r\n]+/gm, ""),
+                    role: data[2].toLowerCase().replace(/[\r\n]+/gm, "")
                 };
 
                 if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
@@ -91,13 +94,13 @@ const InviteUsers = ({ add }) => {
                                     <p className="size-pointeight-rem gray-color">{inviteInstance.email}</p>
                                 </div>
                                 <div className="display-flex align-items-center" style={{ '--vc-height': '25px', '--vc-width': '50px', '--vc-handle-width': '15px', '--vc-handle-height': '15px' }}>
-                                    <div className="vc-toggle-container right-margin-20">
+                                    {/* <div className="vc-toggle-container right-margin-20">
                                         <label className="vc-switch">
                                             <input type="checkbox" onChange={e => { let invitedVar = invited; invitedVar[index].administrator = e.target.checked; setInvited([...invitedVar]); }} checked={inviteInstance.administrator || false} className="vc-switch-input hide" />
                                             <span className="vc-switch-label" data-on="Yes" data-off="No"></span>
                                             <span className="vc-handle"></span>
                                         </label>
-                                    </div>
+                                    </div> */}
                                     {inviteInstance.administrator ?
                                         <span className="size-pointeight-rem mustard-color bold right-margin-10">Administrator</span>
                                         : ""}
@@ -121,12 +124,16 @@ const InviteUsers = ({ add }) => {
                             <p className="size-pointeight-rem bold">Invite as Admin</p>
                             <p className="size-pointseven-rem light-gray-color">Choose to invite this user as an Administrator</p>
                         </div>
-                        <div className="vc-toggle-container right-margin-20">
-                            <label className="vc-switch">
+                        <div className="right-margin-20">
+                            {/* <label className="vc-switch">
                                 <input type="checkbox" name="administrator" checked={invite.administrator || false} onChange={onChange} className="vc-switch-input hide" />
                                 <span className="vc-switch-label" data-on="Yes" data-off="No"></span>
                                 <span className="vc-handle"></span>
-                            </label>
+                            </label> */}
+                            <select value={role} onChange={e => setRole(e.target.value)} className="select-role height-30 border-radius-5 no-outline border-gray border-width-2 left-padding-10 right-padding-10">
+                                <option value="user">User</option>
+                                <option value="administrator">Administrator</option>
+                            </select>
                         </div>
                     </div>
                     <div className="full-width display-flex top-margin-30 space-between">

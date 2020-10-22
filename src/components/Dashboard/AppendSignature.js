@@ -71,8 +71,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
             toast.warning("Please sign to proceed");
         } else {
             if (signatureCanvas?.current?.isEmpty() === false || signature.signature !== "") {
-                console.log("Upload signature");
-
                 let signatureImage;
 
                 if (signatureType === "draw") {
@@ -136,6 +134,10 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         })
     }
 
+    const uploadSignatureFile = file => {
+        dispatch(documentActions.signDocumentNew(file.target.files[0], document.document._id, userToken));
+    }
+
     return (
         <>
             {modal !== false ?
@@ -153,7 +155,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                             setSignature={setSignature}
                             signatureType={signatureType}
                             setSignatureType={setSignatureType}
-                            signDocument={signDocument} />
+                            signDocument={signDocument}
+                            uploadSignatureFile={uploadSignatureFile} />
                         : ""}
                 </ModalContainer>
                 : ""}
