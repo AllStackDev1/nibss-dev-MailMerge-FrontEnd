@@ -49,10 +49,14 @@ const SaveSignature = ({ add }) => {
         }
     }
 
+    const uploadSignatureFile = file => {
+        dispatch(authActions.saveSignature(file.target.files[0], add));
+    }
+
     return (
         <>
             <div className="left-padding-80 right-padding-80">
-                <p className="size-onepointfive-rem bold bottom-padding-10 text-center">Save your Signature</p>
+                <p className="size-onepointfive-rem bold bottom-padding-10 text-center">Saver your Signature</p>
                 <p className="size-pointeight-rem light-gray-color text-center bottom-margin-30">Create and save your signatures</p>
                 <div className="height-1 width-150 margin-auto border-top-gray bottom-margin-30"></div>
                 <div className="width-70-percent margin-auto top-margin-30 display-flex">
@@ -63,19 +67,24 @@ const SaveSignature = ({ add }) => {
                         }}
                         className={`
                             ${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} 
-                            smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
+                            smooth border-box width-30-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
                         <img src={require(`images/icons/draw-signature.svg`)} className="height-30" alt="Invite users" />
-                        <p className="bold size-pointeightfive-rem top-margin-10">Draw Signature</p>
+                        <p className="bold size-pointeight-rem top-margin-10">Draw Signature</p>
                     </div>
                     <div onClick={() => {
                         setSignatureType("write");
                         signatureCanvas.current.clear();
                     }} className={`
                             ${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} 
-                            smooth border-box width-50-percent no-select cursor-pointer height-100 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                            smooth border-box width-30-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
                         <img src={require(`images/icons/write-signature.svg`)} className="height-30" alt="Invite users" />
-                        <p className="bold size-pointeightfive-rem top-margin-10">Write Signature</p>
+                        <p className="bold size-pointeight-rem top-margin-10">Write Signature</p>
                     </div>
+                    <div onClick={() => { document.getElementById('signature_file').click() }} className={`smooth opacity-0-5 height-100 border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                        <i className="material-icons">cloud_upload</i>
+                        <p className="bold size-pointeight-rem top-margin-10">Upload Signature</p>
+                    </div>
+                    <input type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
                 </div>
                 <div className="display-flex justify-center">
                     <div className={`${signatureType === 'write' ? 'hide' : ''} display-flex flex-direction-column cursor-pointer no-select justify-center`}>

@@ -141,6 +141,10 @@ html, body {
     width: min-content !important;
 }
 
+.min-height-content {
+    height: min-content;
+}
+
 .no_underline {
     border-bottom: none !important;
 }
