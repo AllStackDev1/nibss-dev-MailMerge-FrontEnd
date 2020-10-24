@@ -12,6 +12,8 @@ RUN echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' >> /e
 && apt install -y ansible sshpass
 
 
-RUN apt install -y python-pip
+RUN apt install -y python-pip python3-pip
 
 RUN npm install -g sonarqube-scanner
+
+RUN pip3 install dominate requests argparse
