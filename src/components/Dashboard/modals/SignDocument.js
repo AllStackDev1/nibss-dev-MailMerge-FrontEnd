@@ -30,7 +30,7 @@ const SignDocument = ({ signatureType, setSignatureType, uploadSignatureFile, si
                                     <p className="size-pointnine-rem">Draw or write a new signature</p>
                                 </div>
                                 <button onClick={() => setSignatureSource("saved")} className="no-shrink left-padding-20 right-padding-20 height-40 white mustard-color border-mustard border-width-2 border-radius-2 display-flex justify-center align-items-center">
-                                    USED SAVED SIGNATURE
+                                    USE SAVED SIGNATURE
                                 </button>
                             </div>
                             <div className="width-70-percent margin-auto display-flex">
@@ -42,7 +42,7 @@ const SignDocument = ({ signatureType, setSignatureType, uploadSignatureFile, si
                                     <img src={require(`images/icons/write-signature.svg`)} className="height-25" alt="Invite users" />
                                     <p className="bold size-pointeight-rem top-margin-10">Write Signature</p>
                                 </div>
-                                <div onClick={() => { document.getElementById('signature_file').click() }} className={`smooth border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
+                                <div onClick={() => { document.getElementById('signature_file').click() }} className={`opacity-0-5 smooth border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
                                     <i className="material-icons">cloud_upload</i>
                                     <p className="bold size-pointeight-rem top-margin-10">Upload Signature</p>
                                 </div>
@@ -93,7 +93,7 @@ const SignDocument = ({ signatureType, setSignatureType, uploadSignatureFile, si
                                 I understand this is a legal representation of my signature.
                             </label>
                         </div>
-                        <button onClick={signDocument} disabled={legal.legal === false} className="left-margin-50 no-shrink left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                        <button onClick={signDocument} disabled={legal.legal === false || signingDocument} className="left-margin-50 no-shrink left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                             {signingDocument ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :

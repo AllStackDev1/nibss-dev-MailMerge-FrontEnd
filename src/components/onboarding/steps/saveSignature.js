@@ -56,7 +56,7 @@ const SaveSignature = ({ add }) => {
     return (
         <>
             <div className="left-padding-80 right-padding-80">
-                <p className="size-onepointfive-rem bold bottom-padding-10 text-center">Saver your Signature</p>
+                <p className="size-onepointfive-rem bold bottom-padding-10 text-center">Save your Signature</p>
                 <p className="size-pointeight-rem light-gray-color text-center bottom-margin-30">Create and save your signatures</p>
                 <div className="height-1 width-150 margin-auto border-top-gray bottom-margin-30"></div>
                 <div className="width-70-percent margin-auto top-margin-30 display-flex">
@@ -110,6 +110,7 @@ const SaveSignature = ({ add }) => {
                 <p onClick={logout} className="mustard-color size-pointeight-rem bold cursor-pointer">LOGOUT</p>
                 <button
                     onClick={saveSignature}
+                    disabled={auth.uploading}
                     className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {auth.uploading ?
                         auth.uploadProgress ?
