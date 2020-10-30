@@ -7,10 +7,14 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Log from "./snippets/documents/Log";
 import PageTitle from "./snippets/PageTitle";
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const DocumentInstance = ({ user }) => {
-    const [tab, setTab] = useState(1);
+    const [tab, setTab] = useState(2);
     const [document, setDocument] = useState({});
+    const [imageError, setImageError] = useState(false);
+    const [numPages, setNumPages] = useState(null);
     const documents = useSelector(state => state.document);
 
     const { documentId } = useParams();
@@ -30,8 +34,12 @@ const DocumentInstance = ({ user }) => {
         dispatch(push('/dashboard/documents'));
     }
 
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
     return (
-        <div className="full-width height-auto bottom-padding-20 border-box left-padding-30 right-padding-30 display-flex flex-direction-column">
+        <div className="full-width full-height custom-scrollbar overflow-auto-y bottom-padding-20 border-box left-padding-30 right-padding-30">
             <BackButton onClick={goBack} className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
                 <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                 BACK
@@ -39,13 +47,16 @@ const DocumentInstance = ({ user }) => {
             <PageTitle
                 title="Document"
             />
-            <div className={`full-width min-height-600 white border-radius-10 top-margin-30 box-shadow-less2`}>
+            <div className={`min-height-600 full-width white border-radius-10 top-margin-30 box-shadow-less2`}>
                 <div className="height-50 full-width border-bottom-gray display-flex">
                     <Tab onClick={() => setTab(1)} className={`${tab === 1 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
                         LOGS
                     </Tab>
                     <Tab onClick={() => setTab(2)} className={`${tab === 2 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
                         DELIVERY REPORT
+                    </Tab>
+                    <Tab onClick={() => setTab(3)} className={`${tab === 3 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
+                        VIEW DOCUMENT
                     </Tab>
                 </div>
                 <div className="padding-30 full-width border-box">
@@ -55,6 +66,8 @@ const DocumentInstance = ({ user }) => {
                                 <Log log={log} />)
                             : "Loading ...."
                         :
+                        ""}
+                    {tab === 2 ?
                         <div className="full-width">
                             {document.document ?
                                 <>
@@ -105,14 +118,14 @@ const DocumentInstance = ({ user }) => {
                                         </BorderGray>
                                     </div>
                                     <div className="full-width top-margin-50">
-                                        <div className="full-width display-flex bottom-margin-10">
+                                        <div className="full-width display-flex bottom-margin-20">
                                             <div className="width-30-percent size-pointnine-rem no-shrink bold">Recipient Name</div>
                                             <div className="width-30-percent size-pointnine-rem no-shrink bold">Email</div>
                                             <div className="width-20-percent size-pointnine-rem no-shrink bold">Status</div>
                                             <div className="width-20-percent size-pointnine-rem no-shrink bold">Date</div>
                                         </div>
                                         {document.document?.recipients?.map((recipient, index) =>
-                                            <div className="full-width display-flex" key={index}>
+                                            <div className="full-width display-flex bottom-margin-20" key={index}>
                                                 <div className="width-30-percent size-pointeight-rem no-shrink capitalize">{recipient.name}</div>
                                                 <div className="width-30-percent size-pointeight-rem no-shrink">{recipient.email}</div>
                                                 <div className="width-20-percent size-pointeight-rem no-shrink">
@@ -130,6 +143,27 @@ const DocumentInstance = ({ user }) => {
                                 : "Loading ..."
                             }
                         </div>
+                        : ""}
+                    {
+                        tab === 3 ?
+                            imageError === false ?
+                                <PageContainer className={`${numPages === undefined ? 'width-75-percent' : ''}`}>
+                                    <img onError={() => setImageError(true)} src={document.document?.file} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                                </PageContainer>
+                                :
+                                <>
+                                    <Document
+                                        file={document.document?.file}
+                                        onLoadSuccess={onDocumentLoadSuccess}
+                                    >
+                                        {Array.from(new Array(numPages), (el, index) => (
+                                            <PageContainer key={index} className={`${index} ${numPages === undefined ? 'width-75-percent' : 'min-content margin-auto'} bottom-margin-20`}>
+                                                <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
+                                            </PageContainer>
+                                        ))}
+                                    </Document>
+                                </>
+                            : ""
                     }
                 </div>
             </div>
@@ -162,10 +196,17 @@ const Status = styled.span`
 `;
 
 const Tab = styled.div`
-                            &.active-tab {
-                                color: #9E7D0A;
-                                border-bottom: 1px solid #9E7D0A;
-                            }
-                        `;
+                        &.active-tab {
+                            color: #9E7D0A;
+                            border-bottom: 1px solid #9E7D0A;
+                        }
+                    `;
+
+const PageContainer = styled.div`
+                        border: 1px solid #CCC !important;
+                        &:hover {
+                            border: 1px dashed #d8d8d8 !important;
+                        }
+                    `;
 
 export default DocumentInstance;
