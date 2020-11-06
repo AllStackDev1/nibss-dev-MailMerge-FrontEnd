@@ -156,8 +156,8 @@ const Recipients = ({ user }) => {
         }
     }
 
-    const initiateDeleteRecipient = recipient => {
-        setRecipientToDelete(recipient);
+    const initiateDeleteRecipient = r => {
+        setRecipientToDelete(r);
         setModal("delete-recipient");
     }
 
@@ -175,8 +175,8 @@ const Recipients = ({ user }) => {
         dispatch(recipientActions.addTagsToRecipient(toAddTag, toAddTags));
     }
 
-    const initiateDeleteTag = (tag) => {
-        setTagToDelete(tag);
+    const initiateDeleteTag = (t) => {
+        setTagToDelete(t);
         setModal("delete-tag");
     }
 

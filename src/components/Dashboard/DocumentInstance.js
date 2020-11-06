@@ -8,10 +8,11 @@ import styled from "styled-components";
 import Log from "./snippets/documents/Log";
 import PageTitle from "./snippets/PageTitle";
 import { Document, Page, pdfjs } from "react-pdf";
+import DocumentTab from "./snippets/documents/DocumentTab";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const DocumentInstance = ({ user }) => {
-    const [tab, setTab] = useState(2);
+    const [tab, setTab] = useState(1);
     const [document, setDocument] = useState({});
     const [imageError, setImageError] = useState(false);
     const [numPages, setNumPages] = useState(null);
@@ -34,8 +35,34 @@ const DocumentInstance = ({ user }) => {
         dispatch(push('/dashboard/documents'));
     }
 
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
+    function onDocumentLoadSuccess({ num }) {
+        setNumPages(num);
+    }
+
+    // RENDER HELPER
+    const renderFile = () => {
+        if (imageError === false) {
+            const pageStyle = `${numPages === undefined ? 'width-75-percent' : ''}`;
+
+            return <PageContainer className={pageStyle}>
+                <img
+                    onError={() => setImageError(true)}
+                    src={document.document?.file}
+                    className="full-width right-margin-10" alt="NIBSS Upload Document" />
+            </PageContainer>
+        }
+
+        return <Document
+            file={document.document?.file}
+            onLoadSuccess={onDocumentLoadSuccess}>
+            {[...Array(numPages)].map((el, index) => (
+                <PageContainer
+                    key={index}
+                    className={`${index} ${numPages === undefined ? 'width-75-percent' : 'min-content margin-auto'} bottom-margin-20`}>
+                    <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
+                </PageContainer>
+            ))}
+        </Document>
     }
 
     return (
@@ -49,15 +76,21 @@ const DocumentInstance = ({ user }) => {
             />
             <div className={`min-height-600 full-width white border-radius-10 top-margin-30 box-shadow-less2`}>
                 <div className="height-50 full-width border-bottom-gray display-flex">
-                    <Tab onClick={() => setTab(1)} className={`${tab === 1 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
-                        LOGS
-                    </Tab>
-                    <Tab onClick={() => setTab(2)} className={`${tab === 2 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
-                        DELIVERY REPORT
-                    </Tab>
-                    <Tab onClick={() => setTab(3)} className={`${tab === 3 ? 'active-tab' : ''} full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center`}>
-                        VIEW DOCUMENT
-                    </Tab>
+                    <DocumentTab
+                        label="LOGS"
+                        tab={tab}
+                        setTab={setTab}
+                        index={1} />
+                    <DocumentTab
+                        label="DELIVERY REPORT"
+                        tab={tab}
+                        setTab={setTab}
+                        index={2} />
+                    <DocumentTab
+                        label="VIEW DOCUMENT"
+                        tab={tab}
+                        setTab={setTab}
+                        index={3} />
                 </div>
                 <div className="padding-30 full-width border-box">
                     {tab === 1 ?
@@ -145,29 +178,11 @@ const DocumentInstance = ({ user }) => {
                         </div>
                         : ""}
                     {
-                        tab === 3 ?
-                            imageError === false ?
-                                <PageContainer className={`${numPages === undefined ? 'width-75-percent' : ''}`}>
-                                    <img onError={() => setImageError(true)} src={document.document?.file} className="full-width right-margin-10" alt="NIBSS Upload Document" />
-                                </PageContainer>
-                                :
-                                <>
-                                    <Document
-                                        file={document.document?.file}
-                                        onLoadSuccess={onDocumentLoadSuccess}
-                                    >
-                                        {Array.from(new Array(numPages), (el, index) => (
-                                            <PageContainer key={index} className={`${index} ${numPages === undefined ? 'width-75-percent' : 'min-content margin-auto'} bottom-margin-20`}>
-                                                <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
-                                            </PageContainer>
-                                        ))}
-                                    </Document>
-                                </>
-                            : ""
+                        tab === 3 && renderFile()
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -194,13 +209,6 @@ const Status = styled.span`
         color: #BDBDBD;
     }
 `;
-
-const Tab = styled.div`
-                        &.active-tab {
-                            color: #9E7D0A;
-                            border-bottom: 1px solid #9E7D0A;
-                        }
-                    `;
 
 const PageContainer = styled.div`
                         border: 1px solid #CCC !important;

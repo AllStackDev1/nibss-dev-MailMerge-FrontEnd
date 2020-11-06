@@ -94,13 +94,6 @@ const InviteUsers = ({ add }) => {
                                     <p className="size-pointeight-rem gray-color">{inviteInstance.email}</p>
                                 </div>
                                 <div className="display-flex align-items-center" style={{ '--vc-height': '25px', '--vc-width': '50px', '--vc-handle-width': '15px', '--vc-handle-height': '15px' }}>
-                                    {/* <div className="vc-toggle-container right-margin-20">
-                                        <label className="vc-switch">
-                                            <input type="checkbox" onChange={e => { let invitedVar = invited; invitedVar[index].administrator = e.target.checked; setInvited([...invitedVar]); }} checked={inviteInstance.administrator || false} className="vc-switch-input hide" />
-                                            <span className="vc-switch-label" data-on="Yes" data-off="No"></span>
-                                            <span className="vc-handle"></span>
-                                        </label>
-                                    </div> */}
                                     {inviteInstance.administrator ?
                                         <span className="size-pointeight-rem mustard-color bold right-margin-10">Administrator</span>
                                         : ""}
@@ -125,12 +118,10 @@ const InviteUsers = ({ add }) => {
                             <p className="size-pointseven-rem light-gray-color">Choose to invite this user as an Administrator</p>
                         </div>
                         <div className="right-margin-20">
-                            {/* <label className="vc-switch">
-                                <input type="checkbox" name="administrator" checked={invite.administrator || false} onChange={onChange} className="vc-switch-input hide" />
-                                <span className="vc-switch-label" data-on="Yes" data-off="No"></span>
-                                <span className="vc-handle"></span>
-                            </label> */}
-                            <select value={role} onChange={e => setRole(e.target.value)} className="select-role height-30 border-radius-5 no-outline border-gray border-width-2 left-padding-10 right-padding-10">
+                            <select
+                                value={role}
+                                onChange={e => setRole(e.target.value)}
+                                className="select-role height-30 border-radius-5 no-outline border-gray border-width-2 left-padding-10 right-padding-10">
                                 <option value="user">User</option>
                                 <option value="administrator">Administrator</option>
                             </select>
@@ -141,7 +132,10 @@ const InviteUsers = ({ add }) => {
                             <img src={require(`images/icons/email-send.svg`)} className="height-15" alt="Invite users" />
                             <span className="mustard-color bold size-pointeightfive-rem left-padding-10">INVITE</span>
                         </button>
-                        <button type="button" onClick={() => { document.getElementById('csv_file').click() }} className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
+                        <button
+                            type="button"
+                            onClick={() => { document.getElementById('csv_file').click() }}
+                            className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
                             <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
                             <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
                         </button>
@@ -150,13 +144,18 @@ const InviteUsers = ({ add }) => {
                 </form>
 
             </div>
-            <div className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center ${add ? 'flex-end' : 'space-between'}`}>
+            <div
+                className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 
+                            ${add ? 'flex-end' : 'space-between'}`}>
                 {!add ?
                     <Link to="/dashboard/index">
                         <p className="size-pointnine-rem mustard-color no-select cursor-pointer bold">SKIP</p>
                     </Link>
                     : ""}
-                <button disabled={user.invitingUsers} onClick={sendInvites} className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                <button
+                    disabled={user.invitingUsers}
+                    onClick={sendInvites}
+                    className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {user.invitingUsers ?
                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                         :

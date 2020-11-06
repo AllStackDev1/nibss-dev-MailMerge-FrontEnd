@@ -634,6 +634,10 @@ html, body {
     min-width: 70%;
 }
 
+.min-width-30-percent {
+    min-width: 30%;
+}
+
 .min-width-200 {
     min-width: 200px;
 }

@@ -2,6 +2,14 @@ import React from 'react';
 import styled from 'styled-components'
 
 const Pagination = ({ data, viewPage }) => {
+    // RENDER HELPER
+    const renderPage = index => {
+        if (index + 1 <= data.pagination.number_of_pages) {
+            return <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
+        }
+        return <div></div>;
+    }
+
     return (
         <div className="full-width display-flex height-50 align-items-center justify-center bottom-padding-30 top-padding-20 no-select">
             <span className="material-icons light-gray-color right-margin-5 cursor-pointer">chevron_left</span>
@@ -10,9 +18,7 @@ const Pagination = ({ data, viewPage }) => {
                 data.pagination ?
                     data.pagination.number_of_pages !== undefined ?
                         [...Array(data.pagination.number_of_pages < 3 ? 3 : data.pagination.number_of_pages)].map((item, index) =>
-                            index + 1 <= data.pagination.number_of_pages ?
-                                <Page key={index} onClick={() => viewPage(index + 1)} className={`border-radius-100-percent ${index + 1 === data.pagination.current && 'active-page'} ${index + 1 > data.pagination.number_of_pages ? 'opacity-0-5' : 'cursor-pointer'}`}>{index + 1}</Page>
-                                : ""
+                            renderPage(index)
                         )
                         : ''
                     : ''

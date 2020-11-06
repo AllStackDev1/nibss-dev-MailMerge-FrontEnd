@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from 'actions';
 import { toast } from 'react-toastify';
 import { push } from 'connected-react-router';
+import SignatureOption from 'components/Dashboard/snippets/documents/SignatureOption';
 
 const SaveSignature = ({ add }) => {
     const [signatureType, setSignatureType] = useState('draw');
@@ -60,30 +61,33 @@ const SaveSignature = ({ add }) => {
                 <p className="size-pointeight-rem light-gray-color text-center bottom-margin-30">Create and save your signatures</p>
                 <div className="height-1 width-150 margin-auto border-top-gray bottom-margin-30"></div>
                 <div className="width-70-percent margin-auto top-margin-30 display-flex">
-                    <div
+                    <SignatureOption
+                        label="Draw Signature"
+                        signatureType={signatureType}
                         onClick={() => {
                             setSignatureType("draw");
                             setSignature({ signature: "" })
                         }}
-                        className={`
-                            ${signatureType === "draw" ? 'border-gray' : 'opacity-0-5'} 
-                            smooth border-box width-30-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
-                        <img src={require(`images/icons/draw-signature.svg`)} className="height-30" alt="Invite users" />
-                        <p className="bold size-pointeight-rem top-margin-10">Draw Signature</p>
-                    </div>
-                    <div onClick={() => {
-                        setSignatureType("write");
-                        signatureCanvas.current.clear();
-                    }} className={`
-                            ${signatureType === "write" ? 'border-gray' : 'opacity-0-5'} 
-                            smooth border-box width-30-percent no-select cursor-pointer height-100 border-radius-7 gray right-margin-30 display-flex flex-direction-column align-items-center justify-center`}>
-                        <img src={require(`images/icons/write-signature.svg`)} className="height-30" alt="Invite users" />
-                        <p className="bold size-pointeight-rem top-margin-10">Write Signature</p>
-                    </div>
-                    <div onClick={() => { document.getElementById('signature_file').click() }} className={`smooth opacity-0-5 height-100 border-box width-30-percent no-select cursor-pointer height-80 border-radius-7 gray display-flex flex-direction-column align-items-center justify-center`}>
-                        <i className="material-icons">cloud_upload</i>
-                        <p className="bold size-pointeight-rem top-margin-10">Upload Signature</p>
-                    </div>
+                        optionType="draw"
+                        image={require(`images/icons/draw-signature.svg`)} />
+                    <SignatureOption
+                        label="Write Signature"
+                        signatureType={signatureType}
+                        onClick={() => {
+                            setSignatureType("write");
+                            signatureCanvas.current.clear();
+                        }}
+                        optionType="write"
+                        image={require(`images/icons/write-signature.svg`)} />
+                    <SignatureOption
+                        label="Upload Signature"
+                        signatureType={signatureType}
+                        onClick={() => {
+                            document.getElementById('signature_file').click()
+                        }}
+                        optionType="upload"
+                        icon="cloud_upload" />
+
                     <input type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
                 </div>
                 <div className="display-flex justify-center">
