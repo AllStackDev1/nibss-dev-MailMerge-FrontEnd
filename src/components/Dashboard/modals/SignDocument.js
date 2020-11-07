@@ -78,7 +78,13 @@ const SignDocument = ({
                         optionType="upload"
                         icon="cloud_upload" />
 
-                    <input type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
+                    <input
+                        type="file"
+                        name="signature_file"
+                        id="signature_file"
+                        accept="image/*"
+                        onChange={uploadSignatureFile}
+                        className="width-0 height-0 border-box hide" />
                 </div>
                 <div>
                     {renderSignatureType(signatureType)}
@@ -102,12 +108,12 @@ const SignDocument = ({
                     </button>
                 </div>
                 <div className="display-flex flex-wrap">
-                    {user?.data?.signatures?.map((signature, index) =>
+                    {user?.data?.signatures?.map((mapSignature, index) =>
                         <SignatureContainer
                             key={index}
-                            onClick={() => setDocumentSignature(s => s !== signature ? signature : "")}
-                            url={signature}
-                            className={`${documentSignature === signature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
+                            onClick={() => setDocumentSignature(s => s !== mapSignature ? mapSignature : "")}
+                            url={mapSignature}
+                            className={`${documentSignature === mapSignature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
                             <div className="width-80-percent height-60-percent"></div>
                         </SignatureContainer>
                     ) || ""}
@@ -116,8 +122,8 @@ const SignDocument = ({
         )
     }
 
-    const renderSignatureType = signatureType => {
-        if (signatureType === 'write') {
+    const renderSignatureType = s => {
+        if (s === 'write') {
             return (
                 <input
                     type="text"
@@ -151,7 +157,18 @@ const SignDocument = ({
                     <p className="white-color bold">Create Signature</p>
                     <p className="white-color size-pointeight-rem">Append signature to document</p>
                 </div>
-                <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50 bottom-margin-50">
+                <div
+                    className={`action-modal 
+                        no-select 
+                        white 
+                        full-width 
+                        border-box 
+                        left-padding-50 
+                        right-padding-50 
+                        bottom-padding-50 
+                        border-radius-10 
+                        top-padding-50 
+                        bottom-margin-50`}>
                     {signatureSource === "new" && renderNew()}
                     {signatureSource === "saved" && renderSaved()}
                     <div className="display-flex top-margin-20 align-items-center space-between">
@@ -165,7 +182,17 @@ const SignDocument = ({
                         <button
                             onClick={signDocument}
                             disabled={legal.legal === false || signingDocument}
-                            className="left-margin-50 no-shrink left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                            className={`left-margin-50 
+                                no-shrink 
+                                left-padding-20 
+                                right-padding-20 
+                                height-40 
+                                mustard 
+                                white-color 
+                                border-radius-2 
+                                display-flex 
+                                justify-center 
+                                align-items-center`}>
                             {signingDocument ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :

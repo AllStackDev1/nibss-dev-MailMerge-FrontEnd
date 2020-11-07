@@ -24,7 +24,7 @@ const Users = ({ user: localUser }) => {
 
     const dispatch = useDispatch();
     const users = useSelector(state => state.user);
-    let { pageId } = useParams();
+    const { pageId } = useParams();
     const page = useRef(null);
 
     useEffect(() => {
@@ -83,9 +83,9 @@ const Users = ({ user: localUser }) => {
         }
     }, [dispatch, pageId]);
 
-    const viewPage = page => {
-        if (page <= users.platformUsers.pagination.number_of_pages && page !== users.platformUsers.pagination.current) {
-            dispatch(push(`/dashboard/users/${page}`));
+    const viewPage = p => {
+        if (p <= users.platformUsers.pagination.number_of_pages && p !== users.platformUsers.pagination.current) {
+            dispatch(push(`/dashboard/users/${p}`));
         }
     }
 
@@ -95,8 +95,8 @@ const Users = ({ user: localUser }) => {
         dispatch(userActions.edit(user));
     }
 
-    const initiateDeleteUser = user => {
-        setToDelete(user);
+    const initiateDeleteUser = u => {
+        setToDelete(u);
     }
 
     const deleteUser = () => {
@@ -104,8 +104,8 @@ const Users = ({ user: localUser }) => {
         dispatch(userActions.deleteUser(toDelete));
     }
 
-    const updateRole = user => {
-        dispatch(userActions.updateRole(user));
+    const updateRole = u => {
+        dispatch(userActions.updateRole(u));
     }
 
     const exportDocument = (type) => {
@@ -114,23 +114,58 @@ const Users = ({ user: localUser }) => {
         }
     }
 
+    const renderModals = () => {
+        if (modal == "edit-user") {
+            <EditUser
+                user={user}
+                editing={users.editing}
+                onChange={onChangeUser}
+                onSubmit={editUser} />
+        }
+
+        if (modal == "delete-user") {
+            <DeleteUser
+                deleting={users.deleting}
+                onSubmit={deleteUser}
+                closeModal={() => {
+                    setModal(false);
+                    setToDelete({});
+                }} />
+        }
+    }
+
+    const renderUsers = () => {
+        if (users.platformUsers === undefined || (users.searching)) {
+            return <EmptyUser />;
+        }
+
+        const toLoop = (search.search !== "" || filter !== false) && users.searchResults ?
+            users.searchResults :
+            users.platformUsers;
+
+        return <>
+            {(toLoop).data.map((u, index) =>
+                <User
+                    key={index}
+                    setModal={setModal}
+                    setUser={setUser}
+                    deleteUser={initiateDeleteUser}
+                    updateRole={updateRole}
+                    userBeingUpdated={users.deleting || users.updatingRole}
+                    user={u} />
+            )}
+            <Pagination
+                data={toLoop}
+                viewPage={viewPage}
+            />
+        </>
+    }
+
     return (
         <>
             {modal !== false ?
                 <ModalContainer closeModal={() => setModal(false)}>
-                    {modal === "edit-user" ?
-                        <EditUser
-                            user={user}
-                            editing={users.editing}
-                            onChange={onChangeUser}
-                            onSubmit={editUser} />
-                        : ""}
-                    {modal === "delete-user" ?
-                        <DeleteUser
-                            deleting={users.deleting}
-                            onSubmit={deleteUser}
-                            closeModal={() => { setModal(false); setToDelete({}); }} />
-                        : ""}
+                    {renderModals()}
                 </ModalContainer>
                 : ""}
             <div ref={page} className="full-width full-height border-box left-padding-30 right-padding-30 custom-scrollbar overflow-auto-y">
@@ -167,44 +202,7 @@ const Users = ({ user: localUser }) => {
                         </div>
                         <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                     </div>
-                    {users.platformUsers === undefined || (users.searching) ?
-                        <EmptyUser />
-                        :
-                        search.search !== "" && users.searchResults ?
-                            <>
-                                {users.searchResults.data.map((user, index) =>
-                                    <User
-                                        key={index}
-                                        setModal={setModal}
-                                        setUser={setUser}
-                                        deleteUser={initiateDeleteUser}
-                                        updateRole={updateRole}
-                                        userBeingUpdated={users.deleting || users.updatingRole}
-                                        user={user} />
-                                )}
-                                <Pagination
-                                    data={users.searchResults}
-                                    viewPage={viewPage}
-                                />
-                            </>
-                            :
-                            <>
-                                {users.platformUsers.data.map((user, index) =>
-                                    <User
-                                        key={index}
-                                        setModal={setModal}
-                                        setUser={setUser}
-                                        deleteUser={initiateDeleteUser}
-                                        updateRole={updateRole}
-                                        userBeingUpdated={users.deleting || users.updatingRole}
-                                        user={user} />
-                                )}
-                                <Pagination
-                                    data={users.platformUsers}
-                                    viewPage={viewPage}
-                                />
-                            </>
-                    }
+                    {renderUsers()}
                 </div>
             </div>
         </>

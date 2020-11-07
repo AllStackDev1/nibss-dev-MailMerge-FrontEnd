@@ -36,7 +36,7 @@ const Recipients = ({ user }) => {
     const dispatch = useDispatch();
     const recipients = useSelector(state => state.recipient);
 
-    let { pageId } = useParams();
+    const { pageId } = useParams();
     const page = useRef(null);
 
     useEffect(() => {
@@ -149,7 +149,7 @@ const Recipients = ({ user }) => {
     const addRecipient = e => {
         e.preventDefault();
 
-        if (modal === "edit-recipient") {
+        if (modal == "edit-recipient") {
             dispatch(recipientActions.edit(editRecipient));
         } else {
             dispatch(recipientActions.add(recipient));
@@ -184,9 +184,9 @@ const Recipients = ({ user }) => {
         dispatch(recipientActions.deleteTag(tagToDelete));
     }
 
-    const initiateEdit = recipient => {
-        setToAddTag(recipient);
-        setToAddTags(recipients.recipients.data.find(rec => rec._id === recipient).tag);
+    const initiateEdit = r => {
+        setToAddTag(r);
+        setToAddTags(recipients.recipients.data.find(rec => rec._id === r).tag);
 
         setViewingTags(true);
     }
@@ -199,14 +199,14 @@ const Recipients = ({ user }) => {
             var csv = e.target.result;
             var allTextLines = csv.split('\n');
 
-            let recipientArr = [];
+            const recipientArr = [];
 
-            for (var i = 0; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split(',');
+            for (textLine of allTextLines) {
+                var data = textLine.split(',');
 
                 var row = {
-                    name: data[0].replace( /[\r\n]+/gm, "" ),
-                    email: data[1].replace( /[\r\n]+/gm, "" )
+                    name: data[0].replace(/[\r\n]+/gm, ""),
+                    email: data[1].replace(/[\r\n]+/gm, "")
                 };
 
                 recipientArr.push(row);
@@ -218,9 +218,81 @@ const Recipients = ({ user }) => {
         file.target.value = null;
     }
 
-    const viewPage = page => {
-        if (page <= recipients.recipients.pagination.number_of_pages && page !== recipients.recipients.pagination.current) {
-            dispatch(push(`/dashboard/recipients/${page}`));
+    const viewPage = p => {
+        if (p <= recipients.recipients.pagination.number_of_pages && p !== recipients.recipients.pagination.current) {
+            dispatch(push(`/dashboard/recipients/${p}`));
+        }
+    }
+
+    const renderRecipients = () => {
+        if (recipients.recipients === undefined || (recipients.searching)) {
+            return <EmptyRecipient />;
+        }
+
+        const toLoop = (search.search !== "" || filter.length > 0) && recipients.searchRecipients ?
+            recipients.searchRecipients :
+            recipients.recipients;
+
+        return <>
+            {(toLoop).data.map((r, index) =>
+                <Recipient
+                    key={index}
+                    setModal={setModal}
+                    setEditRecipient={setEditRecipient}
+                    deleteRecipient={initiateDeleteRecipient}
+                    recipient={r}
+                    toAddTag={toAddTag}
+                    initiateEdit={initiateEdit}
+                    recipientBeingDeleted={recipients.deleting} />
+            )}
+            <Pagination
+                data={toLoop}
+                viewPage={viewPage}
+            />
+        </>
+    }
+
+    const renderModal = () => {
+        if (modal == "add-recipient" || modal == "edit-recipient") {
+            return <AddRecipient
+                recipient={recipient}
+                editRecipient={editRecipient}
+                modal={modal}
+                creating={recipients.addingRecipient || recipients.editingRecipient}
+                onChange={onChangeRecipient}
+                onChangeEdit={onChangeRecipientEdit}
+                onSubmit={addRecipient}
+                closeModal={() => {
+                    setModal(false);
+                    setEditRecipient({});
+                    setRecipient({});
+                }} />
+        }
+        if (modal == "create-tag") {
+            return <CreateTag
+                tag={tag}
+                creating={recipients.addingTag}
+                onChange={onChangeTag}
+                onSubmit={addTag}
+                closeModal={() => setModal(false)} />
+        }
+        if (modal == "delete-tag") {
+            return <DeleteTag
+                deleting={recipients.deletingTag}
+                onSubmit={deleteTag}
+                closeModal={() => {
+                    setModal(false);
+                    setTagToDelete({});
+                }} />
+        }
+        if (modal == "delete-recipient") {
+            return <DeleteRecipient
+                deleting={recipients.deleting}
+                onSubmit={deleteRecipient}
+                closeModal={() => {
+                    setModal(false);
+                    setRecipientToDelete({});
+                }} />
         }
     }
 
@@ -228,37 +300,7 @@ const Recipients = ({ user }) => {
         <>
             {modal !== false ?
                 <ModalContainer closeModal={() => setModal(false)}>
-                    {modal === "add-recipient" || modal === "edit-recipient" ?
-                        <AddRecipient
-                            recipient={recipient}
-                            editRecipient={editRecipient}
-                            modal={modal}
-                            creating={recipients.addingRecipient || recipients.editingRecipient}
-                            onChange={onChangeRecipient}
-                            onChangeEdit={onChangeRecipientEdit}
-                            onSubmit={addRecipient}
-                            closeModal={() => { setModal(false); setEditRecipient({}); setRecipient({}); }} />
-                        : ""}
-                    {modal === "create-tag" ?
-                        <CreateTag
-                            tag={tag}
-                            creating={recipients.addingTag}
-                            onChange={onChangeTag}
-                            onSubmit={addTag}
-                            closeModal={() => setModal(false)} />
-                        : ""}
-                    {modal === "delete-tag" ?
-                        <DeleteTag
-                            deleting={recipients.deletingTag}
-                            onSubmit={deleteTag}
-                            closeModal={() => { setModal(false); setTagToDelete({}); }} />
-                        : ""}
-                    {modal === "delete-recipient" ?
-                        <DeleteRecipient
-                            deleting={recipients.deleting}
-                            onSubmit={deleteRecipient}
-                            closeModal={() => { setModal(false); setRecipientToDelete({}); }} />
-                        : ""}
+                    {renderModal()}
                 </ModalContainer>
                 : ""}
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
@@ -278,8 +320,8 @@ const Recipients = ({ user }) => {
                     onChange={onChangeSearch}
                     search={search}
                     filter={filter}
-                    addFilter={f => { setFilter(filter => ([...filter, f])) }}
-                    removeFilter={f => { setFilter(filter => (filter.filter(item => item !== f))) }}
+                    addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
+                    removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }}
                     addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
                     <ViewTag
@@ -312,46 +354,7 @@ const Recipients = ({ user }) => {
                         </div>
                         <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                     </div>
-                    {recipients.recipients === undefined || (recipients.searching) ?
-                        <EmptyRecipient />
-                        :
-                        (search.search !== "" || filter.length > 0) && recipients.searchRecipients ?
-                            <>
-                                {recipients.searchRecipients.data.map((recipient, index) =>
-                                    <Recipient
-                                        key={index}
-                                        setModal={setModal}
-                                        setEditRecipient={setEditRecipient}
-                                        deleteRecipient={initiateDeleteRecipient}
-                                        recipient={recipient}
-                                        toAddTag={toAddTag}
-                                        initiateEdit={initiateEdit}
-                                        recipientBeingDeleted={recipients.deleting} />
-                                )}
-                                <Pagination
-                                    data={recipients.searchRecipients}
-                                    viewPage={viewPage}
-                                />
-                            </>
-                            :
-                            <>
-                                {recipients.recipients.data.map((recipient, index) =>
-                                    <Recipient
-                                        key={index}
-                                        setModal={setModal}
-                                        setEditRecipient={setEditRecipient}
-                                        deleteRecipient={initiateDeleteRecipient}
-                                        recipient={recipient}
-                                        toAddTag={toAddTag}
-                                        initiateEdit={initiateEdit}
-                                        recipientBeingDeleted={recipients.deleting} />
-                                )}
-                                <Pagination
-                                    data={recipients.recipients}
-                                    viewPage={viewPage}
-                                />
-                            </>
-                    }
+                    {renderRecipients()}
                 </div>
             </div>
         </>

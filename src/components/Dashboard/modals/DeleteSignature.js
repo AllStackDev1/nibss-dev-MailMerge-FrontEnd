@@ -15,13 +15,46 @@ const DeleteSignature = ({ onSubmit, deleting, closeModal }) => {
                 <p className="size-onepointfive-rem bold">Confirmation</p>
                 <p className="size-one-rem bottom-margin-50">Are you sure you want to delete this signature?</p>
                 <div className="full-width display-flex space-between">
-                    <button onClick={onSubmit} type="button" disabled={deleting !== undefined && deleting !== false} className="width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button
+                        onClick={onSubmit}
+                        type="button"
+                        disabled={deleting !== undefined && deleting !== false}
+                        className={`width-200 
+                        no-border 
+                        left-padding-30 
+                        right-padding-30 
+                        border-box 
+                        mustard 
+                        height-45 
+                        cursor-pointer 
+                        white-color 
+                        size-pointeight-rem 
+                        bold 
+                        display-flex 
+                        align-items-center 
+                        justify-center`}>
                         {deleting !== undefined && deleting !== false ?
                             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                             :
                             'Yes'}
                     </button>
-                    <button onClick={closeModal} type="button" disabled={deleting !== undefined && deleting !== false} className="width-200 no-border left-padding-30 right-padding-30 border-box red height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button
+                        onClick={closeModal}
+                        type="button"
+                        disabled={deleting !== undefined && deleting !== false}
+                        className={`width-200 
+                            no-border 
+                            left-padding-30 
+                            right-padding-30 
+                            border-box 
+                            red 
+                            height-45 
+                            cursor-pointer 
+                            white-color 
+                            size-pointeight-rem 
+                            bold display-flex 
+                            align-items-center 
+                            justify-center`}>
                         No
                     </button>
                 </div>
