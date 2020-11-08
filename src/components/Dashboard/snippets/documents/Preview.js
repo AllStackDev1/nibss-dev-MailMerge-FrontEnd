@@ -15,7 +15,10 @@ const Preview = ({ onChange }) => {
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
-            onEditorStateChange={editorState => {setEditorState(editorState); onChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));}}
+            onEditorStateChange={editorState => {
+                setEditorState(editorState);
+                onChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+            }}
             placeholder="Write something"
         />
     );

@@ -263,19 +263,38 @@ const Documents = withRouter(({ location }) => {
                             title="Documents"
                         />
                         <Tabs className="height-60 full-width display-flex no-select">
-                            <Tab onClick={() => { fetch(); setTab(1) }} className={`${tab === 1 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                            <Tab
+                                onClick={() => {
+                                    fetch();
+                                    setTab(1)
+                                }}
+                                className={`${tab === 1 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
                                 All Documents {tab === 1 && fetching === false ? documents?.documents ? `(${documents?.documents?.total_documents || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => { fetch("pending"); setTab(2) }} className={`${tab === 2 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                            <Tab onClick={() => {
+                                fetch("pending");
+                                setTab(2)
+                            }}
+                                className={`${tab === 2 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
                                 Pending Documents {tab === 2 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.pending_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => { fetch("signed"); setTab(3) }} className={`${tab === 3 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                            <Tab
+                                onClick={() => {
+                                    fetch("signed");
+                                    setTab(3)
+                                }}
+                                className={`${tab === 3 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
                                 Signed Documents {tab === 3 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.signed_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
-                            <Tab onClick={() => { fetch("rejected"); setTab(4) }} className={`${tab === 4 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                            <Tab
+                                onClick={() => {
+                                    fetch("rejected");
+                                    setTab(4)
+                                }}
+                                className={`${tab === 4 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
                                 Rejected Documents {tab === 4 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.rejected_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>

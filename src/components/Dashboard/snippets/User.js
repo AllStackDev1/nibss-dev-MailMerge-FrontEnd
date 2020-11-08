@@ -24,7 +24,10 @@ const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModa
             <Menu className="no-shrink width-50 height-50 size-pointeight-rem right-margin-20 display-flex align-items-center justify-center">
                 <img src={require(`images/icons/dashboard/more.svg`)} className="height-5" alt="NIBSS PDF" />
                 <div className="box-shadow-less2 border-radius-10 padding-10 white">
-                    <div onClick={() => { setModal("edit-user"); setUser(user); }} className="smooth display-flex align-items-center">
+                    <div onClick={() => {
+                        setModal("edit-user");
+                        setUser(user);
+                    }} className="smooth display-flex align-items-center">
                         <div className="width-30 height-35"></div>
                         Edit User
                     </div>
