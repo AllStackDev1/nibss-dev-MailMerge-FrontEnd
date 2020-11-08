@@ -149,7 +149,7 @@ const Recipients = ({ user }) => {
     const addRecipient = e => {
         e.preventDefault();
 
-        if (modal == "edit-recipient") {
+        if (modal === "edit-recipient") {
             dispatch(recipientActions.edit(editRecipient));
         } else {
             dispatch(recipientActions.add(recipient));
@@ -201,7 +201,7 @@ const Recipients = ({ user }) => {
 
             const recipientArr = [];
 
-            for (textLine of allTextLines) {
+            for (const textLine of allTextLines) {
                 var data = textLine.split(',');
 
                 var row = {
@@ -253,7 +253,7 @@ const Recipients = ({ user }) => {
     }
 
     const renderModal = () => {
-        if (modal == "add-recipient" || modal == "edit-recipient") {
+        if (modal === "add-recipient" || modal === "edit-recipient") {
             return <AddRecipient
                 recipient={recipient}
                 editRecipient={editRecipient}
@@ -268,7 +268,7 @@ const Recipients = ({ user }) => {
                     setRecipient({});
                 }} />
         }
-        if (modal == "create-tag") {
+        if (modal === "create-tag") {
             return <CreateTag
                 tag={tag}
                 creating={recipients.addingTag}
@@ -276,7 +276,7 @@ const Recipients = ({ user }) => {
                 onSubmit={addTag}
                 closeModal={() => setModal(false)} />
         }
-        if (modal == "delete-tag") {
+        if (modal === "delete-tag") {
             return <DeleteTag
                 deleting={recipients.deletingTag}
                 onSubmit={deleteTag}
@@ -285,7 +285,7 @@ const Recipients = ({ user }) => {
                     setTagToDelete({});
                 }} />
         }
-        if (modal == "delete-recipient") {
+        if (modal === "delete-recipient") {
             return <DeleteRecipient
                 deleting={recipients.deleting}
                 onSubmit={deleteRecipient}
@@ -294,6 +294,8 @@ const Recipients = ({ user }) => {
                     setRecipientToDelete({});
                 }} />
         }
+
+        return <div></div>;
     }
 
     return (

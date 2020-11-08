@@ -28,7 +28,24 @@ const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => 
                         Drag and drop documents directly from your computer.<br />
                         You can upload multiple .pdf, .doc, .docx, .jpg, .jpeg, .png, .csv, .xls, .xlsx, .xlsm, .txt
                     </Gray>
-                    <button type="button" className="margin-auto top-margin-30 width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button
+                        type="button"
+                        className={`margin-auto 
+                            top-margin-30 
+                            width-200 
+                            no-border 
+                            left-padding-30 
+                            right-padding-30 
+                            border-box 
+                            mustard 
+                            height-45 
+                            cursor-pointer 
+                            white-color 
+                            size-pointeight-rem 
+                            bold 
+                            display-flex 
+                            align-items-center 
+                            justify-center`}>
                         CHOOSE FILE
                     </button>
                 </Container>

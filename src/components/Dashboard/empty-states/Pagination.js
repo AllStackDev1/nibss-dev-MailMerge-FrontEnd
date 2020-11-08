@@ -42,4 +42,4 @@ const Page = styled.p`
                         }
                     `;
 
-export default EmptyPagination
+export default EmptyPagination;

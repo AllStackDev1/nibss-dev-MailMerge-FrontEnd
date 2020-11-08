@@ -34,10 +34,6 @@ const Login = props => {
                             <input type="email" name="email_input" onChange={onChange} value={user.email_input || ""} className={`${user.email_input !== undefined && user.email_input !== "" ? "with-data" : ""} height-55 smooth`} required autoComplete="new-password" />
                             <label className="smooth">Enter your email address</label>
                         </InputGroup>
-                        {/* <InputGroup className="input-group full-width height-55 bottom-margin-15 border-radius-10">
-                            <input type="text" name="username" onChange={onChange} value={user.username || ""} className={`${user.username !== undefined && user.username !== "" ? "with-data" : ""} height-55 smooth`} required autoComplete="new-password" />
-                            <label className="smooth">Username</label>
-                        </InputGroup> */}
                         <InputGroup className="input-group full-width height-55 border-radius-10">
                             <input type="password" name="password" onChange={onChange} value={user.password || ""} className={`${user.password !== undefined && user.password !== "" ? "with-data" : ""} height-55 smooth`} required autoComplete="new-password" />
                             <label className="smooth">Enter password</label>
@@ -79,4 +75,4 @@ const InputGroup = styled.div`
                                 }
                             `;
 
-export default Login
+export default Login;

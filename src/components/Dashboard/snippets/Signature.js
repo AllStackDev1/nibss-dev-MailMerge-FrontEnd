@@ -72,4 +72,4 @@ const SignatureContainer = styled.div`
                         }
                     `;
 
-export default Signature
+export default Signature;

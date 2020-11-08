@@ -115,16 +115,16 @@ const Users = ({ user: localUser }) => {
     }
 
     const renderModals = () => {
-        if (modal == "edit-user") {
-            <EditUser
+        if (modal === "edit-user") {
+            return <EditUser
                 user={user}
                 editing={users.editing}
                 onChange={onChangeUser}
                 onSubmit={editUser} />
         }
 
-        if (modal == "delete-user") {
-            <DeleteUser
+        if (modal === "delete-user") {
+            return <DeleteUser
                 deleting={users.deleting}
                 onSubmit={deleteUser}
                 closeModal={() => {
@@ -132,6 +132,8 @@ const Users = ({ user: localUser }) => {
                     setToDelete({});
                 }} />
         }
+
+        return <div></div>;
     }
 
     const renderUsers = () => {
