@@ -143,7 +143,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                             file={documentFile}
                                             onLoadSuccess={onDocumentLoadSuccess}
                                         >
-                                            {Array.from(new Array(numPages), (el, index) => (
+                                            {[...Array(numPages)].map((el, index) => (
                                                 <PageContainer ref={refs.current[index]} key={index} className={`${index} ${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50 ${hovering ? 'one' : ''}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
                                                     <Page width={550} key={`page_${index + 1}`} pageNumber={index + 1} />
                                                     {placeholders.map((placeholder, i) =>
@@ -159,7 +159,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                                 file={documentFile}
                                                 onLoadSuccess={onDocumentLoadSuccess}
                                             >
-                                                {Array.from(new Array(numPages), (el, index) => (
+                                                {[...Array(numPages)].map((el, index) => (
                                                     <PageContainer ref={refsFull.current[index]} key={index} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
                                                         <Page key={`page_${index + 1}`} pageNumber={index + 1} />
                                                     </PageContainer>
