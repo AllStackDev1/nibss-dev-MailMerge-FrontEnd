@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +7,7 @@ import DeleteSignature from '../modals/DeleteSignature';
 import ModalContainer from '../modals/ModalContainer';
 
 const Signature = ({ signature }) => {
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState("");
     const [toDelete, setToDelete] = useState({});
     const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const Signature = ({ signature }) => {
     }, [auth.deletingSignature]);
 
     const renderModals = () => {
-        if (modal === "delete-signature") {
+        if (modal == "delete-signature") {
             return <DeleteSignature
                 deleting={auth.deletingSignature}
                 onSubmit={deleteSignature}
@@ -42,7 +43,7 @@ const Signature = ({ signature }) => {
 
     return (
         <>
-            {modal !== false ?
+            {modal !== "" ?
                 <ModalContainer closeModal={() => setModal(false)}>
                     {renderModals()}
                 </ModalContainer>

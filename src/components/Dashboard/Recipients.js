@@ -24,7 +24,7 @@ const Recipients = ({ user }) => {
     const [toAddTag, setToAddTag] = useState(false);
     const [toAddTags, setToAddTags] = useState([]);
     const [viewingTags, setViewingTags] = useState(false);
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState("");
     const [tagToDelete, setTagToDelete] = useState({});
     const [recipientToDelete, setRecipientToDelete] = useState({});
     const [search, setSearch] = useState({
@@ -300,7 +300,7 @@ const Recipients = ({ user }) => {
 
     return (
         <>
-            {modal !== false ?
+            {modal !== "" ?
                 <ModalContainer closeModal={() => setModal(false)}>
                     {renderModal()}
                 </ModalContainer>

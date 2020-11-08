@@ -18,7 +18,7 @@ const Users = ({ user: localUser }) => {
     const [search, setSearch] = useState({});
     const [filter, setFilter] = useState(false);
     const [timer, setTimer] = useState();
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState("");
     const [user, setUser] = useState({});
     const [toDelete, setToDelete] = useState({});
 
@@ -165,7 +165,7 @@ const Users = ({ user: localUser }) => {
 
     return (
         <>
-            {modal !== false ?
+            {modal !== "" ?
                 <ModalContainer closeModal={() => setModal(false)}>
                     {renderModals()}
                 </ModalContainer>

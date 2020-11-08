@@ -29,7 +29,7 @@ const Documents = withRouter(({ location }) => {
     const [fetching, setFetching] = useState(false);
     const [step, setStep] = useState(1);
     const [uploadingDocument, setUploadingDocument] = useState(false);
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState("");
     const [placeholders, setPlaceholders] = useState([]);
 
     const dispatch = useDispatch();
@@ -246,7 +246,7 @@ const Documents = withRouter(({ location }) => {
                 </>
                 :
                 <>
-                    {modal !== false ?
+                    {modal !== "" ?
                         <ModalContainer closeModal={() => setModal(false)}>
                             {modal === "create-document" ?
                                 <CreateDocument

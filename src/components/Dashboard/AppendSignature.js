@@ -20,7 +20,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [signature, setSignature] = useState({ signature: "" });
     const [signatureType, setSignatureType] = useState("draw");
 
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState("");
     const documents = useSelector(state => state.document);
 
     const { documentId } = useParams();
@@ -241,7 +241,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
     return (
         <>
-            {modal !== false ?
+            {modal !== "" ?
                 <ModalContainer closeModal={() => setModal(false)}>
                     {renderModals()}
                 </ModalContainer>
