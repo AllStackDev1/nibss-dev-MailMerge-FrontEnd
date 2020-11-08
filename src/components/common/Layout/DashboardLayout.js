@@ -90,7 +90,7 @@ class DashboardLayout extends React.Component {
 }
 
 function mapStateToProps(state) {
-    let user = JSON.parse(localStorage.getItem('nibss-user'));
+    const user = JSON.parse(localStorage.getItem('nibss-user'));
 
     return {
         user

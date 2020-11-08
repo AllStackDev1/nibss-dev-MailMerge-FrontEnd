@@ -43,10 +43,10 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 }
             });
 
-            let imageSize = await getImageSize(documentContainer.current.querySelector('img'));
+            const imageSize = await getImageSize(documentContainer.current.querySelector('img'));
 
             setPlaceholders(placeholders => {
-                let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+                const userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
 
                 if (userSigned !== -1) {
                     placeholders[userSigned] = {

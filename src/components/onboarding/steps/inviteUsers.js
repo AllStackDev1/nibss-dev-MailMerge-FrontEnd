@@ -54,7 +54,7 @@ const InviteUsers = ({ add }) => {
             var csv = e.target.result;
             var allTextLines = csv.split('\n');
 
-            let invitedArr = [];
+            const invitedArr = [];
 
             for (const textLine of allTextLines) {
                 var data = textLine.split(',');

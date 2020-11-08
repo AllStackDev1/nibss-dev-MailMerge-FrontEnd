@@ -9,7 +9,7 @@ import EmptySidebar from 'components/Dashboard/snippets/EmptySidebar';
 
 const Onboarding = props => {
     const [step, setStep] = useState(1);
-    let userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
+    const userLocal = JSON.parse(localStorage.getItem(`nibss-user`));
 
     const dispatch = useDispatch();
 

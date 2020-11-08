@@ -101,7 +101,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     }
 
     const calculateOffset = async e => {
-        let imageSize = await getImageSize(e.target);
+        const imageSize = await getImageSize(e.target);
 
         document.document.signatories.forEach((signatory, i) => {
             const documentCopy = Object.assign({}, document);
@@ -118,7 +118,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
     const calculateOffsetPDF = e => {
         document.document.signatories.forEach((signatory, i) => {
-            let documentCopy = Object.assign({}, document);
+            const documentCopy = Object.assign({}, document);
 
             if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]) {
                 if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current) {

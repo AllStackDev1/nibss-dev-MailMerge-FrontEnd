@@ -34,15 +34,16 @@ const Documents = withRouter(({ location }) => {
 
     const dispatch = useDispatch();
     const page = useRef(null);
-    let { pageId } = useParams();
+    const { pageId } = useParams();
 
     const tabClasses = `width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`;
 
     useEffect(() => {
-        let type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
+        const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
 
-        if (type)
+        if (type) {
             setTab(type === "pending" ? 2 : type === "signed" ? 3 : type === "rejected" ? 4 : "");
+        }
 
         if (pageId) {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
