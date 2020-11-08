@@ -13,12 +13,7 @@ const DashboardIndex = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // if (pageId) {
-        //     page.current.scrollTo({ top: 0, behavior: 'smooth' });
-        //     dispatch(documentActions.fetchPage('', pageId));
-        // } else {
         dispatch(documentActions.fetch());
-        // }
     }, [dispatch]);
 
     useEffect(() => {
