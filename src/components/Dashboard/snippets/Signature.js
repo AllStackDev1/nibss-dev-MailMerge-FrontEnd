@@ -39,6 +39,8 @@ const Signature = ({ signature }) => {
                     setToDelete({});
                 }} />
         }
+
+        return <div></div>
     }
 
     return (

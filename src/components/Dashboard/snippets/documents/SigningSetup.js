@@ -72,7 +72,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
             const info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
 
             setPlaceholders(p => {
-                let userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+                const userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
 
                 if (userSigned !== -1) {
                     p[userSigned] = {
@@ -121,13 +121,13 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
     }
 
     const renderFiles = (documentFile, index) => {
-        const isNumPages = numPages === undefined || numPages === null;
+        const isNumPages = numPages === undefined || numPages === null ? 'width-75-percent' : '';
 
         if (isFileImage(documentFile)) {
             return <PageContainer
                 key={index}
                 ref={documentContainer}
-                className={`${isNumPages ? 'width-75-percent' : ''}`}
+                className={isNumPages}
                 onMouseOver={e => {
                     e.preventDefault();
                     setHovering(true);
@@ -152,7 +152,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                     <PageContainer
                         ref={refs.current[index]}
                         key={index}
-                        className={`${index} ${isNumPages ? 'width-75-percent' : ''} bottom-margin-50 ${hovering ? 'one' : ''}`}
+                        className={`${index} ${isNumPages} bottom-margin-50 ${hovering ? 'one' : ''}`}
                         onMouseOver={e => {
                             e.preventDefault();
                             setHovering(true);
@@ -183,7 +183,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                         <PageContainer
                             ref={refsFull.current[index]}
                             key={index}
-                            className={`${isNumPages ? 'width-75-percent' : ''} bottom-margin-50`}
+                            className={`${isNumPages} bottom-margin-50`}
                             onMouseOver={e => {
                                 e.preventDefault();
                                 setHovering(true);

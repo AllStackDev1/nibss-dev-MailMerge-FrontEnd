@@ -72,8 +72,8 @@ function deleteRecipient(recipient) {
     function request(deleteRecipientRequest) {
         return { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient: deleteRecipientRequest };
     }
-    function success(deleteRecipient) {
-        return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient: deleteRecipient };
+    function success(deleteRecipientSuccess) {
+        return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient: deleteRecipientSuccess };
     }
     function failure(deleteRecipientError) {
         return { type: recipientConstants.DELETE_RECIPIENT_FAILURE, error: deleteRecipientError };
@@ -224,8 +224,8 @@ function fetch(src) {
     function request() {
         return { type: recipientConstants.FETCH_REQUEST };
     }
-    function success(recipientSuccess, src) {
-        return { type: recipientConstants.FETCH_SUCCESS, recipients: recipientSuccess, src };
+    function success(recipientSuccess, srcSuccess) {
+        return { type: recipientConstants.FETCH_SUCCESS, recipients: recipientSuccess, src: srcSuccess };
     }
     function failure(requestError) {
         return { type: recipientConstants.FETCH_FAILURE, error: requestError };
@@ -280,8 +280,8 @@ function fetchPage(page, src) {
     function request() {
         return { type: recipientConstants.FETCH_PAGE_REQUEST };
     }
-    function success(pageSuccess, src) {
-        return { type: recipientConstants.FETCH_PAGE_SUCCESS, recipients: pageSuccess, src };
+    function success(pageSuccess, srcFetchSuccess) {
+        return { type: recipientConstants.FETCH_PAGE_SUCCESS, recipients: pageSuccess, src: srcFetchSuccess };
     }
     function failure(pageError) {
         return { type: recipientConstants.FETCH_PAGE_FAILURE, error: pageError };

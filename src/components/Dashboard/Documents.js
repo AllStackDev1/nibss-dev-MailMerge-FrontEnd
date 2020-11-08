@@ -36,6 +36,8 @@ const Documents = withRouter(({ location }) => {
     const page = useRef(null);
     let { pageId } = useParams();
 
+    const tabClasses = `width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`;
+
     useEffect(() => {
         let type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
 
@@ -268,7 +270,7 @@ const Documents = withRouter(({ location }) => {
                                     fetch();
                                     setTab(1)
                                 }}
-                                className={`${tab === 1 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                className={`${tab === 1 && 'active-tab'} ${tabClasses}`}>
                                 All Documents {tab === 1 && fetching === false ? documents?.documents ? `(${documents?.documents?.total_documents || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
@@ -276,7 +278,7 @@ const Documents = withRouter(({ location }) => {
                                 fetch("pending");
                                 setTab(2)
                             }}
-                                className={`${tab === 2 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                className={`${tab === 2 && 'active-tab'} ${tabClasses}`}>
                                 Pending Documents {tab === 2 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.pending_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
@@ -285,7 +287,7 @@ const Documents = withRouter(({ location }) => {
                                     fetch("signed");
                                     setTab(3)
                                 }}
-                                className={`${tab === 3 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                className={`${tab === 3 && 'active-tab'} ${tabClasses}`}>
                                 Signed Documents {tab === 3 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.signed_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
@@ -294,7 +296,7 @@ const Documents = withRouter(({ location }) => {
                                     fetch("rejected");
                                     setTab(4)
                                 }}
-                                className={`${tab === 4 ? 'active-tab' : ''} width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`}>
+                                className={`${tab === 4 && 'active-tab'} ${tabClasses}`}>
                                 Rejected Documents {tab === 4 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.rejected_document || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
