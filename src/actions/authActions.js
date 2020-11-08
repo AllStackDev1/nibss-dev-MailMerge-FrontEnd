@@ -53,14 +53,14 @@ function login(user) {
             );
     };
 
-    function request() { 
-        return { type: authConstants.LOGIN_REQUEST }; 
+    function request() {
+        return { type: authConstants.LOGIN_REQUEST };
     }
-    function success(userSuccess) { 
-        return { type: authConstants.LOGIN_SUCCESS, user: userSuccess }; 
+    function success(userSuccess) {
+        return { type: authConstants.LOGIN_SUCCESS, user: userSuccess };
     }
-    function failure(error) { 
-        return { type: authConstants.LOGIN_FAILURE, error }; 
+    function failure(error) {
+        return { type: authConstants.LOGIN_FAILURE, error };
     }
 }
 
@@ -125,11 +125,11 @@ function saveSignature(file, add) {
     function update(loaded) {
         return { type: authConstants.UPLOAD_PROGRESS, loaded };
     }
-    function success(response, addSuccess) { 
-        return { type: authConstants.UPLOAD_SUCCESS, response, add: addSuccess }; 
+    function success(response, addSuccess) {
+        return { type: authConstants.UPLOAD_SUCCESS, response, add: addSuccess };
     }
-    function error() { 
-        return { type: authConstants.UPLOAD_ERROR }; 
+    function error() {
+        return { type: authConstants.UPLOAD_ERROR };
     }
 }
 
@@ -153,14 +153,14 @@ function deleteSignature(signature) {
             );
     };
 
-    function request(requestSignature) { 
-        return { type: authConstants.START_DELETE_SIGNATURE, signature: requestSignature }; 
+    function request(requestSignature) {
+        return { type: authConstants.START_DELETE_SIGNATURE, signature: requestSignature };
     }
-    function success(profile) { 
-        return { type: authConstants.DELETE_SIGNATURE_SUCCESS, profile }; 
+    function success(profile) {
+        return { type: authConstants.DELETE_SIGNATURE_SUCCESS, profile };
     }
-    function failure(error) { 
-        return { type: authConstants.DELETE_SIGNATURE_FAILURE, error }; 
+    function failure(error) {
+        return { type: authConstants.DELETE_SIGNATURE_FAILURE, error };
     }
 }
 
@@ -183,14 +183,14 @@ function fetchProfile() {
             );
     };
 
-    function request() { 
-        return { type: authConstants.START_FETCH_PROFILE }; 
+    function request() {
+        return { type: authConstants.START_FETCH_PROFILE };
     }
-    function success(profile) { 
-        return { type: authConstants.FETCH_PROFILE_SUCCESS, profile }; 
+    function success(profile) {
+        return { type: authConstants.FETCH_PROFILE_SUCCESS, profile };
     }
-    function failure(error) { 
-        return { type: authConstants.FETCH_PROFILE_FAILURE, error }; 
+    function failure(error) {
+        return { type: authConstants.FETCH_PROFILE_FAILURE, error };
     }
 }
 
@@ -214,13 +214,13 @@ function updateProfile(user) {
             );
     };
 
-    function request() { 
-        return { type: authConstants.START_UPDATE_PROFILE }; 
+    function request() {
+        return { type: authConstants.START_UPDATE_PROFILE };
     }
-    function success(profile) { 
-        return { type: authConstants.UPDATE_PROFILE_SUCCESS, profile }; 
+    function success(profile) {
+        return { type: authConstants.UPDATE_PROFILE_SUCCESS, profile };
     }
-    function failure(error) { 
-        return { type: authConstants.UPDATE_PROFILE_FAILURE, error }; 
+    function failure(error) {
+        return { type: authConstants.UPDATE_PROFILE_FAILURE, error };
     }
 }

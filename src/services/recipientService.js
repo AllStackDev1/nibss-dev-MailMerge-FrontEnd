@@ -94,7 +94,7 @@ function search(searchParam, filter) {
     };
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/admin/recipient/search?${buildQuery({
-        search: searchParam, 
+        search: searchParam,
         filter: filter?.length > 0 ? JSON.stringify(filter) : ''
     })}`, requestOptions)
         .then(authService.handleResponse)

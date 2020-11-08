@@ -22,14 +22,14 @@ function invite(users, add) {
 
         userService.invite(users)
             .then(
-                users => {
-                    dispatch(success(users));
+                inviteUserResponse => {
+                    dispatch(success(inviteUserResponse));
 
                     if (add) {
                         dispatch(push(`/dashboard/users`));
                     }
 
-                    toast.success(users.message);
+                    toast.success(inviteUserResponse.message);
                 },
                 error => {
                     if (error.message) {
@@ -40,9 +40,15 @@ function invite(users, add) {
             );
     };
 
-    function request() { return { type: userConstants.INVITE_REQUEST }; }
-    function success(users) { return { type: userConstants.INVITE_SUCCESS, users }; }
-    function failure(error) { return { type: userConstants.INVITE_FAILURE, error }; }
+    function request() {
+        return { type: userConstants.INVITE_REQUEST };
+    }
+    function success(userSuccess) {
+        return { type: userConstants.INVITE_SUCCESS, users: userSuccess };
+    }
+    function failure(error) {
+        return { type: userConstants.INVITE_FAILURE, error };
+    }
 }
 
 function edit(user) {
@@ -51,22 +57,28 @@ function edit(user) {
 
         userService.edit(user)
             .then(
-                user => {
-                    dispatch(success(user));
+                editUserResponse => {
+                    dispatch(success(editUserResponse));
 
-                    toast.success(user.message);
+                    toast.success(editUserResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                editError => {
+                    if (editError.message) {
+                        dispatch(failure(editError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: userConstants.EDIT_REQUEST }; }
-    function success(user) { return { type: userConstants.EDIT_SUCCESS, user }; }
-    function failure(error) { return { type: userConstants.EDIT_FAILURE, error }; }
+    function request() {
+        return { type: userConstants.EDIT_REQUEST };
+    }
+    function success(userSuccess) {
+        return { type: userConstants.EDIT_SUCCESS, user: userSuccess };
+    }
+    function failure(error) {
+        return { type: userConstants.EDIT_FAILURE, error };
+    }
 }
 
 function deleteUser(user) {
@@ -75,22 +87,28 @@ function deleteUser(user) {
 
         userService.deleteUser(user)
             .then(
-                user => {
-                    dispatch(success(user));
+                deleteUserResponse => {
+                    dispatch(success(deleteUserResponse));
 
-                    toast.success(user.message);
+                    toast.success(deleteUserResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                deleteError => {
+                    if (deleteError.message) {
+                        dispatch(failure(deleteError.message));
                     }
                 }
             );
     };
 
-    function request(user) { return { type: userConstants.DELETE_REQUEST, user }; }
-    function success(user) { return { type: userConstants.DELETE_SUCCESS, user }; }
-    function failure(error) { return { type: userConstants.DELETE_FAILURE, error }; }
+    function request(userRequest) {
+        return { type: userConstants.DELETE_REQUEST, user: userRequest };
+    }
+    function success(userSuccess) {
+        return { type: userConstants.DELETE_SUCCESS, user: userSuccess };
+    }
+    function failure(error) {
+        return { type: userConstants.DELETE_FAILURE, error };
+    }
 }
 
 function exportDocument(type) {
@@ -106,20 +124,26 @@ function exportDocument(type) {
             .then(response => {
                 dispatch(success());
 
-                let url = window.URL.createObjectURL(response);
-                let a = document.createElement('a');
+                const url = window.URL.createObjectURL(response);
+                const a = document.createElement('a');
                 a.href = url;
                 a.download = `Users - ${type.toUpperCase()}.${type}`;
                 a.click();
-            }).catch(function(error) {
+            }).catch(function (error) {
                 dispatch(failure());
                 console.log(error);
             });
     };
 
-    function request() { return { type: userConstants.DOWNLOAD_REQUEST }; }
-    function success() { return { type: userConstants.DOWNLOAD_SUCCESS }; }
-    function failure() { return { type: userConstants.DOWNLOAD_FAILURE }; }
+    function request() {
+        return { type: userConstants.DOWNLOAD_REQUEST };
+    }
+    function success() {
+        return { type: userConstants.DOWNLOAD_SUCCESS };
+    }
+    function failure() {
+        return { type: userConstants.DOWNLOAD_FAILURE };
+    }
 }
 
 function updateRole(user) {
@@ -128,22 +152,28 @@ function updateRole(user) {
 
         userService.updateRole(user)
             .then(
-                user => {
-                    dispatch(success(user));
+                updateUserResponse => {
+                    dispatch(success(updateUserResponse));
 
-                    toast.success(user.message);
+                    toast.success(updateUserResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                updateError => {
+                    if (updateError.message) {
+                        dispatch(failure(updateError.message));
                     }
                 }
             );
     };
 
-    function request(user) { return { type: userConstants.ASSIGN_AS_ADMIN_REQUEST, user }; }
-    function success(user) { return { type: userConstants.ASSIGN_AS_ADMIN_SUCCESS, user }; }
-    function failure(error) { return { type: userConstants.ASSIGN_AS_ADMIN_FAILURE, error }; }
+    function request(requestUser) {
+        return { type: userConstants.ASSIGN_AS_ADMIN_REQUEST, user: requestUser };
+    }
+    function success(successUser) {
+        return { type: userConstants.ASSIGN_AS_ADMIN_SUCCESS, user: successUser };
+    }
+    function failure(error) {
+        return { type: userConstants.ASSIGN_AS_ADMIN_FAILURE, error };
+    }
 }
 
 function fetchUsers() {
@@ -152,20 +182,26 @@ function fetchUsers() {
 
         userService.fetch()
             .then(
-                users => {
-                    dispatch(success(users));
+                fetchUserResponse => {
+                    dispatch(success(fetchUserResponse));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchError => {
+                    if (fetchError.message) {
+                        dispatch(failure(fetchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: userConstants.FETCH_REQUEST }; }
-    function success(users) { return { type: userConstants.FETCH_SUCCESS, users }; }
-    function failure(error) { return { type: userConstants.FETCH_FAILURE, error }; }
+    function request() {
+        return { type: userConstants.FETCH_REQUEST };
+    }
+    function success(userSuccess) {
+        return { type: userConstants.FETCH_SUCCESS, users: userSuccess };
+    }
+    function failure(fetchError) {
+        return { type: userConstants.FETCH_FAILURE, error: fetchError };
+    }
 }
 
 function fetchPage(page) {
@@ -185,31 +221,43 @@ function fetchPage(page) {
             );
     };
 
-    function request() { return { type: userConstants.FETCH_PAGE_REQUEST }; }
-    function success(users) { return { type: userConstants.FETCH_PAGE_SUCCESS, users }; }
-    function failure(error) { return { type: userConstants.FETCH_PAGE_FAILURE, error }; }
+    function request() {
+        return { type: userConstants.FETCH_PAGE_REQUEST };
+    }
+    function success(users) {
+        return { type: userConstants.FETCH_PAGE_SUCCESS, users };
+    }
+    function failure(error) {
+        return { type: userConstants.FETCH_PAGE_FAILURE, error };
+    }
 }
 
-function search(search, filter) {
+function search(searchParam, filter) {
     return dispatch => {
         dispatch(request());
 
-        userService.search(search, filter)
+        userService.search(searchParam, filter)
             .then(
-                users => {
-                    dispatch(success(users));
+                userSearchResponse => {
+                    dispatch(success(userSearchResponse));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                searchError => {
+                    if (searchError.message) {
+                        dispatch(failure(searchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: userConstants.SEARCH_REQUEST }; }
-    function success(users) { return { type: userConstants.SEARCH_SUCCESS, users }; }
-    function failure(error) { return { type: userConstants.SEARCH_FAILURE, error }; }
+    function request() {
+        return { type: userConstants.SEARCH_REQUEST };
+    }
+    function success(users) {
+        return { type: userConstants.SEARCH_SUCCESS, users };
+    }
+    function failure(error) {
+        return { type: userConstants.SEARCH_FAILURE, error };
+    }
 }
 
 function reset() {
