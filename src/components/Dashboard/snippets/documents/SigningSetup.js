@@ -105,7 +105,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
         }
     }
 
-    function onDocumentLoadSuccess({ numPagesLoaded }) {
+    function onDocumentLoadSuccess({ numPages: numPagesLoaded }) {
         setNumPages(numPagesLoaded);
         refs.current = refs.current.splice(0, numPagesLoaded);
         for (let i = 0; i < numPagesLoaded; i++) {

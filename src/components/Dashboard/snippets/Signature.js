@@ -30,7 +30,7 @@ const Signature = ({ signature }) => {
     }, [auth.deletingSignature]);
 
     const renderModals = () => {
-        if (modal == "delete-signature") {
+        if (modal === "delete-signature") {
             return <DeleteSignature
                 deleting={auth.deletingSignature}
                 onSubmit={deleteSignature}

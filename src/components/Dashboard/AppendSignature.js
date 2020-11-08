@@ -30,7 +30,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const refs = useRef([React.createRef(), React.createRef()]);
     const refsFull = useRef([React.createRef(), React.createRef()]);
 
-    function onDocumentLoadSuccess({ numPs }) {
+    function onDocumentLoadSuccess({ numPages: numPs }) {
         setNumPages(numPs);
         refs.current = refs.current.splice(0, numPs);
         for (let i = 0; i < numPs; i++) {

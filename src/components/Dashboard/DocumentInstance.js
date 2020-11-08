@@ -35,7 +35,7 @@ const DocumentInstance = ({ user }) => {
         dispatch(push('/dashboard/documents'));
     }
 
-    function onDocumentLoadSuccess({ num }) {
+    function onDocumentLoadSuccess({ numPages: num }) {
         setNumPages(num);
     }
 
