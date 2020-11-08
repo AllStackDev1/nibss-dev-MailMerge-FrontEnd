@@ -169,7 +169,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                         top: placeholder.absolute_y_coordinate,
                                         backgroundColor: getColor(placeholder.name)
                                     }}></div>
-                                : ""
+                                : <div></div>
                         )}
                     </PageContainer>
                 ))}

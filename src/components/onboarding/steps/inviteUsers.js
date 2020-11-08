@@ -56,8 +56,8 @@ const InviteUsers = ({ add }) => {
 
             let invitedArr = [];
 
-            for (var i = 0; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split(',');
+            for (const textLine of allTextLines) {
+                var data = textLine.split(',');
 
                 var row = {
                     name: data[0].replace(/[\r\n]+/gm, ""),

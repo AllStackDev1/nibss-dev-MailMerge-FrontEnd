@@ -21,27 +21,33 @@ function add(recipients, multiple) {
 
         recipientService.add(recipients, multiple)
             .then(
-                recipient => {
+                addRecipientResponse => {
                     recipientService.fetch()
                         .then(
                             recipients => {
                                 dispatch(success(recipients));
 
-                                toast.success(recipient.message);
+                                toast.success(addRecipientResponse.message);
                             });
                 },
-                error => {
-                    if (error.message) {
-                        toast.error(error.message);
-                        dispatch(failure(error.message));
+                addRecipientError => {
+                    if (addRecipientError.message) {
+                        toast.error(addRecipientError.message);
+                        dispatch(failure(addRecipientError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.ADD_RECIPIENT_REQUEST }; }
-    function success(recipients) { return { type: recipientConstants.ADD_RECIPIENT_SUCCESS, recipients }; }
-    function failure(error) { return { type: recipientConstants.ADD_RECIPIENT_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.ADD_RECIPIENT_REQUEST };
+    }
+    function success(recipientSuccess) {
+        return { type: recipientConstants.ADD_RECIPIENT_SUCCESS, recipients: recipientSuccess };
+    }
+    function failure(recipientError) {
+        return { type: recipientConstants.ADD_RECIPIENT_FAILURE, error: recipientError };
+    }
 }
 
 function deleteRecipient(recipient) {
@@ -50,22 +56,28 @@ function deleteRecipient(recipient) {
 
         recipientService.deleteRecipient(recipient)
             .then(
-                recipient => {
-                    dispatch(success(recipient));
+                deleteRecipientResponse => {
+                    dispatch(success(deleteRecipientResponse));
 
-                    toast.success(recipient.message);
+                    toast.success(deleteRecipientResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                deleteRecipientError => {
+                    if (deleteRecipientError.message) {
+                        dispatch(failure(deleteRecipientError.message));
                     }
                 }
             );
     };
 
-    function request(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient }; }
-    function success(recipient) { return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient }; }
-    function failure(error) { return { type: recipientConstants.DELETE_RECIPIENT_FAILURE, error }; }
+    function request(deleteRecipientRequest) {
+        return { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient: deleteRecipientRequest };
+    }
+    function success(deleteRecipient) {
+        return { type: recipientConstants.DELETE_RECIPIENT_SUCCESS, recipient: deleteRecipient };
+    }
+    function failure(deleteRecipientError) {
+        return { type: recipientConstants.DELETE_RECIPIENT_FAILURE, error: deleteRecipientError };
+    }
 }
 
 function deleteTag(tag) {
@@ -74,22 +86,28 @@ function deleteTag(tag) {
 
         recipientService.deleteTag(tag)
             .then(
-                tag => {
-                    dispatch(success(tag.tag));
+                deleteTagResponse => {
+                    dispatch(success(deleteTagResponse.tag));
 
-                    toast.success(tag.message);
+                    toast.success(deleteTagResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                deleteTagError => {
+                    if (deleteTagError.message) {
+                        dispatch(failure(deleteTagError.message));
                     }
                 }
             );
     };
 
-    function request(tag) { return { type: recipientConstants.DELETE_TAG_REQUEST, tag }; }
-    function success(tag) { return { type: recipientConstants.DELETE_TAG_SUCCESS, tag }; }
-    function failure(error) { return { type: recipientConstants.DELETE_TAG_FAILURE, error }; }
+    function request(deleteTagRequest) {
+        return { type: recipientConstants.DELETE_TAG_REQUEST, tag: deleteTagRequest };
+    }
+    function success(deleteTagSuccess) {
+        return { type: recipientConstants.DELETE_TAG_SUCCESS, tag: deleteTagSuccess };
+    }
+    function failure(deleteTagError) {
+        return { type: recipientConstants.DELETE_TAG_FAILURE, error: deleteTagError };
+    }
 }
 
 function edit(recipient) {
@@ -98,22 +116,28 @@ function edit(recipient) {
 
         recipientService.edit(recipient)
             .then(
-                recipient => {
-                    dispatch(success(recipient));
+                editRecipientResponse => {
+                    dispatch(success(editRecipientResponse));
 
-                    toast.success(recipient.message);
+                    toast.success(editRecipientResponse.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                editRecipientError => {
+                    if (editRecipientError.message) {
+                        dispatch(failure(editRecipientError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.EDIT_RECIPIENT_REQUEST }; }
-    function success(recipient) { return { type: recipientConstants.EDIT_RECIPIENT_SUCCESS, recipient }; }
-    function failure(error) { return { type: recipientConstants.EDIT_RECIPIENT_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.EDIT_RECIPIENT_REQUEST };
+    }
+    function success(editRecipientSuccess) {
+        return { type: recipientConstants.EDIT_RECIPIENT_SUCCESS, recipient: editRecipientSuccess };
+    }
+    function failure(editRecipientError) {
+        return { type: recipientConstants.EDIT_RECIPIENT_FAILURE, error: editRecipientError };
+    }
 }
 
 function addTag(tag) {
@@ -122,26 +146,32 @@ function addTag(tag) {
 
         recipientService.addTag(tag)
             .then(
-                tag => {
+                addTagResponse => {
                     recipientService.fetchTags()
                         .then(
-                            tags => {
-                                dispatch(success(tags));
+                            fetchtags => {
+                                dispatch(success(fetchtags));
 
-                                toast.success(tag.message);
+                                toast.success(addTagResponse.message);
                             });
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                addTagError => {
+                    if (addTagError.message) {
+                        dispatch(failure(addTagError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.ADD_TAG_REQUEST }; }
-    function success(tags) { return { type: recipientConstants.ADD_TAG_SUCCESS, tags }; }
-    function failure(error) { return { type: recipientConstants.ADD_TAG_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.ADD_TAG_REQUEST };
+    }
+    function success(addTagSuccess) {
+        return { type: recipientConstants.ADD_TAG_SUCCESS, tags: addTagSuccess };
+    }
+    function failure(addTagError) {
+        return { type: recipientConstants.ADD_TAG_FAILURE, error: addTagError };
+    }
 }
 
 function addTagsToRecipient(recipient, tags) {
@@ -150,22 +180,28 @@ function addTagsToRecipient(recipient, tags) {
 
         recipientService.addTagsToRecipient(recipient, tags)
             .then(
-                recipient => {
-                    dispatch(success(recipient.data));
+                addToRecipientSuccess => {
+                    dispatch(success(addToRecipientSuccess.data));
 
-                    toast.success(recipient.message);
+                    toast.success(addToRecipientSuccess.message);
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                addToRecipientError => {
+                    if (addToRecipientError.message) {
+                        dispatch(failure(addToRecipientError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST }; }
-    function success(recipient) { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS, recipient }; }
-    function failure(error) { return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_REQUEST };
+    }
+    function success(addToRecipientS) {
+        return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS, recipient: addToRecipientS };
+    }
+    function failure(addToRecipientE) {
+        return { type: recipientConstants.ADD_TAG_TO_RECIPIENT_FAILURE, error: addToRecipientE };
+    }
 }
 
 function fetch(src) {
@@ -174,20 +210,26 @@ function fetch(src) {
 
         recipientService.fetch(src)
             .then(
-                recipients => {
-                    dispatch(success(recipients, src));
+                fetchResponse => {
+                    dispatch(success(fetchResponse, src));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchError => {
+                    if (fetchError.message) {
+                        dispatch(failure(fetchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.FETCH_REQUEST }; }
-    function success(recipients, src) { return { type: recipientConstants.FETCH_SUCCESS, recipients, src }; }
-    function failure(error) { return { type: recipientConstants.FETCH_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.FETCH_REQUEST };
+    }
+    function success(recipientSuccess, src) {
+        return { type: recipientConstants.FETCH_SUCCESS, recipients: recipientSuccess, src };
+    }
+    function failure(requestError) {
+        return { type: recipientConstants.FETCH_FAILURE, error: requestError };
+    }
 }
 
 function search(searchTerm, filter, src) {
@@ -196,20 +238,26 @@ function search(searchTerm, filter, src) {
 
         recipientService.search(searchTerm, filter)
             .then(
-                recipients => {
-                    dispatch(success(recipients));
+                searchResponse => {
+                    dispatch(success(searchResponse));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                searchError => {
+                    if (searchError.message) {
+                        dispatch(failure(searchError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.SEARCH_REQUEST }; }
-    function success(recipients) { return { type: recipientConstants.SEARCH_SUCCESS, recipients, src }; }
-    function failure(error) { return { type: recipientConstants.SEARCH_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.SEARCH_REQUEST };
+    }
+    function success(recipientSuccess) {
+        return { type: recipientConstants.SEARCH_SUCCESS, recipients: recipientSuccess, src };
+    }
+    function failure(recipientError) {
+        return { type: recipientConstants.SEARCH_FAILURE, error: recipientError };
+    }
 }
 
 function fetchPage(page, src) {
@@ -218,8 +266,8 @@ function fetchPage(page, src) {
 
         recipientService.fetchPage(page)
             .then(
-                recipients => {
-                    dispatch(success(recipients, src));
+                pageResponse => {
+                    dispatch(success(pageResponse, src));
                 },
                 error => {
                     if (error.message) {
@@ -229,9 +277,15 @@ function fetchPage(page, src) {
             );
     };
 
-    function request() { return { type: recipientConstants.FETCH_PAGE_REQUEST }; }
-    function success(recipients, src) { return { type: recipientConstants.FETCH_PAGE_SUCCESS, recipients, src }; }
-    function failure(error) { return { type: recipientConstants.FETCH_PAGE_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.FETCH_PAGE_REQUEST };
+    }
+    function success(pageSuccess, src) {
+        return { type: recipientConstants.FETCH_PAGE_SUCCESS, recipients: pageSuccess, src };
+    }
+    function failure(pageError) {
+        return { type: recipientConstants.FETCH_PAGE_FAILURE, error: pageError };
+    }
 }
 
 function fetchTags() {
@@ -240,18 +294,24 @@ function fetchTags() {
 
         recipientService.fetchTags()
             .then(
-                tags => {
-                    dispatch(success(tags));
+                fetchTagsResponse => {
+                    dispatch(success(fetchTagsResponse));
                 },
-                error => {
-                    if (error.message) {
-                        dispatch(failure(error.message));
+                fetchTagsError => {
+                    if (fetchTagsError.message) {
+                        dispatch(failure(fetchTagsError.message));
                     }
                 }
             );
     };
 
-    function request() { return { type: recipientConstants.FETCH_TAGS_REQUEST }; }
-    function success(tags) { return { type: recipientConstants.FETCH_TAGS_SUCCESS, tags }; }
-    function failure(error) { return { type: recipientConstants.FETCH_TAGS_FAILURE, error }; }
+    function request() {
+        return { type: recipientConstants.FETCH_TAGS_REQUEST };
+    }
+    function success(tagSuccess) {
+        return { type: recipientConstants.FETCH_TAGS_SUCCESS, tags: tagSuccess };
+    }
+    function failure(fetchError) {
+        return { type: recipientConstants.FETCH_TAGS_FAILURE, error: fetchError };
+    }
 }
