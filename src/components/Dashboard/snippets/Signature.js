@@ -12,8 +12,8 @@ const Signature = ({ signature }) => {
 
     const auth = useSelector(state => state.auth);
 
-    const initiateDeleteSignature = signature => {
-        setToDelete(signature);
+    const initiateDeleteSignature = s => {
+        setToDelete(s);
         setModal("delete-signature");
     }
 
@@ -22,33 +22,42 @@ const Signature = ({ signature }) => {
     }
 
     useEffect(() => {
-        if(auth.deletingSignature === false) {
+        if (auth.deletingSignature === false) {
             setModal(false);
             setToDelete({});
         }
     }, [auth.deletingSignature]);
 
+    const renderModals = () => {
+        if (modal === "delete-signature") {
+            return <DeleteSignature
+                deleting={auth.deletingSignature}
+                onSubmit={deleteSignature}
+                closeModal={() => {
+                    setModal(false);
+                    setToDelete({});
+                }} />
+        }
+    }
+
     return (
         <>
             {modal !== false ?
                 <ModalContainer closeModal={() => setModal(false)}>
-                    {modal === "delete-signature" ?
-                        <DeleteSignature
-                            deleting={auth.deletingSignature}
-                            onSubmit={deleteSignature}
-                            closeModal={() => { setModal(false); setToDelete({}); }} />
-                        : ""}
+                    {renderModals()}
                 </ModalContainer>
                 : ""}
-        <SignatureContainer url={signature} className="bottom-margin-20 display-flex flex-direction-column">
-            <div className="full-width full-height display-flex align-items-center justify-center">
-                <div className="width-80-percent height-60-percent"></div>
-            </div>
-            <button onClick={() => initiateDeleteSignature(signature)} className="cursor-pointer no-select full-width height-40 no-shrink display-flex align-items-center justify-center">
-                <img src={require(`images/icons/dashboard/delete.svg`)} className="height-15 right-margin-10" alt="NIBSS Empty" />
+            <SignatureContainer url={signature} className="bottom-margin-20 display-flex flex-direction-column">
+                <div className="full-width full-height display-flex align-items-center justify-center">
+                    <div className="width-80-percent height-60-percent"></div>
+                </div>
+                <button
+                    onClick={() => initiateDeleteSignature(signature)}
+                    className="cursor-pointer no-select full-width height-40 no-shrink display-flex align-items-center justify-center">
+                    <img src={require(`images/icons/dashboard/delete.svg`)} className="height-15 right-margin-10" alt="NIBSS Empty" />
                 Delete
             </button>
-        </SignatureContainer>
+            </SignatureContainer>
         </>
     );
 }

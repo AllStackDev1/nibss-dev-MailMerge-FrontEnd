@@ -32,7 +32,10 @@ const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModa
                         <div className="width-30 height-35"></div>
                         Assign as {user.role === "administrator" ? "user" : "admin"}
                     </div>
-                    <Delete onClick={() => { deleteUser(user); setModal('delete-user') }} className="smooth display-flex align-items-center">
+                    <Delete onClick={() => {
+                        deleteUser(user);
+                        setModal('delete-user')
+                    }} className="smooth display-flex align-items-center">
                         <div className="width-30 height-35 display-flex align-items-center justify-center">
                             <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />
                         </div>

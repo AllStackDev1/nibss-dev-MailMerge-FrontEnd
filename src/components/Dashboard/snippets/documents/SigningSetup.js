@@ -19,10 +19,9 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
     const refsFull = useRef([React.createRef(), React.createRef()]);
 
     const mouseUp = async (x, y) => {
-
         if (documentContainer.current) {
             setPlaceholders(placeholders => {
-                let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+                const userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
                 if (userSigned !== -1) {
                     placeholders[userSigned] = {
                         ...placeholders[userSigned],
@@ -70,30 +69,32 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 }
             });
         } else {
-            let info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
+            const info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
 
-            setPlaceholders(placeholders => {
-                let userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+            setPlaceholders(p => {
+                let userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
 
                 if (userSigned !== -1) {
-                    placeholders[userSigned] = {
-                        ...placeholders[userSigned],
+                    p[userSigned] = {
+                        ...p[userSigned],
                         page: info.page,
                         absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
                         absolute_y_coordinate: info.offset,
-                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) / refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
+                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
+                            refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
                         y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight
                     }
 
-                    return placeholders;
+                    return p;
                 } else {
                     return [
-                        ...placeholders,
+                        ...p,
                         {
                             page: info.page,
                             absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
                             absolute_y_coordinate: info.offset,
-                            x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) / refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
+                            x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
+                                refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
                             y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
                             name: signatoryDragged.name,
                             email: signatoryDragged.email
@@ -104,19 +105,96 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
         }
     }
 
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-        refs.current = refs.current.splice(0, numPages);
-        for (let i = 0; i < numPages; i++) {
+    function onDocumentLoadSuccess({ numPagesLoaded }) {
+        setNumPages(numPagesLoaded);
+        refs.current = refs.current.splice(0, numPagesLoaded);
+        for (let i = 0; i < numPagesLoaded; i++) {
             refs.current[i] = refs.current[i] || React.createRef();
         }
         refs.current = refs.current.map((item) => item || React.createRef());
 
-        refsFull.current = refsFull.current.splice(0, numPages);
-        for (let i = 0; i < numPages; i++) {
+        refsFull.current = refsFull.current.splice(0, numPagesLoaded);
+        for (let i = 0; i < numPagesLoaded; i++) {
             refsFull.current[i] = refsFull.current[i] || React.createRef();
         }
         refsFull.current = refsFull.current.map((item) => item || React.createRef());
+    }
+
+    const renderFiles = (documentFile, index) => {
+        const isNumPages = numPages === undefined || numPages === null;
+
+        if (isFileImage(documentFile)) {
+            return <PageContainer
+                key={index}
+                ref={documentContainer}
+                className={`${isNumPages ? 'width-75-percent' : ''}`}
+                onMouseOver={e => {
+                    e.preventDefault();
+                    setHovering(true);
+                }}
+                onMouseLeave={e => setHovering(false)}>
+                <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
+                {placeholders.map((placeholder, i) =>
+                    <div
+                        key={i}
+                        className="width-180 height-40 absolute"
+                        style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
+                )}
+            </PageContainer>
+        }
+
+        return <>
+            <Document
+                file={documentFile}
+                onLoadSuccess={onDocumentLoadSuccess}
+            >
+                {[...Array(numPages)].map((el, index) => (
+                    <PageContainer
+                        ref={refs.current[index]}
+                        key={index}
+                        className={`${index} ${isNumPages ? 'width-75-percent' : ''} bottom-margin-50 ${hovering ? 'one' : ''}`}
+                        onMouseOver={e => {
+                            e.preventDefault();
+                            setHovering(true);
+                        }}
+                        onMouseLeave={e => setHovering(false)}>
+                        <Page width={550} key={`page_${index + 1}`} pageNumber={index + 1} />
+                        {placeholders.map((placeholder, i) =>
+                            placeholder.page === (index) ?
+                                <div
+                                    key={i}
+                                    className="width-180 height-40 absolute"
+                                    style={{
+                                        left: placeholder.absolute_x_coordinate,
+                                        top: placeholder.absolute_y_coordinate,
+                                        backgroundColor: getColor(placeholder.name)
+                                    }}></div>
+                                : ""
+                        )}
+                    </PageContainer>
+                ))}
+            </Document>
+            <div className="hide height-0 overflow-hidden">
+                <Document
+                    file={documentFile}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                >
+                    {[...Array(numPages)].map((el, index) => (
+                        <PageContainer
+                            ref={refsFull.current[index]}
+                            key={index}
+                            className={`${isNumPages ? 'width-75-percent' : ''} bottom-margin-50`}
+                            onMouseOver={e => {
+                                e.preventDefault();
+                                setHovering(true);
+                            }}
+                            onMouseLeave={e => setHovering(false)}>
+                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                        </PageContainer>
+                    ))}
+                </Document>
+            </div>
+        </>
     }
 
     return (
@@ -127,50 +205,11 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
 
             <div className="full-height display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
                 <div ref={pdfContainer} className={`${numPages === undefined || numPages === null ? "min-width-70-percent" : ""} right-margin-50`}>
-                    {documentFiles ?
-                        documentFiles.map((documentFile, index) =>
-                            <React.Fragment key={index}>
-                                {isFileImage(documentFile) ?
-                                    <PageContainer key={index} ref={documentContainer} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
-                                        <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
-                                        {placeholders.map((placeholder, index) =>
-                                            <div key={index} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
-                                        )}
-                                    </PageContainer>
-                                    :
-                                    <>
-                                        <Document
-                                            file={documentFile}
-                                            onLoadSuccess={onDocumentLoadSuccess}
-                                        >
-                                            {[...Array(numPages)].map((el, index) => (
-                                                <PageContainer ref={refs.current[index]} key={index} className={`${index} ${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50 ${hovering ? 'one' : ''}`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
-                                                    <Page width={550} key={`page_${index + 1}`} pageNumber={index + 1} />
-                                                    {placeholders.map((placeholder, i) =>
-                                                        placeholder.page === (index) ?
-                                                            <div key={i} className="width-180 height-40 absolute" style={{ left: placeholder.absolute_x_coordinate, top: placeholder.absolute_y_coordinate, backgroundColor: getColor(placeholder.name) }}></div>
-                                                            : ""
-                                                    )}
-                                                </PageContainer>
-                                            ))}
-                                        </Document>
-                                        <div className="hide height-0 overflow-hidden">
-                                            <Document
-                                                file={documentFile}
-                                                onLoadSuccess={onDocumentLoadSuccess}
-                                            >
-                                                {[...Array(numPages)].map((el, index) => (
-                                                    <PageContainer ref={refsFull.current[index]} key={index} className={`${numPages === undefined || numPages === null ? 'width-75-percent' : ''} bottom-margin-50`} onMouseOver={e => { e.preventDefault(); setHovering(true); }} onMouseLeave={e => setHovering(false)}>
-                                                        <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                                                    </PageContainer>
-                                                ))}
-                                            </Document>
-                                        </div>
-                                    </>
-                                }
-                            </React.Fragment>
-                        )
-                        : ""}
+                    {documentFiles?.map((documentFile, index) =>
+                        <React.Fragment key={index}>
+                            {renderFiles(documentFile, index)}
+                        </React.Fragment>
+                    )}
                 </div>
                 <SignatoriesPanel>
                     <div className="display-flex align-items-center">
