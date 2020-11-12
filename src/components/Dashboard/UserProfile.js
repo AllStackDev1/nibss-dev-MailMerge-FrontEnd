@@ -70,7 +70,19 @@ const UserProfile = () => {
                             <input type="text" name="name" value={user.name || ""} onChange={onChange} placeholder="First Name" className="bottom-margin-20" required />
                             <input type="text" name="mobile" value={user.mobile || ""} onChange={onChange} placeholder="Phone" className="bottom-margin-20" required />
                             <input type="email" name="email" value={user.email || ""} onChange={onChange} placeholder="Email address" className="bottom-margin-20" required />
-                            <button type="submit" disabled={auth.updatingProfile} className="uppercase left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                            <button
+                                type="submit"
+                                disabled={auth.updatingProfile}
+                                className={`uppercase 
+                                    left-padding-20 
+                                    right-padding-20 
+                                    height-40 
+                                    mustard 
+                                    white-color 
+                                    border-radius-2 
+                                    display-flex 
+                                    justify-center 
+                                    align-items-center`}>
                                 {auth.updatingProfile ?
                                     <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                     :
@@ -84,7 +96,17 @@ const UserProfile = () => {
                         <div className="full-width bottom-margin-30 display-flex flex-end">
                             <div className="display-flex no-select">
                                 <Link to="/dashboard/add-signature">
-                                    <button className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                                    <button
+                                        className={`uppercase 
+                                            left-padding-20 
+                                            right-padding-20 
+                                            height-35 
+                                            mustard 
+                                            white-color 
+                                            border-radius-2 
+                                            display-flex 
+                                            justify-center 
+                                            align-items-center`}>
                                         ADD SIGNATURE
                                     </button>
                                 </Link>

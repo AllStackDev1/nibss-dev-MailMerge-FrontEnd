@@ -4,7 +4,18 @@ import Moment from 'react-moment'
 
 const Document = ({ document, dashboard, viewDocument, viewStats }) => {
     return (
-        <Container onClick={() => viewDocument(document)} className="cursor-pointer smooth-slow height-90 full-width border-radius-7 white bottom-margin-20 display-flex align-items-center space-between">
+        <Container
+            onClick={() => viewDocument(document)}
+            className={`cursor-pointer 
+                smooth-slow 
+                height-90 
+                full-width 
+                border-radius-7 
+                white 
+                bottom-margin-20 
+                display-flex 
+                align-items-center 
+                space-between`}>
             <div className="no-shrink width-70">
                 {dashboard ?
                     <img src={require(`images/icons/dashboard/pdf.svg`)} className="height-30 right-margin-20 left-margin-30" alt="NIBSS PDF" />
@@ -33,7 +44,18 @@ const Document = ({ document, dashboard, viewDocument, viewStats }) => {
                 <div></div>
                 <p>{document.signed ? 'Signed' : 'Pending'}</p>
             </Status>
-            <ViewDocumentButton onClick={e => viewStats(e, document)} className="no-shrink height-35 right-margin-40 border-box border-radius-5 size-pointeight-rem no-wrap display-flex align-items-center justify-center">
+            <ViewDocumentButton
+                onClick={e => viewStats(e, document)}
+                className={`no-shrink
+                    height-35
+                    right-margin-40
+                    border-box
+                    border-radius-5
+                    size-pointeight-rem
+                    no-wrap
+                    display-flex
+                    align-items-center
+                    justify-center`}>
                 VIEW DOCUMENT
             </ViewDocumentButton>
         </Container>

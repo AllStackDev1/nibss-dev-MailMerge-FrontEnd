@@ -21,7 +21,16 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                         :
                         tags ?
                             tags.map((tag, index) =>
-                                <Tag key={index} onClick={() => { (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ? setTags.filter(item => item !== tag.name) : [...toAddTags, tag.name]) } } className={`${deleting === tag ? 'opacity-0-5' : ''} ${toAddTags.includes(tag.name) ? 'active-tag' : ''} no-select uppercase`}>
+                                <Tag
+                                    key={index}
+                                    onClick={() => {
+                                        (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ?
+                                            setTags.filter(item => item !== tag.name) :
+                                            [...toAddTags, tag.name])
+                                    }}
+                                    className={`${deleting === tag ? 'opacity-0-5' : ''} 
+                                        ${toAddTags.includes(tag.name) ? 'active-tag' : ''} 
+                                        no-select uppercase`}>
                                     {tag.name}
                                     {toAddTag === false ?
                                         <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
@@ -33,8 +42,32 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                     }
                 </div>
                 {toAddTag ?
-                    <div className="full-width height-70 absolute display-flex align-items-center flex-end bottom border-top-lightgray border-box no-shrink">
-                        <button disabled={updating} type="submit" onClick={addTagsToRecipient} className="border-box mustard height-40 no-border cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center right-margin-30">
+                    <div className={`full-width 
+                        height-70 
+                        absolute 
+                        display-flex 
+                        align-items-center 
+                        flex-end 
+                        bottom 
+                        border-top-lightgray 
+                        border-box 
+                        no-shrink`}>
+                        <button
+                            disabled={updating}
+                            type="submit"
+                            onClick={addTagsToRecipient}
+                            className={`border-box 
+                                mustard 
+                                height-40 
+                                no-border 
+                                cursor-pointer 
+                                white-color 
+                                size-pointeight-rem 
+                                bold 
+                                display-flex 
+                                align-items-center 
+                                justify-center 
+                                right-margin-30`}>
                             {updating ?
                                 <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                 :

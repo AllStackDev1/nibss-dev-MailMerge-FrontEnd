@@ -17,7 +17,23 @@ const EditUser = ({ user, onChange, onSubmit, editing }) => {
                     <input type="text" name="name" onChange={onChange} value={user.name || ""} placeholder="Full Name" className="bottom-margin-20" required />
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Email address</p>
                     <input type="email" name="email" onChange={onChange} value={user.email || ""} placeholder="Email address" className="bottom-margin-20" required />
-                    <button type="submit" disabled={editing} className="width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <button
+                        type="submit"
+                        disabled={editing}
+                        className={`width-200 
+                            no-border 
+                            left-padding-30 
+                            right-padding-30 
+                            border-box 
+                            mustard 
+                            height-45 
+                            cursor-pointer 
+                            white-color 
+                            size-pointeight-rem 
+                            bold 
+                            display-flex 
+                            align-items-center 
+                            justify-center`}>
                         {editing ?
                             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                             :

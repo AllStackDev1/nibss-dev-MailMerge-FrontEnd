@@ -5,8 +5,26 @@ import { getInitials } from 'helpers/getInitials';
 
 const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModal }) => {
     return (
-        <UserInstance className={`${userBeingUpdated?._id === user._id ? "opacity-0-5" : ""} smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
-            <Profile style={{ backgroundColor: getColor(user.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-20 border-radius-100-percent left-margin-10">
+        <UserInstance
+            className={`
+                ${userBeingUpdated?._id === user._id ? "opacity-0-5" : ""} 
+                smooth height-80 full-width border-radius-10 white display-flex align-items-center space-between`}>
+            <Profile
+                style={{ backgroundColor: getColor(user.name) }}
+                className={`
+                    white-color 
+                    display-flex 
+                    align-items-center 
+                    justify-center 
+                    size-pointeight-rem 
+                    bold 
+                    no-shrink 
+                    width-40 
+                    height-40 
+                    right-margin-20 
+                    border-radius-100-percent 
+                    left-margin-10`
+                }>
                 {getInitials(user.name)}
             </Profile>
             <div className="no-shrink width-25-percent size-pointeight-rem bold capitalize">

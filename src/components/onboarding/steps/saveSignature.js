@@ -110,7 +110,18 @@ const SaveSignature = ({ add }) => {
                 </div>
             </div>
             <div
-                className="height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center space-between">
+                className={`height-80 
+                    white 
+                    full-width 
+                    absolute 
+                    bottom 
+                    border-top-lightgray 
+                    left-padding-80 
+                    right-padding-60 
+                    border-box 
+                    display-flex 
+                    align-items-center 
+                    space-between`}>
                 <p onClick={logout} className="mustard-color size-pointeight-rem bold cursor-pointer">LOGOUT</p>
                 <button
                     onClick={saveSignature}

@@ -15,10 +15,38 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
             <form onSubmit={onSubmit}>
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50">
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Enter Recipient Full Name</p>
-                    <input type="text" name="name" onChange={modal === "edit-recipient" ? onChangeEdit : onChange} value={modal === "edit-recipient" ? editRecipient.name : recipient.name || ""} placeholder="Enter Recipient Full Name" className="bottom-margin-20" required />
+                    <input
+                        type="text"
+                        name="name"
+                        onChange={modal === "edit-recipient" ? onChangeEdit : onChange}
+                        value={modal === "edit-recipient" ? editRecipient.name : recipient.name || ""}
+                        placeholder="Enter Recipient Full Name"
+                        className="bottom-margin-20" required />
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Enter Recipient Email address</p>
-                    <input type="email" name="email" onChange={modal === "edit-recipient" ? onChangeEdit : onChange} value={modal === "edit-recipient" ? editRecipient.email : recipient.email || ""} placeholder="Enter Recipient Email address" className="bottom-margin-20" required />
-                    <button type="submit" disabled={creating} className="width-200 no-border left-padding-30 right-padding-30 border-box mustard height-45 cursor-pointer white-color size-pointeight-rem bold display-flex align-items-center justify-center">
+                    <input
+                        type="email"
+                        name="email"
+                        onChange={modal === "edit-recipient" ? onChangeEdit : onChange}
+                        value={modal === "edit-recipient" ? editRecipient.email : recipient.email || ""}
+                        placeholder="Enter Recipient Email address"
+                        className="bottom-margin-20" required />
+                    <button
+                        type="submit"
+                        disabled={creating}
+                        className={`width-200 
+                            no-border 
+                            left-padding-30 
+                            right-padding-30 
+                            border-box 
+                            mustard 
+                            height-45 
+                            cursor-pointer 
+                            white-color 
+                            size-pointeight-rem 
+                            bold 
+                            display-flex 
+                            align-items-center 
+                            justify-center`}>
                         {creating ?
                             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                             :

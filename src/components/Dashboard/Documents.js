@@ -24,6 +24,7 @@ const Documents = withRouter(({ location }) => {
         recipients: []
     });
 
+
     const [documentFiles, setDocumentFiles] = useState([]);
     const [tab, setTab] = useState(1);
     const [fetching, setFetching] = useState(false);
@@ -36,7 +37,24 @@ const Documents = withRouter(({ location }) => {
     const page = useRef(null);
     const { pageId } = useParams();
 
-    const tabClasses = `width-25-percent cursor-pointer size-pointeightfive-rem display-flex align-items-center justify-center`;
+    const activeTabClass = 'active-tab';
+
+    const tabClasses = `width-25-percent 
+        cursor-pointer 
+        size-pointeightfive-rem 
+        display-flex 
+        align-items-center 
+        justify-center`;
+
+    const documentStepClasses = `smooth 
+        height-35 
+        width-35 
+        display-flex 
+        align-items-center 
+        justify-center 
+        border-radius-100-percent`;
+
+    const activeStepClass = 'active-step';
 
     useEffect(() => {
         const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
@@ -90,7 +108,9 @@ const Documents = withRouter(({ location }) => {
 
     const addRecipient = recipient => {
         setDocument(document => {
-            document.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ? document.recipients.splice(document.recipients.findIndex(rec => rec._id === recipient._id), 1) : document.recipients.push(recipient);
+            document.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ?
+                document.recipients.splice(document.recipients.findIndex(rec => rec._id === recipient._id), 1) :
+                document.recipients.push(recipient);
 
             return {
                 ...document
@@ -165,27 +185,48 @@ const Documents = withRouter(({ location }) => {
             {uploadingDocument ?
                 <>
                     {step < 5 ?
-                        <BackButton onClick={() => setUploadingDocument(false)} className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
+                        <BackButton
+                            onClick={() => setUploadingDocument(false)}
+                            className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                             BACK
                         </BackButton>
                         : ""}
-                    <Container className={`${step === 3 || step === 4 ? 'height-auto bottom-margin-50' : ''} ${step === 5 ? "complete" : ""} onboarding width-80-percent bottom-padding-80 display-flex flex-direction-column align-items-center margin-auto top-margin-25 border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
+                    <Container
+                        className={`${step === 3 || step === 4 ? 'height-auto bottom-margin-50' : ''} 
+                            ${step === 5 ? "complete" : ""} 
+                            onboarding 
+                            width-80-percent 
+                            bottom-padding-80 
+                            display-flex 
+                            flex-direction-column 
+                            align-items-center 
+                            margin-auto 
+                            top-margin-25 
+                            border-box 
+                            top-padding-50 
+                            white 
+                            border-radius-10 
+                            box-shadow-less2`}>
                         {step < 5 ?
                             <div className="display-flex align-items-center justify-center no-select">
-                                <Step className={`${step === 1 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
+                                <Step
+                                    className={`${step === 1 ? activeStepClass : ''} ${documentStepClasses}`}>
                                     1
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step className={`${step === 2 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
+                                <Step
+                                    className={`${step === 2 ? activeStepClass : ''} ${documentStepClasses}`}>
                                     2
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step className={`${step === 3 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
+                                <Step
+                                    className={`${step === 3 ? activeStepClass : ''} ${documentStepClasses}`}>
                                     3
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step className={`${step === 4 ? 'active-step' : ''} smooth height-35 width-35 display-flex align-items-center justify-center border-radius-100-percent`}>
+                                <Step
+                                    className={`${step === 4 ? activeStepClass : ''} ${documentStepClasses}`}>
                                     4
                                 </Step>
                             </div>
@@ -232,11 +273,34 @@ const Documents = withRouter(({ location }) => {
                                 setUploadingDocument={setUploadingDocument} />
                             : ""}
                         {step < 5 ?
-                            <BottomNav className="height-80 width-85-percent margin-auto border-top-gray no-shrink absolute bottom above display-flex align-items-center space-between">
-                                <p onClick={() => setStep(step => step < 3 ? step + 1 : step - 1)} className="size-pointnine-rem mustard-color no-select cursor-pointer bold">
+                            <BottomNav
+                                className={`height-80 
+                                    width-85-percent 
+                                    margin-auto 
+                                    border-top-gray 
+                                    no-shrink 
+                                    absolute 
+                                    bottom 
+                                    above 
+                                    display-flex 
+                                    align-items-center 
+                                    space-between`}>
+                                <p
+                                    onClick={() => setStep(step => step < 3 ? step + 1 : step - 1)}
+                                    className="size-pointnine-rem mustard-color no-select cursor-pointer bold">
                                     {step > 2 ? 'PREVIOUS' : 'SKIP'}
                                 </p>
-                                <button onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }} className="left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                                <button
+                                    onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }}
+                                    className={`left-padding-20 
+                                        right-padding-20 
+                                        height-40 
+                                        mustard 
+                                        white-color 
+                                        border-radius-2 
+                                        display-flex 
+                                        justify-center 
+                                        align-items-center`}>
                                     {documents.preparing ?
                                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                         :
@@ -271,7 +335,7 @@ const Documents = withRouter(({ location }) => {
                                     fetch();
                                     setTab(1)
                                 }}
-                                className={`${tab === 1 && 'active-tab'} ${tabClasses}`}>
+                                className={`${tab === 1 && activeTabClass} ${tabClasses}`}>
                                 All Documents {tab === 1 && fetching === false ? documents?.documents ? `(${documents?.documents?.total_documents || 0})` : '' : ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
@@ -279,8 +343,12 @@ const Documents = withRouter(({ location }) => {
                                 fetch("pending");
                                 setTab(2)
                             }}
-                                className={`${tab === 2 && 'active-tab'} ${tabClasses}`}>
-                                Pending Documents {tab === 2 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.pending_document || 0})` : '' : ''}
+                                className={`${tab === 2 && activeTabClass} ${tabClasses}`}>
+                                Pending Documents {tab === 2 && fetching === false ?
+                                    documents?.documents ?
+                                        `(${documents?.documents?.document_stats?.pending_document || 0})` :
+                                        '' :
+                                    ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                             <Tab
@@ -288,8 +356,12 @@ const Documents = withRouter(({ location }) => {
                                     fetch("signed");
                                     setTab(3)
                                 }}
-                                className={`${tab === 3 && 'active-tab'} ${tabClasses}`}>
-                                Signed Documents {tab === 3 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.signed_document || 0})` : '' : ''}
+                                className={`${tab === 3 && activeTabClass} ${tabClasses}`}>
+                                Signed Documents {tab === 3 && fetching === false ?
+                                    documents?.documents ?
+                                        `(${documents?.documents?.document_stats?.signed_document || 0})` :
+                                        '' :
+                                    ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                             <Tab
@@ -297,12 +369,27 @@ const Documents = withRouter(({ location }) => {
                                     fetch("rejected");
                                     setTab(4)
                                 }}
-                                className={`${tab === 4 && 'active-tab'} ${tabClasses}`}>
-                                Rejected Documents {tab === 4 && fetching === false ? documents?.documents ? `(${documents?.documents?.document_stats?.rejected_document || 0})` : '' : ''}
+                                className={`${tab === 4 && activeTabClass} ${tabClasses}`}>
+                                Rejected Documents {tab === 4 && fetching === false ?
+                                    documents?.documents ?
+                                        `(${documents?.documents?.document_stats?.rejected_document || 0})` :
+                                        '' :
+                                    ''}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                         </Tabs>
-                        <UploadButton onClick={() => setModal("create-document")} className="cursor-pointer top-margin-30 bottom-margin-20 full-width height-60 display-flex align-items-center justify-center size-pointeight-rem bold">
+                        <UploadButton
+                            onClick={() => setModal("create-document")}
+                            className={`cursor-pointer 
+                                top-margin-30 
+                                bottom-margin-20 
+                                full-width 
+                                height-60 
+                                display-flex 
+                                align-items-center 
+                                justify-center 
+                                size-pointeight-rem 
+                                bold`}>
                             <img src={require(`images/icons/dashboard/upload.svg`)} className="height-20 right-margin-10" alt="NIBSS Upload Document" />
                             Upload a document
                         </UploadButton>
