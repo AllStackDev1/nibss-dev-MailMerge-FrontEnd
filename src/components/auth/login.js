@@ -31,15 +31,47 @@ const Login = props => {
                 <form onSubmit={login} className="width-85-percent">
                     <div className="full-width bottom-margin-15">
                         <InputGroup className="input-group full-width height-55 bottom-margin-15 border-radius-10">
-                            <input type="email" name="email_input" onChange={onChange} value={user.email_input || ""} className={`${user.email_input !== undefined && user.email_input !== "" ? "with-data" : ""} height-55 smooth`} required autoComplete="new-password" />
+                            <input
+                                type="email"
+                                name="email_input"
+                                onChange={onChange}
+                                value={user.email_input || ""}
+                                className={`${user.email_input !== undefined && user.email_input !== "" ? "with-data" : ""} height-55 smooth`}
+                                required
+                                autoComplete="new-password" />
                             <label className="smooth">Enter your email address</label>
                         </InputGroup>
                         <InputGroup className="input-group full-width height-55 border-radius-10">
-                            <input type="password" name="password" onChange={onChange} value={user.password || ""} className={`${user.password !== undefined && user.password !== "" ? "with-data" : ""} height-55 smooth`} required autoComplete="new-password" />
+                            <input
+                                type="password"
+                                name="password"
+                                onChange={onChange}
+                                value={user.password || ""}
+                                className={`${user.password !== undefined && user.password !== "" ? "with-data" : ""} height-55 smooth`}
+                                required
+                                autoComplete="new-password" />
                             <label className="smooth">Enter password</label>
                         </InputGroup>
                     </div>
-                    <button type="submit" disabled={auth.loggingIn} className="full-width bottom-margin-30 left-padding-30 right-padding-30 border-box border-radius-10 mustard height-55 cursor-pointer white-color size-pointnine-rem bold display-flex align-items-center justify-center">
+                    <button
+                        type="submit"
+                        disabled={auth.loggingIn}
+                        className={`
+                            full-width 
+                            bottom-margin-30 
+                            left-padding-30 
+                            right-padding-30 
+                            border-box 
+                            border-radius-10 
+                            mustard 
+                            height-55 
+                            cursor-pointer 
+                            white-color 
+                            size-pointnine-rem 
+                            bold 
+                            display-flex 
+                            align-items-center 
+                            justify-center`}>
                         {auth.loggingIn ?
                             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                             :

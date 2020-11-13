@@ -57,7 +57,20 @@ const Onboarding = props => {
         <div className="full-height-vh full-width display-flex light-brown">
             <EmptySidebar />
             <div className={`${step === 3 ? 'display-flex align-items-center' : ''} full-width full-height overflow-scroll-y custom-scrollbar`}>
-                <div className={`${step === 3 ? 'height-60-percent bottom-padding-50' : 'onboarding bottom-padding-150'} smooth overflow-hidden width-70-percent margin-auto top-margin-70 bottom-margin-5-percent border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
+                <div
+                    className={`
+                        ${step === 3 ? 'height-60-percent bottom-padding-50' : 'onboarding bottom-padding-150'} 
+                        smooth 
+                        overflow-hidden 
+                        width-70-percent 
+                        margin-auto 
+                        top-margin-70 
+                        bottom-margin-5-percent 
+                        border-box 
+                        top-padding-50 
+                        white 
+                        border-radius-10 
+                        box-shadow-less2`}>
                     {step === 1 ?
                         <SaveSignature
                             step={step}

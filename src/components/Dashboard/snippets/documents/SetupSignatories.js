@@ -38,7 +38,10 @@ const SetupSignatories = ({ selectUser, document }) => {
                     </form>
                     {document.signatories ?
                         document.signatories.filter(signatory => signatory.nibss === true).map((signatory, key) =>
-                            <div key={key} className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 ${key !== document.signatories.filter(signatory => signatory.nibss === true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
+                            <div
+                                key={key}
+                                className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
+                                    ${key !== document.signatories.filter(signatory => signatory.nibss === true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
                                 <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
                                     <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
                                     <span className="uppercase size-pointeight-rem">{signatory.name}</span>
@@ -61,7 +64,10 @@ const SetupSignatories = ({ selectUser, document }) => {
                     </form>
                     {document.signatories ?
                         document.signatories.filter(signatory => signatory.nibss !== true).map((signatory, key) =>
-                            <div key={key} className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 ${key !== document.signatories.filter(signatory => signatory.nibss !== true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
+                            <div
+                                key={key}
+                                className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
+                                    ${key !== document.signatories.filter(signatory => signatory.nibss !== true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
                                 <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
                                     <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
                                     <span className="uppercase size-pointeight-rem">{signatory.name}</span>

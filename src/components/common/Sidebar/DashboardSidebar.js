@@ -28,16 +28,29 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                         route.support === true ?
                             <div key={index} className="top-margin-70 top-padding-30 border-top-gray">
                                 <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
-                                    <RouteLink className={`${location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}` ? 'active-link' : ''} display-flex align-items-center border-box dash-link overflow-hidden left-padding-10`}>
+                                    <RouteLink
+                                        className={`${location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}` ?
+                                            'active-link' :
+                                            ''} 
+                                        display-flex align-items-center border-box dash-link overflow-hidden left-padding-10`}>
                                         <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>
                                             <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                             <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}-brown.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}-brown.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                             <div className="display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}-white.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}-white.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                         </div>
                                         <div className="smooth height-45 left-padding-10 display-flex align-items-center size-pointeight-rem bold no-wrap">
@@ -49,16 +62,28 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                             :
                             (user.data.role === "user" && route.user) || user.data.role === "administrator" ?
                                 <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
-                                    <RouteLink className={`${location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}` ? 'active-link' : ''} display-flex align-items-center border-box dash-link overflow-hidden left-padding-10`}>
+                                    <RouteLink
+                                        className={`${location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}` ?
+                                            'active-link' :
+                                            ''} display-flex align-items-center border-box dash-link overflow-hidden left-padding-10`}>
                                         <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>
                                             <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                             <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}-brown.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}-brown.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                             <div className="display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img src={require(`images/icons/dashboard/${route.icon}-white.svg`)} className={`height-${route.height ? route.height : '20'}`} alt="NIBSS Empty" />
+                                                <img
+                                                    src={require(`images/icons/dashboard/${route.icon}-white.svg`)}
+                                                    className={`height-${route.height ? route.height : '20'}`}
+                                                    alt="NIBSS Empty" />
                                             </div>
                                         </div>
                                         <div className="smooth height-45 left-padding-10 display-flex align-items-center size-pointeight-rem bold no-wrap">

@@ -9,7 +9,21 @@ const Signup = props => (
             <p className="size-pointnine-rem gray-color bottom-margin-40">
                 Start your free trial to start sending legally binding eSignatures.
             </p>
-            <div className="left-padding-30 right-padding-30 border-box mustard height-55 cursor-pointer width-85-percent white-color size-pointnine-rem bold display-flex align-items-center space-between">
+            <div
+                className={`
+                    left-padding-30 
+                    right-padding-30 
+                    border-box 
+                    mustard 
+                    height-55 
+                    cursor-pointer 
+                    width-85-percent 
+                    white-color 
+                    size-pointnine-rem 
+                    bold 
+                    display-flex 
+                    align-items-center 
+                    space-between`}>
                 <p>SIGN UP WITH NIBBS</p>
                 <span className="material-icons">
                     arrow_forward

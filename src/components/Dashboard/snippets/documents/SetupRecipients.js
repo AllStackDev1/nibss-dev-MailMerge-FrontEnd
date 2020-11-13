@@ -70,7 +70,20 @@ const SetupRecipients = ({ document, addRecipient }) => {
             <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
             <div className="display-flex width-85-percent space-between top-margin-30">
                 <input type="text" name="search" onChange={onChangeSearch} placeholder="search name" className="height-40 width-250" required />
-                <Menu className="display-flex align-items-center justify-center cursor-pointer left-padding-15 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color right-margin-20">
+                <Menu
+                    className={`
+                        display-flex 
+                        align-items-center 
+                        justify-center 
+                        cursor-pointer 
+                        left-padding-15 
+                        right-padding-10 
+                        white 
+                        border-radius-5 
+                        box-shadow-less2 
+                        size-pointeight-rem 
+                        mustard-color 
+                        right-margin-20`}>
                     <img src={require(`images/icons/dashboard/filter.svg`)} className={`height-15 right-margin-10`} alt="Filter" />
                     Filter By
                     <span className="material-icons">
@@ -80,7 +93,12 @@ const SetupRecipients = ({ document, addRecipient }) => {
                         <div className="box-shadow-less2 border-radius-10 padding-10 white">
                             {recipients.tags ?
                                 recipients.tags.map((tag, index) =>
-                                    <div key={index} onClick={() => filter.includes(tag.name) ? setFilter(filter => (filter.filter(item => item !== tag.name))) : setFilter(filter => ([...filter, tag.name]))} className="smooth display-flex align-items-center bottom-margin-10">
+                                    <div
+                                        key={index}
+                                        onClick={() => filter.includes(tag.name) ?
+                                            setFilter(filter => (filter.filter(item => item !== tag.name))) :
+                                            setFilter(filter => ([...filter, tag.name]))}
+                                        className="smooth display-flex align-items-center bottom-margin-10">
                                         <div className="width-30 right-margin-10">
                                             <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(tag.name)} className="checkbox-s" />
                                             <label htmlFor={`tag-${index}`} className="no-shrink"></label>
@@ -104,10 +122,28 @@ const SetupRecipients = ({ document, addRecipient }) => {
                     (search.search !== "" || filter.length > 0) && recipients.documentSearchRecipients ?
                         recipients.documentSearchRecipients.data.map((recipient, index) =>
                             <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
-                                <input type="checkbox" id={`recipient-${index}`} className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                                <input
+                                    type="checkbox"
+                                    id={`recipient-${index}`}
+                                    className="checkbox-s"
+                                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
                                 <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
                                 <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
-                                    <Profile style={{ backgroundColor: getColor(recipient.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20">
+                                    <Profile
+                                        style={{ backgroundColor: getColor(recipient.name) }}
+                                        className={`
+                                            white-color 
+                                            display-flex 
+                                            align-items-center 
+                                            justify-center 
+                                            size-pointeight-rem 
+                                            bold 
+                                            no-shrink 
+                                            width-40 
+                                            height-40 
+                                            right-margin-40 
+                                            border-radius-100-percent 
+                                            left-margin-20`}>
                                         {getInitials(recipient.name)}
                                     </Profile>
                                     <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
@@ -122,10 +158,26 @@ const SetupRecipients = ({ document, addRecipient }) => {
                         :
                         recipients.documentRecipients.data.map((recipient, index) =>
                             <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
-                                <input type="checkbox" id={`recipient-${index}`} className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                                <input
+                                    type="checkbox"
+                                    id={`recipient-${index}`}
+                                    className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
                                 <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
                                 <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
-                                    <Profile style={{ backgroundColor: getColor(recipient.name) }} className="white-color display-flex align-items-center justify-center size-pointeight-rem bold no-shrink width-40 height-40 right-margin-40 border-radius-100-percent left-margin-20">
+                                    <Profile
+                                        style={{ backgroundColor: getColor(recipient.name) }}
+                                        className={`white-color 
+                                            display-flex 
+                                            align-items-center 
+                                            justify-center 
+                                            size-pointeight-rem 
+                                            bold 
+                                            no-shrink 
+                                            width-40 
+                                            height-40 
+                                            right-margin-40 
+                                            border-radius-100-percent 
+                                            left-margin-20`}>
                                         {getInitials(recipient.name)}
                                     </Profile>
                                     <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">

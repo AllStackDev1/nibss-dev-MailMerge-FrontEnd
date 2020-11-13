@@ -74,7 +74,10 @@ const Toolbox = ({ user,
                         <div className="box-shadow-less2 border-radius-10 padding-10 white">
                             {filterList ?
                                 filterList.map((tag, index) =>
-                                    <div key={index} onClick={() => filter === tag ? setFilter("") : setFilter(tag)} className="smooth capitalize display-flex align-items-center bottom-margin-10">
+                                    <div
+                                        key={index}
+                                        onClick={() => filter === tag ? setFilter("") : setFilter(tag)}
+                                        className="smooth capitalize display-flex align-items-center bottom-margin-10">
                                         <div className="width-30 right-margin-10">
                                             <input readOnly type="checkbox" id={`tag-${index}`} checked={filter === tag} className="checkbox-s" />
                                             <label htmlFor={`tag-${index}`} className="no-shrink"></label>
@@ -85,7 +88,10 @@ const Toolbox = ({ user,
                                 :
                                 recipients.tags ?
                                     recipients.tags.map((tag, index) =>
-                                        <div key={index} onClick={() => filter.includes(tag.name) ? removeFilter(tag.name) : addFilter(tag.name)} className="smooth display-flex align-items-center bottom-margin-10">
+                                        <div
+                                            key={index}
+                                            onClick={() => filter.includes(tag.name) ? removeFilter(tag.name) : addFilter(tag.name)}
+                                            className="smooth display-flex align-items-center bottom-margin-10">
                                             <div className="width-30 right-margin-10">
                                                 <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(tag.name)} className="checkbox-s" />
                                                 <label htmlFor={`tag-${index}`} className="no-shrink"></label>
@@ -177,7 +183,13 @@ const Toolbox = ({ user,
                                 :
                                 'Upload CSV'}
                         </ActionButton>
-                        <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
+                        <input
+                            type="file"
+                            name="csv_file"
+                            id="csv_file"
+                            accept=".csv"
+                            onChange={parseCSV}
+                            className="width-0 height-0 border-box hide" />
                     </>
                     : ""}
                 {user?.data?.role !== userLabel ?

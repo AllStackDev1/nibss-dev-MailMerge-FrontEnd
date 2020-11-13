@@ -55,11 +55,17 @@ const UserProfile = () => {
             />
             <div className="full-width min-height-600 white border-radius-10 padding-30 border-box top-margin-30">
                 <Tabs className="height-50 no-select full-width display-flex">
-                    <Tab onClick={() => setTab(1)} className={`${tab === 1 ? "active-tab" : ""} left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
+                    <Tab
+                        onClick={() => setTab(1)}
+                        className={`${tab === 1 ? "active-tab" : ""} 
+                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
                         My Profile
                         <div></div>
                     </Tab>
-                    <Tab onClick={() => setTab(2)} className={`${tab === 2 ? "active-tab" : ""} left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
+                    <Tab
+                        onClick={() => setTab(2)}
+                        className={`${tab === 2 ? "active-tab" : ""} 
+                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
                         Saved signature
                         <div></div>
                     </Tab>
