@@ -14,9 +14,17 @@ function fetch(type) {
         method: 'GET'
     };
 
-    const filter = `${type ? '?' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`;
+    const typeMatch = {
+        "signed": "signed=true",
+        "pending": "signed=false",
+        "rejected": "rejected=true"
+    }
 
-    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents${`${filter}`}`, requestOptions)
+    const appendParam = type ? '?' : '';
+
+    const filter = `${appendParam}${typeMatch[type] || ""}`;
+
+    return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents${filter}`, requestOptions)
         .then(authService.handleResponse)
         .then(documents => {
             return documents;
@@ -48,7 +56,15 @@ function fetchPage(type, page) {
         method: 'GET'
     };
 
-    const filter = `${type ? '&' : ''}${type === "signed" ? "signed=true" : type === "pending" ? "signed=false" : type === "rejected" ? "rejected=true" : ""}`;
+    const typeMatch = {
+        "signed": "signed=true",
+        "pending": "signed=false",
+        "rejected": "rejected=true"
+    }
+
+    const appendParam = type ? '&' : '';
+
+    const filter = `${appendParam}${typeMatch[type] || ""}`;
 
     return authService.fetchFrom(`${process.env.REACT_APP_API_URL}/documents?page=${page}${filter}`, requestOptions)
         .then(authService.handleResponse)

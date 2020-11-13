@@ -55,6 +55,19 @@ const Documents = withRouter(({ location }) => {
         border-radius-100-percent`;
 
     const activeStepClass = 'active-step';
+    const documentContainerClass = 'height-auto bottom-margin-50';
+    const completeClass = "complete";
+
+    const renderTabStats = (tabArg, key, total) => {
+        if (!documents?.documents) {
+            return '';
+        }
+
+        if (tab === tabArg && fetching === false) {
+            if (total) return `(${documents?.documents[key] || 0})`
+            return `(${documents?.documents?.document_stats?.[key] || 0})`
+        }
+    }
 
     useEffect(() => {
         const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
@@ -193,8 +206,8 @@ const Documents = withRouter(({ location }) => {
                         </BackButton>
                         : ""}
                     <Container
-                        className={`${step === 3 || step === 4 ? 'height-auto bottom-margin-50' : ''} 
-                            ${step === 5 ? "complete" : ""} 
+                        className={`${(step === 3 || step === 4) && documentContainerClass} 
+                            ${step === 5 && completeClass} 
                             onboarding 
                             width-80-percent 
                             bottom-padding-80 
@@ -211,22 +224,22 @@ const Documents = withRouter(({ location }) => {
                         {step < 5 ?
                             <div className="display-flex align-items-center justify-center no-select">
                                 <Step
-                                    className={`${step === 1 ? activeStepClass : ''} ${documentStepClasses}`}>
+                                    className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
                                     1
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step
-                                    className={`${step === 2 ? activeStepClass : ''} ${documentStepClasses}`}>
+                                    className={`${step === 2 && activeStepClass} ${documentStepClasses}`}>
                                     2
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step
-                                    className={`${step === 3 ? activeStepClass : ''} ${documentStepClasses}`}>
+                                    className={`${step === 3 && activeStepClass} ${documentStepClasses}`}>
                                     3
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
                                 <Step
-                                    className={`${step === 4 ? activeStepClass : ''} ${documentStepClasses}`}>
+                                    className={`${step === 4 && activeStepClass} ${documentStepClasses}`}>
                                     4
                                 </Step>
                             </div>
@@ -336,7 +349,7 @@ const Documents = withRouter(({ location }) => {
                                     setTab(1)
                                 }}
                                 className={`${tab === 1 && activeTabClass} ${tabClasses}`}>
-                                All Documents {tab === 1 && fetching === false ? documents?.documents ? `(${documents?.documents?.total_documents || 0})` : '' : ''}
+                                All Documents {renderTabStats(1, 'total_documents', true)}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                             <Tab onClick={() => {
@@ -344,11 +357,7 @@ const Documents = withRouter(({ location }) => {
                                 setTab(2)
                             }}
                                 className={`${tab === 2 && activeTabClass} ${tabClasses}`}>
-                                Pending Documents {tab === 2 && fetching === false ?
-                                    documents?.documents ?
-                                        `(${documents?.documents?.document_stats?.pending_document || 0})` :
-                                        '' :
-                                    ''}
+                                Pending Documents {renderTabStats(2, 'pending_document')}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                             <Tab
@@ -357,11 +366,7 @@ const Documents = withRouter(({ location }) => {
                                     setTab(3)
                                 }}
                                 className={`${tab === 3 && activeTabClass} ${tabClasses}`}>
-                                Signed Documents {tab === 3 && fetching === false ?
-                                    documents?.documents ?
-                                        `(${documents?.documents?.document_stats?.signed_document || 0})` :
-                                        '' :
-                                    ''}
+                                Signed Documents {renderTabStats(3, 'signed_document')}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                             <Tab
@@ -370,11 +375,7 @@ const Documents = withRouter(({ location }) => {
                                     setTab(4)
                                 }}
                                 className={`${tab === 4 && activeTabClass} ${tabClasses}`}>
-                                Rejected Documents {tab === 4 && fetching === false ?
-                                    documents?.documents ?
-                                        `(${documents?.documents?.document_stats?.rejected_document || 0})` :
-                                        '' :
-                                    ''}
+                                Rejected Documents {renderTabStats(4, 'rejected_document')}
                                 <div className="full-width height-0 smooth"></div>
                             </Tab>
                         </Tabs>
