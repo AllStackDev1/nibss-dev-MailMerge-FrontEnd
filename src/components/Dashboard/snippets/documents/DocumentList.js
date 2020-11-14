@@ -6,6 +6,8 @@ import Document from "../Document";
 import Pagination from "../Pagination";
 
 const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocument, viewStats }) => {
+    const tabMap = { 2: "Pending", 3: "Signed", 4: "Rejected" }
+
     return (
         documents.documents === undefined || fetching === true ?
             <EmptyDocument />
@@ -22,15 +24,14 @@ const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocum
                 ) ||
                     <div className="height-400 white border-radius-10 box-shadow-less2 display-flex align-items-center justify-center flex-direction-column">
                         <img src={require(`images/something-went-wrong.svg`)} className="height-100 bottom-margin-30" alt="NIBSS No data" />
-                        You dont have any {tab === 2 ? "Pending " : tab === 3 ? "Signed " : tab === 4 ? "Rejected " : ""}documents
+                        You dont have any {`${tabMap[tab]} `}documents
                     </div>
                 }
-                {documents?.documents?.data ?
+                {documents?.documents?.data &&
                     <Pagination
                         data={documents.documents}
                         viewPage={viewPage}
-                    />
-                    : ""}
+                    />}
             </>
     )
 }

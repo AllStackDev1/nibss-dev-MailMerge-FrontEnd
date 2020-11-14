@@ -60,6 +60,53 @@ const SetupRecipients = ({ document, addRecipient }) => {
         }
     }
 
+    const renderRecipients = () => {
+        if (recipients.documentRecipients === undefined || recipients.searching) {
+            return <EmptyDocumentRecipient />;
+        }
+
+        const toLoop = (search.search !== "" || filter.length > 0) && recipients.documentSearchRecipients ?
+            recipients.documentSearchRecipients :
+            recipients.documentRecipients;
+
+
+        return (toLoop).map((recipient, index) =>
+            <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
+                <input
+                    type="checkbox"
+                    id={`recipient-${index}`}
+                    className="checkbox-s"
+                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
+                <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
+                    <Profile
+                        style={{ backgroundColor: getColor(recipient.name) }}
+                        className={`
+                                        white-color 
+                                        display-flex 
+                                        align-items-center 
+                                        justify-center 
+                                        size-pointeight-rem 
+                                        bold 
+                                        no-shrink 
+                                        width-40 
+                                        height-40 
+                                        right-margin-40 
+                                        border-radius-100-percent 
+                                        left-margin-20`}>
+                        {getInitials(recipient.name)}
+                    </Profile>
+                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
+                        {recipient.name}
+                    </div>
+                    <div className="no-shrink width-30-percent size-pointeight-rem">
+                        <p className="size-pointeight-rem light-gray-color truncate">{recipient.email}</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <>
             <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">
@@ -116,79 +163,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
                 </Menu>
             </div>
             <div className="full-height width-85-percent top-margin-40 border-box overflow-auto-y custom-scrollbar" onScroll={fetchMoreRecipients}>
-                {recipients.documentRecipients === undefined || recipients.searching ?
-                    <EmptyDocumentRecipient />
-                    :
-                    (search.search !== "" || filter.length > 0) && recipients.documentSearchRecipients ?
-                        recipients.documentSearchRecipients.data.map((recipient, index) =>
-                            <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
-                                <input
-                                    type="checkbox"
-                                    id={`recipient-${index}`}
-                                    className="checkbox-s"
-                                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
-                                <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
-                                <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
-                                    <Profile
-                                        style={{ backgroundColor: getColor(recipient.name) }}
-                                        className={`
-                                            white-color 
-                                            display-flex 
-                                            align-items-center 
-                                            justify-center 
-                                            size-pointeight-rem 
-                                            bold 
-                                            no-shrink 
-                                            width-40 
-                                            height-40 
-                                            right-margin-40 
-                                            border-radius-100-percent 
-                                            left-margin-20`}>
-                                        {getInitials(recipient.name)}
-                                    </Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        {recipient.name}
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">{recipient.email}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                        :
-                        recipients.documentRecipients.data.map((recipient, index) =>
-                            <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
-                                <input
-                                    type="checkbox"
-                                    id={`recipient-${index}`}
-                                    className="checkbox-s" checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
-                                <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
-                                <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
-                                    <Profile
-                                        style={{ backgroundColor: getColor(recipient.name) }}
-                                        className={`white-color 
-                                            display-flex 
-                                            align-items-center 
-                                            justify-center 
-                                            size-pointeight-rem 
-                                            bold 
-                                            no-shrink 
-                                            width-40 
-                                            height-40 
-                                            right-margin-40 
-                                            border-radius-100-percent 
-                                            left-margin-20`}>
-                                        {getInitials(recipient.name)}
-                                    </Profile>
-                                    <div className="no-shrink width-50-percent size-pointeight-rem bold capitalize">
-                                        {recipient.name}
-                                    </div>
-                                    <div className="no-shrink width-30-percent size-pointeight-rem">
-                                        <p className="size-pointeight-rem light-gray-color truncate">{recipient.email}</p>
-                                    </div>
-                                </div>
-                            </div>)
-                }
+                {renderRecipients()}
             </div>
         </>
     )

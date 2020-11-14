@@ -2,6 +2,14 @@ import React from "react"
 import styled from "styled-components"
 
 const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, closeTags, addTagsToRecipient, tags, recipients, toAddTag, toAddTags, deleteTag }) => {
+    const renderUpdateText = () => {
+        if (updating) {
+            return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        }
+
+        return 'UPDATE TAGS';
+    }
+    
     return (
         <Overlay onClick={closeTags} className={`${viewingTags ? 'view-tags' : ''} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">
@@ -19,26 +27,23 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                             <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
                         </div>
                         :
-                        tags ?
-                            tags.map((tag, index) =>
-                                <Tag
-                                    key={index}
-                                    onClick={() => {
-                                        (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ?
-                                            setTags.filter(item => item !== tag.name) :
-                                            [...toAddTags, tag.name])
-                                    }}
-                                    className={`${deleting === tag ? 'opacity-0-5' : ''} 
+                        tags?.map((tag, index) =>
+                            <Tag
+                                key={index}
+                                onClick={() => {
+                                    (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ?
+                                        setTags.filter(item => item !== tag.name) :
+                                        [...toAddTags, tag.name])
+                                }}
+                                className={`${deleting === tag ? 'opacity-0-5' : ''} 
                                         ${toAddTags.includes(tag.name) ? 'active-tag' : ''} 
                                         no-select uppercase`}>
-                                    {tag.name}
-                                    {toAddTag === false ?
-                                        <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
-                                        : ""}
-                                </Tag>
-                            )
-                            :
-                            ""
+                                {tag.name}
+                                {toAddTag === false ?
+                                    <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
+                                    : ""}
+                            </Tag>
+                        )
                     }
                 </div>
                 {toAddTag ?
@@ -68,10 +73,7 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                                 align-items-center 
                                 justify-center 
                                 right-margin-30`}>
-                            {updating ?
-                                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                                :
-                                'UPDATE TAGS'}
+                            {renderUpdateText()}
                         </button>
                     </div>
                     : ""}

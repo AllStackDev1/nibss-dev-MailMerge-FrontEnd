@@ -37,6 +37,14 @@ const UserSearch = ({ selectUser }) => {
         dispatch(userActions.clearSearch());
     }
 
+    const renderSearchingState = () => {
+        if (users.searchingUsers || users.searchResults === undefined) {
+            return <span className="size-pointseven-rem white-color">Searching</span>
+        }
+
+        return users.searchResults.length;
+    }
+
     return (
         <>
 
@@ -57,31 +65,27 @@ const UserSearch = ({ selectUser }) => {
                         <div className="display-flex align-items-center">
                             <p className="size-pointeight-rem bold right-margin-10">USER SUGGESTIONS</p>
                             <div className="display-flex align-items justify-center border-radius-30 black size-pointeight-rem white-color left-padding-10 right-padding-10">
-                                {users.searchingUsers || users.searchResults === undefined ?
-                                    <span className="size-pointseven-rem white-color">Searching</span>
-                                    : users.searchResults.length}
+                                {renderSearchingState()}
                             </div>
                         </div>
-                        {users.searchResults ?
-                            users.searchResults?.data.map((user, key) =>
-                                <div
-                                    key={key}
-                                    onClick={() => {
-                                        selectUser(user, true);
-                                        setSearchTerm("");
-                                    }}
-                                    className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
-                                                ${key !== users.searchResults.length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
-                                    <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
-                                        <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
-                                        <span className="uppercase size-pointeight-rem">{user.name}</span>
-                                    </div>
-                                    <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
-                                        <i className="material-icons right-margin-10 size-pointnine-rem">email</i>
-                                        <span className="lowercase size-pointeight-rem">{user.email}</span>
-                                    </div>
-                                </div>)
-                            : ''}
+                        {users.searchResults?.data.map((user, key) =>
+                            <div
+                                key={key}
+                                onClick={() => {
+                                    selectUser(user, true);
+                                    setSearchTerm("");
+                                }}
+                                className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
+                                            ${key !== users.searchResults.length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
+                                <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
+                                    <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
+                                    <span className="uppercase size-pointeight-rem">{user.name}</span>
+                                </div>
+                                <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
+                                    <i className="material-icons right-margin-10 size-pointnine-rem">email</i>
+                                    <span className="lowercase size-pointeight-rem">{user.email}</span>
+                                </div>
+                            </div>)}
                     </SearchResults>
                     : ''}
             </div>

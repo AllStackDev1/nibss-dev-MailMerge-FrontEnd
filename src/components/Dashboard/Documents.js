@@ -122,13 +122,13 @@ const Documents = withRouter(({ location }) => {
     }
 
     const addRecipient = recipient => {
-        setDocument(document => {
-            document.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ?
-                document.recipients.splice(document.recipients.findIndex(rec => rec._id === recipient._id), 1) :
-                document.recipients.push(recipient);
+        setDocument(d => {
+            d.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ?
+                d.recipients.splice(d.recipients.findIndex(rec => rec._id === recipient._id), 1) :
+                d.recipients.push(recipient);
 
             return {
-                ...document
+                ...d
             }
         });
     }
@@ -137,8 +137,8 @@ const Documents = withRouter(({ location }) => {
         var r = new FileReader();
 
         r.onloadend = function (e) {
-            setDocumentFiles(documentFiles => [
-                ...documentFiles,
+            setDocumentFiles(d => [
+                ...d,
                 e.target.result
             ]);
         }
@@ -146,8 +146,8 @@ const Documents = withRouter(({ location }) => {
         r.readAsDataURL(acceptedFiles[0], "UTF-8");
 
         // Do something with the files
-        setDocument(document => ({
-            ...document,
+        setDocument(d => ({
+            ...d,
             file: acceptedFiles[0]
         }));
 
@@ -172,27 +172,43 @@ const Documents = withRouter(({ location }) => {
         }
     };
 
-    const viewPage = page => {
-        if (page <= documents.documents.pagination.number_of_pages && page !== documents.documents.pagination.current) {
-            dispatch(push(`/dashboard/documents/${page}`));
+    const viewPage = p => {
+        if (p <= documents.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
+            dispatch(push(`/dashboard/documents/${p}`));
         }
     }
 
-    const viewDocument = (document) => {
-        dispatch(documentActions.setDocument(document));
+    const viewDocument = (d) => {
+        dispatch(documentActions.setDocument(d));
 
-        if (document.signed) {
-            dispatch(push(`/dashboard/document/${document._id}`));
+        if (d.signed) {
+            dispatch(push(`/dashboard/document/${d._id}`));
         } else {
-            dispatch(push(`/dashboard/append-signature/${document._id}`));
+            dispatch(push(`/dashboard/append-signature/${d._id}`));
         }
     }
 
-    const viewStats = (e, document) => {
+    const viewStats = (e, d) => {
         e.stopPropagation();
-        dispatch(documentActions.setDocument(document));
+        dispatch(documentActions.setDocument(d));
 
-        dispatch(push(`/dashboard/document/${document._id}`));
+        dispatch(push(`/dashboard/document/${d._id}`));
+    }
+
+    const renderSkipText = () => {
+        if (step > 2) {
+            return 'PREVIOUS'
+        }
+
+        return 'SKIP';
+    }
+
+    const renderNextContent = () => {
+        if (documents.preparing) {
+            return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        }
+
+        return 'NEXT';
     }
 
     return (
@@ -271,11 +287,10 @@ const Documents = withRouter(({ location }) => {
                                         onChange={documentBody => setDocument({ ...document, documentBody })} />
                                 </Gray>
                                 <p className="bottom-margin-20 top-margin-30 size-pointnine-rem bold">Document Attachment</p>
-                                {documentFiles ?
+                                {documentFiles &&
                                     documentFiles.map((documentFile, index) =>
                                         <img src={documentFile} key={index} className="height-100 bottom-margin-30" alt="NIBSS Upload Document" />
-                                    )
-                                    : ""}
+                                    )}
                             </div>}
                         {step === 5 &&
                             <DocumentCreationSuccessful
@@ -296,7 +311,7 @@ const Documents = withRouter(({ location }) => {
                                 <p
                                     onClick={() => setStep(step => step < 3 ? step + 1 : step - 1)}
                                     className="size-pointnine-rem mustard-color no-select cursor-pointer bold">
-                                    {step > 2 ? 'PREVIOUS' : 'SKIP'}
+                                    {renderSkipText()}
                                 </p>
                                 <button
                                     onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }}
@@ -309,18 +324,14 @@ const Documents = withRouter(({ location }) => {
                                         display-flex 
                                         justify-center 
                                         align-items-center`}>
-                                    {documents.preparing ?
-                                        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                                        :
-                                        'NEXT'
-                                    }
+                                    {renderNextContent()}
                                 </button>
                             </BottomNav>}
                     </Container>
                 </>
                 :
                 <>
-                    {modal !== "" ?
+                    {modal !== "" &&
                         <ModalContainer closeModal={() => setModal("")}>
                             {modal === "create-document" &&
                                 <CreateDocument
@@ -329,8 +340,7 @@ const Documents = withRouter(({ location }) => {
                                     setStep={setStep}
                                     closeModal={() => setModal("")}
                                     setUploadingDocument={setUploadingDocument} />}
-                        </ModalContainer>
-                        : ""}
+                        </ModalContainer>}
                     <div className="full-width border-box left-padding-30 right-padding-30">
                         <PageTitle
                             title="Documents"

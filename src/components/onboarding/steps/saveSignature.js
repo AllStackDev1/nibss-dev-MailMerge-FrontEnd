@@ -54,6 +54,18 @@ const SaveSignature = ({ add }) => {
         dispatch(authActions.saveSignature(file.target.files[0], add));
     }
 
+    const renderUploadProgress = () => {
+        if (!auth.uploading) {
+            return 'SAVE';
+        }
+
+        if (auth.uploadProgress) {
+            return `${auth.uploadProgress}%`
+        } else {
+            return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        }
+    }
+
     return (
         <>
             <div className="left-padding-80 right-padding-80">
@@ -127,13 +139,7 @@ const SaveSignature = ({ add }) => {
                     onClick={saveSignature}
                     disabled={auth.uploading}
                     className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                    {auth.uploading ?
-                        auth.uploadProgress ?
-                            `${auth.uploadProgress}%`
-                            :
-                            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                        :
-                        'SAVE'}
+                    {renderUploadProgress()}
                 </button>
             </div>
         </>

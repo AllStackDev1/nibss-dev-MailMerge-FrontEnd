@@ -7,10 +7,18 @@ import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
 const DashboardSidebar = ({ routes, logout, location, user }) => {
+    const routePath = route => {
+        if (route.path.includes("/:")) {
+            return route.path.split("/:")[0]
+        }
+
+        return route.path;
+    }
+
     const routeActiveClass = route => {
         let activeLink = "";
-        
-        if (location.pathname === `/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`) {
+
+        if (location.pathname === `/dashboard${routePath(route)}`) {
             activeLink = 'active-link';
         }
 
@@ -37,7 +45,7 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                     {routes.map((route, index) =>
                         route.support === true ?
                             <div key={index} className="top-margin-70 top-padding-30 border-top-gray">
-                                <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
+                                <Link to={`/dashboard${routePath(route)}`} key={index}>
                                     <RouteLink
                                         className={`${routeActiveClass(route)}`}>
                                         <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>
@@ -68,34 +76,34 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                             </div>
                             :
                             ((user.data.role === "user" && route.user) || user.data.role === "administrator") &&
-                                <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
-                                    <RouteLink
-                                        className={`${routeActiveClass(route)}`}>
-                                        <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>
-                                            <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img
-                                                    src={require(`images/icons/dashboard/${route.icon}.svg`)}
-                                                    className={`height-${route.height || '20'}`}
-                                                    alt="NIBSS Empty" />
-                                            </div>
-                                            <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img
-                                                    src={require(`images/icons/dashboard/${route.icon}-brown.svg`)}
-                                                    className={`height-${route.height || '20'}`}
-                                                    alt="NIBSS Empty" />
-                                            </div>
-                                            <div className="display-flex align-items-center justify-center width-40 height-40 no-shrink">
-                                                <img
-                                                    src={require(`images/icons/dashboard/${route.icon}-white.svg`)}
-                                                    className={`height-${route.height || '20'}`}
-                                                    alt="NIBSS Empty" />
-                                            </div>
+                            <Link to={`/dashboard${routePath(route)}`} key={index}>
+                                <RouteLink
+                                    className={`${routeActiveClass(route)}`}>
+                                    <div className={`display-flex align-items-center width-40 height-50 left-margin-0 overflow-hidden`}>
+                                        <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
+                                            <img
+                                                src={require(`images/icons/dashboard/${route.icon}.svg`)}
+                                                className={`height-${route.height || '20'}`}
+                                                alt="NIBSS Empty" />
                                         </div>
-                                        <div className="smooth height-45 left-padding-10 display-flex align-items-center size-pointeight-rem bold no-wrap">
-                                            {route?.name}
+                                        <div className="smooth display-flex align-items-center justify-center width-40 height-40 no-shrink">
+                                            <img
+                                                src={require(`images/icons/dashboard/${route.icon}-brown.svg`)}
+                                                className={`height-${route.height || '20'}`}
+                                                alt="NIBSS Empty" />
                                         </div>
-                                    </RouteLink>
-                                </Link>
+                                        <div className="display-flex align-items-center justify-center width-40 height-40 no-shrink">
+                                            <img
+                                                src={require(`images/icons/dashboard/${route.icon}-white.svg`)}
+                                                className={`height-${route.height || '20'}`}
+                                                alt="NIBSS Empty" />
+                                        </div>
+                                    </div>
+                                    <div className="smooth height-45 left-padding-10 display-flex align-items-center size-pointeight-rem bold no-wrap">
+                                        {route?.name}
+                                    </div>
+                                </RouteLink>
+                            </Link>
                     )}
                 </LinkContainer>
                 <Link to="/" className="full-width no-shrink display-block margin-bottom-30">
