@@ -35,11 +35,11 @@ const Users = ({ user: localUser }) => {
 
     useEffect(() => {
         if (users.editing === false) {
-            setModal(false);
+            setModal("");
             setUser({});
         }
         if (users.deleting === false) {
-            setModal(false);
+            setModal("");
             setToDelete({});
         }
     }, [users.editing, users.deleting]);
@@ -128,7 +128,7 @@ const Users = ({ user: localUser }) => {
                 deleting={users.deleting}
                 onSubmit={deleteUser}
                 closeModal={() => {
-                    setModal(false);
+                    setModal("");
                     setToDelete({});
                 }} />
         }
@@ -166,7 +166,7 @@ const Users = ({ user: localUser }) => {
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal(false)}>
+                <ModalContainer closeModal={() => setModal("")}>
                     {renderModals()}
                 </ModalContainer>
                 : ""}

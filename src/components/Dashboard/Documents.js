@@ -64,7 +64,7 @@ const Documents = withRouter(({ location }) => {
         }
 
         if (tab === tabArg && fetching === false) {
-            if (total) return `(${documents?.documents[key] || 0})`
+            if (total) { return `(${documents?.documents[key] || 0})` }
             return `(${documents?.documents?.document_stats?.[key] || 0})`
         }
     }
@@ -72,8 +72,10 @@ const Documents = withRouter(({ location }) => {
     useEffect(() => {
         const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
 
+        const typeTabs = { "pending": 2, "signed": 3, "rejected": 4 };
+
         if (type) {
-            setTab(type === "pending" ? 2 : type === "signed" ? 3 : type === "rejected" ? 4 : "");
+            setTab(typeTabs[type] || "");
         }
 
         if (pageId) {
@@ -150,7 +152,7 @@ const Documents = withRouter(({ location }) => {
         }));
 
         setUploadingDocument(true);
-        setModal(false);
+        setModal("");
         setStep(1);
     }, []);
 
@@ -197,14 +199,13 @@ const Documents = withRouter(({ location }) => {
         <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y">
             {uploadingDocument ?
                 <>
-                    {step < 5 ?
+                    {step < 5 &&
                         <BackButton
                             onClick={() => setUploadingDocument(false)}
                             className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                             BACK
-                        </BackButton>
-                        : ""}
+                        </BackButton>}
                     <Container
                         className={`${(step === 3 || step === 4) && documentContainerClass} 
                             ${step === 5 && completeClass} 
@@ -221,7 +222,7 @@ const Documents = withRouter(({ location }) => {
                             white 
                             border-radius-10 
                             box-shadow-less2`}>
-                        {step < 5 ?
+                        {step < 5 &&
                             <div className="display-flex align-items-center justify-center no-select">
                                 <Step
                                     className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
@@ -242,28 +243,24 @@ const Documents = withRouter(({ location }) => {
                                     className={`${step === 4 && activeStepClass} ${documentStepClasses}`}>
                                     4
                                 </Step>
-                            </div>
-                            : ""}
-                        {step === 1 ?
+                            </div>}
+                        {step === 1 &&
                             <SetupSignatories
                                 document={document}
-                                selectUser={selectUser} />
-                            : ""}
-                        {step === 2 ?
+                                selectUser={selectUser} />}
+                        {step === 2 &&
                             <SetupRecipients
                                 document={document}
                                 addRecipient={addRecipient}
-                            />
-                            : ""}
-                        {step === 3 ?
+                            />}
+                        {step === 3 &&
                             <SigningSetup
                                 signatories={document.signatories}
                                 placeholders={placeholders}
                                 documentFiles={documentFiles}
                                 setPlaceholders={setPlaceholders}
-                            />
-                            : ""}
-                        {step === 4 ?
+                            />}
+                        {step === 4 &&
                             <div className="full-width width-85-percent margin-auto">
                                 <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Preview</p>
                                 <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Preview the document send it</p>
@@ -279,13 +276,11 @@ const Documents = withRouter(({ location }) => {
                                         <img src={documentFile} key={index} className="height-100 bottom-margin-30" alt="NIBSS Upload Document" />
                                     )
                                     : ""}
-                            </div>
-                            : ""}
-                        {step === 5 ?
+                            </div>}
+                        {step === 5 &&
                             <DocumentCreationSuccessful
-                                setUploadingDocument={setUploadingDocument} />
-                            : ""}
-                        {step < 5 ?
+                                setUploadingDocument={setUploadingDocument} />}
+                        {step < 5 &&
                             <BottomNav
                                 className={`height-80 
                                     width-85-percent 
@@ -320,22 +315,20 @@ const Documents = withRouter(({ location }) => {
                                         'NEXT'
                                     }
                                 </button>
-                            </BottomNav>
-                            : ""}
+                            </BottomNav>}
                     </Container>
                 </>
                 :
                 <>
                     {modal !== "" ?
-                        <ModalContainer closeModal={() => setModal(false)}>
-                            {modal === "create-document" ?
+                        <ModalContainer closeModal={() => setModal("")}>
+                            {modal === "create-document" &&
                                 <CreateDocument
                                     onDrop={onDrop}
                                     setModal={setModal}
                                     setStep={setStep}
-                                    closeModal={() => setModal(false)}
-                                    setUploadingDocument={setUploadingDocument} />
-                                : ""}
+                                    closeModal={() => setModal("")}
+                                    setUploadingDocument={setUploadingDocument} />}
                         </ModalContainer>
                         : ""}
                     <div className="full-width border-box left-padding-30 right-padding-30">

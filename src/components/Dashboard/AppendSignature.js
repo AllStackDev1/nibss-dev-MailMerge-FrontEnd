@@ -147,7 +147,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
             return <SignDocument
                 user={user || decode(userToken)}
                 setModal={setModal}
-                closeModal={() => setModal(false)}
+                closeModal={() => setModal("")}
                 signingDocument={documents.signingDocument}
                 documentSignature={documentSignature}
                 setDocumentSignature={setDocumentSignature}
@@ -242,7 +242,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal(false)}>
+                <ModalContainer closeModal={() => setModal("")}>
                     {renderModals()}
                 </ModalContainer>
                 : ""}

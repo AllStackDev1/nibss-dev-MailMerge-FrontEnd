@@ -67,7 +67,7 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                                 </Link>
                             </div>
                             :
-                            (user.data.role === "user" && route.user) || user.data.role === "administrator" ?
+                            ((user.data.role === "user" && route.user) || user.data.role === "administrator") &&
                                 <Link to={`/dashboard${route.path.includes("/:") ? route.path.split("/:")[0] : route.path}`} key={index}>
                                     <RouteLink
                                         className={`${routeActiveClass(route)}`}>
@@ -96,7 +96,6 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                                         </div>
                                     </RouteLink>
                                 </Link>
-                                : ""
                     )}
                 </LinkContainer>
                 <Link to="/" className="full-width no-shrink display-block margin-bottom-30">

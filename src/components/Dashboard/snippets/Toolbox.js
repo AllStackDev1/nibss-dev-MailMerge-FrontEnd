@@ -37,10 +37,76 @@ const Toolbox = ({ user,
     }, [dispatch, filterList]);
 
     const viewTagsClass = () => {
-        if (upload === true)
-            return 'right-margin-20';
+        if (upload === true) { return 'right-margin-20'; }
 
         return 'right-margin-50'
+    }
+
+    const renderDownloading = () => {
+        if (downloading) { return <ExportLoader className="lds-ring"><div></div><div></div><div></div><div></div></ExportLoader> }
+
+        return <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>
+    }
+
+    const renderFilterList = () => {
+        if (filterList) {
+            return filterList.map((t, index) =>
+                <div
+                    key={index}
+                    onClick={() => filter === t ? setFilter("") : setFilter(t)}
+                    className="smooth capitalize display-flex align-items-center bottom-margin-10">
+                    <div className="width-30 right-margin-10">
+                        <input readOnly type="checkbox" id={`tag-${index}`} checked={filter === t} className="checkbox-s" />
+                        <label htmlFor={`tag-${index}`} className="no-shrink"></label>
+                    </div>
+                    {t}
+                </div>
+            )
+        }
+
+        if (recipients.tags) {
+            return recipients.tags.map((t, index) =>
+                <div
+                    key={index}
+                    onClick={() => filter.includes(t.name) ? removeFilter(t.name) : addFilter(t.name)}
+                    className="smooth display-flex align-items-center bottom-margin-10">
+                    <div className="width-30 right-margin-10">
+                        <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(t.name)} className="checkbox-s" />
+                        <label htmlFor={`tag-${index}`} className="no-shrink"></label>
+                    </div>
+                    {t.name}
+                </div>
+            )
+        } else {
+            return <div className="height-200 full-width display-flex align-items-center justify-center">
+                <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
+            </div>
+        }
+    }
+
+    const renderAdditionText = () => {
+        if (adding) {
+            return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        }
+
+        return 'Upload CSV';
+    }
+
+    const renderRecipientButton = () => {
+        if (addButtonUrl) {
+            return <Link to={addButtonUrl}>
+                <button
+                    className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                    {addButtonText}
+                </button>
+            </Link>
+        }
+        
+        return <button
+            onClick={() => setModal("add-recipient")}
+            className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+            {addButtonText}
+        </button>
     }
 
     return (
@@ -79,38 +145,7 @@ const Toolbox = ({ user,
                     Filter
                     <div className="top-padding-10">
                         <div className="box-shadow-less2 border-radius-10 padding-10 white">
-                            {filterList ?
-                                filterList.map((tag, index) =>
-                                    <div
-                                        key={index}
-                                        onClick={() => filter === tag ? setFilter("") : setFilter(tag)}
-                                        className="smooth capitalize display-flex align-items-center bottom-margin-10">
-                                        <div className="width-30 right-margin-10">
-                                            <input readOnly type="checkbox" id={`tag-${index}`} checked={filter === tag} className="checkbox-s" />
-                                            <label htmlFor={`tag-${index}`} className="no-shrink"></label>
-                                        </div>
-                                        {tag}
-                                    </div>
-                                )
-                                :
-                                recipients.tags ?
-                                    recipients.tags.map((tag, index) =>
-                                        <div
-                                            key={index}
-                                            onClick={() => filter.includes(tag.name) ? removeFilter(tag.name) : addFilter(tag.name)}
-                                            className="smooth display-flex align-items-center bottom-margin-10">
-                                            <div className="width-30 right-margin-10">
-                                                <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(tag.name)} className="checkbox-s" />
-                                                <label htmlFor={`tag-${index}`} className="no-shrink"></label>
-                                            </div>
-                                            {tag.name}
-                                        </div>
-                                    )
-                                    :
-                                    <div className="height-200 full-width display-flex align-items-center justify-center">
-                                        <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
-                                    </div>
-                            }
+                            {renderFilterList()}
                         </div>
                     </div>
                 </Menu>
@@ -129,10 +164,7 @@ const Toolbox = ({ user,
                         mustard-color 
                         ${user?.data?.role !== userLabel && "right-margin-50"}`}>
                         Export as
-                        {downloading ?
-                            <ExportLoader className="lds-ring"><div></div><div></div><div></div><div></div></ExportLoader>
-                            :
-                            <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>}
+                        {renderDownloading()}
                         <div className="top-padding-10">
                             <div className="box-shadow-less2 border-radius-10 padding-10 white min-width-100">
                                 <div onClick={() => exportDocument('csv')} className="smooth display-flex align-items-center bottom-margin-10">
@@ -185,10 +217,7 @@ const Toolbox = ({ user,
                                 mustard-color 
                                 ${user?.data?.role !== userLabel && "right-margin-50"}`
                             }>
-                            {adding ?
-                                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                                :
-                                'Upload CSV'}
+                            {renderAdditionText()}
                         </ActionButton>
                         <input
                             type="file"
@@ -200,19 +229,7 @@ const Toolbox = ({ user,
                     </>
                     : ""}
                 {user?.data?.role !== userLabel ?
-                    addButtonUrl ?
-                        <Link to={addButtonUrl}>
-                            <button
-                                className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                                {addButtonText}
-                            </button>
-                        </Link>
-                        :
-                        <button
-                            onClick={() => setModal("add-recipient")}
-                            className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                            {addButtonText}
-                        </button>
+                    renderRecipientButton()
                     : ""}
             </div>
         </ToolBox>

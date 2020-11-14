@@ -62,22 +62,22 @@ const Recipients = ({ user }) => {
 
     useEffect(() => {
         if (recipients.addingTag === false) {
-            setModal(false);
+            setModal("");
             setTag({});
         }
         if (recipients.deletingTag === false) {
-            setModal(false);
+            setModal("");
             setTagToDelete({});
         }
         if (recipients.deleting === false) {
-            setModal(false);
+            setModal("");
             setRecipientToDelete({});
         }
     }, [recipients.addingTag, recipients.deleting, recipients.deletingTag]);
 
     useEffect(() => {
         if (recipients.addingRecipient === false || recipients.editingRecipient === false) {
-            setModal(false);
+            setModal("");
             setRecipient({});
         }
     }, [recipients.addingRecipient, recipients.editingRecipient]);
@@ -263,7 +263,7 @@ const Recipients = ({ user }) => {
                 onChangeEdit={onChangeRecipientEdit}
                 onSubmit={addRecipient}
                 closeModal={() => {
-                    setModal(false);
+                    setModal("");
                     setEditRecipient({});
                     setRecipient({});
                 }} />
@@ -274,14 +274,14 @@ const Recipients = ({ user }) => {
                 creating={recipients.addingTag}
                 onChange={onChangeTag}
                 onSubmit={addTag}
-                closeModal={() => setModal(false)} />
+                closeModal={() => setModal("")} />
         }
         if (modal === "delete-tag") {
             return <DeleteTag
                 deleting={recipients.deletingTag}
                 onSubmit={deleteTag}
                 closeModal={() => {
-                    setModal(false);
+                    setModal("");
                     setTagToDelete({});
                 }} />
         }
@@ -290,7 +290,7 @@ const Recipients = ({ user }) => {
                 deleting={recipients.deleting}
                 onSubmit={deleteRecipient}
                 closeModal={() => {
-                    setModal(false);
+                    setModal("");
                     setRecipientToDelete({});
                 }} />
         }
@@ -301,7 +301,7 @@ const Recipients = ({ user }) => {
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal(false)}>
+                <ModalContainer closeModal={() => setModal("")}>
                     {renderModal()}
                 </ModalContainer>
                 : ""}

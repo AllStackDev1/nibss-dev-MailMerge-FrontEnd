@@ -24,7 +24,7 @@ const Signature = ({ signature }) => {
 
     useEffect(() => {
         if (auth.deletingSignature === false) {
-            setModal(false);
+            setModal("");
             setToDelete({});
         }
     }, [auth.deletingSignature]);
@@ -35,7 +35,7 @@ const Signature = ({ signature }) => {
                 deleting={auth.deletingSignature}
                 onSubmit={deleteSignature}
                 closeModal={() => {
-                    setModal(false);
+                    setModal("");
                     setToDelete({});
                 }} />
         }
@@ -46,7 +46,7 @@ const Signature = ({ signature }) => {
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal(false)}>
+                <ModalContainer closeModal={() => setModal("")}>
                     {renderModals()}
                 </ModalContainer>
                 : ""}

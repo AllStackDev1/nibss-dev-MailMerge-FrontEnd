@@ -48,6 +48,22 @@ const UserProfile = () => {
         dispatch(authActions.updateProfile(user));
     }
 
+    const renderButtonContent = () => {
+        if (auth.updatingProfile) {
+            return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+        }
+
+        return <p>UPDATE PROFILE</p>;
+    }
+
+    const renderSignatures = () => {
+        return auth.profile?.signatures?.map((signature, index) =>
+            <Signature
+                signature={signature}
+                key={index} />
+        )
+    }
+
     return (
         <div className="full-width border-box left-padding-30 right-padding-30">
             <PageTitle
@@ -89,10 +105,7 @@ const UserProfile = () => {
                                     display-flex 
                                     justify-center 
                                     align-items-center`}>
-                                {auth.updatingProfile ?
-                                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-                                    :
-                                    <p>UPDATE PROFILE</p>}
+                                {renderButtonContent()}
                             </button>
                         </div>
                     </form>
@@ -118,18 +131,7 @@ const UserProfile = () => {
                                 </Link>
                             </div>
                         </div>
-                        {auth.profile ?
-                            auth.profile.signatures ?
-                                auth.profile.signatures.length > 0 ?
-                                    auth.profile.signatures.map((signature, index) =>
-                                        <Signature
-                                            signature={signature}
-                                            key={index} />
-                                    )
-                                    : ""
-                                : ""
-                            : ""
-                        }
+                        {renderSignatures()}
                     </div>
                     : ""}
             </div>
