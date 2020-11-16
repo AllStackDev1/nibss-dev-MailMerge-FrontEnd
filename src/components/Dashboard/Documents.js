@@ -60,14 +60,14 @@ const Documents = withRouter(({ location }) => {
 
     const renderTabStats = (tabArg, key, total) => {
         if (!documents?.documents) {
-            return;
+            return <span></span>;
         }
 
         if (tab === tabArg && fetching === false) {
             if (total) {
-                return `(${documents?.documents[key] || 0})`
+                return <span className="left-padding-5">{`(${documents?.documents[key] || 0})`}</span>
             }
-            return `(${documents?.documents?.document_stats?.[key] || 0})`
+            return <span className="left-padding-5">{`(${documents?.documents?.document_stats?.[key] || 0})`}</span>
         }
     }
 

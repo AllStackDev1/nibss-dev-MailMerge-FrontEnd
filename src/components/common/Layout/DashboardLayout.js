@@ -30,8 +30,8 @@ class DashboardLayout extends React.Component {
         document.scrollingElement.scrollTop = 0;
     }
 
-    getRoutes = routes => {
-        return routes.map((prop, key) => {
+    getRoutes = r => {
+        return r.map((prop, key) => {
             return (
                 <Route
                     path={'/dashboard' + prop.path}

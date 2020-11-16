@@ -24,8 +24,8 @@ function add(recipients, multiple) {
                 addRecipientResponse => {
                     recipientService.fetch()
                         .then(
-                            recipients => {
-                                dispatch(success(recipients));
+                            r => {
+                                dispatch(success(r));
 
                                 toast.success(addRecipientResponse.message);
                             });

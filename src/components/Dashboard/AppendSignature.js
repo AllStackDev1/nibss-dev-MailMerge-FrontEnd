@@ -22,6 +22,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
     const [modal, setModal] = useState("");
     const documents = useSelector(state => state.document);
+    const signDocumentConst = "sign-document";
 
     const { documentId } = useParams();
     const dispatch = useDispatch();
@@ -48,8 +49,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     }
 
     useEffect(() => {
-        function setDocumentData(document) {
-            setDocument(document);
+        function setDocumentData(d) {
+            setDocument(d);
         }
 
         if (document._id === undefined) {
@@ -143,7 +144,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     }
 
     const renderModals = () => {
-        if (modal === "sign-document") {
+        if (modal === signDocumentConst) {
             return <SignDocument
                 user={user || decode(userToken)}
                 setModal={setModal}
@@ -179,7 +180,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     .map((signatory, index) =>
                         signatory.absolute_x_coordinate !== undefined ?
                             <div
-                                onClick={() => setModal("sign-document")}
+                                onClick={() => setModal(signDocumentConst)}
                                 key={index}
                                 className="width-150 height-35 absolute cursor-pointer"
                                 style={{
@@ -208,7 +209,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                             .map((signatory, i) =>
                                 signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
                                     <div
-                                        onClick={() => setModal("sign-document")}
+                                        onClick={() => setModal(signDocumentConst)}
                                         key={index}
                                         className="width-150 height-35 absolute cursor-pointer"
                                         style={{
@@ -216,7 +217,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                                             top: signatory.absolute_y_coordinate,
                                             backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email)
                                         }}></div>
-                                    : ""
+                                    : <div></div>
                             )}
                     </PageContainer>
                 ))}

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipientActions } from 'actions/recipientActions';
+import Filter from './toolbox/Filter';
+import RecipientButton from './toolbox/RecipientButton';
 
 const Toolbox = ({ user,
     search,
@@ -56,31 +58,15 @@ const Toolbox = ({ user,
     const renderFilterList = () => {
         if (filterList) {
             return filterList.map((t, index) =>
-                <div
-                    key={index}
-                    onClick={() => filter === t ? setFilter("") : setFilter(t)}
-                    className="smooth capitalize display-flex align-items-center bottom-margin-10">
-                    <div className="width-30 right-margin-10">
-                        <input readOnly type="checkbox" id={`tag-${index}`} checked={filter === t} className="checkbox-s" />
-                        <label htmlFor={`tag-${index}`} className="no-shrink"></label>
-                    </div>
-                    {t}
-                </div>
+                <Filter index={index} name={t} checked={filter === t}
+                    onClick={() => filter === t ? setFilter("") : setFilter(t)} />
             )
         }
 
         if (recipients.tags) {
             return recipients.tags.map((t, index) =>
-                <div
-                    key={index}
-                    onClick={() => filter.includes(t.name) ? removeFilter(t.name) : addFilter(t.name)}
-                    className="smooth display-flex align-items-center bottom-margin-10">
-                    <div className="width-30 right-margin-10">
-                        <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(t.name)} className="checkbox-s" />
-                        <label htmlFor={`tag-${index}`} className="no-shrink"></label>
-                    </div>
-                    {t.name}
-                </div>
+                <Filter index={index} name={t.name} checked={filter.includes(t.name)}
+                    onClick={() => filter.includes(t.name) ? removeFilter(t.name) : addFilter(t.name)} />
             )
         } else {
             return <div className="height-200 full-width display-flex align-items-center justify-center">
@@ -100,18 +86,11 @@ const Toolbox = ({ user,
     const renderRecipientButton = () => {
         if (addButtonUrl) {
             return <Link to={addButtonUrl}>
-                <button
-                    className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                    {addButtonText}
-                </button>
+                <RecipientButton addButtonText={addButtonText} />
             </Link>
         }
 
-        return <button
-            onClick={() => setModal("add-recipient")}
-            className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-            {addButtonText}
-        </button>
+        return <RecipientButton onClick={() => setModal("add-recipient")} addButtonText={addButtonText} />
     }
 
     return (

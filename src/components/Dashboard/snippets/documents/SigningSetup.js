@@ -20,19 +20,19 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
 
     const mouseUp = async (x, y) => {
         if (documentContainer.current) {
-            setPlaceholders(placeholders => {
-                const userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+            setPlaceholders(currentPlaceholders => {
+                const userSigned = currentPlaceholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
                 if (userSigned !== -1) {
-                    placeholders[userSigned] = {
-                        ...placeholders[userSigned],
+                    currentPlaceholders[userSigned] = {
+                        ...currentPlaceholders[userSigned],
                         absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
                         absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
                     }
 
-                    return placeholders;
+                    return currentPlaceholders;
                 } else {
                     return [
-                        ...placeholders,
+                        ...currentPlaceholders,
                         {
                             absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
                             absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
@@ -45,20 +45,20 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
 
             const imageSize = await getImageSize(documentContainer.current.querySelector('img'));
 
-            setPlaceholders(placeholders => {
-                const userSigned = placeholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+            setPlaceholders(currentPlaceholders => {
+                const userSigned = currentPlaceholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
 
                 if (userSigned !== -1) {
-                    placeholders[userSigned] = {
-                        ...placeholders[userSigned],
+                    currentPlaceholders[userSigned] = {
+                        ...currentPlaceholders[userSigned],
                         x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
                         y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height
                     }
 
-                    return placeholders;
+                    return currentPlaceholders;
                 } else {
                     return [
-                        ...placeholders,
+                        ...currentPlaceholders,
                         {
                             x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
                             y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height,
@@ -148,19 +148,19 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 file={documentFile}
                 onLoadSuccess={onDocumentLoadSuccess}
             >
-                {[...Array(numPages)].map((el, index) => (
+                {[...Array(numPages)].map((el, i) => (
                     <PageContainer
-                        ref={refs.current[index]}
-                        key={index}
-                        className={`${index} ${isNumPages} bottom-margin-50 ${hovering ? 'one' : ''}`}
+                        ref={refs.current[i]}
+                        key={i}
+                        className={`${i} ${isNumPages} bottom-margin-50 ${hovering ? 'one' : ''}`}
                         onMouseOver={e => {
                             e.preventDefault();
                             setHovering(true);
                         }}
                         onMouseLeave={e => setHovering(false)}>
-                        <Page width={550} key={`page_${index + 1}`} pageNumber={index + 1} />
+                        <Page width={550} key={`page_${i + 1}`} pageNumber={i + 1} />
                         {placeholders.map((placeholder, i) =>
-                            placeholder.page === (index) ?
+                            placeholder.page === (i) ?
                                 <div
                                     key={i}
                                     className="width-180 height-40 absolute"
@@ -179,17 +179,17 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                     file={documentFile}
                     onLoadSuccess={onDocumentLoadSuccess}
                 >
-                    {[...Array(numPages)].map((el, index) => (
+                    {[...Array(numPages)].map((el, i) => (
                         <PageContainer
-                            ref={refsFull.current[index]}
-                            key={index}
+                            ref={refsFull.current[i]}
+                            key={i}
                             className={`${isNumPages} bottom-margin-50`}
                             onMouseOver={e => {
                                 e.preventDefault();
                                 setHovering(true);
                             }}
                             onMouseLeave={e => setHovering(false)}>
-                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                            <Page key={`page_${i + 1}`} pageNumber={i + 1} />
                         </PageContainer>
                     ))}
                 </Document>

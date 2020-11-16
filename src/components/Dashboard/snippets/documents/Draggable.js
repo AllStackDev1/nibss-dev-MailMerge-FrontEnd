@@ -29,13 +29,13 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
         if (e.button !== 0) {
             return
         }
-        var pos = $(e.target).offset()
+        var elemPos = $(e.target).offset()
 
         setDragging(true);
         setSignatoryDragged(user);
         setRel({
-            x: e.pageX - pos.left,
-            y: e.pageY - pos.top
+            x: e.pageX - elemPos.left,
+            y: e.pageY - elemPos.top
         });
 
         e.stopPropagation()

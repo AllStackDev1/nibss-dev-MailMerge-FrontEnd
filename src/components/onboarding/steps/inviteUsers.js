@@ -34,8 +34,8 @@ const InviteUsers = ({ add }) => {
     const addInvite = e => {
         e.preventDefault();
 
-        setInvited(invited => ([
-            ...invited,
+        setInvited(i => ([
+            ...i,
             invite
         ]));
     }
