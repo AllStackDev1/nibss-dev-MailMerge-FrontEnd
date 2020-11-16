@@ -7,9 +7,9 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
 
-        return 'UPDATE TAGS';
+        return <span>UPDATE TAGS</span>;
     }
-    
+
     return (
         <Overlay onClick={closeTags} className={`${viewingTags ? 'view-tags' : ''} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">

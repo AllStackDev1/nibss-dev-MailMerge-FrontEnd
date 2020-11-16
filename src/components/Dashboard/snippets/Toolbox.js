@@ -29,6 +29,7 @@ const Toolbox = ({ user,
 
     const recipients = useSelector(state => state.recipient);
     const userLabel = "user";
+    const rightMargin50 = 'right-margin-50';
 
     useEffect(() => {
         if (filterList === undefined) {
@@ -37,13 +38,17 @@ const Toolbox = ({ user,
     }, [dispatch, filterList]);
 
     const viewTagsClass = () => {
-        if (upload === true) { return 'right-margin-20'; }
+        if (upload === true) {
+            return 'right-margin-20';
+        }
 
-        return 'right-margin-50'
+        return rightMargin50
     }
 
     const renderDownloading = () => {
-        if (downloading) { return <ExportLoader className="lds-ring"><div></div><div></div><div></div><div></div></ExportLoader> }
+        if (downloading) {
+            return <ExportLoader className="lds-ring"><div></div><div></div><div></div><div></div></ExportLoader>
+        }
 
         return <span className="material-icons mustard-color left-margin-0">arrow_drop_down</span>
     }
@@ -89,7 +94,7 @@ const Toolbox = ({ user,
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
 
-        return 'Upload CSV';
+        return <span>Upload CSV</span>;
     }
 
     const renderRecipientButton = () => {
@@ -101,7 +106,7 @@ const Toolbox = ({ user,
                 </button>
             </Link>
         }
-        
+
         return <button
             onClick={() => setModal("add-recipient")}
             className="uppercase left-padding-20 right-padding-20 height-35 mustard white-color border-radius-2 display-flex justify-center align-items-center">
@@ -162,7 +167,7 @@ const Toolbox = ({ user,
                         box-shadow-less2 
                         size-pointeight-rem 
                         mustard-color 
-                        ${user?.data?.role !== userLabel && "right-margin-50"}`}>
+                        ${user?.data?.role !== userLabel && rightMargin50}`}>
                         Export as
                         {renderDownloading()}
                         <div className="top-padding-10">
@@ -215,7 +220,7 @@ const Toolbox = ({ user,
                                 box-shadow-less2 
                                 size-pointeight-rem 
                                 mustard-color 
-                                ${user?.data?.role !== userLabel && "right-margin-50"}`
+                                ${user?.data?.role !== userLabel && rightMargin50}`
                             }>
                             {renderAdditionText()}
                         </ActionButton>

@@ -26,7 +26,9 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
     // calculate relative position to the mouse and set dragging=true
     const onMouseDown = (e) => {
         // only left mouse button
-        if (e.button !== 0) { return }
+        if (e.button !== 0) {
+            return
+        }
         var pos = $(e.target).offset()
 
         setDragging(true);
@@ -54,7 +56,9 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
     };
 
     const onMouseMove = (e) => {
-        if (!dragging) { return }
+        if (!dragging) {
+            return
+        }
 
         posRef.current = {
             x: e.pageX - rel.x,

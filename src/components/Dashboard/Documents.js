@@ -60,11 +60,13 @@ const Documents = withRouter(({ location }) => {
 
     const renderTabStats = (tabArg, key, total) => {
         if (!documents?.documents) {
-            return '';
+            return;
         }
 
         if (tab === tabArg && fetching === false) {
-            if (total) { return `(${documents?.documents[key] || 0})` }
+            if (total) {
+                return `(${documents?.documents[key] || 0})`
+            }
             return `(${documents?.documents?.document_stats?.[key] || 0})`
         }
     }
@@ -208,7 +210,7 @@ const Documents = withRouter(({ location }) => {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
 
-        return 'NEXT';
+        return <span>NEXT</span>;
     }
 
     return (
@@ -309,12 +311,12 @@ const Documents = withRouter(({ location }) => {
                                     align-items-center 
                                     space-between`}>
                                 <p
-                                    onClick={() => setStep(step => step < 3 ? step + 1 : step - 1)}
+                                    onClick={() => setStep(s => s < 3 ? s + 1 : s - 1)}
                                     className="size-pointnine-rem mustard-color no-select cursor-pointer bold">
                                     {renderSkipText()}
                                 </p>
                                 <button
-                                    onClick={() => { step < 4 ? setStep(step => step + 1) : prepareDocument() }}
+                                    onClick={() => { step < 4 ? setStep(s => s + 1) : prepareDocument() }}
                                     className={`left-padding-20 
                                         right-padding-20 
                                         height-40 

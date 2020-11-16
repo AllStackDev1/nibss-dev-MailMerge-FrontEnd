@@ -10,7 +10,9 @@ const AppendSignatureOpen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!documentId) { dispatch(push('/dashboard/documents')) }
+        if (!documentId) {
+            dispatch(push('/dashboard/documents'))
+        }
     }, [dispatch, documentId]);
 
     return (

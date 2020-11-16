@@ -56,11 +56,11 @@ const SaveSignature = ({ add }) => {
 
     const renderUploadProgress = () => {
         if (!auth.uploading) {
-            return 'SAVE';
+            return <span>SAVE</span>;
         }
 
         if (auth.uploadProgress) {
-            return `${auth.uploadProgress}%`
+            return <span>{`${auth.uploadProgress}%`}</span>
         } else {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }

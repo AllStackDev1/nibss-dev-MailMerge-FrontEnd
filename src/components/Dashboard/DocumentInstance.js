@@ -77,7 +77,7 @@ const DocumentInstance = ({ user }) => {
 
     const renderDeliveryReport = () => {
         if (!document.document) {
-            return "Loading ..."
+            return <span>Loading ...</span>
         }
 
         return <>

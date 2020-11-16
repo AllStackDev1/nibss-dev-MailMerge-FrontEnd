@@ -143,8 +143,8 @@ const SetupRecipients = ({ document, addRecipient }) => {
                                     <div
                                         key={index}
                                         onClick={() => filter.includes(tag.name) ?
-                                            setFilter(filter => (filter.filter(item => item !== tag.name))) :
-                                            setFilter(filter => ([...filter, tag.name]))}
+                                            setFilter(f => (f.filter(item => item !== tag.name))) :
+                                            setFilter(f => ([...f, tag.name]))}
                                         className="smooth display-flex align-items-center bottom-margin-10">
                                         <div className="width-30 right-margin-10">
                                             <input readOnly type="checkbox" id={`tag-${index}`} checked={filter.includes(tag.name)} className="checkbox-s" />
