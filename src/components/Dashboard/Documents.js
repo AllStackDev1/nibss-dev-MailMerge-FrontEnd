@@ -59,19 +59,21 @@ const Documents = withRouter(({ location }) => {
     const completeClass = "complete";
 
     const renderTabStats = (tabArg, key, total) => {
-        if (!documents?.documents) {
+        if (documents?.documents) {
+            const statValue = tab === tabArg && fetching === false && total ?
+                documents?.documents[key] :
+                tab === tabArg && fetching === false ?
+                    documents?.documents?.document_stats?.[key]
+                    : "";
+
+            if (statValue !== "") {
+                return <span className="left-padding-5">{`(${statValue || 0})`}</span>
+            }
+
             return <span></span>;
         }
 
-        const statValue = tab === tabArg && fetching === false && total ?
-            documents?.documents[key] :
-            tab === tabArg && fetching === false ?
-                documents?.documents?.document_stats?.[key]
-                : "";
-
-        if (statValue !== "") {
-            return <span className="left-padding-5">{`(${statValue || 0})`}</span>
-        }
+        return <span></span>;
     }
 
     useEffect(() => {
