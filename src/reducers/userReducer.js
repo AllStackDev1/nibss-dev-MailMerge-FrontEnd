@@ -179,13 +179,10 @@ export default function user(state, action) {
                 downloading: true
             };
         case userConstants.DOWNLOAD_SUCCESS:
+        case userConstants.DOWNLOAD_FAILURE:
             return {
                 ...state,
                 downloading: false
-            };
-        case userConstants.DOWNLOAD_FAILURE:
-            return {
-                ...state, downloading: false
             };
         default:
             return state;

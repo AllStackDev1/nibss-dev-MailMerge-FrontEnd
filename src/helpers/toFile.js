@@ -5,8 +5,10 @@ export function toFile(dataurl, filename) {
         n = bstr.length,
         u8arr = new Uint8Array(n);
 
-    while (n--) {
+    while (n >= 0) {
         u8arr[n] = bstr.charCodeAt(n);
+
+        n = n - 1;
     }
 
     return new File([u8arr], filename, { type: mime });

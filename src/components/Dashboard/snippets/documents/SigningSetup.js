@@ -159,8 +159,8 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                         }}
                         onMouseLeave={e => setHovering(false)}>
                         <Page width={550} key={`page_${i + 1}`} pageNumber={i + 1} />
-                        {placeholders.map((placeholder, i) =>
-                            placeholder.page === (i) ?
+                        {placeholders.map((placeholder, placeholderIndex) =>
+                            placeholder.page === placeholderIndex ?
                                 <div
                                     key={i}
                                     className="width-180 height-40 absolute"

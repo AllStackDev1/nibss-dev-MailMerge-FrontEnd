@@ -23,6 +23,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [modal, setModal] = useState("");
     const documents = useSelector(state => state.document);
     const signDocumentConst = "sign-document";
+    const width75percent = "width-75-percent";
 
     const { documentId } = useParams();
     const dispatch = useDispatch();
@@ -167,7 +168,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         const isNumPagesSet = numPages === undefined;
 
         if (imageError === false) {
-            return <PageContainer className={`${isNumPagesSet ? 'width-75-percent' : ''}`}>
+            return <PageContainer className={`${isNumPagesSet ? width75percent : ''}`}>
                 <img
                     ref={documentContainer}
                     onLoad={calculateOffset}
@@ -202,7 +203,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     <PageContainer
                         key={index}
                         ref={refs.current[index]}
-                        className={`${index} ${isNumPagesSet ? 'width-75-percent' : 'full-width'} bottom-margin-20`}>
+                        className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
                         <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
                         {document.document.signatories
                             .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
@@ -231,7 +232,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                         <PageContainer
                             ref={refsFull.current[index]}
                             key={index}
-                            className={`${isNumPagesSet || numPages === null ? 'width-75-percent' : ''} bottom-margin-50`}>
+                            className={`${isNumPagesSet || numPages === null ? width75percent : ''} bottom-margin-50`}>
                             <Page key={`page_${index + 1}`} pageNumber={index + 1} />
                         </PageContainer>
                     ))}

@@ -14,14 +14,12 @@ export const userService = {
 function invite(users) {
     const data = [...users];
 
-    data.map(user => {
+    data.forEach(user => {
         if (!user.administrator) {
             user.role = "user"
         } else {
             user.role = "administrator"
         }
-
-        return user;
     });
 
     const obj = {

@@ -63,11 +63,14 @@ const Documents = withRouter(({ location }) => {
             return <span></span>;
         }
 
-        if (tab === tabArg && fetching === false) {
-            if (total) {
-                return <span className="left-padding-5">{`(${documents?.documents[key] || 0})`}</span>
-            }
-            return <span className="left-padding-5">{`(${documents?.documents?.document_stats?.[key] || 0})`}</span>
+        const statValue = tab === tabArg && fetching === false && total ?
+            documents?.documents[key] :
+            tab === tabArg && fetching === false ?
+                documents?.documents?.document_stats?.[key]
+                : "";
+
+        if (statValue !== "") {
+            return <span className="left-padding-5">{`(${statValue || 0})`}</span>
         }
     }
 
