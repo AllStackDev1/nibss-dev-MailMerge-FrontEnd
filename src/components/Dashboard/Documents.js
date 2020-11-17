@@ -60,11 +60,12 @@ const Documents = withRouter(({ location }) => {
 
     const renderTabStats = (tabArg, key, total) => {
         if (documents?.documents) {
+            const notTotal = tab === tabArg && fetching === false ?
+                documents?.documents?.document_stats?.[key]
+                : "";
+
             const statValue = tab === tabArg && fetching === false && total ?
-                documents?.documents[key] :
-                tab === tabArg && fetching === false ?
-                    documents?.documents?.document_stats?.[key]
-                    : "";
+                documents?.documents[key] : notTotal;
 
             if (statValue !== "") {
                 return <span className="left-padding-5">{`(${statValue || 0})`}</span>

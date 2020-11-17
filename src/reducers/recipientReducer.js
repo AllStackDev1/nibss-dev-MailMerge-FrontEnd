@@ -32,8 +32,6 @@ export default function recipient(state, action) {
                 searching: true
             };
         case recipientConstants.SEARCH_SUCCESS: {
-            console.log(action.src);
-
             return {
                 ...state,
                 searching: false,
@@ -198,7 +196,6 @@ export default function recipient(state, action) {
                     ...action.recipient
                 }
             }
-
             return {
                 ...state,
                 addingTagToRecipient: false
