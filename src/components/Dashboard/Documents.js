@@ -270,7 +270,7 @@ const Documents = withRouter(({ location }) => {
                             <SetupRecipients document={document} addRecipient={addRecipient}
                             />}
                         {step === 3 &&
-                            <SigningSetup signatories={document.signatories} placeholders={placeholders} 
+                            <SigningSetup signatories={document.signatories} placeholders={placeholders}
                                 documentFiles={documentFiles} setPlaceholders={setPlaceholders}
                             />}
                         {step === 4 &&

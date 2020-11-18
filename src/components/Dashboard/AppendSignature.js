@@ -53,7 +53,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         function setDocumentData(d) {
             setDocument(d);
         }
-
         if (document._id === undefined) {
             if (documents.document) {
                 if (JSON.stringify(documents.document) !== JSON.stringify(document)) {
@@ -73,7 +72,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         } else {
             if (signatureCanvas?.current?.isEmpty() === false || signature.signature !== "") {
                 let signatureImage;
-
                 if (signatureType === "draw") {
                     signatureImage = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
                 } else {
@@ -84,7 +82,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     var textImage = window.TextImage(style);
                     signatureImage = textImage.toDataURL(signature.signature);
                 }
-
                 dispatch(documentActions.signDocumentNew(toFile(signatureImage, `signature${Date.now()}.svg`), document.document._id, userToken));
             } else {
                 dispatch(documentActions.signDocument({
@@ -100,13 +97,11 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
         document.document.signatories.forEach((signatory, i) => {
             const documentCopy = Object.assign({}, document);
-
             documentCopy.document.signatories[i] = {
                 ...signatory,
                 absolute_x_coordinate: (signatory.x_coordinate / imageSize.width) * documentContainer.current.offsetWidth,
                 absolute_y_coordinate: (signatory.y_coordinate / imageSize.height) * documentContainer.current.offsetHeight
             }
-
             setDocument(documentCopy);
         })
     }
@@ -139,20 +134,9 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
     const renderModals = () => {
         if (modal === signDocumentConst) {
-            return <SignDocument
-                user={user || decode(userToken)}
-                setModal={setModal}
-                closeModal={() => setModal("")}
-                signingDocument={documents.signingDocument}
-                documentSignature={documentSignature}
-                setDocumentSignature={setDocumentSignature}
-                signatureCanvas={signatureCanvas}
-                signature={signature}
-                setSignature={setSignature}
-                signatureType={signatureType}
-                setSignatureType={setSignatureType}
-                signDocument={signDocument}
-                uploadSignatureFile={uploadSignatureFile} />;
+            return <SignDocument user={user || decode(userToken)} setModal={setModal} closeModal={() => setModal("")} signingDocument={documents.signingDocument}
+                documentSignature={documentSignature} setDocumentSignature={setDocumentSignature} signatureCanvas={signatureCanvas} signature={signature}
+                setSignature={setSignature} signatureType={signatureType} setSignatureType={setSignatureType} signDocument={signDocument} uploadSignatureFile={uploadSignatureFile} />;
         }
         return <div></div>;
     }
@@ -162,13 +146,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
         if (imageError === false) {
             return <PageContainer className={`${isNumPagesSet ? width75percent : ''}`}>
-                <img
-                    ref={documentContainer}
-                    onLoad={calculateOffset}
-                    onError={() => setImageError(true)}
-                    src={document.document.file}
-                    className="full-width right-margin-10"
-                    alt="NIBSS Upload Document" />
+                <img ref={documentContainer} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file}
+                    className="full-width right-margin-10" alt="NIBSS Upload Document" />
                 {document.document.signatories
                     .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
                     .map((signatory, index) =>
@@ -223,9 +202,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal("")}>
-                    {renderModals()}
-                </ModalContainer>
+                <ModalContainer closeModal={() => setModal("")}>{renderModals()}</ModalContainer>
                 : ""}
             <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>
                 <div
