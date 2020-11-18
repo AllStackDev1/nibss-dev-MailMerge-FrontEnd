@@ -7,8 +7,6 @@ export function buildQuery(data) {
     // Create a query array to hold the key/value pairs
     var query = [];
 
-    console.log(data);
-
     // Loop through the data object
     for (var key in data) {
         if (data.hasOwnProperty(key)) {

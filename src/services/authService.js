@@ -9,6 +9,7 @@ export const authService = {
     getToken,
     fetchProfile,
     updateProfile,
+    updateAccount,
     deleteSignature
 };
 
@@ -158,6 +159,16 @@ function updateProfile(user) {
 
             return updateUser;
         });
+}
+
+function updateAccount(user) {
+    return new Promise((resolve, reject) => {
+        user.account = decode(user._token);
+
+        localStorage.setItem(`nibss-user`, JSON.stringify(user));
+
+        resolve(user);
+    })
 }
 
 function deleteSignature(signature) {

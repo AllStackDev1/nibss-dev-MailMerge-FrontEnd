@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
-const DashboardSidebar = ({ routes, logout, location, user }) => {
+const DashboardSidebar = ({ routes, logout, location, user = {} }) => {
     const routePath = route => {
         if (route.path.includes("/:")) {
             return route.path.split("/:")[0]
@@ -75,7 +75,7 @@ const DashboardSidebar = ({ routes, logout, location, user }) => {
                                 </Link>
                             </div>
                             :
-                            ((user.data.role === "user" && route.user) || user.data.role === "administrator") &&
+                            ((user?.data?.role === "user" && route.user) || user?.data?.role === "administrator") &&
                             <Link to={`/dashboard${routePath(route)}`} key={index}>
                                 <RouteLink
                                     className={`${routeActiveClass(route)}`}>

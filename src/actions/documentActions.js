@@ -155,15 +155,11 @@ function signDocumentNew(file, documentId, userToken) {
             .then(res => {
                 toast.success(res.data.message);
 
-                console.log(res);
-
                 dispatch(success(res.data.data));
                 dispatch(push(`/dashboard/documents`));
             })
             .catch(err => {
                 dispatch(failure());
-
-                console.log(err);
 
                 if (err.response) {
                     if (err.response.data) {

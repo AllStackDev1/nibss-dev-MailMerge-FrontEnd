@@ -131,7 +131,6 @@ function exportDocument(type) {
                 a.click();
             }).catch(function (error) {
                 dispatch(failure());
-                console.log(error);
             });
     };
 

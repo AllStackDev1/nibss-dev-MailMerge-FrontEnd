@@ -248,41 +248,30 @@ const Documents = withRouter(({ location }) => {
                             box-shadow-less2`}>
                         {step < 5 &&
                             <div className="display-flex align-items-center justify-center no-select">
-                                <Step
-                                    className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
+                                <Step className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
                                     1
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step
-                                    className={`${step === 2 && activeStepClass} ${documentStepClasses}`}>
+                                <Step className={`${step === 2 && activeStepClass} ${documentStepClasses}`}>
                                     2
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step
-                                    className={`${step === 3 && activeStepClass} ${documentStepClasses}`}>
+                                <Step className={`${step === 3 && activeStepClass} ${documentStepClasses}`}>
                                     3
                                 </Step>
                                 <StepDelimiter></StepDelimiter>
-                                <Step
-                                    className={`${step === 4 && activeStepClass} ${documentStepClasses}`}>
+                                <Step className={`${step === 4 && activeStepClass} ${documentStepClasses}`}>
                                     4
                                 </Step>
                             </div>}
                         {step === 1 &&
-                            <SetupSignatories
-                                document={document}
-                                selectUser={selectUser} />}
+                            <SetupSignatories document={document} selectUser={selectUser} />}
                         {step === 2 &&
-                            <SetupRecipients
-                                document={document}
-                                addRecipient={addRecipient}
+                            <SetupRecipients document={document} addRecipient={addRecipient}
                             />}
                         {step === 3 &&
-                            <SigningSetup
-                                signatories={document.signatories}
-                                placeholders={placeholders}
-                                documentFiles={documentFiles}
-                                setPlaceholders={setPlaceholders}
+                            <SigningSetup signatories={document.signatories} placeholders={placeholders} 
+                                documentFiles={documentFiles} setPlaceholders={setPlaceholders}
                             />}
                         {step === 4 &&
                             <div className="full-width width-85-percent margin-auto">
@@ -291,8 +280,7 @@ const Documents = withRouter(({ location }) => {
                                 <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
 
                                 <Gray className="min-height-350 display-flex top-margin-40 border-box bottom-padding-30 padding-10 border-radius-15">
-                                    <RTE
-                                        onChange={documentBody => setDocument({ ...document, documentBody })} />
+                                    <RTE onChange={documentBody => setDocument({ ...document, documentBody })} />
                                 </Gray>
                                 <p className="bottom-margin-20 top-margin-30 size-pointnine-rem bold">Document Attachment</p>
                                 {documentFiles &&

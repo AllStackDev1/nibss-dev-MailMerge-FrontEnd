@@ -1,6 +1,5 @@
 import { documentActions } from "actions/documentActions";
 import { getImageSize, toFile } from "helpers";
-import { getColor } from "helpers/getColor";
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,6 +9,7 @@ import SignDocument from "./modals/SignDocument";
 import decode from 'jwt-decode';
 import { Document, Page, pdfjs } from "react-pdf";
 import { toast } from "react-toastify";
+import Trigger from "./snippets/append-signature/Trigger";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
@@ -61,7 +61,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                 }
             } else {
                 if (documents.fetchingSingle === false) {
-                    console.log("Fetching single document");
                     dispatch(documentActions.fetchSingle(urlDocumentId ? urlDocumentId : documentId, userToken));
                 }
             }
@@ -79,13 +78,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     signatureImage = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
                 } else {
                     var style = {
-                        font: 'Poppins',
-                        align: 'center',
-                        color: 'black',
-                        size: 30,
-                        background: 'transparent',
-                        stroke: 1,
-                        strokeColor: 'rgba(0, 0, 0, 1)'
+                        font: 'Poppins', align: 'center', color: 'black', size: 30, background: 'transparent', stroke: 1, strokeColor: 'rgba(0, 0, 0, 1)'
                     };
 
                     var textImage = window.TextImage(style);
@@ -180,15 +173,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
                     .map((signatory, index) =>
                         signatory.absolute_x_coordinate !== undefined ?
-                            <div
-                                onClick={() => setModal(signDocumentConst)}
-                                key={index}
-                                className="width-150 height-35 absolute cursor-pointer"
-                                style={{
-                                    left: signatory.absolute_x_coordinate,
-                                    top: signatory.absolute_y_coordinate,
-                                    backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email)
-                                }}></div>
+                            <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
+                                user={user} userToken={userToken} />
                             : <div></div>
                     )}
             </PageContainer>
@@ -209,15 +195,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                             .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
                             .map((signatory, i) =>
                                 signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
-                                    <div
-                                        onClick={() => setModal(signDocumentConst)}
-                                        key={index}
-                                        className="width-150 height-35 absolute cursor-pointer"
-                                        style={{
-                                            left: signatory.absolute_x_coordinate,
-                                            top: signatory.absolute_y_coordinate,
-                                            backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email)
-                                        }}></div>
+                                    <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
+                                        user={user} userToken={userToken} />
                                     : <div></div>
                             )}
                     </PageContainer>
@@ -250,22 +229,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                 : ""}
             <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>
                 <div
-                    className={`onboarding 
-                        display-flex 
-                        flex-direction-column 
-                        align-items-center 
-                        bottom-padding-50 
-                        smooth 
-                        overflow-hidden 
-                        width-70-percent 
-                        margin-auto 
-                        top-margin-70 
-                        bottom-margin-5-percent 
-                        border-box 
-                        top-padding-50 
-                        white 
-                        border-radius-10 
-                        box-shadow-less2`}>
+                    className={`onboarding display-flex flex-direction-column align-items-center bottom-padding-50 smooth overflow-hidden 
+                        width-70-percent margin-auto top-margin-70 bottom-margin-5-percent border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
                     {!document.document ?
                         <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
                         :

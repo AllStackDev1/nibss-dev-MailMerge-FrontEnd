@@ -54,7 +54,6 @@ const SetupRecipients = ({ document, addRecipient }) => {
     const fetchMoreRecipients = e => {
         if ((e.target.scrollHeight - e.target.scrollTop) - e.target.clientHeight < 20) {
             if (recipients.fetching === false && (recipients.documentRecipients.pagination.current !== recipients.documentRecipients.pagination.number_of_pages)) {
-                console.log('Fetching more data');
                 dispatch(recipientActions.fetchPage(recipients.documentRecipients.pagination.next, 'document'));
             }
         }

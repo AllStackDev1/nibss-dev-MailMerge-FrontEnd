@@ -100,7 +100,6 @@ const Users = ({ user: localUser }) => {
     }
 
     const deleteUser = () => {
-        console.log(toDelete);
         dispatch(userActions.deleteUser(toDelete));
     }
 

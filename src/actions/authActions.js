@@ -95,15 +95,14 @@ function saveSignature(file, add) {
                 },
                 headers
             })
-            .then(res => {
+            .then(async res => {
                 toast.success(res.data.message);
 
                 if (add) {
                     dispatch(push(`/dashboard/user-profile`));
-                // } else {
-                //     console.log(res);
-                //     let user = res.data;
                 }
+
+                await authService.updateAccount(res.data);
 
                 dispatch(success(res, add));
             })
