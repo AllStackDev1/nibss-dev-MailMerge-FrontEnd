@@ -44,11 +44,9 @@ const Documents = withRouter(({ location }) => {
     useEffect(() => {
         const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
         const typeTabs = { "pending": 2, "signed": 3, "rejected": 4 };
-
         if (type) {
             setTab(typeTabs[type] || "");
         }
-
         if (pageId) {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(documentActions.fetchPage(type ? type : '', pageId));
@@ -101,22 +99,18 @@ const Documents = withRouter(({ location }) => {
 
     const onDrop = useCallback(acceptedFiles => {
         var r = new FileReader();
-
         r.onloadend = function (e) {
             setDocumentFiles(d => [
                 ...d,
                 e.target.result
             ]);
         }
-
         r.readAsDataURL(acceptedFiles[0], "UTF-8");
 
-        // Do something with the files
         setDocument(d => ({
             ...d,
             file: acceptedFiles[0]
         }));
-
         setUploadingDocument(true);
         setModal("");
         setStep(1);
@@ -128,9 +122,7 @@ const Documents = withRouter(({ location }) => {
 
     const fetch = type => {
         setFetching(true);
-
         dispatch(documentActions.fetch(type ? type : ''));
-
         if (type) {
             dispatch(push(`/dashboard/documents?type=${type}`));
         } else {
@@ -200,14 +192,12 @@ const Documents = withRouter(({ location }) => {
                             <SetupRecipients document={document} addRecipient={addRecipient} />}
                         {step === 3 &&
                             <SigningSetup signatories={document.signatories} placeholders={placeholders}
-                                documentFiles={documentFiles} setPlaceholders={setPlaceholders}
-                            />}
+                                documentFiles={documentFiles} setPlaceholders={setPlaceholders} />}
                         {step === 4 &&
                             <div className="full-width width-85-percent margin-auto">
                                 <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">Preview</p>
                                 <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Preview the document send it</p>
                                 <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
-
                                 <Gray className="min-height-350 display-flex top-margin-40 border-box bottom-padding-30 padding-10 border-radius-15">
                                     <RTE onChange={documentBody => setDocument({ ...document, documentBody })} />
                                 </Gray>
@@ -223,13 +213,11 @@ const Documents = withRouter(({ location }) => {
                             <BottomNav
                                 className={`height-80 width-85-percent margin-auto border-top-gray no-shrink absolute bottom 
                                     above display-flex align-items-center space-between`}>
-                                <p
-                                    onClick={() => setStep(s => s < 3 ? s + 1 : s - 1)}
+                                <p onClick={() => setStep(s => s < 3 ? s + 1 : s - 1)}
                                     className="size-pointnine-rem mustard-color no-select cursor-pointer bold">
                                     {renderSkipText()}
                                 </p>
-                                <button
-                                    onClick={() => { step < 4 ? setStep(s => s + 1) : prepareDocument() }}
+                                <button onClick={() => { step < 4 ? setStep(s => s + 1) : prepareDocument() }}
                                     className={`left-padding-20 right-padding-20 height-40 mustard white-color border-radius-2 
                                         display-flex justify-center align-items-center`}>
                                     {renderNextContent()}
@@ -247,8 +235,7 @@ const Documents = withRouter(({ location }) => {
                         </ModalContainer>}
                     <div className="full-width border-box left-padding-30 right-padding-30">
                         <PageTitle
-                            title="Documents"
-                        />
+                            title="Documents" />
                         <Tabs fetch={fetch} tab={tab} setTab={setTab} documents={documents} fetching={fetching} />
                         <UploadButton
                             onClick={() => setModal("create-document")}
@@ -261,8 +248,7 @@ const Documents = withRouter(({ location }) => {
                             viewStats={viewStats} tab={tab} />
                     </div>
                 </>}
-        </div>
-    )
+        </div>)
 });
 
 const UploadButton = styled.div`

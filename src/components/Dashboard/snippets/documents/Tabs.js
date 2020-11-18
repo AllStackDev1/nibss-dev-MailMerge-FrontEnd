@@ -27,24 +27,37 @@ const DocumentTabs = ({ fetch, tab, setTab, documents, fetching }) => {
     return (
         <Tabs className="height-60 full-width display-flex no-select">
             <Tab
-                onClick={() => { fetch(); setTab(1) }}
+                onClick={() => {
+                    fetch();
+                    setTab(1)
+                }}
                 className={`${tab === 1 && activeTabClass} ${tabClasses}`}>
                 All Documents {renderTabStats(1, 'total_documents', true)}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
-            <Tab onClick={() => { fetch("pending"); setTab(2) }}
+            <Tab
+                onClick={() => {
+                    fetch("pending");
+                    setTab(2)
+                }}
                 className={`${tab === 2 && activeTabClass} ${tabClasses}`}>
                 Pending Documents {renderTabStats(2, 'pending_document')}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
             <Tab
-                onClick={() => { fetch("signed"); setTab(3) }}
+                onClick={() => {
+                    fetch("signed");
+                    setTab(3)
+                }}
                 className={`${tab === 3 && activeTabClass} ${tabClasses}`}>
                 Signed Documents {renderTabStats(3, 'signed_document')}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
             <Tab
-                onClick={() => { fetch("rejected"); setTab(4) }}
+                onClick={() => {
+                    fetch("rejected");
+                    setTab(4)
+                }}
                 className={`${tab === 4 && activeTabClass} ${tabClasses}`}>
                 Rejected Documents {renderTabStats(4, 'rejected_document')}
                 <div className="full-width height-0 smooth"></div>
