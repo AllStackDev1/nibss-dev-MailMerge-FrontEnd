@@ -68,8 +68,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
             recipients.documentSearchRecipients :
             recipients.documentRecipients;
 
-
-        return (toLoop).map((recipient, index) =>
+        return (toLoop).data.map((recipient, index) =>
             <div key={index} onClick={() => addRecipient(recipient)} className="cursor-pointer bottom-margin-20">
                 <input
                     type="checkbox"
