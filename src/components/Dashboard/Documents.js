@@ -172,24 +172,17 @@ const Documents = withRouter(({ location }) => {
             {uploadingDocument ?
                 <>
                     {step < 5 &&
-                        <BackButton
-                            onClick={() => setUploadingDocument(false)}
+                        <BackButton onClick={() => setUploadingDocument(false)}
                             className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                             BACK
                         </BackButton>}
-                    <Container
-                        className={`${(step === 3 || step === 4) && documentContainerClass} 
+                    <Container className={`${(step === 3 || step === 4) && documentContainerClass} 
                             ${step === 5 && completeClass} onboarding width-80-percent bottom-padding-80 display-flex flex-direction-column 
                             align-items-center margin-auto top-margin-25 border-box top-padding-50 white border-radius-10 box-shadow-less2`}>
-                        {step < 5 &&
-                            <div className="display-flex align-items-center justify-center no-select">
-                                <Steps step={step} />
-                            </div>}
-                        {step === 1 &&
-                            <SetupSignatories document={document} selectUser={selectUser} />}
-                        {step === 2 &&
-                            <SetupRecipients document={document} addRecipient={addRecipient} />}
+                        {step < 5 && <Steps step={step} />}
+                        {step === 1 && <SetupSignatories document={document} selectUser={selectUser} />}
+                        {step === 2 && <SetupRecipients document={document} addRecipient={addRecipient} />}
                         {step === 3 &&
                             <SigningSetup signatories={document.signatories} placeholders={placeholders}
                                 documentFiles={documentFiles} setPlaceholders={setPlaceholders} />}
@@ -207,8 +200,7 @@ const Documents = withRouter(({ location }) => {
                                         <img src={documentFile} key={index} className="height-100 bottom-margin-30" alt="NIBSS Upload Document" />
                                     )}
                             </div>}
-                        {step === 5 &&
-                            <DocumentCreationSuccessful setUploadingDocument={setUploadingDocument} />}
+                        {step === 5 && <DocumentCreationSuccessful setUploadingDocument={setUploadingDocument} />}
                         {step < 5 &&
                             <BottomNav
                                 className={`height-80 width-85-percent margin-auto border-top-gray no-shrink absolute bottom 
@@ -234,11 +226,9 @@ const Documents = withRouter(({ location }) => {
                                     setUploadingDocument={setUploadingDocument} />}
                         </ModalContainer>}
                     <div className="full-width border-box left-padding-30 right-padding-30">
-                        <PageTitle
-                            title="Documents" />
+                        <PageTitle title="Documents" />
                         <Tabs fetch={fetch} tab={tab} setTab={setTab} documents={documents} fetching={fetching} />
-                        <UploadButton
-                            onClick={() => setModal("create-document")}
+                        <UploadButton onClick={() => setModal("create-document")}
                             className={`cursor-pointer top-margin-30 bottom-margin-20 full-width height-60 display-flex align-items-center 
                                 justify-center size-pointeight-rem bold`}>
                             <img src={require(`images/icons/dashboard/upload.svg`)} className="height-20 right-margin-10" alt="NIBSS Upload Document" />

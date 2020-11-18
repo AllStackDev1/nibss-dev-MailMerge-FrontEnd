@@ -13,7 +13,7 @@ const Steps = ({ step }) => {
     const activeStepClass = 'active-step';
 
     return (
-        <>
+        <div className="display-flex align-items-center justify-center no-select">
             <Step className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
                 1
             </Step>
@@ -29,7 +29,7 @@ const Steps = ({ step }) => {
             <Step className={`${step === 4 && activeStepClass} ${documentStepClasses}`}>
                 4
             </Step>
-        </>)
+        </div>)
 }
 
 export default Steps;
