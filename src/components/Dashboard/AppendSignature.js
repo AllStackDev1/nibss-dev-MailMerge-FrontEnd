@@ -136,7 +136,8 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         if (modal === signDocumentConst) {
             return <SignDocument user={user || decode(userToken)} setModal={setModal} closeModal={() => setModal("")} signingDocument={documents.signingDocument}
                 documentSignature={documentSignature} setDocumentSignature={setDocumentSignature} signatureCanvas={signatureCanvas} signature={signature}
-                setSignature={setSignature} signatureType={signatureType} setSignatureType={setSignatureType} signDocument={signDocument} uploadSignatureFile={uploadSignatureFile} />;
+                setSignature={setSignature} signatureType={signatureType} setSignatureType={setSignatureType} signDocument={signDocument}
+                uploadSignatureFile={uploadSignatureFile} />;
         }
         return <div></div>;
     }

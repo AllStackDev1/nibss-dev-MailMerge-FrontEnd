@@ -10,43 +10,46 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
         return <span>UPDATE TAGS</span>;
     }
 
+    const renderTags = () => {
+        if (tags === undefined) {
+            return <div className="full-height full-width display-flex align-items-center justify-center right-padding-10 bottom-padding-50 border-box">
+                <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
+            </div>
+        }
+
+        return tags?.map((tag, index) =>
+            <Tag
+                key={index}
+                onClick={() => {
+                    (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ?
+                        setTags.filter(item => item !== tag.name) :
+                        [...toAddTags, tag.name])
+                }}
+                className={`${deleting === tag ? 'opacity-0-5' : ''} 
+                            ${toAddTags.includes(tag.name) ? 'active-tag' : ''} 
+                            no-select uppercase`}>
+                {tag.name}
+                {toAddTag === false ?
+                    <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
+                    : ""}
+            </Tag>
+        );
+    }
+
     return (
-        <Overlay onClick={closeTags} className={`${viewingTags ? 'view-tags' : ''} full-width full-height absolute left above display-flex flex-end`}>
+        <Overlay onClick={closeTags} className={`${viewingTags && 'view-tags'} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">
                 <p className="top-padding-50 bottom-padding-20 text-right no-shrink right-padding-30 border-box bold no-select">
                     <span className="cursor-pointer" onClick={() => setModal("create-tag")}>Create New Tag</span>
                 </p>
-                {toAddTag ?
+                {toAddTag &&
                     <p className="bottom-padding-20 no-shrink size-pointeight-rem left-padding-30 border-box bold no-select">
                         ADD TAGS FOR {recipients.data.find(recipient => recipient._id === toAddTag).name}
-                    </p>
-                    : ""}
+                    </p>}
                 <div className="display-flex top-padding-10 flex-wrap full-height overflow-auto-y custom-scrollbar left-padding-30 border-box flex-start-content">
-                    {tags === undefined ?
-                        <div className="full-height full-width display-flex align-items-center justify-center right-padding-10 bottom-padding-50 border-box">
-                            <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>
-                        </div>
-                        :
-                        tags?.map((tag, index) =>
-                            <Tag
-                                key={index}
-                                onClick={() => {
-                                    (toAddTag !== false) && setToAddTags(setTags => setTags.includes(tag.name) ?
-                                        setTags.filter(item => item !== tag.name) :
-                                        [...toAddTags, tag.name])
-                                }}
-                                className={`${deleting === tag ? 'opacity-0-5' : ''} 
-                                        ${toAddTags.includes(tag.name) ? 'active-tag' : ''} 
-                                        no-select uppercase`}>
-                                {tag.name}
-                                {toAddTag === false ?
-                                    <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
-                                    : ""}
-                            </Tag>
-                        )
-                    }
+                    {renderTags()}
                 </div>
-                {toAddTag ?
+                {toAddTag &&
                     <div className={`full-width 
                         height-70 
                         absolute 
@@ -75,8 +78,7 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                                 right-margin-30`}>
                             {renderUpdateText()}
                         </button>
-                    </div>
-                    : ""}
+                    </div>}
             </div>
         </Overlay>
     )
