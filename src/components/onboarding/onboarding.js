@@ -24,9 +24,9 @@ const Onboarding = props => {
     }, [dispatch]);
 
     useEffect(() => {
-            if (userLocal?.data.status === "active") {
-                setStep(2);
-            }
+        if (userLocal?.data.status === "active") {
+            setStep(2);
+        }
     }, [userLocal]);
 
     useEffect(() => {
@@ -40,13 +40,11 @@ const Onboarding = props => {
     }, [auth.uploading, auth.uploaded, userLocal]);
 
     useEffect(() => {
-        if (user.invitingUsers === false && user.users) {
-            if (userLocal.data.role === "administrator") {
-                if (userLocal.data.status === "active") {
-                    dispatch(push(`/dashboard/index`));
-                } else {
-                    setStep(s => s + 1);
-                }
+        if (userLocal?.data?.role === "administrator" && user.invitingUsers === false && user.users) {
+            if (userLocal.data.status === "active") {
+                dispatch(push(`/dashboard/index`));
+            } else {
+                setStep(s => s + 1);
             }
         }
     }, [user.invitingUsers, user.users, userLocal.data, dispatch]);

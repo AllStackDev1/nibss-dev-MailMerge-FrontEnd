@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from 'actions/userActions';
 import { Link } from 'react-router-dom';
-import Invite from './snippets/invite';
+import Invite from './snippets/Invite';
+import InviteForm from './snippets/inviteForm';
 
 const InviteUsers = ({ add }) => {
     const [invite, setInvite] = useState({});
@@ -92,45 +93,7 @@ const InviteUsers = ({ add }) => {
                             <Invite inviteInstance={inviteInstance} index={index} invited={invited} setInvited={setInvited} />
                         )}
                     </div>}
-                <form onSubmit={addInvite}>
-                    <div className="full-width display-flex">
-                        <div className="width-50-percent right-margin-20">
-                            <input type="text" name="name" onChange={onChange} value={invite.name || ""} placeholder="Full Name" required />
-                        </div>
-                        <div className="width-50-percent">
-                            <input type="email" name="email" onChange={onChange} value={invite.email || ""} placeholder="Email Address" required />
-                        </div>
-                    </div>
-                    <div className="full-width display-flex top-margin-30 space-between">
-                        <div>
-                            <p className="size-pointeight-rem bold">Invite as Admin</p>
-                            <p className="size-pointseven-rem light-gray-color">Choose to invite this user as an Administrator</p>
-                        </div>
-                        <div className="right-margin-20">
-                            <select
-                                value={role}
-                                onChange={e => setRole(e.target.value)}
-                                className="select-role height-30 border-radius-5 no-outline border-gray border-width-2 left-padding-10 right-padding-10">
-                                <option value="user">User</option>
-                                <option value="administrator">Administrator</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="full-width display-flex top-margin-30 space-between">
-                        <button type="submit" className="left-padding-30 right-padding-30 height-45 box-shadow-less border-radius-5 display-flex align-items-center">
-                            <img src={require(`images/icons/email-send.svg`)} className="height-15" alt="Invite users" />
-                            <span className="mustard-color bold size-pointeightfive-rem left-padding-10">INVITE</span>
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => { document.getElementById('csv_file').click() }}
-                            className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
-                            <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
-                            <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
-                        </button>
-                        <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
-                    </div>
-                </form>
+                <InviteForm addInvite={addInvite} invite={invite} onChange={onChange} role={role} setRole={setRole} parseCSV={parseCSV} />
             </div>
             <div
                 className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 
