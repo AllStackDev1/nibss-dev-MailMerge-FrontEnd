@@ -99,19 +99,15 @@ export default function recipient(state, action) {
                 editingRecipient: true
             };
         case recipientConstants.EDIT_RECIPIENT_SUCCESS: {
-            if (state.recipients) {
-                if (state.recipients.data) {
-                    state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
-                        ...action.recipient.data
-                    }
+            if (state.recipients?.data) {
+                state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
+                    ...action.recipient.data
                 }
             }
 
-            if (state.searchRecipients) {
-                if (state.searchRecipients.data) {
-                    state.searchRecipients.data[state.searchRecipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
-                        ...action.recipient.data
-                    }
+            if (state.searchRecipients?.data) {
+                state.searchRecipients.data[state.searchRecipients.data.findIndex(r => r._id === action.recipient.data._id)] = {
+                    ...action.recipient.data
                 }
             }
 
@@ -147,12 +143,10 @@ export default function recipient(state, action) {
                 deleting: action.recipient
             };
         case recipientConstants.DELETE_RECIPIENT_SUCCESS:
-            if (state.recipients) {
-                if (state.recipients.data) {
-                    state.recipients.data = [
-                        ...state.recipients.data.filter((r) => r._id !== action.recipient.recipient._id)
-                    ];
-                }
+            if (state.recipients?.data) {
+                state.recipients.data = [
+                    ...state.recipients.data.filter((r) => r._id !== action.recipient.recipient._id)
+                ];
             }
 
             return {
@@ -191,7 +185,7 @@ export default function recipient(state, action) {
                 addingTagToRecipient: true
             };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS:
-            if (state.recipients.data) {
+            if (state.recipients?.data) {
                 state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient._id)] = {
                     ...action.recipient
                 }

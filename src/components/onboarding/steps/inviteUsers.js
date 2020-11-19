@@ -147,7 +147,6 @@ const InviteUsers = ({ add }) => {
                         <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
                     </div>
                 </form>
-
             </div>
             <div
                 className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 
