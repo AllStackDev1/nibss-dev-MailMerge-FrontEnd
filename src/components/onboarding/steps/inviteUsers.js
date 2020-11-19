@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from 'actions/userActions';
 import { Link } from 'react-router-dom';
+import Invite from './snippets/invite';
 
 const InviteUsers = ({ add }) => {
     const [invite, setInvite] = useState({});
@@ -84,30 +85,13 @@ const InviteUsers = ({ add }) => {
                 <p className="size-onepointfive-rem bold bottom-padding-10 text-center">Start Inviting Users</p>
                 <p className="size-pointeight-rem light-gray-color text-center bottom-margin-30">Send invitations to your colleagues and executives</p>
                 <div className="height-1 width-150 margin-auto border-top-gray bottom-margin-30"></div>
-                {invited.length > 0 ?
+                {invited.length > 0 &&
                     <div className="bottom-padding-30">
                         <p className="size-onepointtwo-rem bold bottom-padding-10 mid-gray-color">Invited</p>
                         {invited.map((inviteInstance, index) =>
-                            <div key={index} className="invited full-width display-flex space-between top-padding-10">
-                                <div>
-                                    <p className="size-pointnine-rem bold gray-color">{inviteInstance.name}</p>
-                                    <p className="size-pointeight-rem gray-color">{inviteInstance.email}</p>
-                                </div>
-                                <div
-                                    className="display-flex align-items-center"
-                                    style={{ '--vc-height': '25px', '--vc-width': '50px', '--vc-handle-width': '15px', '--vc-handle-height': '15px' }}>
-                                    {inviteInstance.administrator ?
-                                        <span className="size-pointeight-rem mustard-color bold right-margin-10">Administrator</span>
-                                        : ""}
-                                    <img
-                                        src={require(`images/icons/bin.svg`)}
-                                        onClick={() => setInvited(invited.filter((_, i) => i !== index))}
-                                        className="height-18 cursor-pointer" alt="Invite users" />
-                                </div>
-                            </div>
+                            <Invite inviteInstance={inviteInstance} index={index} invited={invited} setInvited={setInvited} />
                         )}
-                    </div>
-                    : ""}
+                    </div>}
                 <form onSubmit={addInvite}>
                     <div className="full-width display-flex">
                         <div className="width-50-percent right-margin-20">
