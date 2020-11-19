@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import InviteUsers from './steps/inviteUsers';
-import SaveSignature from './steps/saveSignature';
-import OnboardingSuccessful from './steps/onboardingSuccessful';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { authActions, userActions } from 'actions';
 import EmptySidebar from 'components/Dashboard/snippets/EmptySidebar';
+import OnboardingSteps from './steps/snippets/OnboardingSteps';
 
 const Onboarding = props => {
     const [step, setStep] = useState(1);
@@ -67,18 +65,7 @@ const Onboarding = props => {
                         white 
                         border-radius-10 
                         box-shadow-less2`}>
-                    {step === 1 &&
-                        <SaveSignature
-                            step={step}
-                            setStep={setStep} />}
-                    {step === 2 &&
-                        <InviteUsers
-                            step={step}
-                            setStep={setStep} />}
-                    {step === 3 &&
-                        <OnboardingSuccessful
-                            userLocal={userLocal} />}
-
+                    <OnboardingSteps step={step} setStep={setStep} userLocal={userLocal} />
                 </div>
             </div>
         </div>

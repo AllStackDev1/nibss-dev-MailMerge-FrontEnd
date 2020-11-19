@@ -61,7 +61,7 @@ const UserSearch = ({ selectUser }) => {
                     className="height-50"
                     placeholder="Full Name"
                     required />
-                {(users.searchResults && searchTerm !== "") || users.searchingUsers ?
+                {((users.searchResults && searchTerm !== "") || users.searchingUsers) &&
                     <SearchResults className="full-width min-height-40 white border-gray border-radius-5 absolute above-3 border-box padding-20 overflow-auto-y custom-scrollbar">
                         <div className="display-flex align-items-center">
                             <p className="size-pointeight-rem bold right-margin-10">USER SUGGESTIONS</p>
@@ -70,14 +70,13 @@ const UserSearch = ({ selectUser }) => {
                             </div>
                         </div>
                         {users.searchResults?.data.map((user, key) =>
-                            <UserSearchResult 
+                            <UserSearchResult
                                 key={key}
                                 user={user}
                                 selectUser={selectUser}
                                 setSearchTerm={setSearchTerm}
                                 length={users.searchResults.length} />)}
-                    </SearchResults>
-                    : ''}
+                    </SearchResults>}
             </div>
         </>
     )
