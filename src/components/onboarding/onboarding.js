@@ -24,11 +24,9 @@ const Onboarding = props => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (userLocal !== undefined) {
-            if (userLocal.data.status === "active") {
+            if (userLocal?.data.status === "active") {
                 setStep(2);
             }
-        }
     }, [userLocal]);
 
     useEffect(() => {
@@ -71,20 +69,17 @@ const Onboarding = props => {
                         white 
                         border-radius-10 
                         box-shadow-less2`}>
-                    {step === 1 ?
+                    {step === 1 &&
                         <SaveSignature
                             step={step}
-                            setStep={setStep} />
-                        : ""}
-                    {step === 2 ?
+                            setStep={setStep} />}
+                    {step === 2 &&
                         <InviteUsers
                             step={step}
-                            setStep={setStep} />
-                        : ""}
-                    {step === 3 ?
+                            setStep={setStep} />}
+                    {step === 3 &&
                         <OnboardingSuccessful
-                            userLocal={userLocal} />
-                        : ""}
+                            userLocal={userLocal} />}
 
                 </div>
             </div>
