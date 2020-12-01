@@ -143,11 +143,9 @@ export default function recipient(state, action) {
                 deleting: action.recipient
             };
         case recipientConstants.DELETE_RECIPIENT_SUCCESS:
-            if (state.recipients?.data) {
-                state.recipients.data = [
-                    ...state.recipients.data.filter((r) => r._id !== action.recipient.recipient._id)
-                ];
-            }
+            state.recipients.data = [
+                ...state.recipients.data.filter((r) => r._id !== action.recipient.recipient._id)
+            ];
 
             return {
                 ...state,
@@ -164,11 +162,9 @@ export default function recipient(state, action) {
                 deletingTag: action.tag
             };
         case recipientConstants.DELETE_TAG_SUCCESS:
-            if (state.tags) {
-                state.tags = [
-                    ...state.tags.filter((tag) => tag._id !== action.tag._id)
-                ];
-            }
+            state.tags = [
+                ...state.tags.filter((tag) => tag._id !== action.tag._id)
+            ];
 
             return {
                 ...state,
@@ -185,11 +181,10 @@ export default function recipient(state, action) {
                 addingTagToRecipient: true
             };
         case recipientConstants.ADD_TAG_TO_RECIPIENT_SUCCESS:
-            if (state.recipients?.data) {
-                state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient._id)] = {
-                    ...action.recipient
-                }
+            state.recipients.data[state.recipients.data.findIndex(r => r._id === action.recipient._id)] = {
+                ...action.recipient
             }
+
             return {
                 ...state,
                 addingTagToRecipient: false

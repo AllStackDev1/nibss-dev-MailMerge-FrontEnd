@@ -1,16 +1,15 @@
 import { documentActions } from "actions/documentActions";
-import { getImageSize, toFile } from "helpers";
+import { toFile } from "helpers";
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import ModalContainer from "./modals/ModalContainer";
 import SignDocument from "./modals/SignDocument";
-import decode from 'jwt-decode';
-import { Document, Page, pdfjs } from "react-pdf";
 import { toast } from "react-toastify";
-import Trigger from "./snippets/append-signature/Trigger";
-pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
+import AppendSignatureDocument from "./snippets/AppendSignatureDocument";
+import AppendSignatureImage from "./snippets/AppendSignatureImage";
+import decode from 'jwt-decode';
 
 const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const [document, setDocument] = useState({});
@@ -31,23 +30,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const signatureCanvas = useRef(null);
     const refs = useRef([React.createRef(), React.createRef()]);
     const refsFull = useRef([React.createRef(), React.createRef()]);
-
-    function onDocumentLoadSuccess({ numPages: numPs }) {
-        setNumPages(numPs);
-        refs.current = refs.current.splice(0, numPs);
-        for (let i = 0; i < numPs; i++) {
-            refs.current[i] = refs.current[i] || React.createRef();
-        }
-        refs.current = refs.current.map((item) => item || React.createRef());
-
-        refsFull.current = refsFull.current.splice(0, numPs);
-        for (let i = 0; i < numPs; i++) {
-            refsFull.current[i] = refsFull.current[i] || React.createRef();
-        }
-        refsFull.current = refsFull.current.map((item) => item || React.createRef());
-
-        setTimeout(calculateOffsetPDF, 1000);
-    }
 
     useEffect(() => {
         function setDocumentData(d) {
@@ -92,42 +74,6 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         }
     }
 
-    const calculateOffset = async e => {
-        const imageSize = await getImageSize(e.target);
-
-        document.document.signatories.forEach((signatory, i) => {
-            const documentCopy = Object.assign({}, document);
-            documentCopy.document.signatories[i] = {
-                ...signatory,
-                absolute_x_coordinate: (signatory.x_coordinate / imageSize.width) * documentContainer.current.offsetWidth,
-                absolute_y_coordinate: (signatory.y_coordinate / imageSize.height) * documentContainer.current.offsetHeight
-            }
-            setDocument(documentCopy);
-        })
-    }
-
-    const calculateOffsetPDF = e => {
-        document.document.signatories.forEach((signatory, i) => {
-            const documentCopy = Object.assign({}, document);
-
-            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]) {
-                if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current) {
-                    documentCopy.document.signatories[i] = {
-                        ...signatory,
-                        absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
-                            parseInt(signatory.page) :
-                            0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
-                        absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
-                            parseInt(signatory.page) :
-                            0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
-                    }
-
-                    setDocument(documentCopy);
-                }
-            }
-        })
-    }
-
     const uploadSignatureFile = file => {
         dispatch(documentActions.signDocumentNew(file.target.files[0], document.document._id, userToken));
     }
@@ -146,65 +92,60 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         const isNumPagesSet = numPages === undefined;
 
         if (imageError === false) {
-            return <PageContainer className={`${isNumPagesSet ? width75percent : ''}`}>
-                <img ref={documentContainer} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file}
-                    className="full-width right-margin-10" alt="NIBSS Upload Document" />
-                {document.document.signatories
-                    .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
-                    .map((signatory, index) =>
-                        signatory.absolute_x_coordinate !== undefined ?
-                            <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                                user={user} userToken={userToken} />
-                            : <div></div>
-                    )}
-            </PageContainer>
+            return <AppendSignatureImage
+                imageRef={documentContainer}
+                isNumPagesSet={isNumPagesSet}
+                width75percent={width75percent}
+                setImageError={setImageError}
+                setDocument={setDocument}
+                document={document}
+                user={user}
+                userToken={userToken}
+                signDocumentConst={signDocumentConst}
+                setModal={setModal}
+            />
         }
 
         return <>
-            <Document
+            <AppendSignatureDocument
+                document={document}
+                signDocumentConst={signDocumentConst}
                 file={document.document.file}
-                onLoadSuccess={onDocumentLoadSuccess}
-            >
-                {[...Array(numPages)].map((el, index) => (
-                    <PageContainer
-                        key={index}
-                        ref={refs.current[index]}
-                        className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
-                        <Page width={700} key={`page_${index + 1}`} pageNumber={index + 1} />
-                        {document.document.signatories
-                            .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
-                            .map((signatory, i) =>
-                                signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
-                                    <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                                        user={user} userToken={userToken} />
-                                    : <div></div>
-                            )}
-                    </PageContainer>
-                ))}
-            </Document>
+                pageWidth={700}
+                docRef={refs}
+                refs={refs}
+                refsFull={refsFull}
+                signatories={document.document.signatories
+                    .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))}
+                isNumPagesSet={isNumPagesSet}
+                width75percent={width75percent}
+                setDocument={setDocument}
+                setNumPages={setNumPages}
+                user={user}
+                userToken={userToken}
+            />
             <div className="hide height-0 overflow-hidden">
-                <Document
+                <AppendSignatureDocument
+                    document={document}
+                    signDocumentConst={signDocumentConst}
                     file={document.document.file}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                >
-                    {[...Array(numPages)].map((el, index) => (
-                        <PageContainer
-                            ref={refsFull.current[index]}
-                            key={index}
-                            className={`${isNumPagesSet || numPages === null ? width75percent : ''} bottom-margin-50`}>
-                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                        </PageContainer>
-                    ))}
-                </Document>
+                    docRef={refsFull}
+                    refs={refs}
+                    refsFull={refsFull}
+                    isNumPagesSet={isNumPagesSet}
+                    width75percent={width75percent}
+                    setDocument={setDocument}
+                    setNumPages={setNumPages}
+                    user={user}
+                    userToken={userToken}
+                />
             </div>
         </>
     }
 
     return (
         <>
-            {modal !== "" ?
-                <ModalContainer closeModal={() => setModal("")}>{renderModals()}</ModalContainer>
-                : ""}
+            {modal !== "" && <ModalContainer closeModal={() => setModal("")}>{renderModals()}</ModalContainer>}
             <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>
                 <div
                     className={`onboarding display-flex flex-direction-column align-items-center bottom-padding-50 smooth overflow-hidden 
@@ -234,12 +175,5 @@ const Loader = styled.div`
                         border-color: #9E7D0A transparent transparent transparent
                     }
                 `;
-
-const PageContainer = styled.div`
-                border: 1px solid #CCC !important;
-                &:hover {
-                    border: 1px dashed #d8d8d8 !important;
-                }
-            `;
 
 export default AppendSignature;

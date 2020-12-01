@@ -1,11 +1,8 @@
 /* eslint-disable */
 
 import React, { useEffect, useRef, useState } from "react"
-import User from "./snippets/User"
-import Pagination from "./snippets/Pagination"
 import Toolbox from "./snippets/Toolbox"
 import PageTitle from "./snippets/PageTitle"
-import EmptyUser from "./empty-states/User"
 import { useDispatch, useSelector } from "react-redux"
 import { userActions } from "actions"
 import { useParams } from "react-router-dom"
@@ -13,6 +10,7 @@ import { push } from "connected-react-router"
 import ModalContainer from "./modals/ModalContainer"
 import EditUser from "./modals/EditUser"
 import DeleteUser from "./modals/DeleteUser"
+import UserList from "./snippets/UserList"
 
 const Users = ({ user: localUser }) => {
     const [search, setSearch] = useState({});
@@ -135,33 +133,6 @@ const Users = ({ user: localUser }) => {
         return <div></div>;
     }
 
-    const renderUsers = () => {
-        if (users.platformUsers === undefined || (users.searching)) {
-            return <EmptyUser />;
-        }
-
-        const toLoop = (search.search !== "" || filter !== false) && users.searchResults ?
-            users.searchResults :
-            users.platformUsers;
-
-        return <>
-            {(toLoop).data.map((u, index) =>
-                <User
-                    key={index}
-                    setModal={setModal}
-                    setUser={setUser}
-                    deleteUser={initiateDeleteUser}
-                    updateRole={updateRole}
-                    userBeingUpdated={users.deleting || users.updatingRole}
-                    user={u} />
-            )}
-            <Pagination
-                data={toLoop}
-                viewPage={viewPage}
-            />
-        </>
-    }
-
     return (
         <>
             {modal !== "" ?
@@ -203,7 +174,15 @@ const Users = ({ user: localUser }) => {
                         </div>
                         <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
                     </div>
-                    {renderUsers()}
+                    {<UserList
+                        setModal={setModal}
+                        setUser={setUser}
+                        initiateDeleteUser={initiateDeleteUser}
+                        updateRole={updateRole}
+                        viewPage={viewPage}
+                        filter={filter}
+                        search={search}
+                        users={users} />}
                 </div>
             </div>
         </>

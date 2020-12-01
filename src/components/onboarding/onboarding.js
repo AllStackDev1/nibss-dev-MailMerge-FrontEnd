@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { authActions, userActions } from 'actions';
 import EmptySidebar from 'components/Dashboard/snippets/EmptySidebar';
-import OnboardingSteps from './steps/snippets/OnboardingSteps';
+import OnboardingContainer from './OnboardingContainer';
 
 const Onboarding = props => {
     const [step, setStep] = useState(1);
@@ -50,24 +50,7 @@ const Onboarding = props => {
     return (
         <div className="full-height-vh full-width display-flex light-brown">
             <EmptySidebar />
-            <div className={`${step === 3 ? 'display-flex align-items-center' : ''} full-width full-height overflow-scroll-y custom-scrollbar`}>
-                <div
-                    className={`
-                        ${step === 3 ? 'height-60-percent bottom-padding-50' : 'onboarding bottom-padding-150'} 
-                        smooth 
-                        overflow-hidden 
-                        width-70-percent 
-                        margin-auto 
-                        top-margin-70 
-                        bottom-margin-5-percent 
-                        border-box 
-                        top-padding-50 
-                        white 
-                        border-radius-10 
-                        box-shadow-less2`}>
-                    <OnboardingSteps step={step} setStep={setStep} userLocal={userLocal} />
-                </div>
-            </div>
+            <OnboardingContainer step={step} setStep={setStep} userLocal={userLocal} />
         </div>
     );
 }
