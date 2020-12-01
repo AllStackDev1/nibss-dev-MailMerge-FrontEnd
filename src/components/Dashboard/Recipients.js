@@ -1,21 +1,19 @@
 /* eslint-disable */
 
 import React, { useState, useEffect, useRef } from "react"
-import Recipient from "./snippets/Recipient";
-import Pagination from "./snippets/Pagination";
 import Toolbox from "./snippets/Toolbox";
 import PageTitle from "./snippets/PageTitle";
 import ViewTag from "./snippets/ViewTag";
 import ModalContainer from "./modals/ModalContainer";
 import AddRecipient from "./modals/AddRecipient";
 import CreateTag from "./modals/CreateTag";
-import EmptyRecipient from "./empty-states/Recipient";
 import { recipientActions } from "actions/recipientActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { push } from "connected-react-router";
 import DeleteTag from "./modals/DeleteTag";
 import DeleteRecipient from "./modals/DeleteRecipient";
+import RecipientList from "./snippets/RecipientList";
 
 const Recipients = ({ user }) => {
     const [recipient, setRecipient] = useState({});
@@ -224,44 +222,11 @@ const Recipients = ({ user }) => {
         }
     }
 
-    const renderRecipients = () => {
-        if (recipients.recipients === undefined || (recipients.searching)) {
-            return <EmptyRecipient />;
-        }
-
-        const toLoop = (search.search !== "" || filter.length > 0) && recipients.searchRecipients ?
-            recipients.searchRecipients :
-            recipients.recipients;
-
-        return <>
-            {(toLoop).data.map((r, index) =>
-                <Recipient
-                    key={index}
-                    setModal={setModal}
-                    setEditRecipient={setEditRecipient}
-                    deleteRecipient={initiateDeleteRecipient}
-                    recipient={r}
-                    toAddTag={toAddTag}
-                    initiateEdit={initiateEdit}
-                    recipientBeingDeleted={recipients.deleting} />
-            )}
-            <Pagination
-                data={toLoop}
-                viewPage={viewPage}
-            />
-        </>
-    }
-
     const renderModal = () => {
         if (modal === "add-recipient" || modal === "edit-recipient") {
             return <AddRecipient
-                recipient={recipient}
-                editRecipient={editRecipient}
-                modal={modal}
-                creating={recipients.addingRecipient || recipients.editingRecipient}
-                onChange={onChangeRecipient}
-                onChangeEdit={onChangeRecipientEdit}
-                onSubmit={addRecipient}
+                recipient={recipient} editRecipient={editRecipient} modal={modal} creating={recipients.addingRecipient || recipients.editingRecipient}
+                onChange={onChangeRecipient} onChangeEdit={onChangeRecipientEdit} onSubmit={addRecipient}
                 closeModal={() => {
                     setModal("");
                     setEditRecipient({});
@@ -270,16 +235,11 @@ const Recipients = ({ user }) => {
         }
         if (modal === "create-tag") {
             return <CreateTag
-                tag={tag}
-                creating={recipients.addingTag}
-                onChange={onChangeTag}
-                onSubmit={addTag}
-                closeModal={() => setModal("")} />
+                tag={tag} creating={recipients.addingTag} onChange={onChangeTag} onSubmit={addTag} closeModal={() => setModal("")} />
         }
         if (modal === "delete-tag") {
             return <DeleteTag
-                deleting={recipients.deletingTag}
-                onSubmit={deleteTag}
+                deleting={recipients.deletingTag} onSubmit={deleteTag}
                 closeModal={() => {
                     setModal("");
                     setTagToDelete({});
@@ -287,8 +247,7 @@ const Recipients = ({ user }) => {
         }
         if (modal === "delete-recipient") {
             return <DeleteRecipient
-                deleting={recipients.deleting}
-                onSubmit={deleteRecipient}
+                deleting={recipients.deleting} onSubmit={deleteRecipient}
                 closeModal={() => {
                     setModal("");
                     setRecipientToDelete({});
@@ -306,57 +265,22 @@ const Recipients = ({ user }) => {
                 </ModalContainer>
                 : ""}
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
-                <PageTitle
-                    title="Recipients"
-                />
+                <PageTitle title="Recipients" />
                 <Toolbox
-                    user={user}
-                    tag={true}
-                    upload={true}
-                    parseCSV={parseCSV}
-                    viewTags={viewTags}
-                    closeTags={closeTags}
-                    adding={recipients.addingRecipient}
-                    viewingTags={viewingTags}
-                    setModal={setModal}
-                    onChange={onChangeSearch}
-                    search={search}
-                    filter={filter}
-                    addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
-                    removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }}
-                    addButtonText="Add Recipient" />
+                    user={user} tag={true} upload={true} parseCSV={parseCSV} viewTags={viewTags} closeTags={closeTags}
+                    adding={recipients.addingRecipient} viewingTags={viewingTags} setModal={setModal} onChange={onChangeSearch}
+                    search={search} filter={filter} addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
+                    removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }} addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
                     <ViewTag
-                        recipients={recipients.recipients}
-                        tags={recipients.tags}
-                        updating={recipients.addingTagToRecipient}
-                        deleting={recipients.deletingTag}
-                        toAddTag={toAddTag}
-                        toAddTags={toAddTags}
-                        closeTags={closeTags}
-                        setModal={setModal}
-                        viewingTags={viewingTags}
-                        setToAddTags={setToAddTags}
-                        addTagsToRecipient={addTagsToRecipient}
+                        recipients={recipients.recipients} tags={recipients.tags} updating={recipients.addingTagToRecipient}
+                        deleting={recipients.deletingTag} toAddTag={toAddTag} toAddTags={toAddTags} closeTags={closeTags}
+                        setModal={setModal} viewingTags={viewingTags} setToAddTags={setToAddTags} addTagsToRecipient={addTagsToRecipient}
                         deleteTag={initiateDeleteTag}
                     />
-                    <div className="full-width display-flex space-between top-padding-30">
-                        <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
-                        <div className="no-shrink width-25-percent size-one-rem bold gray-color opacity-0-5">
-                            #
-                        </div>
-                        <div className="no-shrink width-20-percent size-one-rem bold gray-color opacity-0-5">
-                            Email address
-                        </div>
-                        <div className="no-shrink width-20-percent right-padding-20 left-padding-20 size-one-rem bold gray-color opacity-0-5">
-                            Tag
-                        </div>
-                        <div className="bold no-shrink height-25 width-100 right-margin-50 border-box opacity-0-5">
-                            Status
-                        </div>
-                        <div className="no-shrink width-50 size-pointnine-rem right-margin-30"></div>
-                    </div>
-                    {renderRecipients()}
+                    <RecipientList recipients={recipients} search={search} filter={filter}
+                        setModal={setModal} setEditRecipient={setEditRecipient} initiateDeleteRecipient={initiateDeleteRecipient}
+                        toAddTag={toAddTag} initiateEdit={initiateEdit} viewPage={viewPage} />
                 </div>
             </div>
         </>
