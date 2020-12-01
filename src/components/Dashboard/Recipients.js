@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import React, { useState, useEffect, useRef } from "react"
 import Toolbox from "./snippets/Toolbox";
 import PageTitle from "./snippets/PageTitle";
