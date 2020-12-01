@@ -20,14 +20,13 @@ const Toolbox = ({ user,
     tag,
     upload,
     adding,
-    viewTags,
+    setViewingTags,
     closeTags,
     viewingTags,
     exportButton,
     addButtonText,
     addButtonUrl,
     setModal,
-    parseCSV,
     exportDocument,
     downloading }) => {
     const dispatch = useDispatch();
@@ -42,12 +41,36 @@ const Toolbox = ({ user,
         }
     }, [dispatch, filterList]);
 
+    const viewTags = () => {
+        setViewingTags(true);
+    }
+
     const viewTagsClass = () => {
         if (upload === true) {
             return 'right-margin-20';
         }
 
         return rightMargin50
+    }
+
+    const parseCSV = file => {
+        var reader = new FileReader();
+        reader.readAsText(file.target.files[0], "UTF-8");
+        reader.onload = function (e) {
+            var csv = e.target.result;
+            var allTextLines = csv.split('\n');
+            const recipientArr = [];
+            for (const textLine of allTextLines) {
+                var data = textLine.split(',');
+                var row = {
+                    name: data[0].replace(/[\r\n]+/gm, ""),
+                    email: data[1].replace(/[\r\n]+/gm, "")
+                };
+                recipientArr.push(row);
+            }
+            dispatch(recipientActions.add(recipientArr, true));
+        }
+        file.target.value = null;
     }
 
     const renderDownloading = () => {
@@ -118,18 +141,8 @@ const Toolbox = ({ user,
                         onClick={() => { viewingTags ? closeTags() : viewTags() }}
                         className={`${viewingTags && 'active-button'} 
                             ${viewTagsClass()} 
-                            smooth 
-                            display-flex 
-                            align-items-center 
-                            justify-center 
-                            cursor-pointer 
-                            left-padding-15 
-                            right-padding-10 
-                            white 
-                            border-radius-5 
-                            box-shadow-less2 
-                            size-pointeight-rem 
-                            mustard-color`}>
+                            smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 
+                            right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color`}>
                         View Tags
                     </ActionButton>}
                 {upload === true &&
@@ -138,18 +151,8 @@ const Toolbox = ({ user,
                             onClick={() => { document.getElementById('csv_file').click() }}
                             className={`
                                 ${adding && 'active-button width-80'} 
-                                smooth 
-                                display-flex 
-                                align-items-center 
-                                justify-center 
-                                cursor-pointer 
-                                left-padding-15 
-                                right-padding-10 
-                                white 
-                                border-radius-5 
-                                box-shadow-less2 
-                                size-pointeight-rem 
-                                mustard-color 
+                                smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 
+                                right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color 
                                 ${user?.data?.role !== userLabel && rightMargin50}`
                             }>
                             {renderAdditionText()}

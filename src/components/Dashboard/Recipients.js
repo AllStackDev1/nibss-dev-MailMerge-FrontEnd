@@ -118,9 +118,6 @@ const Recipients = ({ user }) => {
             [name]: value
         });
     }
-    const viewTags = () => {
-        setViewingTags(true);
-    }
     const closeTags = () => {
         setViewingTags(false);
         setToAddTag(false);
@@ -163,26 +160,6 @@ const Recipients = ({ user }) => {
         setToAddTag(r);
         setToAddTags(recipients.recipients.data.find(rec => rec._id === r).tag);
         setViewingTags(true);
-    }
-
-    const parseCSV = file => {
-        var reader = new FileReader();
-        reader.readAsText(file.target.files[0], "UTF-8");
-        reader.onload = function (e) {
-            var csv = e.target.result;
-            var allTextLines = csv.split('\n');
-            const recipientArr = [];
-            for (const textLine of allTextLines) {
-                var data = textLine.split(',');
-                var row = {
-                    name: data[0].replace(/[\r\n]+/gm, ""),
-                    email: data[1].replace(/[\r\n]+/gm, "")
-                };
-                recipientArr.push(row);
-            }
-            dispatch(recipientActions.add(recipientArr, true));
-        }
-        file.target.value = null;
     }
 
     const viewPage = p => {
@@ -232,7 +209,7 @@ const Recipients = ({ user }) => {
                 </ModalContainer>}
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
                 <PageTitle title="Recipients" />
-                <Toolbox user={user} tag={true} upload={true} parseCSV={parseCSV} viewTags={viewTags} closeTags={closeTags}
+                <Toolbox user={user} tag={true} upload={true} setViewingTags={setViewingTags} closeTags={closeTags}
                     adding={recipients.addingRecipient} viewingTags={viewingTags} setModal={setModal} onChange={onChangeSearch}
                     search={search} filter={filter} addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
                     removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }} addButtonText="Add Recipient" />
