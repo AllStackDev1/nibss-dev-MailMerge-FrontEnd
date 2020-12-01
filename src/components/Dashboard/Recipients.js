@@ -30,10 +30,8 @@ const Recipients = ({ user }) => {
     });
     const [filter, setFilter] = useState([]);
     const [timer, setTimer] = useState();
-
     const dispatch = useDispatch();
     const recipients = useSelector(state => state.recipient);
-
     const { pageId } = useParams();
     const page = useRef(null);
 
@@ -51,13 +49,11 @@ const Recipients = ({ user }) => {
             dispatch(recipientActions.search(search.search, filter));
         }
     }, [dispatch, filter]);
-
     useEffect(() => {
         if (viewingTags === true) {
             dispatch(recipientActions.fetchTags());
         }
     }, [viewingTags, dispatch]);
-
     useEffect(() => {
         if (recipients.addingTag === false) {
             setModal("");
@@ -72,20 +68,17 @@ const Recipients = ({ user }) => {
             setRecipientToDelete({});
         }
     }, [recipients.addingTag, recipients.deleting, recipients.deletingTag]);
-
     useEffect(() => {
         if (recipients.addingRecipient === false || recipients.editingRecipient === false) {
             setModal("");
             setRecipient({});
         }
     }, [recipients.addingRecipient, recipients.editingRecipient]);
-
     useEffect(() => {
         if (recipients.addingTagToRecipient === false) {
             closeTags();
         }
     }, [recipients.addingTagToRecipient]);
-
     const onChangeSearch = event => {
         const { name, value } = event.target;
 
@@ -93,12 +86,10 @@ const Recipients = ({ user }) => {
             ...search,
             [name]: value
         });
-
         if (event.target.value !== "") {
             if (timer) {
                 clearTimeout(timer);
             }
-
             setTimer(() => {
                 return setTimeout(() => {
                     dispatch(recipientActions.search(value));
@@ -106,66 +97,52 @@ const Recipients = ({ user }) => {
             });
         }
     }
-
     const onChangeRecipient = event => {
         const { name, value } = event.target;
-
         setRecipient({
             ...recipient,
             [name]: value
         });
     }
-
     const onChangeRecipientEdit = event => {
         const { name, value } = event.target;
-
         setEditRecipient({
             ...editRecipient,
             [name]: value
         });
     }
-
     const onChangeTag = event => {
         const { name, value } = event.target;
-
         setTag({
             ...tag,
             [name]: value
         });
     }
-
     const viewTags = () => {
         setViewingTags(true);
     }
-
     const closeTags = () => {
         setViewingTags(false);
         setToAddTag(false);
         setToAddTags([]);
     }
-
     const addRecipient = e => {
         e.preventDefault();
-
         if (modal === "edit-recipient") {
             dispatch(recipientActions.edit(editRecipient));
         } else {
             dispatch(recipientActions.add(recipient));
         }
     }
-
     const initiateDeleteRecipient = r => {
         setRecipientToDelete(r);
         setModal("delete-recipient");
     }
-
     const deleteRecipient = () => {
         dispatch(recipientActions.deleteRecipient(recipientToDelete));
     }
-
     const addTag = e => {
         e.preventDefault();
-
         dispatch(recipientActions.addTag(tag));
     }
 
@@ -185,34 +162,26 @@ const Recipients = ({ user }) => {
     const initiateEdit = r => {
         setToAddTag(r);
         setToAddTags(recipients.recipients.data.find(rec => rec._id === r).tag);
-
         setViewingTags(true);
     }
 
     const parseCSV = file => {
         var reader = new FileReader();
         reader.readAsText(file.target.files[0], "UTF-8");
-
         reader.onload = function (e) {
             var csv = e.target.result;
             var allTextLines = csv.split('\n');
-
             const recipientArr = [];
-
             for (const textLine of allTextLines) {
                 var data = textLine.split(',');
-
                 var row = {
                     name: data[0].replace(/[\r\n]+/gm, ""),
                     email: data[1].replace(/[\r\n]+/gm, "")
                 };
-
                 recipientArr.push(row);
             }
-
             dispatch(recipientActions.add(recipientArr, true));
         }
-
         file.target.value = null;
     }
 
@@ -238,8 +207,7 @@ const Recipients = ({ user }) => {
                 tag={tag} creating={recipients.addingTag} onChange={onChangeTag} onSubmit={addTag} closeModal={() => setModal("")} />
         }
         if (modal === "delete-tag") {
-            return <DeleteTag
-                deleting={recipients.deletingTag} onSubmit={deleteTag}
+            return <DeleteTag deleting={recipients.deletingTag} onSubmit={deleteTag}
                 closeModal={() => {
                     setModal("");
                     setTagToDelete({});
@@ -253,31 +221,26 @@ const Recipients = ({ user }) => {
                     setRecipientToDelete({});
                 }} />
         }
-
         return <div></div>;
     }
 
     return (
         <>
-            {modal !== "" ?
+            {modal !== "" &&
                 <ModalContainer closeModal={() => setModal("")}>
                     {renderModal()}
-                </ModalContainer>
-                : ""}
+                </ModalContainer>}
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
                 <PageTitle title="Recipients" />
-                <Toolbox
-                    user={user} tag={true} upload={true} parseCSV={parseCSV} viewTags={viewTags} closeTags={closeTags}
+                <Toolbox user={user} tag={true} upload={true} parseCSV={parseCSV} viewTags={viewTags} closeTags={closeTags}
                     adding={recipients.addingRecipient} viewingTags={viewingTags} setModal={setModal} onChange={onChangeSearch}
                     search={search} filter={filter} addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
                     removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }} addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
-                    <ViewTag
-                        recipients={recipients.recipients} tags={recipients.tags} updating={recipients.addingTagToRecipient}
+                    <ViewTag recipients={recipients.recipients} tags={recipients.tags} updating={recipients.addingTagToRecipient}
                         deleting={recipients.deletingTag} toAddTag={toAddTag} toAddTags={toAddTags} closeTags={closeTags}
                         setModal={setModal} viewingTags={viewingTags} setToAddTags={setToAddTags} addTagsToRecipient={addTagsToRecipient}
-                        deleteTag={initiateDeleteTag}
-                    />
+                        deleteTag={initiateDeleteTag} />
                     <RecipientList recipients={recipients} search={search} filter={filter}
                         setModal={setModal} setEditRecipient={setEditRecipient} initiateDeleteRecipient={initiateDeleteRecipient}
                         toAddTag={toAddTag} initiateEdit={initiateEdit} viewPage={viewPage} />
