@@ -179,8 +179,7 @@ const Recipients = ({ user }) => {
                 }} />
         }
         if (modal === "create-tag") {
-            return <CreateTag
-                tag={tag} creating={recipients.addingTag} onChange={onChangeTag} onSubmit={addTag} closeModal={() => setModal("")} />
+            return <CreateTag tag={tag} creating={recipients.addingTag} onChange={onChangeTag} onSubmit={addTag} closeModal={() => setModal("")} />
         }
         if (modal === "delete-tag") {
             return <DeleteTag deleting={recipients.deletingTag} onSubmit={deleteTag}
