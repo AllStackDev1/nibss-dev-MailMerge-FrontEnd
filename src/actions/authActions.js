@@ -11,7 +11,7 @@ export const authActions = {
     deleteSignature,
     reset,
     fetchProfile,
-    updateProfile
+    updateProfile,
 };
 
 function login(user) {
