@@ -2,12 +2,8 @@ const mockDispatch = jest.fn()
 const mockSelector = jest.fn()
 
 const mockState = (state = {}) => {
-    // return mockSelector.mockImplementation(callback => {
-    //     return callback(state);
-    // });
-
-    return useSelector.mockImplementation(callback => {
-        return callback(mockAppState);
+    return mockSelector.mockImplementation(callback => {
+        return callback(state);
     });
 }
 

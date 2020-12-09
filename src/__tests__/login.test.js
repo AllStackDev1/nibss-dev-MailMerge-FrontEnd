@@ -1,15 +1,12 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Login from "../components/auth/login"
-import { mockDispatch, mockState, Provider } from "react-redux";
+import { Provider } from "react-redux";
 import { createStore } from 'redux';
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk';
 import reducer from '../reducers/authReducer';
+import { useSelector } from 'react-redux';
 
 
-const mockStore = configureMockStore([thunk]);
-// console.log("MOCK::>", mockState());
 
 /**
  * 
@@ -18,45 +15,52 @@ const mockStore = configureMockStore([thunk]);
  */
 
 const shallowSetup = (props = {}) => {
+    jest.mock("react-redux", () => ({
+        ...jest.requireActual("react-redux"),
+        useSelector: jest.fn()
+    }));
 
-    const store = mockStore(reducer, {
-        auth: {
-            loggingIn: false
-        }
-    });
+    const store = createStore(reducer, { auth: { loggingIn: false } });
 
-
-
-    const wrapper = shallow(
+    const wrapper = mount(
         <Provider store={store}>
             <Login />
         </Provider>
     )
 
-
-    return wrapper
+    return wrapper;
 }
 
-test('check if component renders', () => {
 
-    const wrapper = shallowSetup()
+describe("component renders", () => {
 
+    beforeEach(() => {
+        useSelector.mockImplementation(callback => {
+            return callback({ auth: { loggingIn: false } });
+        });
 
-    // expect(mockStore.getState().auth.loggingIn).toBe(false)
-    expect(wrapper).toBeTruthy();
+    });
 
+    afterEach(() => {
+        useSelector.mockClear();
+    });
+
+    it('should render login component successfully', () => {
+        const wrapper = shallowSetup()
+        expect(wrapper.find("[data-test='component-login']").length).toBe(1)
+    })
 })
 
 test('check for email field', () => {
 
     const wrapper = shallowSetup();
-
-    expect(wrapper.find('input').length).toBe(0)
+    expect(wrapper.find('[type="email"]').length).toBe(1)
 
 })
 
 test('check for password field', () => {
-
+    const wrapper = shallowSetup();
+    expect(wrapper.find('[type="password"]').length).toBe(1)
 })
 
 describe('if users enter a wrong login details', () => {

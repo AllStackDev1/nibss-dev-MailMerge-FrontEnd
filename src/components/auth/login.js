@@ -24,7 +24,7 @@ const Login = props => {
     }
 
     return (
-        <div className="auth full-height-vh full-width">
+        <div className="auth full-height-vh full-width" data-test="component-login">
             <div className="width-30-percent full-height display-flex flex-start flex-direction-column justify-center left-padding-80 no-select">
                 <img src={require(`images/logo.svg`)} className="height-80 bottom-margin-20" alt="NIBSS logo" />
                 <p className="size-onepointfive-rem bold bottom-margin-20">Login into your account</p>
