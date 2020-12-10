@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from 'actions/userActions';
 import { Link } from 'react-router-dom';
-import Invite from './snippets/Invite';
+import Invite from './snippets/invite';
 import InviteForm from './snippets/inviteForm';
 
 const InviteUsers = ({ add }) => {

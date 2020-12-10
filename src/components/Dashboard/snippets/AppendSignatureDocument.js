@@ -22,20 +22,18 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
         document.document.signatories.forEach((signatory, i) => {
             const documentCopy = Object.assign({}, document);
 
-            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]) {
-                if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0].current) {
-                    documentCopy.document.signatories[i] = {
-                        ...signatory,
-                        absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
-                            parseInt(signatory.page) :
-                            0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
-                        absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
-                            parseInt(signatory.page) :
-                            0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
-                    }
-
-                    setDocument(documentCopy);
+            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]?.current) {
+                documentCopy.document.signatories[i] = {
+                    ...signatory,
+                    absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
+                        parseInt(signatory.page) :
+                        0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
+                    absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
+                        parseInt(signatory.page) :
+                        0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
                 }
+
+                setDocument(documentCopy);
             }
         })
     }
@@ -51,14 +49,12 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
                     ref={docRef.current[index]}
                     className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
                     <Page width={pageWidth} key={`page_${index + 1}`} pageNumber={index + 1} />
-                    {signatories ?
-                        signatories.map((signatory, i) =>
-                            signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
-                                <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                                    user={user} userToken={userToken} />
-                                : <div></div>
-                        )
-                        : ""}
+                    {signatories?.map((signatory, i) =>
+                        signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
+                            <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
+                                user={user} userToken={userToken} />
+                            : <div></div>
+                    )}
                 </PageContainer>
             ))}
         </Document>

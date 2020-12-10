@@ -123,6 +123,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                 setNumPages={setNumPages}
                 user={user}
                 userToken={userToken}
+                setModal={setModal}
             />
             <div className="hide height-0 overflow-hidden">
                 <AppendSignatureDocument
