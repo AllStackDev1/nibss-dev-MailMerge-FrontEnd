@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const Signup = props => (
     <div className="auth full-height-vh full-width">
@@ -31,9 +31,9 @@ const Signup = props => (
             </div>
             <div className="display-flex size-pointeight-rem top-margin-30">
                 <p>Already have an account</p>
-                <Link to="/">
+                <a href="/">
                     <p className="bold mustard-color left-padding-40 cursor-pointer">Login</p>
-                </Link>
+                </a>
             </div>
         </div>
     </div>
