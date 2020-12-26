@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import About from "../components/about"
+import ProtectedAuth from "../components/common/ProtectedAuth"
 
 
 
 const shallowSetup = (props = {}) => {
-    return shallow(<About />)
+
+    return shallow(<ProtectedAuth />)
 }
 
 it('should match snapshot', () => {

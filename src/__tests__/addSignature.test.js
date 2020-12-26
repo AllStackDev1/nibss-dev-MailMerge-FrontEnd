@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import About from "../components/about"
+import AddSignature from "../components/Dashboard/AddSignature"
 
 
 
 const shallowSetup = (props = {}) => {
-    return shallow(<About />)
+
+    return shallow(<AddSignature />)
 }
 
 it('should match snapshot', () => {

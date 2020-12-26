@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import About from "../components/about"
+import DashboardSidebar from "../components/common/Sidebar/DashboardSidebar"
 
 
 
 const shallowSetup = (props = {}) => {
-    return shallow(<About />)
+
+    return shallow(<DashboardSidebar />)
 }
 
 it('should match snapshot', () => {

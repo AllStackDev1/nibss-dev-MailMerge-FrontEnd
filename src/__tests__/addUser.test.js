@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import About from "../components/about"
+import AddUser from "../components/Dashboard/AddUser"
 
 
 
 const shallowSetup = (props = {}) => {
-    return shallow(<About />)
+
+    return shallow(<AddUser />)
 }
 
 it('should match snapshot', () => {

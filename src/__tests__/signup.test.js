@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import Signup from "../components/auth/signup"
 
 
@@ -7,9 +7,7 @@ import Signup from "../components/auth/signup"
 const shallowSetup = (props = {}) => {
 
 
-    const wrapper = shallow(<Signup />)
-
-    return wrapper;
+    return shallow(<Signup />)
 }
 
 it('should match snapshot', () => {

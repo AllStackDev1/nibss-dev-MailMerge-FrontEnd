@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { mount, shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 import AppendSignatureOpen from "../components/append-sginature-open/append-signature-open";
 
 

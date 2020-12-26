@@ -1,11 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Login from "../components/auth/login"
 import { Provider } from "react-redux";
 import { createStore } from 'redux';
 import reducer from '../reducers/authReducer';
-import { authActions } from '../actions'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 
@@ -23,13 +22,12 @@ const shallowSetup = (props = {}) => {
 
     const store = createStore(reducer, { auth: { loggingIn: false } });
 
-    const wrapper = mount(
+    return mount(
         <Provider store={store}>
             <Login />
         </Provider>
     )
 
-    return wrapper;
 }
 
 const mockLogin = jest.fn();
