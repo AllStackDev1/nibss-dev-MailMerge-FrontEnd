@@ -12,6 +12,11 @@ jest.mock("react-router-dom", () => ({
     useParams: () => ({ documentId: 123 }),
 }))
 
+jest.mock("react", () => ({
+    ...jest.requireActual('react'),
+    useEffect: () => ({})
+}))
+
 afterEach(() => {
     jest.clearAllMocks();
 });

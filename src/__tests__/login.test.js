@@ -1,10 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Login from "../components/auth/login"
-import { Provider } from "react-redux";
 import { createStore } from 'redux';
 import reducer from '../reducers/authReducer';
-import { useSelector } from 'react-redux';
+import { useSelector, Provider } from 'react-redux';
 
 
 
