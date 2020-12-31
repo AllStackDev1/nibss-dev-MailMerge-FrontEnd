@@ -13,3 +13,4 @@ it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
 })
+
