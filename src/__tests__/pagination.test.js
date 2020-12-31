@@ -1,13 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Signup from "../components/auth/signup"
+import Pagination from "../components/Dashboard/empty-states/Pagination"
 
 
 
 const shallowSetup = (props = {}) => {
 
-
-    return shallow(<Signup />)
+    return shallow(<Pagination />)
 }
 
 it('should match snapshot', () => {
