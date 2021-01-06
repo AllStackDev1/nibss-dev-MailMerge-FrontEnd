@@ -7,22 +7,22 @@ const DashboardCards = ({ documents }) => (
         <DashboardCard
             image={require(`images/icons/dashboard/analytics/all-documents.svg`)}
             documents={documents}
-            key={"total_documents"}
+            keyed={"total_documents"}
             label="All Documents" />
         <DashboardCard
             image={require(`images/icons/dashboard/analytics/archived-documents.svg`)}
             documents={documents}
-            key={"archived_document"}
+            keyed={"archived_document"}
             label="Archived Documents" />
         <DashboardCard
             image={require(`images/icons/dashboard/analytics/signed-documents.svg`)}
             documents={documents}
-            key={"signed_document"}
+            keyed={"signed_document"}
             label="Signed Documents" />
         <DashboardCard
             image={require(`images/icons/dashboard/analytics/pending-documents.svg`)}
             documents={documents}
-            key={"pending_document"}
+            keyed={"pending_document"}
             label="Pending Document" />
     </Cards>
 )

@@ -84,12 +84,12 @@ const Toolbox = ({ user,
     const renderFilterList = () => {
         if (filterList) {
             return filterList.map((t, index) =>
-                <Filter index={index} name={t} checked={filter === t}
+                <Filter index={index} name={t} checked={filter === t} key={index}
                     onClick={() => filter === t ? setFilter("") : setFilter(t)} />
             )
         }
 
-        if (recipients.tags) {
+        if (recipients?.tags) {
             return recipients.tags.map((t, index) =>
                 <Filter index={index} name={t.name} checked={filter.includes(t.name)}
                     onClick={() => filter.includes(t.name) ? removeFilter(t.name) : addFilter(t.name)} />

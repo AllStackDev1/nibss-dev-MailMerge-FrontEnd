@@ -147,7 +147,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     return (
         <>
             {modal !== "" && <ModalContainer closeModal={() => setModal("")}>{renderModals()}</ModalContainer>}
-            <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>
+            <div className={`full-width full-height overflow-scroll-y custom-scrollbar`} data-test="component-append-signature">
                 <div
                     className={`onboarding display-flex flex-direction-column align-items-center bottom-padding-50 smooth overflow-hidden 
                         width-70-percent margin-auto top-margin-70 bottom-margin-5-percent border-box top-padding-50 white border-radius-10 box-shadow-less2`}>

@@ -22,13 +22,13 @@ const UserProfile = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (auth.add) {
+        if (auth?.add) {
             setTab(2);
         }
-    }, [auth.add]);
+    }, [auth?.add]);
 
     useEffect(() => {
-        if (auth.fetchingProfile === false && auth.profile && auth.updatingProfile === false) {
+        if (auth?.fetchingProfile === false && auth?.profile && auth?.updatingProfile === false) {
             setUser(auth.profile);
         }
     }, [auth]);
@@ -49,11 +49,11 @@ const UserProfile = () => {
     }
 
     const renderButtonContent = () => {
-        if (auth.updatingProfile) {
+        if (auth?.updatingProfile) {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
 
-        return <p>UPDATE PROFILE</p>;
+        return <p data-test="render-button">UPDATE PROFILE</p>;
     }
 
     const renderSignatures = () => {
@@ -94,7 +94,7 @@ const UserProfile = () => {
                             <input type="email" name="email" value={user.email || ""} onChange={onChange} placeholder="Email address" className="bottom-margin-20" required />
                             <button
                                 type="submit"
-                                disabled={auth.updatingProfile}
+                                disabled={auth?.updatingProfile}
                                 className={`uppercase 
                                     left-padding-20 
                                     right-padding-20 

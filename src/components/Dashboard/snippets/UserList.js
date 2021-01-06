@@ -5,7 +5,7 @@ import User from './User'
 
 const UserList = ({ users, search, filter, setModal, setUser, initiateDeleteUser, updateRole, viewPage }) => {
     const renderUsers = () => {
-        if (users.platformUsers === undefined || (users.searching)) {
+        if (users?.platformUsers === undefined || (users.searching)) {
             return <EmptyUser />;
         }
 

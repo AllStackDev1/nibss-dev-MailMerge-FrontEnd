@@ -18,10 +18,10 @@ const DashboardIndex = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (documents.fetching === false) {
+        if (documents?.fetching === false) {
             setFetching(false);
         }
-    }, [documents.fetching]);
+    }, [documents?.fetching]);
 
     const viewPage = p => {
         if (p <= documents.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
@@ -34,7 +34,7 @@ const DashboardIndex = () => {
     const viewDocument = (document) => {
         dispatch(documentActions.setDocument(document));
 
-        if(document.signed) {
+        if (document.signed) {
             dispatch(push(`/dashboard/document/${document._id}`));
         } else {
             dispatch(push(`/dashboard/append-signature/${document._id}`));

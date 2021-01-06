@@ -36,7 +36,8 @@ const Recipients = ({ user }) => {
 
     useEffect(() => {
         if (pageId) {
-            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            // page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(recipientActions.fetchPage(pageId));
         } else {
             dispatch(recipientActions.fetch());
@@ -54,30 +55,30 @@ const Recipients = ({ user }) => {
         }
     }, [viewingTags, dispatch]);
     useEffect(() => {
-        if (recipients.addingTag === false) {
+        if (recipients?.addingTag === false) {
             setModal("");
             setTag({});
         }
-        if (recipients.deletingTag === false) {
+        if (recipients?.deletingTag === false) {
             setModal("");
             setTagToDelete({});
         }
-        if (recipients.deleting === false) {
+        if (recipients?.deleting === false) {
             setModal("");
             setRecipientToDelete({});
         }
-    }, [recipients.addingTag, recipients.deleting, recipients.deletingTag]);
+    }, [recipients?.addingTag, recipients?.deleting, recipients?.deletingTag]);
     useEffect(() => {
-        if (recipients.addingRecipient === false || recipients.editingRecipient === false) {
+        if (recipients?.addingRecipient === false || recipients?.editingRecipient === false) {
             setModal("");
             setRecipient({});
         }
-    }, [recipients.addingRecipient, recipients.editingRecipient]);
+    }, [recipients?.addingRecipient, recipients?.editingRecipient]);
     useEffect(() => {
-        if (recipients.addingTagToRecipient === false) {
+        if (recipients?.addingTagToRecipient === false) {
             closeTags();
         }
-    }, [recipients.addingTagToRecipient]);
+    }, [recipients?.addingTagToRecipient]);
     const onChangeSearch = event => {
         const { name, value } = event.target;
 
@@ -208,12 +209,12 @@ const Recipients = ({ user }) => {
             <div ref={page} className="full-width full-height custom-scrollbar overflow-auto-y border-box left-padding-30 right-padding-30">
                 <PageTitle title="Recipients" />
                 <Toolbox user={user} tag={true} upload={true} setViewingTags={setViewingTags} closeTags={closeTags}
-                    adding={recipients.addingRecipient} viewingTags={viewingTags} setModal={setModal} onChange={onChangeSearch}
+                    adding={recipients?.addingRecipient} viewingTags={viewingTags} setModal={setModal} onChange={onChangeSearch}
                     search={search} filter={filter} addFilter={f => { setFilter(filterS => ([...filterS, f])) }}
                     removeFilter={f => { setFilter(filterS => (filterS.filter(item => item !== f))) }} addButtonText="Add Recipient" />
                 <div className="overflow-hidden white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50 min-height-500">
-                    <ViewTag recipients={recipients.recipients} tags={recipients.tags} updating={recipients.addingTagToRecipient}
-                        deleting={recipients.deletingTag} toAddTag={toAddTag} toAddTags={toAddTags} closeTags={closeTags}
+                    <ViewTag recipients={recipients?.recipients} tags={recipients?.tags} updating={recipients?.addingTagToRecipient}
+                        deleting={recipients?.deletingTag} toAddTag={toAddTag} toAddTags={toAddTags} closeTags={closeTags}
                         setModal={setModal} viewingTags={viewingTags} setToAddTags={setToAddTags} addTagsToRecipient={addTagsToRecipient}
                         deleteTag={initiateDeleteTag} />
                     <RecipientList recipients={recipients} search={search} filter={filter}

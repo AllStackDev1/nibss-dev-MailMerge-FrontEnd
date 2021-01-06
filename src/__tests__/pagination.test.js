@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Pagination from "../components/Dashboard/empty-states/Pagination"
 
 
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<Pagination />)
+    return mount(<Pagination {...props} />)
 }
 
 it('should match snapshot', () => {
@@ -14,3 +14,28 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
+it("should define component", () => {
+
+    const wrapper = shallowSetup();
+    expect(wrapper).toBeTruthy();
+
+})
+
+it('should render pagination when page is more than 3', () => {
+
+    const viewPageMock = jest.fn();
+    const renderPageMock = jest.fn();
+    const index = 4
+
+    const wrapper = mount(
+        <Pagination renderPage={renderPageMock} data={4} viewPage={viewPageMock} />
+    )
+
+    wrapper.update();
+
+    // wrapper.setState({ count: 2 })
+    renderPageMock();
+
+    expect(renderPageMock).toHaveBeenCalled();
+
+})
