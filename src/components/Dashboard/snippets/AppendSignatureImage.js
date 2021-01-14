@@ -22,9 +22,9 @@ const AppendSignatureImage = ({ imageRef, isNumPagesSet, width75percent, documen
 
     return (
         <PageContainer className={`${isNumPagesSet ? width75percent : ''}`}>
-            <img ref={imageRef} onLoad={calculateOffset} onError={() => setImageError(true)} src={document.document.file}
+            <img ref={imageRef} onLoad={calculateOffset} onError={() => setImageError(true)} src={document?.document.file}
                 className="full-width right-margin-10" alt="NIBSS Upload Document" />
-            {document.document.signatories
+            {document?.document.signatories
                 .filter(signatory => signatory.email === (user?.data?.email || decode(userToken)?.data?.email))
                 .map((signatory, index) =>
                     signatory.absolute_x_coordinate !== undefined ?

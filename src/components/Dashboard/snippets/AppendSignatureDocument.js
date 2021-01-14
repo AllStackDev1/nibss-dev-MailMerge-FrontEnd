@@ -40,13 +40,13 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
 
     return (
         <Document
-            file={document.document.file}
+            file={document?.document.file}
             onLoadSuccess={onDocumentLoadSuccess}
         >
             {[...Array(numPages)].map((el, index) => (
                 <PageContainer
                     key={index}
-                    ref={docRef.current[index]}
+                    ref={docRef?.current[index]}
                     className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
                     <Page width={pageWidth} key={`page_${index + 1}`} pageNumber={index + 1} />
                     {signatories?.map((signatory, i) =>

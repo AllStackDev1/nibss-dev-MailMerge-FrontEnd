@@ -35,7 +35,7 @@ const Onboarding = props => {
                 setStep(3);
             }
         }
-    }, [auth.uploading, auth.uploaded, userLocal]);
+    }, [auth?.uploading, auth?.uploaded, userLocal]);
 
     useEffect(() => {
         if (userLocal?.data?.role === "administrator" && user.invitingUsers === false && user.users) {
@@ -45,7 +45,7 @@ const Onboarding = props => {
                 setStep(s => s + 1);
             }
         }
-    }, [user.invitingUsers, user.users, userLocal.data, dispatch]);
+    }, [user?.invitingUsers, user?.users, userLocal?.data, dispatch]);
 
     return (
         <div className="full-height-vh full-width display-flex light-brown">

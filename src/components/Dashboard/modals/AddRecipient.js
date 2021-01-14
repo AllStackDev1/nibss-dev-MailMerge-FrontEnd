@@ -17,7 +17,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
     }
 
     return (
-        <div onClick={e => e.stopPropagation()} className="width-40-percent">
+        <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='recipient-component'>
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
                 <BackButton className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
@@ -33,7 +33,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
                         type="text"
                         name="name"
                         onChange={modal === editRecipientConstant ? onChangeEdit : onChange}
-                        value={modal === editRecipientConstant ? editRecipient.name : recipient.name || ""}
+                        value={modal === editRecipientConstant ? editRecipient?.name : recipient?.name || ""}
                         placeholder="Enter Recipient Full Name"
                         className="bottom-margin-20" required />
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Enter Recipient Email address</p>
@@ -41,7 +41,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
                         type="email"
                         name="email"
                         onChange={modal === editRecipientConstant ? onChangeEdit : onChange}
-                        value={modal === editRecipientConstant ? editRecipient.email : recipient.email || ""}
+                        value={modal === editRecipientConstant ? editRecipient?.email : recipient?.email || ""}
                         placeholder="Enter Recipient Email address"
                         className="bottom-margin-20" required />
                     <button

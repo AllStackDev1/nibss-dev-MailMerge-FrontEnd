@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from 'actions/userActions';
 import { Link } from 'react-router-dom';
-import Invite from './snippets/invite';
+import Invite from './snippets/Invite';
 import InviteForm from './snippets/inviteForm';
 
 const InviteUsers = ({ add }) => {
@@ -104,10 +104,10 @@ const InviteUsers = ({ add }) => {
                     </Link>
                     : ""}
                 <button
-                    disabled={user.invitingUsers}
+                    disabled={user?.invitingUsers}
                     onClick={sendInvites}
                     className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                    {user.invitingUsers ?
+                    {user?.invitingUsers ?
                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                         :
                         'SAVE'}

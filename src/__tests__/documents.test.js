@@ -1,5 +1,5 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React, { useState } from 'react';
+import { mount, shallow } from 'enzyme';
 import Documents from "../components/Dashboard/Documents"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -52,6 +52,44 @@ describe("component renders", () => {
 
         const wrapper = shallowSetup();
         expect(wrapper).toBeTruthy();
+    })
+
+    it("should handle back button click", () => {
+
+        const backButtonClick = jest.fn();
+        const store = createStore(reducer, { documents: "123" });
+
+        jest.mock("react", () => ({
+            ...jest.requireActual("react"),
+            useState: jest.fn()
+        }));
+
+        const documentUploadMock = jest.fn(() => true)
+
+
+
+        const wrapper = shallow(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Documents uploadingDocument={documentUploadMock} step={3} onClick={backButtonClick} />
+                </BrowserRouter>
+            </Provider>
+        )
+
+        let result = backButtonClick("e");
+
+        console.log(wrapper.debug());
+
+
+        const backButton = wrapper.find("BackButton")
+
+        expect(backButton.length).toBe(1)
+
+        // backButton.simulate('click', { stopPropagation: () => { } })
+
+        // expect(result).toBeUndefined();
+        // expect(backButtonClick.mock.calls.length).toEqual(1);
+
     })
 })
 

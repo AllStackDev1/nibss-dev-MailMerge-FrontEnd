@@ -10,7 +10,9 @@ export const authService = {
     fetchProfile,
     updateProfile,
     updateAccount,
-    deleteSignature
+    deleteSignature,
+    handleResponse,
+    isTokenExpired
 };
 
 const requestFormat = 'application/json';

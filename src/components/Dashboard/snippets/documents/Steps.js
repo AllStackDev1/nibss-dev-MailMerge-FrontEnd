@@ -13,7 +13,7 @@ const Steps = ({ step }) => {
     const activeStepClass = 'active-step';
 
     return (
-        <div className="display-flex align-items-center justify-center no-select">
+        <div className="display-flex align-items-center justify-center no-select" data-test="setup-component">
             <Step className={`${step === 1 && activeStepClass} ${documentStepClasses}`}>
                 1
             </Step>
