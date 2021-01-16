@@ -87,7 +87,7 @@ function saveSignature(file, add) {
             'Authorization': 'Bearer ' + authService.getToken()
         }
 
-        Axios
+        return Axios
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
                     const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);

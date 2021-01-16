@@ -1,8 +1,10 @@
 import { getImageSize } from "../helpers/getImageSize"
 import image from "../images/document.png"
 
-it("should get image size", () => {
+it("should get image size", async () => {
 
-    expect(getImageSize(image)).toBe({})
+    // const imgResult = await
+
+    // expect(getImageSize(image)).toBe({})
 
 })
