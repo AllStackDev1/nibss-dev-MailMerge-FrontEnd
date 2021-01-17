@@ -187,7 +187,7 @@ function prepare(document, signatories) {
 
         const data = new FormData();
         data.append('media', document.file);
-        data.append('documentTitle', document.file.name);
+        data.append('documentTitle', document.file?.name);
         data.append('documentBody', document.documentBody);
         data.append('recipients', JSON.stringify(document.recipients));
         data.append('signatories', JSON.stringify(signatories));

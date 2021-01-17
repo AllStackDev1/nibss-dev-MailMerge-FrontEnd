@@ -78,9 +78,6 @@ describe("component renders", () => {
 
         let result = backButtonClick("e");
 
-        console.log(wrapper.debug());
-
-
         const backButton = wrapper.find("BackButton")
 
         // expect(backButton.length).toBe(1)

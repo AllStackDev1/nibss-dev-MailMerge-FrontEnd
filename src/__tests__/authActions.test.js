@@ -3,7 +3,7 @@ import { authConstants } from "../constants"
 import thunk from 'redux-thunk'
 import configureMockStore from "redux-mock-store"
 import fetchMock from 'fetch-mock'
-import { authService } from "../services"
+
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
