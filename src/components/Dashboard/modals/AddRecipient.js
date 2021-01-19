@@ -10,7 +10,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
         }
 
         if (modal === editRecipientConstant) {
-            return <span>UPDATE</span>;
+            return <span data-test="recipient-update">UPDATE</span>;
         } else {
             return <span>ADD</span>;
         }

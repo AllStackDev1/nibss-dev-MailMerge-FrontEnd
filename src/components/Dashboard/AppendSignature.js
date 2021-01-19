@@ -36,12 +36,12 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
             setDocument(d);
         }
         if (document._id === undefined) {
-            if (documents.document) {
+            if (documents?.document) {
                 if (JSON.stringify(documents.document) !== JSON.stringify(document)) {
                     setDocumentData(documents.document);
                 }
             } else {
-                if (documents.fetchingSingle === false) {
+                if (documents?.fetchingSingle === false) {
                     dispatch(documentActions.fetchSingle(urlDocumentId ? urlDocumentId : documentId, userToken));
                 }
             }

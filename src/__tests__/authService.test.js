@@ -43,9 +43,6 @@ describe("handle authservice services", () => {
     })
 
     it("should  get token", () => {
-
-        console.log(AuthServices.authService);
-
         const token = AuthServices.authService.getToken();
 
     })

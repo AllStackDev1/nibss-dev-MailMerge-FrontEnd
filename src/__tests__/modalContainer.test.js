@@ -32,8 +32,6 @@ it("handle recipient click", () => {
 
     const modalContainerDiv = wrapper.find("div.above-all")
 
-    console.log("UJU::>>", modalContainerDiv.debug());
-
     modalContainerDiv.simulate('click', { stopPropagation: () => { } })
 
     expect(result).toBeUndefined();

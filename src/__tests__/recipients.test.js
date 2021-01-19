@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { mount } from 'enzyme';
 import Recipients from "../components/Dashboard/Recipients"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/recipientReducer';
 import { BrowserRouter } from 'react-router-dom';
+import { renderHook, act } from "@testing-library/react-hooks"
 
 
 jest.mock("react-router-dom", () => ({
@@ -26,10 +27,12 @@ const shallowSetup = (props = {}, state) => {
         <Recipients {...state} />
     }
 
+
+
     return mount(
         <Provider store={store}>
             <BrowserRouter>
-                <Recipients {...props} />
+                <Recipients />
             </BrowserRouter>
         </Provider>
     )
@@ -38,6 +41,8 @@ const shallowSetup = (props = {}, state) => {
 
 
 describe("component renders", () => {
+
+
 
     beforeEach(() => {
         useSelector.mockImplementation(callback => {
@@ -51,9 +56,19 @@ describe("component renders", () => {
     });
 
 
-    it("should render without errors", () => {
 
-        const wrapper = shallowSetup();
+
+    it("should render without errors", () => {
+        const useRefSpy = jest.spyOn(React, 'useRef').mockReturnValueOnce({ current: { focus } });
+        const store = createStore(reducer, { recipients: {} });
+
+        const wrapper = mount(
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Recipients />
+                </BrowserRouter>
+            </Provider>)
+
         expect(wrapper).toBeTruthy();
     })
 })
