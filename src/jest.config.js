@@ -4,6 +4,7 @@ module.exports = {
         "\\.(css|less)$": "identity-obj-proxy"
     },
     setupFilesAfterEnv: ['../src/__tests__/appendSignature.test.js'],
-    testTimeout: 30000
+    testTimeout: 30000,
+    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"]
 }
 
