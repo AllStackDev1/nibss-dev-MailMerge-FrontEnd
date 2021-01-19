@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Invite from "../components/onboarding/steps/snippets/Invite"
+import Invite from "../components/onboarding/steps/snippets/invite"
 
 
 
