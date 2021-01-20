@@ -4,9 +4,6 @@ module.exports = {
         "\\.(css|less)$": "identity-obj-proxy"
     },
     setupFilesAfterEnv: ['../src/__tests__/appendSignature.test.js'],
-    "testPathIgnorePatterns": [
-        "../src/actions"
-    ],
     testTimeout: 30000
 }
 
