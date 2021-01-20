@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
 import Recipients from "../components/Dashboard/Recipients"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/recipientReducer';
 import { BrowserRouter } from 'react-router-dom';
-import { renderHook, act } from "@testing-library/react-hooks"
 
 
 jest.mock("react-router-dom", () => ({
@@ -59,7 +58,6 @@ describe("component renders", () => {
 
 
     it("should render without errors", () => {
-        const useRefSpy = jest.spyOn(React, 'useRef').mockReturnValueOnce({ current: { focus } });
         const store = createStore(reducer, { recipients: {} });
 
         const wrapper = mount(

@@ -165,12 +165,6 @@ describe("recipient reducer", () => {
         })
     })
 
-    test("delete recipient request", () => {
-        expect(recipient({}, { type: recipientConstants.DELETE_RECIPIENT_REQUEST, recipient: "recipient" })).toEqual({
-            deleting: "recipient"
-        })
-    })
-
     test("delete recipient failure", () => {
         expect(recipient({}, { type: recipientConstants.DELETE_RECIPIENT_FAILURE })).toEqual({
             deleting: false

@@ -10,7 +10,6 @@ const shallowSetup = (props = {}) => {
 }
 
 it('should render with error', () => {
-    // const calculateOffsetPDFMock = jest.fn();
     const wrapper = shallowSetup();
     expect(wrapper).toBeTruthy();
 })

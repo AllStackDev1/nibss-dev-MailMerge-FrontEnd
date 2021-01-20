@@ -86,19 +86,30 @@ describe("user reducer", () => {
     })
 
     test("assign as admin success", () => {
-        expect(user({ platformUsers: { data: [{ _id: "123" }] }, searchResults: { data: [{ _id: "123" }] } }, { type: userConstants.ASSIGN_AS_ADMIN_SUCCESS, user: { user: { _id: "123" } } })).toEqual({
-            updatingRole: false,
-            platformUsers: {
-                data: [
-                    {
-                        _id: "123",
-                    },
-                ],
+        expect(user({
+                platformUsers: {
+                    data: [{ _id: "123" }]
+                },
+                searchResults: {
+                    data: [{ _id: "123" }]
+                }
             },
-            searchResults: {
-                data: [{ _id: "123", }]
-            }
-        })
+            {
+                type: userConstants.ASSIGN_AS_ADMIN_SUCCESS,
+                user: { user: { _id: "123" } }
+            })).toEqual({
+                updatingRole: false,
+                platformUsers: {
+                    data: [
+                        {
+                            _id: "123",
+                        },
+                    ],
+                },
+                searchResults: {
+                    data: [{ _id: "123", }]
+                }
+            })
     })
 
     test("assign as admin failure", () => {
