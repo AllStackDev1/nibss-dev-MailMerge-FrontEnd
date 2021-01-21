@@ -1,9 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import AppendSignature from "../components/Dashboard/AppendSignature"
 import enableHooks from "jest-react-hooks-shallow";
 import { useSelector } from 'react-redux';
-
 
 enableHooks(jest)
 
@@ -21,7 +20,7 @@ test("should render without error", () => {
     }))
 
     const setDocumentMock = jest.fn();
-    const setDocumentData = jest.fn();
+
 
 
     afterEach(() => {
@@ -32,27 +31,27 @@ test("should render without error", () => {
         return callback({ documents: { document: "1234" } });
     });
 
-
-
     const renderSignatureInterfaceMock = jest.fn();
-    const wrapper = shallow(<AppendSignature renderSignatureInterface={renderSignatureInterfaceMock} />)
+    const wrapper = mount(<AppendSignature renderSignatureInterface={renderSignatureInterfaceMock} document={{ document: false }} />)
 
-
+    // console.log(wrapper.signDocument());
 
     let result = renderSignatureInterfaceMock("e");
     expect(result).toBeUndefined();
 
 
     expect(renderSignatureInterfaceMock.mock.calls.length).toEqual(1)
-    expect(wrapper.find('.lds-ring').length).toEqual(1)
+    expect(wrapper.find('.lds-ring').length).toEqual(2)
     expect(wrapper).toBeTruthy();
 
 })
 
-it("shoukld render snap", () => {
+it("should render snap", () => {
     const wrapper = shallow(<AppendSignature />)
 
     wrapper.setProps({ user: "user1", documentId: "1234", userToken: "token1" })
     expect(wrapper).toMatchSnapshot()
 })
+
+
 

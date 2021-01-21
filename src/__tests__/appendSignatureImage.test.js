@@ -6,11 +6,10 @@ import AppendSignatureImage from "../components/Dashboard/snippets/AppendSignatu
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<AppendSignatureImage />)
+    return shallow(<AppendSignatureImage {...props} />)
 }
 
 it('should render with error', () => {
-    // const calculateOffsetPDFMock = jest.fn();
     const wrapper = shallowSetup();
     expect(wrapper).toBeTruthy();
 })
@@ -21,4 +20,5 @@ it("shouls render snapshot", () => {
     expect(wrapper).toMatchSnapshot();
 
 })
+
 

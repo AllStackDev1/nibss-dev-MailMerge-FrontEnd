@@ -7,12 +7,13 @@ import fetchMock from 'fetch-mock'
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
+const applicationJson = 'application/json'
 
 test("add actions", () => {
     const store = mockStore({})
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/admin/recipient/multiple', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.add("recipient", "type"))
 
@@ -25,7 +26,7 @@ test("delete recipient actions", () => {
     const store = mockStore({})
 
     fetchMock.delete('https://nibss-mail-merge.natterbase.com/admin/recipient/undefined', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.deleteRecipient("recipient", "type"))
 
@@ -38,7 +39,7 @@ test("delete tag action", () => {
     const store = mockStore({})
 
     fetchMock.delete('https://nibss-mail-merge.natterbase.com/admin/recipient/tag/undefined', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.deleteTag("tag"))
 
@@ -50,7 +51,7 @@ test("edit action", () => {
     const store = mockStore({})
 
     fetchMock.put('https://nibss-mail-merge.natterbase.com/admin/recipient/undefined', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.edit("recipient"))
 
@@ -61,7 +62,7 @@ test("add tag action", () => {
     const store = mockStore({})
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/admin/recipient/tag', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.addTag("tag"))
 
@@ -73,7 +74,7 @@ test("add tags to recipient", () => {
     const store = mockStore({})
 
     fetchMock.put('https://nibss-mail-merge.natterbase.com/admin/recipient/recipient', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.addTagsToRecipient("recipient", "tag"))
 
@@ -86,7 +87,7 @@ test("fetch action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/recipient', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.fetch("src"))
 
@@ -99,7 +100,7 @@ test("search action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/recipient/search?search=search%20query&filter=%22filter%22', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.search("search query", "filter", "src"))
 
@@ -112,7 +113,7 @@ test("fetchPage action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/recipient?page=page', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.fetchPage("page", "src"))
 
@@ -125,7 +126,7 @@ test("fetchTags action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/recipient/tag', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.recipientActions.fetchTags())
 

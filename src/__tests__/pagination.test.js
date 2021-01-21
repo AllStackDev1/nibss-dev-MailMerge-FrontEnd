@@ -16,7 +16,9 @@ it('should match snapshot', () => {
 
 it("should define component", () => {
 
-    const wrapper = shallowSetup();
+    const arg = { data: { pagination: { number_of_pages: 5 } } }
+
+    const wrapper = shallowSetup({ data: arg });
     expect(wrapper).toBeTruthy();
 
 })
@@ -28,7 +30,7 @@ it('should render pagination when page is more than 3', () => {
     const index = 4
 
     const wrapper = mount(
-        <Pagination renderPage={renderPageMock} data={4} viewPage={viewPageMock} />
+        <Pagination data={4} viewPage={viewPageMock} />
     )
 
     wrapper.update();
@@ -39,3 +41,4 @@ it('should render pagination when page is more than 3', () => {
     expect(renderPageMock).toHaveBeenCalled();
 
 })
+

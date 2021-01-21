@@ -69,7 +69,10 @@
       "./src/serviceWorker.js",
       "./src/jest.config.js",
       "./src/helpers/toFile.js",
-      "./src/helpers/getImageSize.js"
+      "./src/helpers/getImageSize.js",
+      "./src/components/Dashboard/snippets/append-signature/Trigger.js",
+      "./src/store.js",
+      "./src/index.js"
   ]
   }
 }

@@ -22,7 +22,7 @@ it("handle recipient click", () => {
         <AddRecipient onClick={onClickMock} />
     )
 
-    let result = onClickMock("e");
+    const result = onClickMock("e");
 
     const recipientDiv = wrapper.find("[data-test='recipient-component']")
     recipientDiv.simulate('click', { stopPropagation: () => { } })

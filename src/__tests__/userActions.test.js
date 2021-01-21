@@ -7,12 +7,13 @@ import fetchMock from 'fetch-mock'
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
+const applicationJson = 'application/json'
 
 test("add actions", () => {
     const store = mockStore({})
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/admin/invite', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.invite([{ role: "role" }, { administrator: "administrator" }], "add"))
 
@@ -25,7 +26,7 @@ test("edit actions", () => {
     const store = mockStore({})
 
     fetchMock.put('https://nibss-mail-merge.natterbase.com/admin/users/123', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.edit({ role: "role", _id: "123" }))
 
@@ -38,7 +39,7 @@ test("deleteUser action", () => {
     const store = mockStore({})
 
     fetchMock.delete('https://nibss-mail-merge.natterbase.com/admin/users/123', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.deleteUser({ role: "role", _id: "123" }))
 
@@ -51,7 +52,7 @@ test("exportDocument action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/users/download/type', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.exportDocument("type"))
 
@@ -64,7 +65,7 @@ test("updateRole  action", () => {
     const store = mockStore({})
 
     fetchMock.put('https://nibss-mail-merge.natterbase.com/admin/users/role/123', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.updateRole({ role: "role", _id: "123" }))
 
@@ -77,7 +78,7 @@ test("fetchUsers action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/users', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.fetchUsers())
 
@@ -90,7 +91,7 @@ test("fetchPage action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/users?page=page', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.fetchPage("page"))
 
@@ -103,7 +104,7 @@ test("search action", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/admin/users/search?search=search%20query&filter=filter', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.userActions.search("search query", "filter"))
 

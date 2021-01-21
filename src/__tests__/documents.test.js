@@ -68,7 +68,7 @@ describe("component renders", () => {
 
 
 
-        const wrapper = shallow(
+        const wrapper = mount(
             <Provider store={store}>
                 <BrowserRouter>
                     <Documents uploadingDocument={documentUploadMock} step={3} onClick={backButtonClick} />
@@ -76,9 +76,7 @@ describe("component renders", () => {
             </Provider>
         )
 
-        let result = backButtonClick("e");
 
-        const backButton = wrapper.find("BackButton")
 
         // expect(backButton.length).toBe(1)
 

@@ -7,6 +7,7 @@ import fetchMock from 'fetch-mock'
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
+const applicationJson = 'application/json'
 
 test("login actions", () => {
     const data = {
@@ -18,7 +19,7 @@ test("login actions", () => {
 
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/auth/login', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
     store.dispatch(actions.authActions.login({ email_input: "exa" }))
@@ -42,7 +43,7 @@ test("reset action", () => {
 
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/users/invite/complete', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
     store.dispatch(actions.authActions.saveSignature("", false));
@@ -57,7 +58,7 @@ test("delete signature action", () => {
 
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/users/remove/signature', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
     store.dispatch(actions.authActions.deleteSignature(""));
@@ -80,7 +81,7 @@ test("fetch profile action", () => {
 
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/users', {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': applicationJson }
     })
     store.dispatch(actions.authActions.fetchProfile());
 
@@ -94,7 +95,7 @@ test("update profile action", () => {
 
 
     fetchMock.put('https://nibss-mail-merge.natterbase.com/users', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
     store.dispatch(actions.authActions.updateProfile("user"));

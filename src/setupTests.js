@@ -12,6 +12,8 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 enableHooks(jest);
 
+// "setupFilesAfterEnv": ["./src/__tests__/appendSignature.test.js"]
+
 const localStorageMock = {
     getItem: jest.fn(),
     setItem: jest.fn(),

@@ -23,16 +23,16 @@ const Signature = ({ signature }) => {
     }
 
     useEffect(() => {
-        if (auth.deletingSignature === false) {
+        if (auth?.deletingSignature === false) {
             setModal("");
             setToDelete({});
         }
-    }, [auth.deletingSignature]);
+    }, [auth?.deletingSignature]);
 
     const renderModals = () => {
         if (modal === "delete-signature") {
             return <DeleteSignature
-                deleting={auth.deletingSignature}
+                deleting={auth?.deletingSignature}
                 onSubmit={deleteSignature}
                 closeModal={() => {
                     setModal("");

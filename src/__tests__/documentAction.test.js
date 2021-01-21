@@ -7,12 +7,13 @@ import fetchMock from 'fetch-mock'
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
+const applicationJson = 'application/json'
 
 test("fetch actions", () => {
     const store = mockStore({})
 
     fetchMock.get('https://nibss-mail-merge.natterbase.com/documents?', {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.documentActions.fetch("type"))
 
@@ -26,8 +27,8 @@ test("fetch single action", () => {
     fetchMock.get('https://nibss-mail-merge.natterbase.com/documents/abc', {
         headers: {
             'Authorization': 'Bearer ' + 'token1111',
-            'Accept': "application/json",
-            'Content-Type': "application/json"
+            'Accept': applicationJson,
+            'Content-Type': applicationJson
         }
     }, { overwriteRoutes: true })
     store.dispatch(actions.documentActions.fetchSingle("abc", "token1111"))
@@ -53,8 +54,8 @@ test("sign document action", () => {
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/sign', {
         'Authorization': 'Bearer ' + "token123",
-        'Accept': "application/json",
-        'Content-Type': "application/json"
+        'Accept': applicationJson,
+        'Content-Type': applicationJson
     }, { overwriteRoutes: true })
     store.dispatch(actions.documentActions.signDocument("123", "token123"))
 
@@ -68,8 +69,8 @@ test("sign new document action", () => {
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/sign', {
         'Authorization': 'Bearer ' + "token123",
-        'Accept': "application/json",
-        'Content-Type': "application/json"
+        'Accept': applicationJson,
+        'Content-Type': applicationJson
     }, { overwriteRoutes: true })
     store.dispatch(actions.documentActions.signDocumentNew("123", "token123"))
 
@@ -83,8 +84,8 @@ test("sign new document action", () => {
 
     fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/prepare', {
         'Authorization': 'Bearer ' + "token123",
-        'Accept': "application/json",
-        'Content-Type': "application/json"
+        'Accept': applicationJson,
+        'Content-Type': applicationJson
     }, { overwriteRoutes: true })
     store.dispatch(actions.documentActions.prepare("document", "signature"))
 
