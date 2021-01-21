@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router";
 import styled from "styled-components";
 
-const ModalContainer = ({children, closeModal}) => {
+const ModalContainer = ({ children, closeModal }) => {
     return (
         <Container onClick={closeModal} className="fixed left top above-all full-width full-height-vh display-flex align-items-center flex-direction-column justify-center">
             {children}

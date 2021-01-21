@@ -104,10 +104,10 @@ const InviteUsers = ({ add }) => {
                     </Link>
                     : ""}
                 <button
-                    disabled={user.invitingUsers}
+                    disabled={user?.invitingUsers}
                     onClick={sendInvites}
                     className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
-                    {user.invitingUsers ?
+                    {user?.invitingUsers ?
                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                         :
                         'SAVE'}

@@ -36,7 +36,7 @@ const SetupSignatories = ({ selectUser, document }) => {
                             <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
                         </DocumentButton>
                     </form>
-                    {document.signatories ?
+                    {document?.signatories ?
                         document.signatories.filter(filterSignatory => filterSignatory.nibss === true).map((mapSignature, key) =>
                             <div
                                 key={key}
@@ -62,7 +62,7 @@ const SetupSignatories = ({ selectUser, document }) => {
                             <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
                         </DocumentButton>
                     </form>
-                    {document.signatories ?
+                    {document?.signatories ?
                         document.signatories.filter(filterSignatory => filterSignatory.nibss !== true).map((mapSignature, key) =>
                             <div
                                 key={key}

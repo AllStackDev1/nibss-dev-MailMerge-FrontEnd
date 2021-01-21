@@ -6,7 +6,7 @@ import Recipient from './Recipient';
 const RecipientList = ({ recipients, search, filter, setModal, setEditRecipient, initiateDeleteRecipient, toAddTag,
     initiateEdit, viewPage }) => {
     const renderRecipients = () => {
-        if (recipients.recipients === undefined || (recipients.searching)) {
+        if (recipients?.recipients === undefined || (recipients?.searching)) {
             return <EmptyRecipient />;
         }
 

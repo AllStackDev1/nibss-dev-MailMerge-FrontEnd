@@ -60,7 +60,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
     }
 
     const renderRecipients = () => {
-        if (recipients.documentRecipients === undefined || recipients.searching) {
+        if (recipients?.documentRecipients === undefined || recipients.searching) {
             return <EmptyDocumentRecipient />;
         }
 
@@ -109,7 +109,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
         <>
             <p className="gray-color size-onepointtwo-rem bold text-center top-margin-30">
                 Select Recipients
-                <span className="light size-pointnine-rem">{document.recipients.length > 0 ? ` - ${document.recipients.length} selected` : ""}</span>
+                <span className="light size-pointnine-rem">{document?.recipients.length > 0 ? ` - ${document?.recipients.length} selected` : ""}</span>
             </p>
             <p className="light-gray-color size-pointeight-rem text-center top-margin-5">Tell us who will be getting this documenmts</p>
             <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
@@ -136,7 +136,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
                     </span>
                     <div className="top-padding-10">
                         <div className="box-shadow-less2 border-radius-10 padding-10 white">
-                            {recipients.tags ?
+                            {recipients?.tags ?
                                 recipients.tags.map((tag, index) =>
                                     <div
                                         key={index}

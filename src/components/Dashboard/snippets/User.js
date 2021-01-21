@@ -45,7 +45,7 @@ const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModa
                     <div onClick={() => {
                         setModal("edit-user");
                         setUser(user);
-                    }} className="smooth display-flex align-items-center">
+                    }} className="smooth display-flex align-items-center" data-click="test-component">
                         <div className="width-30 height-35"></div>
                         Edit User
                     </div>

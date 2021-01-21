@@ -6,5 +6,18 @@ import '@testing-library/jest-dom/extend-expect';
 
 import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
+import enableHooks from 'jest-react-hooks-shallow';
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
+
+enableHooks(jest);
+
+// "setupFilesAfterEnv": ["./src/__tests__/appendSignature.test.js"]
+
+const localStorageMock = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+    clear: jest.fn(),
+};
+global.localStorage = localStorageMock;

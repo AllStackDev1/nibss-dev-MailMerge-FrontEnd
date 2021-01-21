@@ -9,7 +9,7 @@ const DocumentList = ({ dashboard, documents, viewPage, fetching, tab, viewDocum
     const tabMap = { 2: "Pending", 3: "Signed", 4: "Rejected" }
 
     return (
-        documents.documents === undefined || fetching === true ?
+        documents?.documents === undefined || fetching === true ?
             <EmptyDocument />
             :
             <>

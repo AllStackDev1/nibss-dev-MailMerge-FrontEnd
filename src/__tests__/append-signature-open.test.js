@@ -22,10 +22,18 @@ afterEach(() => {
 });
 
 
-test("renders component", () => {
 
-    const wrapper = shallow(<AppendSignatureOpen />)
-    expect(wrapper).toBeTruthy();
+
+describe("", () => {
+
+
+
+    test("renders component", () => {
+
+        const wrapper = shallow(<AppendSignatureOpen />)
+        expect(wrapper).toBeTruthy();
+    })
+
 
 })
 

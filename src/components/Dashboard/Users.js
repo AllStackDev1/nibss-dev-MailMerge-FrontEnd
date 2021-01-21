@@ -32,15 +32,15 @@ const Users = ({ user: localUser }) => {
     }, [dispatch, filter]); // eslint-disable-line no-use-before-define
 
     useEffect(() => {
-        if (users.editing === false) {
+        if (users?.editing === false) {
             setModal("");
             setUser({});
         }
-        if (users.deleting === false) {
+        if (users?.deleting === false) {
             setModal("");
             setToDelete({});
         }
-    }, [users.editing, users.deleting]);
+    }, [users?.editing, users?.deleting]);
 
     const onChangeUser = event => {
         const { name, value } = event.target;
@@ -74,7 +74,8 @@ const Users = ({ user: localUser }) => {
 
     useEffect(() => {
         if (pageId) {
-            page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            // page.current.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(userActions.fetchPage(pageId));
         } else {
             dispatch(userActions.fetchUsers());
@@ -154,7 +155,7 @@ const Users = ({ user: localUser }) => {
                     filter={filter}
                     setFilter={setFilter}
                     exportDocument={exportDocument}
-                    downloading={users.downloading}
+                    downloading={users?.downloading}
                     addButtonText="Add New User"
                     addButtonUrl="/dashboard/add-user" />
                 <div className="white border-radius-10 left-padding-10 right-padding-10 top-margin-30 bottom-margin-50">

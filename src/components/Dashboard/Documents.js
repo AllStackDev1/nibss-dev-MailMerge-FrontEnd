@@ -42,7 +42,7 @@ const Documents = withRouter(({ location }) => {
     const completeClass = "complete";
 
     useEffect(() => {
-        const type = qs.parse(location.search, { ignoreQueryPrefix: true }).type;
+        const type = qs.parse(location?.search, { ignoreQueryPrefix: true }).type;
         const typeTabs = { "pending": 2, "signed": 3, "rejected": 4 };
         if (type) {
             setTab(typeTabs[type] || "");
@@ -56,13 +56,13 @@ const Documents = withRouter(({ location }) => {
     }, [dispatch, pageId]);
 
     useEffect(() => {
-        if (documents.fetching === false) {
+        if (documents?.fetching === false) {
             setFetching(false);
         }
-    }, [documents.fetching]);
+    }, [documents?.fetching]);
 
     useEffect(() => {
-        if (documents.preparing === false) {
+        if (documents?.preparing === false) {
             setDocument({ signatories: [], recipients: [] });
             setDocumentFiles([]);
             setTab(1);
@@ -72,7 +72,7 @@ const Documents = withRouter(({ location }) => {
 
             dispatch(documentActions.fetch());
         }
-    }, [documents.preparing]);
+    }, [documents?.preparing]);
 
     const selectUser = (user, nibss) => {
         setDocument({

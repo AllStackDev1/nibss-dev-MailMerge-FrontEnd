@@ -6,11 +6,15 @@ import Recipient from "../components/Dashboard/empty-states/Recipient"
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<Recipient />)
+    return shallow(<Recipient {...props} />)
 }
 
 it('should match snapshot', () => {
-    const wrapper = shallowSetup()
+
+    const recipient = { _id: "123" }
+    const wrapper = shallowSetup({ recipient })
     expect(wrapper).toMatchSnapshot();
 })
+
+
 
