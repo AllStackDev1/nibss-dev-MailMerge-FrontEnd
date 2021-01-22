@@ -13,7 +13,7 @@ const Invite = ({ inviteInstance, invited, setInvited, index }) => (
                 <span className="size-pointeight-rem mustard-color bold right-margin-10">Administrator</span>}
             <img
                 src={require(`images/icons/bin.svg`)}
-                onClick={() => setInvited(invited.filter((_, i) => i !== index))}
+                onClick={() => setInvited(invited?.filter((_, i) => i !== index))}
                 className="height-18 cursor-pointer" alt="Invite users" />
         </div>
     </div>

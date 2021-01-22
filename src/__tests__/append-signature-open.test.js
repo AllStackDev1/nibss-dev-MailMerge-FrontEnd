@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import AppendSignatureOpen from "../components/append-sginature-open/append-signature-open";
 
 
@@ -30,7 +30,7 @@ describe("", () => {
 
     test("renders component", () => {
 
-        const wrapper = shallow(<AppendSignatureOpen />)
+        const wrapper = mount(<AppendSignatureOpen />)
         expect(wrapper).toBeTruthy();
     })
 

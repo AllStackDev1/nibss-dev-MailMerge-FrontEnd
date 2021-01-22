@@ -14,8 +14,10 @@ const Document = ({ document, dashboard, viewDocument, viewStats }) => {
                 white 
                 bottom-margin-20 
                 display-flex 
-                align-items-center 
-                space-between`}>
+                align-items-center
+                space-between`}
+            data-testid="container-parent"
+        >
             <div className="no-shrink width-70">
                 {dashboard ?
                     <img src={require(`images/icons/dashboard/pdf.svg`)} className="height-30 right-margin-20 left-margin-30" alt="NIBSS PDF" />

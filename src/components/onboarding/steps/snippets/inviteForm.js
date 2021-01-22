@@ -4,10 +4,10 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
     <form onSubmit={addInvite}>
         <div className="full-width display-flex">
             <div className="width-50-percent right-margin-20">
-                <input type="text" name="name" onChange={onChange} value={invite.name || ""} placeholder="Full Name" required />
+                <input type="text" name="name" onChange={onChange} value={invite?.name || ""} placeholder="Full Name" required />
             </div>
             <div className="width-50-percent">
-                <input type="email" name="email" onChange={onChange} value={invite.email || ""} placeholder="Email Address" required />
+                <input type="email" name="email" onChange={onChange} value={invite?.email || ""} placeholder="Email Address" required />
             </div>
         </div>
         <div className="full-width display-flex top-margin-30 space-between">
@@ -18,7 +18,7 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
             <div className="right-margin-20">
                 <select
                     value={role}
-                    onChange={e => setRole(e.target.value)}
+                    onChange={e => setRole(e.target?.value)}
                     className="select-role height-30 border-radius-5 no-outline border-gray border-width-2 left-padding-10 right-padding-10">
                     <option value="user">User</option>
                     <option value="administrator">Administrator</option>

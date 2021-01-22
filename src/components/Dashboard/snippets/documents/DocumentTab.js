@@ -7,7 +7,7 @@ const DocumentTab = ({ label, setTab, tab, index }) =>
         className={`
             ${tab === index ? 'active-tab' : ''} 
             full-height size-pointnine-rem cursor-pointer left-padding-80 right-padding-100 display-flex align-items-center
-        `}>
+        `} data-testid="doc-tab">
         {label}
     </Tab>
 

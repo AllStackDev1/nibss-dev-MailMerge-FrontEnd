@@ -31,7 +31,7 @@ const DocumentTabs = ({ fetch, tab, setTab, documents, fetching }) => {
                     fetch();
                     setTab(1)
                 }}
-                className={`${tab === 1 && activeTabClass} ${tabClasses}`}>
+                className={`${tab === 1 && activeTabClass} ${tabClasses}`} data-testid="tab1">
                 All Documents {renderTabStats(1, 'total_documents', true)}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
@@ -40,7 +40,7 @@ const DocumentTabs = ({ fetch, tab, setTab, documents, fetching }) => {
                     fetch("pending");
                     setTab(2)
                 }}
-                className={`${tab === 2 && activeTabClass} ${tabClasses}`}>
+                className={`${tab === 2 && activeTabClass} ${tabClasses}`} data-testid="tab2">
                 Pending Documents {renderTabStats(2, 'pending_document')}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
@@ -49,7 +49,7 @@ const DocumentTabs = ({ fetch, tab, setTab, documents, fetching }) => {
                     fetch("signed");
                     setTab(3)
                 }}
-                className={`${tab === 3 && activeTabClass} ${tabClasses}`}>
+                className={`${tab === 3 && activeTabClass} ${tabClasses}`} data-testid="tab3">
                 Signed Documents {renderTabStats(3, 'signed_document')}
                 <div className="full-width height-0 smooth"></div>
             </Tab>
@@ -58,7 +58,7 @@ const DocumentTabs = ({ fetch, tab, setTab, documents, fetching }) => {
                     fetch("rejected");
                     setTab(4)
                 }}
-                className={`${tab === 4 && activeTabClass} ${tabClasses}`}>
+                className={`${tab === 4 && activeTabClass} ${tabClasses}`} data-testid="tab4">
                 Rejected Documents {renderTabStats(4, 'rejected_document')}
                 <div className="full-width height-0 smooth"></div>
             </Tab>

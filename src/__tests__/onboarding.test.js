@@ -2,7 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Onboarding from "../components/onboarding/onboarding"
 import { useSelector, Provider } from 'react-redux';
+import configureMockStore from "redux-mock-store"
+import thunk from 'redux-thunk'
 
+const middleware = [thunk]
+const mockStore = configureMockStore(middleware)
 
 
 /**
@@ -42,4 +46,21 @@ describe("component renders", () => {
         const wrapper = shallowSetup()
         expect(wrapper).toBeTruthy();
     })
+})
+
+it("runn", () => {
+
+    const store = mockStore({})
+
+    store.dispatch(jest.fn())
+
+    const wrapper = shallow(
+        <Provider store={store}>
+            <Onboarding />
+        </Provider>
+    )
+
+    wrapper.render()
+
+
 })
