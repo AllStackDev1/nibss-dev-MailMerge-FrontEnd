@@ -13,3 +13,4 @@ it("should click user search result", () => {
     expect(setUploadingDocumentMock.mock.calls.length).toBe(1)
 
 })
+
