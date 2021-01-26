@@ -1,5 +1,5 @@
 export function toFile(dataurl, filename) {
-    var arr = dataurl.split(','),
+    var arr = dataurl?.split(','),
         mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]),
         n = bstr.length,

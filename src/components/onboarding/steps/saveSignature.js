@@ -15,7 +15,7 @@ const SaveSignature = ({ add }) => {
     const dispatch = useDispatch();
 
     const clearCanvas = () => {
-        signatureCanvas.current.clear();
+        signatureCanvas.current?.clear();
     }
 
     const logout = () => {
@@ -30,7 +30,7 @@ const SaveSignature = ({ add }) => {
             let signatureImage;
 
             if (signatureType === "draw") {
-                signatureImage = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
+                signatureImage = signatureCanvas.current?.getTrimmedCanvas().toDataURL('image/svg');
             } else {
                 var style = {
                     font: 'Poppins',
@@ -87,7 +87,7 @@ const SaveSignature = ({ add }) => {
                         signatureType={signatureType}
                         onClick={() => {
                             setSignatureType("write");
-                            signatureCanvas.current.clear();
+                            signatureCanvas.current?.clear();
                         }}
                         optionType="write"
                         image={require(`images/icons/write-signature.svg`)} />

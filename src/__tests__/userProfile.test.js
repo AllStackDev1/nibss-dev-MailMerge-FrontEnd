@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import UserProfile from "../components/Dashboard/UserProfile"
 import { useSelector } from "react-redux";
+import { render, fireEvent } from "@testing-library/react"
+import { BrowserRouter } from 'react-router-dom'
 
 const shallowSetup = (props = {}) => {
     jest.mock("react-redux", () => ({
@@ -74,6 +76,28 @@ describe("user profile setup", () => {
         const wrapper = mount(<UserProfile renderSignatures={renderSignaturesMock} />)
         let renderSignaturesFunc = renderSignaturesMock();
         expect(renderSignaturesMock).toHaveBeenCalledTimes(1)
+    })
+
+    it("should handle tab 1 click", () => {
+
+
+
+        const setTabMock = jest.fn();
+
+        const { getByTestId } = render(<UserProfile />)
+        fireEvent.click(getByTestId("tab1"))
+
+        // expect(setTabMock.mock.calls.length).toBe(1)
+
+    })
+
+    it("should handle tab 2 click", () => {
+
+        const setTabMock = jest.fn();
+        const { getByTestId } = render(<BrowserRouter><UserProfile /></BrowserRouter>)
+        fireEvent.click(getByTestId("tab2"))
+
+        // expect(setTabMock.mock.calls.length).toBe(1)
     })
 
 })

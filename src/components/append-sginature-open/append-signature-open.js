@@ -16,7 +16,7 @@ const AppendSignatureOpen = () => {
     }, [dispatch, documentId]);
 
     return (
-        <div className="full-height-vh full-width display-flex light-brown">
+        <div className="full-height-vh full-width display-flex light-brown" data-testid="append-signature">
             <EmptySidebar />
             <AppendSignature
                 documentId={documentId}

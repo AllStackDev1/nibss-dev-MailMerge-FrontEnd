@@ -6,7 +6,6 @@ import AppendSignatureOpen from "../components/append-sginature-open/append-sign
 
 
 
-
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual('react-router-dom'),
     useParams: () => ({ documentId: 123 }),
@@ -41,4 +40,6 @@ test('create snapshot', () => {
     const wrapper = shallow(<AppendSignatureOpen />)
     expect(wrapper).toMatchSnapshot();
 })
+
+
 
