@@ -18,17 +18,17 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
-it("runn", () => {
+it("should handle searchUser", () => {
 
     const onChangeMock = jest.fn();
     const wrapper = shallowSetup(<UserSearch />);
 
-    const signatureInput = wrapper.find(".height-50");
+    const searchUserDiv = wrapper.find(".height-50");
 
-    expect(signatureInput.length).toBe(1);
+    expect(searchUserDiv.length).toBe(1);
 
 
-    signatureInput.simulate('change', { target: { name: 'email_input', value: 'test@example.com' } })
+    searchUserDiv.simulate('change', { target: { name: 'email_input', value: 'test@example.com' } })
 
     let result = onChangeMock("e");
 

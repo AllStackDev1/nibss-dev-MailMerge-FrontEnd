@@ -95,3 +95,26 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
+it("should upload document", () => {
+
+    const uploadClick = jest.fn();
+
+    const wrapper = shallowSetup();
+    const uploadBtn = wrapper.find("[data-test='uploadbutton']").at(0);
+
+    const btn = uploadClick();
+
+    uploadBtn.simulate("click");
+
+    expect(uploadClick.mock.calls.length).toEqual(1);
+
+
+})
+
+it("should ", () => {
+
+    const wrapper = shallowSetup();
+    expect(wrapper.find(".width-85-percent").length).toBe(1)
+
+})
+

@@ -230,7 +230,7 @@ const Documents = withRouter(({ location }) => {
                         <Tabs fetch={fetch} tab={tab} setTab={setTab} documents={documents} fetching={fetching} />
                         <UploadButton onClick={() => setModal("create-document")}
                             className={`cursor-pointer top-margin-30 bottom-margin-20 full-width height-60 display-flex align-items-center 
-                                justify-center size-pointeight-rem bold`}>
+                                justify-center size-pointeight-rem bold`} data-test="uploadbutton">
                             <img src={require(`images/icons/dashboard/upload.svg`)} className="height-20 right-margin-10" alt="NIBSS Upload Document" />
                             Upload a document
                         </UploadButton>
