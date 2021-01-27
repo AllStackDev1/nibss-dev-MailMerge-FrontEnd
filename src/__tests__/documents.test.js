@@ -111,10 +111,10 @@ it("should upload document", () => {
 
 })
 
-it("should ", () => {
+// it("should ", () => {
 
-    const wrapper = shallowSetup();
-    expect(wrapper.find(".width-85-percent").length).toBe(1)
+//     const wrapper = shallowSetup();
+//     expect(wrapper.find(".width-85-percent").length).toBe(1)
 
-})
+// })
 
