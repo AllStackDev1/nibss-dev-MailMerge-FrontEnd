@@ -64,7 +64,7 @@
     "jest-react-hooks-shallow": "^1.4.2",
     "redux-mock-store": "^1.5.4"
   },
-  "jest":{
+  "jest": {
     "coveragePathIgnorePatterns": [
       "./src/serviceWorker.js",
       "./src/jest.config.js",
@@ -73,6 +73,6 @@
       "./src/components/Dashboard/snippets/append-signature/Trigger.js",
       "./src/store.js",
       "./src/index.js"
-  ]
+    ]
   }
 }
