@@ -35,5 +35,25 @@ it("render component without error", () => {
 })
 
 
+it("should view document", () => {
+
+    const wrapper = shallowSetup();
+    const docList = wrapper.find("DocumentList")
+    docList.prop("viewDocument")({ signed: true })
+
+    expect(wrapper.find("DocumentList")).toBeTruthy();
+})
+
+
+it("should view page", () => {
+
+    const wrapper = shallowSetup();
+    const viewPg = wrapper.find("DocumentList");
+
+    viewPg.prop("viewPage")(3);
+
+    expect(wrapper.find("DocumentList").prop("viewPage")).toBeTruthy()
+
+})
 
 

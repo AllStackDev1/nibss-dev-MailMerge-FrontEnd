@@ -161,7 +161,7 @@ const Documents = withRouter(({ location }) => {
     }
 
     const renderNextContent = () => {
-        if (documents.preparing) {
+        if (documents?.preparing) {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
         return <span>NEXT</span>;
@@ -173,7 +173,7 @@ const Documents = withRouter(({ location }) => {
                 <>
                     {step < 5 &&
                         <BackButton onClick={() => setUploadingDocument(false)}
-                            className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
+                            className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold" data-test="docs-backbtn">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                             BACK
                         </BackButton>}

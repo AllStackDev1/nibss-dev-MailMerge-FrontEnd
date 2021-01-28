@@ -24,7 +24,7 @@ const DashboardIndex = () => {
     }, [documents?.fetching]);
 
     const viewPage = p => {
-        if (p <= documents.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
+        if (p <= documents?.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(documentActions.fetchPage('', p));
             setFetching(true);

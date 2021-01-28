@@ -5,6 +5,7 @@ import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/documentReducer';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from "@testing-library/react"
 
 
 jest.mock("react-router-dom", () => ({
@@ -111,10 +112,51 @@ it("should upload document", () => {
 
 })
 
-// it("should ", () => {
+it("should close modal container", () => {
 
-//     const wrapper = shallowSetup();
-//     expect(wrapper.find(".width-85-percent").length).toBe(1)
+    const wrapper = shallowSetup();
+    const uploadBtn = wrapper.find("[data-test='uploadbutton']").at(0);
 
-// })
+
+    uploadBtn.simulate("click", { setModal: "create-document" });
+
+
+    wrapper.update()
+
+    expect(wrapper.find("ModalContainer").length).toBe(1)
+    const closeModalClick = wrapper.find("ModalContainer");
+
+
+    closeModalClick.simulate("click", { setModal: "" })
+
+})
+
+
+it("should create document", () => {
+
+    const wrapper = shallowSetup();
+    const uploadBtn = wrapper.find("[data-test='uploadbutton']").at(0);
+
+
+    uploadBtn.simulate("click", { setModal: "create-document" });
+
+    const closeModalDiv = wrapper.find("CreateDocument");
+    closeModalDiv.simulate("click", { setModal: "" })
+
+    act(() => {
+        closeModalDiv.prop("setUploadingDocument")(true)
+    })
+
+    expect(closeModalDiv.length).toBe(1)
+
+    wrapper.update()
+
+    const backBtnEle = wrapper.find("[data-test='docs-backbtn']").at(0)
+
+    backBtnEle.simulate("click");
+
+    expect(backBtnEle).toBeTruthy()
+
+})
+
 
