@@ -171,7 +171,7 @@ const Recipients = ({ user }) => {
     const renderModal = () => {
         if (modal === "add-recipient" || modal === "edit-recipient") {
             return <AddRecipient
-                recipient={recipient} editRecipient={editRecipient} modal={modal} creating={recipients.addingRecipient || recipients.editingRecipient}
+                recipient={recipient} editRecipient={editRecipient} modal={modal} creating={recipients?.addingRecipient || recipients?.editingRecipient}
                 onChange={onChangeRecipient} onChangeEdit={onChangeRecipientEdit} onSubmit={addRecipient}
                 closeModal={() => {
                     setModal("");

@@ -5,6 +5,7 @@ import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/recipientReducer';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from "@testing-library/react"
 
 
 jest.mock("react-router-dom", () => ({
@@ -77,6 +78,25 @@ it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
 })
+
+it("should set modal on toolbox", () => {
+
+    const wrapper = shallowSetup()
+    const tollboxEle = wrapper.find("Toolbox");
+    act(() => {
+        tollboxEle.prop("setModal")("add-recipient")
+    })
+
+    wrapper.update()
+
+    const modalCont = wrapper.find("ModalContainer");
+    modalCont.simulate("click", { setModal: "" })
+
+
+    expect(wrapper.find("Toolbox").length).toBe(1)
+})
+
+
 
 
 
