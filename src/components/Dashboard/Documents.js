@@ -161,7 +161,7 @@ const Documents = withRouter(({ location }) => {
     }
 
     const renderNextContent = () => {
-        if (documents.preparing) {
+        if (documents?.preparing) {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         }
         return <span>NEXT</span>;
@@ -173,7 +173,7 @@ const Documents = withRouter(({ location }) => {
                 <>
                     {step < 5 &&
                         <BackButton onClick={() => setUploadingDocument(false)}
-                            className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
+                            className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold" data-test="docs-backbtn">
                             <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                             BACK
                         </BackButton>}
@@ -230,7 +230,7 @@ const Documents = withRouter(({ location }) => {
                         <Tabs fetch={fetch} tab={tab} setTab={setTab} documents={documents} fetching={fetching} />
                         <UploadButton onClick={() => setModal("create-document")}
                             className={`cursor-pointer top-margin-30 bottom-margin-20 full-width height-60 display-flex align-items-center 
-                                justify-center size-pointeight-rem bold`}>
+                                justify-center size-pointeight-rem bold`} data-test="uploadbutton">
                             <img src={require(`images/icons/dashboard/upload.svg`)} className="height-20 right-margin-10" alt="NIBSS Upload Document" />
                             Upload a document
                         </UploadButton>

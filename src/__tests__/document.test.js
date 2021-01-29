@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import Document from "../components/Dashboard/empty-states/Document"
 import { useSelector } from 'react-redux';
+import { render } from "@testing-library/react"
 
 
 
@@ -43,6 +44,14 @@ it("should render without errors", () => {
 it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
+})
+
+it("should render", () => {
+
+    const vDocsMocks = jest.fn()
+
+    const { getByTestId } = render(<Document viewDocument={vDocsMocks} />)
+    // expect(getByTestId("container-parent")).toBeTruthy();
 })
 
 

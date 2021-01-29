@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { mount } from 'enzyme';
 import Users from "../components/Dashboard/Users"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/userReducer';
 import { BrowserRouter } from 'react-router-dom';
+import ModalContainer from '../components/Dashboard/modals/ModalContainer'
+import UserList from "../components/Dashboard/snippets/UserList"
 
 
 jest.mock("react-router-dom", () => ({
@@ -51,6 +53,7 @@ describe("component renders", () => {
     });
 
 
+
     it("should render without errors", () => {
 
         const wrapper = shallowSetup();
@@ -63,6 +66,21 @@ describe("component renders", () => {
 it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
+})
+
+it("runnn", () => {
+
+    const wrapper = shallowSetup({ user: { _id: "123" } });
+    const modalCont = wrapper.setProps({
+        children:
+            (
+                <BrowserRouter>
+                    <UserList setModal={jest.fn()} />
+                </BrowserRouter>
+            )
+    })
+
+
 })
 
 

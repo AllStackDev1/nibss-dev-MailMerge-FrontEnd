@@ -5,6 +5,7 @@ import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/recipientReducer';
 import { BrowserRouter } from 'react-router-dom';
+import { act } from "@testing-library/react"
 
 
 jest.mock("react-router-dom", () => ({
@@ -77,6 +78,75 @@ it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
 })
+
+it("should set modal on toolbox", () => {
+
+    const wrapper = shallowSetup()
+    const toolboxEle = wrapper.find("Toolbox");
+    act(() => {
+        toolboxEle.prop("setModal")("add-recipient")
+    })
+
+    wrapper.update()
+
+    const modalCont = wrapper.find("ModalContainer");
+    modalCont.simulate("click", { setModal: "" })
+
+    act(() => {
+        expect(wrapper.find("Toolbox").length).toBe(1)
+    })
+
+
+    act(() => {
+        toolboxEle.prop("closeTags")()
+    })
+    expect(toolboxEle.prop("closeTags")).toBeTruthy()
+
+    act(() => {
+        toolboxEle.prop("onChange")({ target: { name: "name", value: "1234" } })
+    })
+    expect(toolboxEle.prop("onChange")).toBeTruthy()
+
+    act(() => {
+        toolboxEle.prop("addFilter")()
+        toolboxEle.prop("removeFilter")()
+    })
+
+
+})
+
+it("should handle view tags", () => {
+
+    const wrapper = shallowSetup()
+    const viewTagEle = wrapper.find("ViewTag")
+
+    act(() => {
+        viewTagEle.prop("deleteTag")("tag")
+    })
+    expect(viewTagEle.prop("deleteTag")).toBeTruthy()
+
+    act(() => {
+        viewTagEle.prop("addTagsToRecipient")()
+    })
+    expect(viewTagEle.prop("addTagsToRecipient")).toBeTruthy()
+
+})
+
+it("should handle recipient list", () => {
+
+    const wrapper = shallowSetup()
+    const recipientListEle = wrapper.find("RecipientList")
+
+    act(() => {
+        recipientListEle.prop("initiateEdit")("id123")
+        recipientListEle.prop("initiateDeleteRecipient")("id123")
+    })
+
+})
+
+
+
+
 
 
 

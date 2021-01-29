@@ -57,7 +57,7 @@ const UserProfile = () => {
     }
 
     const renderSignatures = () => {
-        return auth.profile?.signatures?.map((signature, index) =>
+        return auth?.profile?.signatures?.map((signature, index) =>
             <Signature
                 signature={signature}
                 key={index} />
@@ -74,14 +74,14 @@ const UserProfile = () => {
                     <Tab
                         onClick={() => setTab(1)}
                         className={`${tab === 1 ? "active-tab" : ""} 
-                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
+                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`} data-testid="tab1">
                         My Profile
                         <div></div>
                     </Tab>
                     <Tab
                         onClick={() => setTab(2)}
                         className={`${tab === 2 ? "active-tab" : ""} 
-                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`}>
+                            left-padding-50 right-padding-50 display-flex align-items-center size-pointnine-rem cursor-pointer`} data-testid="tab2">
                         Saved signature
                         <div></div>
                     </Tab>
@@ -89,7 +89,7 @@ const UserProfile = () => {
                 {tab === 1 ?
                     <form onSubmit={updateProfile}>
                         <div className="width-50-percent top-margin-20">
-                            <input type="text" name="name" value={user.name || ""} onChange={onChange} placeholder="First Name" className="bottom-margin-20" required />
+                            <input type="text" name="name" value={user?.name || ""} onChange={onChange} placeholder="First Name" className="bottom-margin-20" required />
                             <input type="text" name="mobile" value={user.mobile || ""} onChange={onChange} placeholder="Phone" className="bottom-margin-20" required />
                             <input type="email" name="email" value={user.email || ""} onChange={onChange} placeholder="Email address" className="bottom-margin-20" required />
                             <button

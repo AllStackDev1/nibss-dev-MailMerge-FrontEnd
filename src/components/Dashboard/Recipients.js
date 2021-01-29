@@ -158,7 +158,7 @@ const Recipients = ({ user }) => {
 
     const initiateEdit = r => {
         setToAddTag(r);
-        setToAddTags(recipients.recipients.data.find(rec => rec._id === r).tag);
+        setToAddTags(recipients?.recipients.data.find(rec => rec._id === r).tag);
         setViewingTags(true);
     }
 
@@ -171,7 +171,7 @@ const Recipients = ({ user }) => {
     const renderModal = () => {
         if (modal === "add-recipient" || modal === "edit-recipient") {
             return <AddRecipient
-                recipient={recipient} editRecipient={editRecipient} modal={modal} creating={recipients.addingRecipient || recipients.editingRecipient}
+                recipient={recipient} editRecipient={editRecipient} modal={modal} creating={recipients?.addingRecipient || recipients?.editingRecipient}
                 onChange={onChangeRecipient} onChangeEdit={onChangeRecipientEdit} onSubmit={addRecipient}
                 closeModal={() => {
                     setModal("");
@@ -183,7 +183,7 @@ const Recipients = ({ user }) => {
             return <CreateTag tag={tag} creating={recipients.addingTag} onChange={onChangeTag} onSubmit={addTag} closeModal={() => setModal("")} />
         }
         if (modal === "delete-tag") {
-            return <DeleteTag deleting={recipients.deletingTag} onSubmit={deleteTag}
+            return <DeleteTag deleting={recipients?.deletingTag} onSubmit={deleteTag}
                 closeModal={() => {
                     setModal("");
                     setTagToDelete({});
@@ -191,7 +191,7 @@ const Recipients = ({ user }) => {
         }
         if (modal === "delete-recipient") {
             return <DeleteRecipient
-                deleting={recipients.deleting} onSubmit={deleteRecipient}
+                deleting={recipients?.deleting} onSubmit={deleteRecipient}
                 closeModal={() => {
                     setModal("");
                     setRecipientToDelete({});

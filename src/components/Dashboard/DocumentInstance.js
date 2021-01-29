@@ -154,7 +154,7 @@ const DocumentInstance = ({ user }) => {
 
     return (
         <div className="full-width full-height custom-scrollbar overflow-auto-y bottom-padding-20 border-box left-padding-30 right-padding-30">
-            <BackButton onClick={goBack} className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold">
+            <BackButton onClick={goBack} className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold" data-test="backbtn">
                 <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                 BACK
             </BackButton>

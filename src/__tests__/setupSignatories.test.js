@@ -6,7 +6,7 @@ import SetupSignatories from "../components/Dashboard/snippets/documents/SetupSi
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<SetupSignatories />)
+    return shallow(<SetupSignatories {...props} />)
 }
 
 describe('handle setup signatoies component', () => {
@@ -34,5 +34,13 @@ describe('handle setup signatoies component', () => {
 it('should match snapshot', () => {
     const wrapper = shallowSetup()
     expect(wrapper).toMatchSnapshot();
+})
+
+it("runn", () => {
+
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } });
+
+
+
 })
 

@@ -15,7 +15,7 @@ const SaveSignature = ({ add }) => {
     const dispatch = useDispatch();
 
     const clearCanvas = () => {
-        signatureCanvas.current.clear();
+        const signatureCanvasCurrent = signatureCanvas.current?.clear()
     }
 
     const logout = () => {
@@ -30,7 +30,7 @@ const SaveSignature = ({ add }) => {
             let signatureImage;
 
             if (signatureType === "draw") {
-                signatureImage = signatureCanvas.current.getTrimmedCanvas().toDataURL('image/svg');
+                signatureImage = signatureCanvas.current?.getTrimmedCanvas().toDataURL('image/svg');
             } else {
                 var style = {
                     font: 'Poppins',
@@ -55,7 +55,7 @@ const SaveSignature = ({ add }) => {
     }
 
     const renderUploadProgress = () => {
-        if (!auth.uploading) {
+        if (!auth?.uploading) {
             return <span>SAVE</span>;
         }
 
@@ -87,7 +87,8 @@ const SaveSignature = ({ add }) => {
                         signatureType={signatureType}
                         onClick={() => {
                             setSignatureType("write");
-                            signatureCanvas.current.clear();
+                            // signatureCanvas.current?.clear();
+                            const signatureCanvasCurrent = signatureCanvas.current?.clear()
                         }}
                         optionType="write"
                         image={require(`images/icons/write-signature.svg`)} />
@@ -137,7 +138,7 @@ const SaveSignature = ({ add }) => {
                 <p onClick={logout} className="mustard-color size-pointeight-rem bold cursor-pointer">LOGOUT</p>
                 <button
                     onClick={saveSignature}
-                    disabled={auth.uploading}
+                    disabled={auth?.uploading}
                     className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
                     {renderUploadProgress()}
                 </button>
