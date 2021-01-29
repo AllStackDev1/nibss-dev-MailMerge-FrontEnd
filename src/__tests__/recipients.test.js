@@ -82,9 +82,9 @@ it('should match snapshot', () => {
 it("should set modal on toolbox", () => {
 
     const wrapper = shallowSetup()
-    const tollboxEle = wrapper.find("Toolbox");
+    const toolboxEle = wrapper.find("Toolbox");
     act(() => {
-        tollboxEle.prop("setModal")("add-recipient")
+        toolboxEle.prop("setModal")("add-recipient")
     })
 
     wrapper.update()
@@ -92,9 +92,59 @@ it("should set modal on toolbox", () => {
     const modalCont = wrapper.find("ModalContainer");
     modalCont.simulate("click", { setModal: "" })
 
+    act(() => {
+        expect(wrapper.find("Toolbox").length).toBe(1)
+    })
 
-    expect(wrapper.find("Toolbox").length).toBe(1)
+
+    act(() => {
+        toolboxEle.prop("closeTags")()
+    })
+    expect(toolboxEle.prop("closeTags")).toBeTruthy()
+
+    act(() => {
+        toolboxEle.prop("onChange")({ target: { name: "name", value: "1234" } })
+    })
+    expect(toolboxEle.prop("onChange")).toBeTruthy()
+
+    act(() => {
+        toolboxEle.prop("addFilter")()
+        toolboxEle.prop("removeFilter")()
+    })
+
+
 })
+
+it("should handle view tags", () => {
+
+    const wrapper = shallowSetup()
+    const viewTagEle = wrapper.find("ViewTag")
+
+    act(() => {
+        viewTagEle.prop("deleteTag")("tag")
+    })
+    expect(viewTagEle.prop("deleteTag")).toBeTruthy()
+
+    act(() => {
+        viewTagEle.prop("addTagsToRecipient")()
+    })
+    expect(viewTagEle.prop("addTagsToRecipient")).toBeTruthy()
+
+})
+
+it("should handle recipient list", () => {
+
+    const wrapper = shallowSetup()
+    const recipientListEle = wrapper.find("RecipientList")
+
+    act(() => {
+        recipientListEle.prop("initiateEdit")("id123")
+        recipientListEle.prop("initiateDeleteRecipient")("id123")
+    })
+
+})
+
+
 
 
 
