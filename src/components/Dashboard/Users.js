@@ -116,14 +116,14 @@ const Users = ({ user: localUser }) => {
         if (modal === "edit-user") {
             return <EditUser
                 user={user}
-                editing={users.editing}
+                editing={users?.editing}
                 onChange={onChangeUser}
                 onSubmit={editUser} />
         }
 
         if (modal === "delete-user") {
             return <DeleteUser
-                deleting={users.deleting}
+                deleting={users?.deleting}
                 onSubmit={deleteUser}
                 closeModal={() => {
                     setModal("");

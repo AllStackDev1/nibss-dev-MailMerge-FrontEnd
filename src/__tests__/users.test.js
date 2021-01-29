@@ -5,8 +5,9 @@ import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/userReducer';
 import { BrowserRouter } from 'react-router-dom';
-import ModalContainer from '../components/Dashboard/modals/ModalContainer'
 import UserList from "../components/Dashboard/snippets/UserList"
+import { act } from "@testing-library/react"
+
 
 
 jest.mock("react-router-dom", () => ({
@@ -80,7 +81,66 @@ it("runnn", () => {
             )
     })
 
+})
+
+it("should render edit user modal", () => {
+    const wrapper = shallowSetup();
+    const userListEle = wrapper.find("UserList");
+
+    act(() => {
+        userListEle.prop("setModal")("edit-user")
+    })
+    expect(userListEle.prop("setModal")).toBeTruthy()
+})
+
+it("should render delete user modal", () => {
+    const wrapper = shallowSetup();
+    const userListEle = wrapper.find("UserList");
+
+    act(() => {
+        userListEle.prop("setModal")("delete-user")
+    })
+    expect(userListEle.prop("setModal")).toBeTruthy()
+})
+
+it("should initiate delete user modal", () => {
+
+    const wrapper = shallowSetup();
+    const userListEle = wrapper.find("UserList");
+
+    act(() => {
+        userListEle.prop("initiateDeleteUser")({ _id: "123" })
+    })
+    expect(userListEle.prop("initiateDeleteUser")).toBeTruthy()
 
 })
 
 
+it("should update role", () => {
+
+    const wrapper = shallowSetup();
+    const userListEle = wrapper.find("UserList");
+
+    act(() => {
+        userListEle.prop("updateRole")({ _id: "123" })
+    })
+    expect(userListEle.prop("updateRole")).toBeTruthy()
+
+})
+
+it("should handle close modal", () => {
+
+    const wrapper = shallowSetup();
+    const userListEle = wrapper.find("UserList");
+
+    act(() => {
+        userListEle.prop("setModal")("edit-user")
+    })
+
+    wrapper.update()
+
+    const modalContainerDiv = wrapper.find("ModalContainer");
+
+    modalContainerDiv.simulate("click")
+
+})
