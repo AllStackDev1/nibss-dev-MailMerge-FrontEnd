@@ -72,7 +72,8 @@
       "./src/helpers/getImageSize.js",
       "./src/components/Dashboard/snippets/append-signature/Trigger.js",
       "./src/store.js",
-      "./src/index.js"
+      "./src/index.js",
+      "src/reducers/index.js"
     ]
   }
 }

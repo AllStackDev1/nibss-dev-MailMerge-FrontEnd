@@ -54,4 +54,3 @@ it("should render snap", () => {
 })
 
 
-
