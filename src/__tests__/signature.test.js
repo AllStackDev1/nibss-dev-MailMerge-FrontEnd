@@ -51,3 +51,34 @@ it("should handle sign document", () => {
 
 })
 
+it("should handle delete signature", () => {
+
+    const wrapper = shallowSetup();
+    const buttonElem = wrapper.find("button");
+
+    buttonElem.prop("onClick")()
+
+    const deleteSignatureElem = wrapper.find("[data-test='delete-signature']")
+    deleteSignatureElem.prop("closeModal")()
+
+    deleteSignatureElem.prop("onSubmit")()
+
+})
+
+it("should handle modal container", () => {
+
+    const wrapper = shallowSetup();
+    const buttonElem = wrapper.find("button");
+
+    buttonElem.prop("onClick")()
+
+    wrapper.update()
+
+    const modalConElem = wrapper.find("[data-test='modal-container']");
+
+    modalConElem.prop("closeModal")("")
+
+    wrapper.update()
+
+})
+
