@@ -33,3 +33,25 @@ it("should run signatories", () => {
 
 })
 
+it("should handle document tag", () => {
+
+    const wrapper = shallowSetup({ setNumPages: jest.fn(), docRef: { current: ["doc1", "doc2"] } });
+    const docEle = wrapper.find("Document");
+
+    docEle.prop("onLoadSuccess")({ numPages: 9 })
+
+    expect(docEle.prop("onLoadSuccess")).toBeTruthy()
+
+})
+
+it("should set 75% as page container width", () => {
+
+    const wrapper = shallowSetup({ isNumPagesSet: true })
+
+    const pageContainerEle = wrapper.find(".bottom-margin-20");
+
+    expect(pageContainerEle).toBeTruthy()
+    expect(wrapper.find(".bottom-margin-20")).toBeTruthy();
+
+})
+

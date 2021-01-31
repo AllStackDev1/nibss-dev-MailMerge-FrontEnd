@@ -84,6 +84,9 @@ it("should click on the next tab 3", () => {
     })
     wrapper.update()
 
+    expect(wrapper.find("img").length).toBe(1)
+
     expect(wrapper.find("DocumentTab").at(2).prop("setTab")).toBeTruthy()
 
 })
+

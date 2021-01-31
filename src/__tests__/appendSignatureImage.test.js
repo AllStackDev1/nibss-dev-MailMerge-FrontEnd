@@ -21,4 +21,17 @@ it("shouls render snapshot", () => {
 
 })
 
+it("should load image error", () => {
+
+    const wrapper = shallowSetup({
+        setImageError: jest.fn()
+    });
+    const signatureImg = wrapper.find(".right-margin-10");
+
+    signatureImg.prop("onError")();
+    expect(signatureImg.prop("onError")).toBeTruthy();
+
+    signatureImg.prop("onLoad")({ target: "200" })
+
+})
 

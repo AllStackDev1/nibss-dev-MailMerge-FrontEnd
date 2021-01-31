@@ -159,4 +159,14 @@ it("should create document", () => {
 
 })
 
+it("runn", () => {
+
+    const wrapper = shallowSetup();
+    const docList = wrapper.find("DocumentList");
+
+    docList.prop("viewDocument")({ _id: "123" })
+
+
+})
+
 
