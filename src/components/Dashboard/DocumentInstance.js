@@ -26,10 +26,10 @@ const DocumentInstance = ({ user }) => {
     }, [dispatch, documentId]);
 
     useEffect(() => {
-        if (documents?.fetchingSingle === false && documents?.document) {
+        if (documents.fetchingSingle === false && documents.document) {
             setDocument(documents.document);
         }
-    }, [documents?.fetchingSingle, documents?.document]);
+    }, [documents.fetchingSingle, documents.document]);
 
     const goBack = () => {
         dispatch(push('/dashboard/documents'));

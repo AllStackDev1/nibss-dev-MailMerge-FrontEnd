@@ -18,10 +18,10 @@ const DashboardIndex = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (documents?.fetching === false) {
+        if (documents.fetching === false) {
             setFetching(false);
         }
-    }, [documents?.fetching]);
+    }, [documents.fetching]);
 
     const viewPage = p => {
         if (p <= documents?.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
