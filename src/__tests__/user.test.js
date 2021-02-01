@@ -11,7 +11,7 @@ const shallowSetup = (props = {}) => {
 
 it('should match snapshot', () => {
     const wrapper = shallowSetup()
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot()
 })
 
 

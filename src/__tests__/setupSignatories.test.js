@@ -36,11 +36,13 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
-it("runn", () => {
+it("should submit form", () => {
 
-    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } });
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] }, selectUser: jest.fn() });
+    const formElem = wrapper.find("form").at(1)
 
+    formElem.simulate("submit", { preventDefault: () => { } })
 
-
+    expect(formElem).toBeTruthy()
 })
 

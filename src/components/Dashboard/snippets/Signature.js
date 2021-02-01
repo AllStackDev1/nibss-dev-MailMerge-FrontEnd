@@ -37,19 +37,18 @@ const Signature = ({ signature }) => {
                 closeModal={() => {
                     setModal("");
                     setToDelete({});
-                }} />
+                }} data-test="delete-signature" />
         }
-
         return <div></div>
     }
 
     return (
         <>
             {modal !== "" ?
-                <ModalContainer closeModal={() => setModal("")}>
+                <ModalContainer closeModal={() => setModal("")} data-test="modal-container">
                     {renderModals()}
                 </ModalContainer>
-                : ""}
+                : <div className="modal-t"></div>}
             <SignatureContainer url={signature} className="bottom-margin-20 display-flex flex-direction-column">
                 <div className="full-width full-height display-flex align-items-center justify-center">
                     <div className="width-80-percent height-60-percent"></div>
