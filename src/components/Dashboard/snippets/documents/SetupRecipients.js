@@ -74,7 +74,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
                     type="checkbox"
                     id={`recipient-${index}`}
                     className="checkbox-s"
-                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} data-test="checkbox-input" />
                 <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
                 <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
                     <Profile

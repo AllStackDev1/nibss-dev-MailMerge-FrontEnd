@@ -20,7 +20,7 @@ const Preview = ({ onChange }) => {
                 onChange(draftToHtml(convertToRaw(changedEditorState.getCurrentContent())));
             }}
             placeholder="Write something"
-        />
+            data-test="preview" />
     );
 };
 

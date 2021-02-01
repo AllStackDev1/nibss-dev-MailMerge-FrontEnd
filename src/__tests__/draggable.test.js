@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
 import Draggable from "../components/Dashboard/snippets/documents/Draggable"
-import { createStore } from 'redux';
-import reducer from '../reducers/userReducer';
-import { useSelector, Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-
+import { act } from "@testing-library/react"
 
 
 /**
@@ -17,7 +13,7 @@ import { BrowserRouter } from 'react-router-dom';
 const shallowSetup = (props = {}) => {
 
     return mount(
-        <Draggable />
+        <Draggable {...props} />
     )
 
 }
@@ -36,5 +32,27 @@ describe("component renders", () => {
         const wrapper = shallowSetup();
         expect(wrapper).toBeTruthy();
     })
+})
+
+it("should handle mouse down zero button", () => {
+
+    const wrapper = shallowSetup();
+    const containerElem = wrapper.find(".full-width").at(0)
+
+    containerElem.prop("onMouseDown")({ button: 2 })
+
+    expect(containerElem.prop("onMouseDown")).toBeTruthy()
+
+})
+
+it("should handle drag position", () => {
+
+    const wrapper = shallowSetup({ setSignatoryDragged: jest.fn() });
+    const containerElem = wrapper.find(".full-width").at(0)
+
+    act(() => {
+        containerElem.prop("onMouseDown")({ button: 0, stopPropagation: jest.fn(), preventDefault: jest.fn() })
+    })
+
 })
 
