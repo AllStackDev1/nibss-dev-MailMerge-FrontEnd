@@ -62,3 +62,15 @@ it("should click tab 4", () => {
 
 })
 
+it("should render tab stats", () => {
+
+    const fetchMock = jest.fn();
+    const setTabMock = jest.fn();
+
+    const { getByTestId } = render(<Tabs fetch={fetchMock} setTab={setTabMock} documents={{ documents: {} }} />)
+    fireEvent.click(getByTestId("tab1"))
+
+    expect(setTabMock.mock.calls.length).toBe(1)
+
+
+})

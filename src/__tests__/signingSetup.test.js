@@ -6,7 +6,7 @@ import SigningSetup from "../components/Dashboard/snippets/documents/SigningSetu
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<SigningSetup />)
+    return shallow(<SigningSetup {...props} />)
 }
 
 describe('handle signing setup component', () => {
@@ -35,6 +35,16 @@ it("should handle signatories panel", () => {
     expect(wrapper.find("SignatoriesPanel").prop("mouseUp")()).toBeTruthy();
 
 })
+
+it("should render files", () => {
+
+    const wrapper = shallowSetup({ documentFiles: ["file ;base64 imagees"], placeholders: [{ page: "placeholder" }] });
+    const pdfContElem = wrapper.find(".min-width-70-percent");
+
+    expect(pdfContElem.length).toBe(1)
+
+})
+
 
 
 

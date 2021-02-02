@@ -46,3 +46,13 @@ it("should submit form", () => {
     expect(formElem).toBeTruthy()
 })
 
+it("runn", () => {
+
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } })
+    const inputElem = wrapper.find("[data-test='input-name']")
+
+    inputElem.simulate("change", { target: { name: "name", value: "value" } })
+    expect(inputElem.length).toBe(1)
+
+
+})
