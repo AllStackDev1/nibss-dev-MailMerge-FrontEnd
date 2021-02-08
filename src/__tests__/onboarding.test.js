@@ -56,9 +56,6 @@ it("runn", () => {
     console.log(wrapper.debug());
 
     const onboardingCon = wrapper.find("OnboardingContainer");
-
-    console.log(onboardingCon.debug());
-
     onboardingCon.prop("userLocal", { data: { role: "administrator", status: "active" } })
 
 })

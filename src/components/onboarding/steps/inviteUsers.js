@@ -106,7 +106,7 @@ const InviteUsers = ({ add }) => {
                 <button
                     disabled={user?.invitingUsers}
                     onClick={sendInvites}
-                    className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center">
+                    className="left-padding-30 right-padding-30 height-45 mustard white-color border-radius-2 display-flex justify-center align-items-center" data-test="save-btn">
                     {user?.invitingUsers ?
                         <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                         :

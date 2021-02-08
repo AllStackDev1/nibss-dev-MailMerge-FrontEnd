@@ -43,6 +43,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 }
             });
 
+
             const imageSize = await getImageSize(documentContainer.current.querySelector('img'));
 
             setPlaceholders(currentPlaceholders => {
@@ -132,7 +133,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                     e.preventDefault();
                     setHovering(true);
                 }}
-                onMouseLeave={e => setHovering(false)}>
+                onMouseLeave={e => setHovering(false)} data-test="page-container">
                 <img src={documentFile} className="full-width right-margin-10" alt="NIBSS Upload Document" />
                 {placeholders.map((placeholder, i) =>
                     <div
@@ -157,7 +158,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                             e.preventDefault();
                             setHovering(true);
                         }}
-                        onMouseLeave={e => setHovering(false)}>
+                        onMouseLeave={e => setHovering(false)} data-test="page-containe-1">
                         <Page width={550} key={`page_${i + 1}`} pageNumber={i + 1} />
                         {placeholders.map((placeholder, placeholderIndex) =>
                             placeholder.page === placeholderIndex ?
@@ -178,6 +179,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 <Document
                     file={documentFile}
                     onLoadSuccess={onDocumentLoadSuccess}
+                    data-test="page-document"
                 >
                     {[...Array(numPages)].map((el, i) => (
                         <PageContainer
@@ -188,7 +190,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                                 e.preventDefault();
                                 setHovering(true);
                             }}
-                            onMouseLeave={e => setHovering(false)}>
+                            onMouseLeave={e => setHovering(false)} data-test="page-containe-2">
                             <Page key={`page_${i + 1}`} pageNumber={i + 1} />
                         </PageContainer>
                     ))}
