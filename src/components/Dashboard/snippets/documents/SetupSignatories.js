@@ -32,7 +32,9 @@ const SetupSignatories = ({ selectUser, document }) => {
                     <form>
                         <UserSearch
                             selectUser={selectUser} />
-                        <DocumentButton type="submit" className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
+                        <DocumentButton
+                            type="submit"
+                            className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
                             <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
                         </DocumentButton>
                     </form>
@@ -41,7 +43,9 @@ const SetupSignatories = ({ selectUser, document }) => {
                             <div
                                 key={key}
                                 className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
-                                    ${key !== document.signatories.filter(filterSignature => filterSignature.nibss === true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
+                                    ${key !== document.signatories.filter(filterSignature => filterSignature.nibss === true).length - 1 ?
+                                        'border-light-gray-2-dashed' : ''
+                                    }`}>
                                 <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
                                     <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
                                     <span className="uppercase size-pointeight-rem">{mapSignature.name}</span>
@@ -56,9 +60,21 @@ const SetupSignatories = ({ selectUser, document }) => {
                 <div className="width-50-percent right-padding-10 overflow-auto-y custom-scrollbar left-padding-60 border-box">
                     <p className="size-pointnine-rem bold bottom-margin-15">External members</p>
                     <form onSubmit={addSignatory}>
-                        <input type="text" name="name" onChange={onChange} value={signatory.name || ""} placeholder="Full Name" className="height-50 bottom-margin-10" required />
-                        <input type="email" name="email" onChange={onChange} value={signatory.email || ""} placeholder="Email address" className="height-50" required />
-                        <DocumentButton type="submit" className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
+                        <input
+                            type="text"
+                            name="name"
+                            onChange={onChange}
+                            value={signatory.name || ""}
+                            placeholder="Full Name" className="height-50 bottom-margin-10" required />
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={onChange}
+                            value={signatory.email || ""}
+                            placeholder="Email address" className="height-50" required />
+                        <DocumentButton
+                            type="submit"
+                            className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
                             <span className="mustard-color bold size-pointeightfive-rem">ADD</span>
                         </DocumentButton>
                     </form>
@@ -67,7 +83,9 @@ const SetupSignatories = ({ selectUser, document }) => {
                             <div
                                 key={key}
                                 className={`user display-flex flex-wrap full-width cursor-pointer top-padding-20 
-                                    ${key !== document.signatories.filter(filterSignature => filterSignature.nibss !== true).length - 1 ? 'border-light-gray-2-dashed' : ''}`}>
+                                    ${key !== document.signatories.filter(filterSignature => filterSignature.nibss !== true).length - 1 ?
+                                        'border-light-gray-2-dashed' : ''
+                                    }`}>
                                 <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
                                     <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
                                     <span className="uppercase size-pointeight-rem">{mapSignature.name}</span>

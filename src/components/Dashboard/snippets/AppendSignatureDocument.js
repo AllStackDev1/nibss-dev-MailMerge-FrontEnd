@@ -1,7 +1,7 @@
 import React from 'react';
 import { Document, Page, pdfjs } from "react-pdf";
-import Trigger from "./append-signature/Trigger";
 import styled from 'styled-components';
+import Signatures from './append-signature/Signatures';
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatories, setModal, numPages, setNumPages,
@@ -49,12 +49,13 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
                     ref={docRef?.current[index]}
                     className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
                     <Page width={pageWidth} key={`page_${index + 1}`} pageNumber={index + 1} />
-                    {signatories?.map((signatory, i) =>
-                        signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
-                            <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                                user={user} userToken={userToken} />
-                            : <div></div>
-                    )}
+                    <Signatures
+                        signatories={signatories}
+                        signDocumentConst={signDocumentConst}
+                        setModal={setModal}
+                        index={index}
+                        user={user}
+                        userToken={userToken} />
                 </PageContainer>
             ))}
         </Document>
