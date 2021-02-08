@@ -87,8 +87,7 @@ const SaveSignature = ({ add }) => {
                         signatureType={signatureType}
                         onClick={() => {
                             setSignatureType("write");
-                            // signatureCanvas.current?.clear();
-                            const signatureCanvasCurrent = signatureCanvas.current?.clear()
+                            signatureCanvas.current?.clear()
                         }}
                         optionType="write"
                         image={require(`images/icons/write-signature.svg`)} />
