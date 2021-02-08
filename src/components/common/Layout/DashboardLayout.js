@@ -62,7 +62,7 @@ class DashboardLayout extends React.Component {
                         innerLink: "/admin/index",
                         imgAlt: "..."
                     }}
-                />
+                data-test="sidebar"/>
                 <div className="flex-grow-1 full-width">
                     <Switch>
                         {this.getRoutes(routes)}

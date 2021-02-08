@@ -3,11 +3,19 @@ import { authConstants } from "../constants"
 import thunk from 'redux-thunk'
 import configureMockStore from "redux-mock-store"
 import fetchMock from 'fetch-mock'
+import nock from "nock"
 
 
 const middleware = [thunk]
 const mockStore = configureMockStore(middleware)
 const applicationJson = 'application/json'
+
+
+const mockServiceCreator = (body, succeeds = true) => () => {
+    new Promise((resolve, reject) => {
+        setTimeout(() => (succeeds ? resolve(body) : reject(body)), 10)
+    })
+}
 
 test("login actions", () => {
     const data = {
@@ -22,7 +30,12 @@ test("login actions", () => {
         headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
-    store.dispatch(actions.authActions.login({ email_input: "exa" }))
+
+    nock("https://localhost:3000")
+        .post(data)
+        .reply(200, {})
+
+    store.dispatch(actions.authActions.login({ email_input: "exa" }, mockServiceCreator({ email_input: "exa" })))
 
     expect(store.getActions()).toEqual([{ type: authConstants.LOGIN_REQUEST }])
 
