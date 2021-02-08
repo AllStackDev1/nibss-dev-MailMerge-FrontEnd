@@ -50,17 +50,12 @@ describe("component renders", () => {
 
 it("runn", () => {
 
-    const store = mockStore({})
 
-    store.dispatch(jest.fn())
+    const wrapper = shallowSetup()
 
-    const wrapper = shallow(
-        <Provider store={store}>
-            <Onboarding />
-        </Provider>
-    )
+    console.log(wrapper.debug());
 
-    wrapper.render()
-
+    const onboardingCon = wrapper.find("OnboardingContainer");
+    onboardingCon.prop("userLocal", { data: { role: "administrator", status: "active" } })
 
 })

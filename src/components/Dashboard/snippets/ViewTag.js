@@ -27,7 +27,7 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
                 }}
                 className={`${deleting === tag ? 'opacity-0-5' : ''} 
                             ${toAddTags.includes(tag.name) ? 'active-tag' : ''} 
-                            no-select uppercase`}>
+                            no-select uppercase`} data-test="tag">
                 {tag.name}
                 {toAddTag === false ?
                     <span className="material-icons" onClick={() => deleteTag(tag)}>remove_circle</span>
@@ -40,10 +40,10 @@ const ViewTag = ({ deleting, viewingTags, updating, setModal, setToAddTags, clos
         <Overlay onClick={closeTags} className={`${viewingTags && 'view-tags'} full-width full-height absolute left above display-flex flex-end`}>
             <div onClick={e => e.stopPropagation()} className="display-flex flex-direction-column">
                 <p className="top-padding-50 bottom-padding-20 text-right no-shrink right-padding-30 border-box bold no-select">
-                    <span className="cursor-pointer" onClick={() => setModal("create-tag")}>Create New Tag</span>
+                    <span className="cursor-pointer" onClick={() => setModal("create-tag")} data-test="view-tag">Create New Tag</span>
                 </p>
                 {toAddTag &&
-                    <p className="bottom-padding-20 no-shrink size-pointeight-rem left-padding-30 border-box bold no-select">
+                    <p className="bottom-padding-20 no-shrink size-pointeight-rem left-padding-30 border-box bold no-select" data-test="add-tag">
                         ADD TAGS FOR {recipients?.data.find(recipient => recipient._id === toAddTag).name}
                     </p>}
                 <div className="display-flex top-padding-10 flex-wrap full-height overflow-auto-y custom-scrollbar left-padding-30 border-box flex-start-content">

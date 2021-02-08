@@ -70,3 +70,14 @@ describe("dashboard layout component", () => {
 
 })
 
+it("should logout", () => {
+
+    const wrapper = shallowSetup();
+    const sideElem = wrapper.find("DashboardSidebar");
+
+    sideElem.prop("logout")()
+    expect(sideElem.prop("logout")).toBeTruthy()
+
+    wrapper.update()
+})
+

@@ -142,7 +142,7 @@ const Toolbox = ({ user,
                         className={`${viewingTags && 'active-button'} 
                             ${viewTagsClass()} 
                             smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 
-                            right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color`}>
+                            right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color`} data-test="active-btn1">
                         View Tags
                     </ActionButton>}
                 {upload === true &&
@@ -154,7 +154,7 @@ const Toolbox = ({ user,
                                 smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 
                                 right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color 
                                 ${user?.data?.role !== userLabel && rightMargin50}`
-                            }>
+                            } data-test="active-btn2">
                             {renderAdditionText()}
                         </ActionButton>
                         <input

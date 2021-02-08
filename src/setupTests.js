@@ -7,8 +7,12 @@ import '@testing-library/jest-dom/extend-expect';
 import Enzyme from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 import enableHooks from 'jest-react-hooks-shallow';
+import fetchMock from "jest-fetch-mock"
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
+
+fetchMock.enableMocks()
+
 
 enableHooks(jest);
 
