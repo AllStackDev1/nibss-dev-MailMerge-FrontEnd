@@ -65,13 +65,13 @@ const SetupSignatories = ({ selectUser, document }) => {
                             name="name"
                             onChange={onChange}
                             value={signatory.name || ""}
-                            placeholder="Full Name" className="height-50 bottom-margin-10" required />
+                            placeholder="Full Name" className="height-50 bottom-margin-10" required data-test='input-name' />
                         <input
                             type="email"
                             name="email"
                             onChange={onChange}
                             value={signatory.email || ""}
-                            placeholder="Email address" className="height-50" required />
+                            placeholder="Email address" className="height-50" required data-test='input-email' />
                         <DocumentButton
                             type="submit"
                             className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">
