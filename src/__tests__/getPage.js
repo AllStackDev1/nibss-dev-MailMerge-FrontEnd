@@ -18,7 +18,7 @@ describe("handle build query function", () => {
         const arrayNum = [{ current: { offsetHeight: 100 } }]
         const offset = 200
 
-        expect(getPage(arrayNum, offset)).toBe(undefined);
+        expect(getPage(arrayNum, offset)).toBe(50);
 
     })
 
