@@ -19,7 +19,7 @@ it("handle recipient click", () => {
     const onClickMock = jest.fn();
 
     const wrapper = mount(
-        <CreateTag onClick={onClickMock} tag={{ name: "abcd" }} />
+        <CreateTag onClick={onClickMock} tag={{ name: "" }} />
     )
 
     let result = onClickMock("e");
@@ -29,6 +29,13 @@ it("handle recipient click", () => {
 
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);
+
+})
+
+it("should show loader", () => {
+
+    const wrapper = shallowSetup({ creating: true, tag: { name: "name" } })
+    expect(wrapper.find(".lds-ring").length).toBe(1)
 
 })
 
