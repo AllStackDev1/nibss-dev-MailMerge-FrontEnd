@@ -29,7 +29,7 @@ const DocumentInstance = ({ user }) => {
         if (documents?.fetchingSingle === false && documents?.document) {
             setDocument(documents.document);
         }
-    }, [documents?.fetchingSingle, documents?.document]);
+    }, [documents.fetchingSingle, documents.document]);
 
     const goBack = () => {
         dispatch(push('/dashboard/documents'));

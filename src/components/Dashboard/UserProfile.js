@@ -22,10 +22,10 @@ const UserProfile = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (auth?.add) {
+        if (auth.add) {
             setTab(2);
         }
-    }, [auth?.add]);
+    }, [auth.add]);
 
     useEffect(() => {
         if (auth?.fetchingProfile === false && auth?.profile && auth?.updatingProfile === false) {

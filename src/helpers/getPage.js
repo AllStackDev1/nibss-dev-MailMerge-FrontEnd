@@ -6,7 +6,7 @@ export function getPage(array, offset) {
                 offset
             };
         } else {
-            return offset = offset - (array[i].current.offsetHeight + 50);
+            offset -= (array[i].current.offsetHeight + 50);
         }
     }
 }

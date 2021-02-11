@@ -1,10 +1,8 @@
 import React, { useState, useRef } from "react"
 import { getColor } from "helpers/getColor";
-import { getImageSize } from "helpers";
 import { isFileImage } from "helpers/isFileImage";
 import { Document, Page, pdfjs } from "react-pdf";
 import styled from "styled-components";
-import { getPage } from "helpers/getPage";
 import SignatoriesPanel from "./SignatoriesPanel";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
@@ -18,93 +16,7 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
     const refs = useRef([React.createRef(), React.createRef()]);
     const refsFull = useRef([React.createRef(), React.createRef()]);
 
-    const mouseUp = async (x, y) => {
-        if (documentContainer.current) {
-            setPlaceholders(currentPlaceholders => {
-                const userSigned = currentPlaceholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
-                if (userSigned !== -1) {
-                    currentPlaceholders[userSigned] = {
-                        ...currentPlaceholders[userSigned],
-                        absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
-                        absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
-                    }
-
-                    return currentPlaceholders;
-                } else {
-                    return [
-                        ...currentPlaceholders,
-                        {
-                            absolute_x_coordinate: x - documentContainer.current.getBoundingClientRect().left,
-                            absolute_y_coordinate: y - documentContainer.current.getBoundingClientRect().top,
-                            name: signatoryDragged.name,
-                            email: signatoryDragged.email
-                        }
-                    ];
-                }
-            });
-
-
-            const imageSize = await getImageSize(documentContainer.current.querySelector('img'));
-
-            setPlaceholders(currentPlaceholders => {
-                const userSigned = currentPlaceholders.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
-
-                if (userSigned !== -1) {
-                    currentPlaceholders[userSigned] = {
-                        ...currentPlaceholders[userSigned],
-                        x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
-                        y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height
-                    }
-
-                    return currentPlaceholders;
-                } else {
-                    return [
-                        ...currentPlaceholders,
-                        {
-                            x_coordinate: ((x - documentContainer.current.getBoundingClientRect().left) / documentContainer.current.offsetWidth) * imageSize.width,
-                            y_coordinate: ((y - documentContainer.current.getBoundingClientRect().top) / documentContainer.current.offsetHeight) * imageSize.height,
-                            name: signatoryDragged.name,
-                            email: signatoryDragged.email
-                        }
-                    ];
-                }
-            });
-        } else {
-            const info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
-
-            setPlaceholders(p => {
-                const userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
-
-                if (userSigned !== -1) {
-                    p[userSigned] = {
-                        ...p[userSigned],
-                        page: info.page,
-                        absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
-                        absolute_y_coordinate: info.offset,
-                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
-                            refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
-                        y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight
-                    }
-
-                    return p;
-                } else {
-                    return [
-                        ...p,
-                        {
-                            page: info.page,
-                            absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
-                            absolute_y_coordinate: info.offset,
-                            x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
-                                refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
-                            y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
-                            name: signatoryDragged.name,
-                            email: signatoryDragged.email
-                        }
-                    ];
-                }
-            });
-        }
-    }
+    
 
     function onDocumentLoadSuccess({ numPages: numPagesLoaded }) {
         setNumPages(numPagesLoaded);
@@ -215,7 +127,12 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
                 </div>
                 <SignatoriesPanel
                     signatories={signatories}
-                    mouseUp={mouseUp}
+                    documentContainer={documentContainer}
+                    refs={refs}
+                    refsFull={refsFull}
+                    pdfContainer={pdfContainer}
+                    setPlaceholders={setPlaceholders}
+                    signatoryDragged={signatoryDragged}
                     setSignatoryDragged={setSignatoryDragged} />
             </div>
         </>
