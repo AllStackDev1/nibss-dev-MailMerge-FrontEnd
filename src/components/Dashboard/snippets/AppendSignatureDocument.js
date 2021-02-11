@@ -15,29 +15,27 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
         }
         docRef.current = docRef.current.map((item) => item || React.createRef());
 
-        setTimeout(calculateOffsetPDF, 1000);
-    }
+        setTimeout(e => {
+            document.document.signatories.forEach((signatory, i) => {
+                const documentCopy = Object.assign({}, document);
 
-    const calculateOffsetPDF = e => {
-        document.document.signatories.forEach((signatory, i) => {
-            const documentCopy = Object.assign({}, document);
+                if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]?.current) {
+                    documentCopy.document.signatories[i] = {
+                        ...signatory,
+                        absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
+                            parseInt(signatory.page) :
+                            0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
+                        absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
+                            parseInt(signatory.page) :
+                            0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
+                    }
 
-            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]?.current) {
-                documentCopy.document.signatories[i] = {
-                    ...signatory,
-                    absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
-                        parseInt(signatory.page) :
-                        0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
-                    absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
-                        parseInt(signatory.page) :
-                        0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
+                    setDocument(documentCopy);
                 }
-
-                setDocument(documentCopy);
-            }
-        })
+            })
+        }, 1000);
     }
-
+    
     return (
         <Document
             file={document?.document.file}

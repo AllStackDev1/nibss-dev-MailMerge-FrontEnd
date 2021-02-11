@@ -15,7 +15,7 @@ const SaveSignature = ({ add }) => {
     const dispatch = useDispatch();
 
     const clearCanvas = () => {
-        const signatureCanvasCurrent = signatureCanvas.current?.clear()
+        signatureCanvas.current.clear()
     }
 
     const logout = () => {
