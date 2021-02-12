@@ -26,15 +26,15 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
-it("should handle signatories panel", () => {
+// it("should handle signatories panel", () => {
 
-    const wrapper = shallowSetup();
+//     const wrapper = shallowSetup();
 
-    wrapper.find("SignatoriesPanel").prop("mouseUp")()
+//     // wrapper.find("SignatoriesPanel").prop("mouseUp")()
 
-    expect(wrapper.find("SignatoriesPanel").prop("mouseUp")()).toBeTruthy();
+//     // expect(wrapper.find("SignatoriesPanel").prop("mouseUp")()).toBeTruthy();
 
-})
+// })
 
 it("should render files", () => {
 

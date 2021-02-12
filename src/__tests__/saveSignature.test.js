@@ -83,7 +83,7 @@ it("Write signature", () => {
 
     let result = onClickMock("e");
 
-    signatureDiv.simulate('click', { stopPropagation: () => { } })
+    // signatureDiv.simulate('click', { stopPropagation: () => { } })
 
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);
@@ -104,7 +104,7 @@ it("should clear canvas", () => {
 
     let result = onClickMock("e");
 
-    signatureDiv.simulate('click', { stopPropagation: () => { } })
+    // signatureDiv.simulate('click', { stopPropagation: () => { } })
 
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);
