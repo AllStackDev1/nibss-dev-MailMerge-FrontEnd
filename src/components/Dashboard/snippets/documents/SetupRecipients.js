@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { recipientActions } from "actions/recipientActions";
-import EmptyDocumentRecipient from "components/Dashboard/empty-states/DocumentRecipient";
+import EmptyDocumentRecipient from "components/Dashboard/empty-states/EmptyDocumentRecipient";
 import { getColor } from "helpers/getColor";
 import { getInitials } from "helpers/getInitials";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Tabs from "../components/Dashboard/snippets/documents/Tabs"
+import Tabs from "../components/Dashboard/snippets/documents/DocumentTabs"
 import { render, fireEvent } from "@testing-library/react"
 
 

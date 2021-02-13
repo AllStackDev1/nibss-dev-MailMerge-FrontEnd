@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DocumentRecipient from "../components/Dashboard/empty-states/DocumentRecipient"
+import DocumentRecipient from "../components/Dashboard/empty-states/EmptyDocumentRecipient"
 
 
 

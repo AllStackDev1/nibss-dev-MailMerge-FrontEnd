@@ -16,7 +16,7 @@ import DocumentList from "./snippets/documents/DocumentList";
 import { useParams, withRouter } from "react-router-dom";
 import qs from 'qs';
 import { push } from "connected-react-router";
-import Tabs from "./snippets/documents/Tabs";
+import Tabs from "./snippets/documents/DocumentTabs";
 import Steps from "./snippets/documents/Steps";
 
 const Documents = withRouter(({ location }) => {
