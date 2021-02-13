@@ -16,8 +16,6 @@ const SigningSetup = ({ signatories, placeholders, setPlaceholders, documentFile
     const refs = useRef([React.createRef(), React.createRef()]);
     const refsFull = useRef([React.createRef(), React.createRef()]);
 
-    
-
     function onDocumentLoadSuccess({ numPages: numPagesLoaded }) {
         setNumPages(numPagesLoaded);
         refs.current = refs.current.splice(0, numPagesLoaded);

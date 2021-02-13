@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Pagination from "../components/Dashboard/empty-states/Pagination"
+import Pagination from "../components/Dashboard/empty-states/EmptyPagination"
 
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SaveSignature from "../components/onboarding/steps/saveSignature"
 import { createStore } from 'redux';
-import reducer from '../reducers/authReducer';
+import reducer from '../reducers/auth';
 import { useSelector } from 'react-redux';
 import SignatureCanvas from 'react-signature-canvas'
 

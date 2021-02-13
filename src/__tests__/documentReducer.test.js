@@ -1,5 +1,5 @@
 import { documentConstants } from "../constants"
-import document from "../reducers/documentReducer"
+import document from "../reducers/document"
 
 
 

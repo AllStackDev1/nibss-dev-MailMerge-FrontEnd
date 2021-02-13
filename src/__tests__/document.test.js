@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mount, shallow } from 'enzyme';
-import Document from "../components/Dashboard/empty-states/Document"
+import Document from "../components/Dashboard/empty-states/EmptyDocument"
 import { useSelector } from 'react-redux';
 import { render } from "@testing-library/react"
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SetupRecipients from "../components/Dashboard/snippets/documents/SetupRecipients"
 import { createStore } from 'redux';
-import reducer from '../reducers/authReducer';
+import reducer from '../reducers/auth';
 import { useSelector } from 'react-redux';
 
 
