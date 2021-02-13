@@ -145,3 +145,4 @@ const PageContainer = styled.div`
 `;
 
 export default SigningSetup;
+
