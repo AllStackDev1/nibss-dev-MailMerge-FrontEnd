@@ -1,5 +1,5 @@
 import { userConstants } from "../constants"
-import user from "../reducers/userReducer"
+import user from "../reducers/user"
 
 
 

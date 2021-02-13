@@ -5,7 +5,7 @@ import DocumentList from "./snippets/documents/DocumentList";
 import { useDispatch, useSelector } from "react-redux";
 import { documentActions } from "actions/documentActions";
 import { push } from "connected-react-router";
-import DashboardCards from "./snippets/dashboard/Cards";
+import DashboardCards from "./snippets/dashboard/DashboardCards";
 
 const DashboardIndex = () => {
     const documents = useSelector(state => state.document);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import User from "../components/Dashboard/empty-states/User"
+import User from "../components/Dashboard/empty-states/EmptyUser"
 
 
 

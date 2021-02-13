@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import DashboardLayout from "../components/common/Layout/DashboardLayout"
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from '../reducers/authReducer';
+import reducer from '../reducers/auth';
 import Sidebar from "../components/common/Sidebar/DashboardSidebar.js";
 import { BrowserRouter } from 'react-router-dom';
 
