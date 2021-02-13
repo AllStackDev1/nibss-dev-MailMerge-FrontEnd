@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React from "react"
-import EmptyDocument from "components/Dashboard/empty-states/Document";
+import EmptyDocument from "components/Dashboard/empty-states/EmptyDocument";
 import Document from "../Document";
 import Pagination from "../Pagination";
 

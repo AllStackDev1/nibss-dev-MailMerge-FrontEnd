@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InviteUsers from "../components/onboarding/steps/inviteUsers"
 import { createStore } from 'redux';
-import reducer from '../reducers/userReducer';
+import reducer from '../reducers/user';
 import { useSelector, Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 

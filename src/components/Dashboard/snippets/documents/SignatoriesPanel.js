@@ -77,21 +77,21 @@ const SignatoriesPanel = ({ signatories, documentContainer, refs, refsFull, setP
                 }
 
                 return p;
-            } else {
-                return [
-                    ...p,
-                    {
-                        page: info.page,
-                        absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
-                        absolute_y_coordinate: info.offset,
-                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
-                            refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
-                        y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
-                        name: signatoryDragged.name,
-                        email: signatoryDragged.email
-                    }
-                ];
             }
+
+            return [
+                ...p,
+                {
+                    page: info.page,
+                    absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
+                    absolute_y_coordinate: info.offset,
+                    x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
+                        refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
+                    y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
+                    name: signatoryDragged.name,
+                    email: signatoryDragged.email
+                }
+            ];
         });
     }
 

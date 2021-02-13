@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Users from "../components/Dashboard/Users"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../reducers/userReducer';
+import reducer from '../reducers/user';
 import { BrowserRouter } from 'react-router-dom';
 import UserList from "../components/Dashboard/snippets/UserList"
 import { act } from "@testing-library/react"
