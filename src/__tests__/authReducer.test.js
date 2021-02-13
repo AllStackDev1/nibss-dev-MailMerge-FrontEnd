@@ -1,5 +1,5 @@
 import { authConstants } from "../constants"
-import auth from "../reducers/authReducer"
+import auth from "../reducers/auth"
 
 
 

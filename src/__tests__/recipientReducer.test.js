@@ -1,5 +1,5 @@
 import { recipientConstants } from "../constants"
-import recipient from "../reducers/recipientReducer"
+import recipient from "../reducers/recipient"
 
 
 

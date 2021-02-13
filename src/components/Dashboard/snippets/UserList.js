@@ -1,5 +1,5 @@
 import React from 'react'
-import EmptyUser from '../empty-states/User'
+import EmptyUser from '../empty-states/EmptyUser'
 import Pagination from './Pagination'
 import User from './User'
 

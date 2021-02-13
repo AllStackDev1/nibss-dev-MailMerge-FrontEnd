@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import DashboardIndex from "../components/Dashboard/DashboardIndex"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../reducers/documentReducer';
+import reducer from '../reducers/document';
 
 
 

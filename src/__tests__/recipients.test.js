@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Recipients from "../components/Dashboard/Recipients"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../reducers/recipientReducer';
+import reducer from '../reducers/recipient';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from "@testing-library/react"
 
