@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import SetupRecipients from "../components/Dashboard/snippets/documents/SetupRecipients"
 import { createStore } from 'redux';
-import reducer from '../reducers/authReducer';
-import { useSelector, Provider } from 'react-redux';
+import reducer from '../reducers/auth';
+import { useSelector } from 'react-redux';
 
 
 
@@ -53,3 +53,23 @@ describe("component renders", () => {
         expect(wrapper).toMatchSnapshot();
     })
 })
+
+it("should handle scroll bar", () => {
+
+    const wrapper = shallowSetup()
+    const customElem = wrapper.find(".custom-scrollbar")
+
+    customElem.simulate("scroll", { target: { scrollHeight: 100 } })
+    expect(customElem.length).toBe(1);
+})
+
+it("should handle inout field change", () => {
+
+    const wrapper = shallowSetup();
+
+    const inputElem = wrapper.find(".width-250");
+    inputElem.simulate("change", { target: { name: "name", value: "value" } })
+
+    expect(wrapper.find(".width-250").length).toBe(1);
+})
+

@@ -17,3 +17,15 @@ it("should return initials", () => {
 
 })
 
+it("should handle one first name", () => {
+
+    expect(getInitials("first")).toEqual("FI")
+
+})
+
+it("should handle first name with space first", () => {
+
+    expect(getInitials(" first")).toEqual("F")
+
+})
+

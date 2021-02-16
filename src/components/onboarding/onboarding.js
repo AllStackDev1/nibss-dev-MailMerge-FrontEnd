@@ -38,7 +38,7 @@ const Onboarding = props => {
     }, [auth.uploading, auth.uploaded, userLocal]);
 
     useEffect(() => {
-        if (userLocal?.data?.role === "administrator" && user.invitingUsers === false && user.users) {
+        if (userLocal.data.role === "administrator" && user.invitingUsers === false && user.users) {
             if (userLocal.data.status === "active") {
                 dispatch(push(`/dashboard/index`));
             } else {

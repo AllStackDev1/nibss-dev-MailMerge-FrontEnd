@@ -53,14 +53,14 @@ const Recipient = ({ setModal, setEditRecipient, deleteRecipient, recipientBeing
                             setModal("edit-recipient");
                             setEditRecipient(recipient);
                         }} className="smooth display-flex align-items-center">
-                            <div className="width-30 height-35"></div>
+                            <div className="width-30 height-35" data-testid="edit-recipient"></div>
                             Edit Recipient
                         </div>
-                        <div onClick={() => initiateEdit(recipient._id)} className="smooth display-flex align-items-center">
+                        <div onClick={() => initiateEdit(recipient._id)} className="smooth display-flex align-items-center" data-testid="initiate-edit">
                             <div className="width-30 height-35"></div>
                             Add Tags
                         </div>
-                        <Delete onClick={() => deleteRecipient(recipient)} className="smooth display-flex align-items-center">
+                        <Delete onClick={() => deleteRecipient(recipient)} className="smooth display-flex align-items-center" data-testid="delete-recipient">
                             <div className="width-30 height-35 display-flex align-items-center justify-center">
                                 <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />
                             </div>

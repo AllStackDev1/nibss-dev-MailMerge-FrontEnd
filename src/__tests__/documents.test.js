@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import Documents from "../components/Dashboard/Documents"
 import { useSelector, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../reducers/documentReducer';
+import reducer from '../reducers/document';
 import { BrowserRouter } from 'react-router-dom';
 import { act } from "@testing-library/react"
 
@@ -156,6 +156,16 @@ it("should create document", () => {
     backBtnEle.simulate("click");
 
     expect(backBtnEle).toBeTruthy()
+
+})
+
+it("runn", () => {
+
+    const wrapper = shallowSetup();
+    const docList = wrapper.find("DocumentList");
+
+    docList.prop("viewDocument")({ _id: "123" })
+
 
 })
 

@@ -46,7 +46,7 @@ const SignDocument = ({
                     </div>
                     <button
                         onClick={() => setSignatureSource("saved")}
-                        className={optionBtnStyle}>
+                        className={optionBtnStyle} data-test="use-save-btn">
                         USE SAVED SIGNATURE
                     </button>
                 </div>
@@ -59,7 +59,7 @@ const SignDocument = ({
                             setSignature({ signature: "" })
                         }}
                         optionType="draw"
-                        image={require(`images/icons/draw-signature.svg`)} />
+                        image={require(`images/icons/draw-signature.svg`)} data-test="draw-signature" />
                     <SignatureOption
                         label="Write Signature"
                         signatureType={signatureType}
@@ -68,7 +68,7 @@ const SignDocument = ({
                             signatureCanvas.current.clear();
                         }}
                         optionType="write"
-                        image={require(`images/icons/write-signature.svg`)} />
+                        image={require(`images/icons/write-signature.svg`)} data-test="write-signature" />
                     <SignatureOption
                         label="Upload Signature"
                         signatureType={signatureType}
@@ -103,7 +103,7 @@ const SignDocument = ({
                     </div>
                     <button
                         onClick={() => setSignatureSource("new")}
-                        className={optionBtnStyle}>
+                        className={optionBtnStyle} data-test="add-new">
                         ADD NEW
                     </button>
                 </div>
@@ -113,7 +113,7 @@ const SignDocument = ({
                             key={index}
                             onClick={() => setDocumentSignature(s => s !== mapSignature ? mapSignature : "")}
                             url={mapSignature}
-                            className={`${documentSignature === mapSignature ? 'active-signature' : ''} display-flex align-items-center justify-center`}>
+                            className={`${documentSignature === mapSignature ? 'active-signature' : ''} display-flex align-items-center justify-center`} data-test="signature-con">
                             <div className="width-80-percent height-60-percent"></div>
                         </SignatureContainer>
                     ) || ""}

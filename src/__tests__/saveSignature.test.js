@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import SaveSignature from "../components/onboarding/steps/saveSignature"
 import { createStore } from 'redux';
-import reducer from '../reducers/authReducer';
+import reducer from '../reducers/auth';
 import { useSelector } from 'react-redux';
 import SignatureCanvas from 'react-signature-canvas'
 
@@ -83,7 +83,7 @@ it("Write signature", () => {
 
     let result = onClickMock("e");
 
-    signatureDiv.simulate('click', { stopPropagation: () => { } })
+    // signatureDiv.simulate('click', { stopPropagation: () => { } })
 
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);
@@ -104,7 +104,7 @@ it("should clear canvas", () => {
 
     let result = onClickMock("e");
 
-    signatureDiv.simulate('click', { stopPropagation: () => { } })
+    // signatureDiv.simulate('click', { stopPropagation: () => { } })
 
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);

@@ -1,5 +1,5 @@
 import React from 'react'
-import EmptyRecipient from '../empty-states/Recipient';
+import EmptyRecipient from '../empty-states/EmptyRecipient';
 import Pagination from './Pagination';
 import Recipient from './Recipient';
 

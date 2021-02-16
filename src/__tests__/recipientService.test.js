@@ -1,6 +1,5 @@
 import * as RecipientServices from '../../src/services/recipientService'
 
-
 it("should run add without  errors", () => {
 
     RecipientServices.recipientService.add("", true)
@@ -13,7 +12,17 @@ it("should  run edit without  errors", () => {
 })
 
 it("should run addTag without  errors", () => {
-    RecipientServices.recipientService.addTag("tag")
+    fetch.mockResponseOnce(JSON.stringify({ addRecipient: {} }))
+
+
+    RecipientServices.recipientService.addTag("admin/recipient/tag", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tag: {} })
+    }).then(res => res.json())
+        .then(result => {
+            console.log(result);
+        })
 })
 
 it("should run addTagsToRecipient without  errors", () => {

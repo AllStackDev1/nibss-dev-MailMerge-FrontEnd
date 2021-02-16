@@ -34,8 +34,8 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
         setDragging(true);
         setSignatoryDragged(user);
         setRel({
-            x: e.pageX - elemPos.left,
-            y: e.pageY - elemPos.top
+            x: e.pageX - (elemPos?.left || 0),
+            y: e.pageY - (elemPos?.top || 0)
         });
 
         e.stopPropagation()

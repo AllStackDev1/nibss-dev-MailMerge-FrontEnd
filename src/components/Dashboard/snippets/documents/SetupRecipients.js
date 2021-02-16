@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { recipientActions } from "actions/recipientActions";
-import EmptyDocumentRecipient from "components/Dashboard/empty-states/DocumentRecipient";
+import EmptyDocumentRecipient from "components/Dashboard/empty-states/EmptyDocumentRecipient";
 import { getColor } from "helpers/getColor";
 import { getInitials } from "helpers/getInitials";
 
@@ -74,7 +74,7 @@ const SetupRecipients = ({ document, addRecipient }) => {
                     type="checkbox"
                     id={`recipient-${index}`}
                     className="checkbox-s"
-                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} />
+                    checked={document.recipients.findIndex(rec => rec._id === recipient._id) !== -1} data-test="checkbox-input" />
                 <label htmlFor={`recipient-${index}`} className="no-shrink absolute left center-item-vertically"></label>
                 <div className="left-padding-30 display-flex full-width align-items-center right-padding-50 border-box above">
                     <Profile

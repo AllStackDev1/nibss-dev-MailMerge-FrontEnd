@@ -1,7 +1,7 @@
 import React from 'react';
 import { Document, Page, pdfjs } from "react-pdf";
-import Trigger from "./append-signature/Trigger";
 import styled from 'styled-components';
+import Signatures from './append-signature/Signatures';
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatories, setModal, numPages, setNumPages,
@@ -15,29 +15,27 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
         }
         docRef.current = docRef.current.map((item) => item || React.createRef());
 
-        setTimeout(calculateOffsetPDF, 1000);
-    }
+        setTimeout(e => {
+            document.document.signatories.forEach((signatory, i) => {
+                const documentCopy = Object.assign({}, document);
 
-    const calculateOffsetPDF = e => {
-        document.document.signatories.forEach((signatory, i) => {
-            const documentCopy = Object.assign({}, document);
+                if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]?.current) {
+                    documentCopy.document.signatories[i] = {
+                        ...signatory,
+                        absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
+                            parseInt(signatory.page) :
+                            0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
+                        absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
+                            parseInt(signatory.page) :
+                            0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
+                    }
 
-            if (refsFull.current[signatory.page ? parseInt(signatory.page) : 0]?.current) {
-                documentCopy.document.signatories[i] = {
-                    ...signatory,
-                    absolute_x_coordinate: (signatory.x_coordinate / refsFull.current[signatory.page ?
-                        parseInt(signatory.page) :
-                        0].current.offsetWidth) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetWidth,
-                    absolute_y_coordinate: (signatory.y_coordinate / refsFull.current[signatory.page ?
-                        parseInt(signatory.page) :
-                        0].current.offsetHeight) * refs.current[signatory.page ? parseInt(signatory.page) : 0].current.offsetHeight
+                    setDocument(documentCopy);
                 }
-
-                setDocument(documentCopy);
-            }
-        })
+            })
+        }, 1000);
     }
-
+    
     return (
         <Document
             file={document?.document.file}
@@ -49,12 +47,13 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
                     ref={docRef?.current[index]}
                     className={`${index} ${isNumPagesSet ? width75percent : 'full-width'} bottom-margin-20`}>
                     <Page width={pageWidth} key={`page_${index + 1}`} pageNumber={index + 1} />
-                    {signatories?.map((signatory, i) =>
-                        signatory.absolute_x_coordinate !== undefined && (parseInt(signatory.page) === index) ?
-                            <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                                user={user} userToken={userToken} />
-                            : <div></div>
-                    )}
+                    <Signatures
+                        signatories={signatories}
+                        signDocumentConst={signDocumentConst}
+                        setModal={setModal}
+                        index={index}
+                        user={user}
+                        userToken={userToken} />
                 </PageContainer>
             ))}
         </Document>

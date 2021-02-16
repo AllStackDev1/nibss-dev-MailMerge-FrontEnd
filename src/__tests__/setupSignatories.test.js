@@ -36,11 +36,33 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
-it("runn", () => {
+it("should submit form", () => {
 
-    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } });
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] }, selectUser: jest.fn() });
+    const formElem = wrapper.find("form").at(1)
 
+    formElem.simulate("submit", { preventDefault: () => { } })
 
+    expect(formElem).toBeTruthy()
+})
+
+it("should test name input field", () => {
+
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } })
+    const inputElem = wrapper.find("[data-test='input-name']")
+
+    inputElem.simulate("change", { target: { name: "name", value: "value" } })
+    expect(inputElem.length).toBe(1)
 
 })
 
+
+it("should test email input field", () => {
+
+    const wrapper = shallowSetup({ document: { signatories: [{ nibss: true }] } })
+    const inputElem = wrapper.find("[data-test='input-email']")
+
+    inputElem.simulate("change", { target: { name: "email", value: "sample@email.com" } })
+    expect(inputElem.length).toBe(1)
+
+})

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import User from "../components/Dashboard/empty-states/User"
+import User from "../components/Dashboard/empty-states/EmptyUser"
 
 
 
@@ -11,7 +11,7 @@ const shallowSetup = (props = {}) => {
 
 it('should match snapshot', () => {
     const wrapper = shallowSetup()
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot()
 })
 
 

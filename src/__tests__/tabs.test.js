@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Tabs from "../components/Dashboard/snippets/documents/Tabs"
+import Tabs from "../components/Dashboard/snippets/documents/DocumentTabs"
 import { render, fireEvent } from "@testing-library/react"
 
 
@@ -62,3 +62,15 @@ it("should click tab 4", () => {
 
 })
 
+it("should render tab stats", () => {
+
+    const fetchMock = jest.fn();
+    const setTabMock = jest.fn();
+
+    const { getByTestId } = render(<Tabs fetch={fetchMock} setTab={setTabMock} documents={{ documents: {} }} />)
+    fireEvent.click(getByTestId("tab1"))
+
+    expect(setTabMock.mock.calls.length).toBe(1)
+
+
+})

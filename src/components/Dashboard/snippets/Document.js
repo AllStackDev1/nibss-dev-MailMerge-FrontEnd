@@ -57,7 +57,7 @@ const Document = ({ document, dashboard, viewDocument, viewStats }) => {
                     no-wrap
                     display-flex
                     align-items-center
-                    justify-center`}>
+                    justify-center`} data-test="view-doc-btn">
                 VIEW DOCUMENT
             </ViewDocumentButton>
         </Container>
