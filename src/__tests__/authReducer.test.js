@@ -110,7 +110,7 @@ describe("auth reducer", () => {
             uploading: false,
             uploaded: 1,
             add: true
-        })
+        });
     })
 
     test("upload error", () => {
