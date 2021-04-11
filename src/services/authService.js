@@ -58,7 +58,6 @@ function fetchFrom(url, options) {
         headers,
         ...options
     })
-        .then(res => handleResponse(res))
         .then(response => {
             return response;
         });

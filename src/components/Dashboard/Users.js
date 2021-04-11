@@ -74,8 +74,7 @@ const Users = ({ user: localUser }) => {
 
     useEffect(() => {
         if (pageId) {
-            // page.current.scrollTo({ top: 0, behavior: 'smooth' });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(userActions.fetchPage(pageId));
         } else {
             dispatch(userActions.fetchUsers());

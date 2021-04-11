@@ -28,7 +28,7 @@ const Onboarding = props => {
     }, [userLocal]);
 
     useEffect(() => {
-        if (auth?.uploading === false && auth.uploaded === 1) {
+        if (auth.uploading === false && auth.uploaded === 1) {
             if (userLocal.data.role === "administrator") {
                 setStep(s => s + 1);
             } else {
