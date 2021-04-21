@@ -91,7 +91,7 @@ const Toolbox = ({ user,
 
         if (recipients?.tags) {
             return recipients.tags.map((t, index) =>
-                <Filter index={index} name={t.name} checked={filter.includes(t.name)}
+                <Filter key={index} index={index} name={t.name} checked={filter.includes(t.name)}
                     onClick={() => filter.includes(t.name) ? removeFilter(t.name) : addFilter(t.name)} />
             )
         } else {

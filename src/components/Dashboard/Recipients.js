@@ -36,8 +36,7 @@ const Recipients = ({ user }) => {
 
     useEffect(() => {
         if (pageId) {
-            // page.current.scrollTo({ top: 0, behavior: 'smooth' });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            page.current.scrollTo({ top: 0, behavior: 'smooth' });
             dispatch(recipientActions.fetchPage(pageId));
         } else {
             dispatch(recipientActions.fetch());

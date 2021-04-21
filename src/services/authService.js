@@ -58,7 +58,6 @@ function fetchFrom(url, options) {
         headers,
         ...options
     })
-        .then(res => handleResponse(res))
         .then(response => {
             return response;
         });
@@ -72,7 +71,6 @@ function getProfile() {
 function loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = getToken(); // Getting token from localstorage
-
     return !!token && !isTokenExpired(token); // handwaiving here
 }
 
