@@ -78,7 +78,9 @@
       "./src/index.js",
       "./src/reducers/index.js",
       "./src/components/Dashboard/DocumentInstance.js",
-      "./src/components/Dashboard/UserProfile.js"
+      "./src/components/Dashboard/UserProfile.js",
+      "./src/components/Dashboard/Recipients.js",
+      "./src/components/Dashboard/Users.js"
     ]
   }
 }

@@ -26,7 +26,7 @@ test("login actions", () => {
     const store = mockStore({ user: [] })
 
 
-    fetchMock.post('https://nibss-mail-merge.natterbase.com/auth/login', {
+    fetchMock.post('https://nibbs-mail-merge.herokuapp.com/auth/login', {
         headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
@@ -70,7 +70,7 @@ test("delete signature action", () => {
     const store = mockStore({})
 
 
-    fetchMock.post('https://nibss-mail-merge.natterbase.com/users/remove/signature', {
+    fetchMock.post('https://nibbs-mail-merge.herokuapp.com/users/remove/signature', {
         headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })
@@ -93,7 +93,7 @@ test("fetch profile action", () => {
     const store = mockStore({})
 
 
-    fetchMock.get('https://nibss-mail-merge.natterbase.com/users', {
+    fetchMock.get('https://nibbs-mail-merge.herokuapp.com/users', {
         headers: { 'Content-Type': applicationJson }
     })
     store.dispatch(actions.authActions.fetchProfile());
@@ -107,7 +107,7 @@ test("update profile action", () => {
     const store = mockStore({})
 
 
-    fetchMock.put('https://nibss-mail-merge.natterbase.com/users', {
+    fetchMock.put('https://nibbs-mail-merge.herokuapp.com/users', {
         headers: { 'Content-Type': applicationJson },
         body: JSON.stringify(data),
     })

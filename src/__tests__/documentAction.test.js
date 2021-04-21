@@ -12,7 +12,7 @@ const applicationJson = 'application/json'
 test("fetch actions", () => {
     const store = mockStore({})
 
-    fetchMock.get('https://nibss-mail-merge.natterbase.com/documents?', {
+    fetchMock.get('https://nibbs-mail-merge.herokuapp.com/documents?', {
         headers: { 'Content-Type': applicationJson },
     })
     store.dispatch(actions.documentActions.fetch("type"))
@@ -24,7 +24,7 @@ test("fetch actions", () => {
 test("fetch single action", () => {
     const store = mockStore({})
 
-    fetchMock.get('https://nibss-mail-merge.natterbase.com/documents/abc', {
+    fetchMock.get('https://nibbs-mail-merge.herokuapp.com/documents/abc', {
         headers: {
             'Authorization': 'Bearer ' + 'token1111',
             'Accept': applicationJson,
@@ -41,7 +41,7 @@ test("fetch page action", () => {
 
     const store = mockStore({})
 
-    fetchMock.get('https://nibss-mail-merge.natterbase.com/documents?page=page&', { overwriteRoutes: false })
+    fetchMock.get('https://nibbs-mail-merge.herokuapp.com/documents?page=page&', { overwriteRoutes: false })
     store.dispatch(actions.documentActions.fetchPage("123", "page"))
 
     expect(store.getActions()).toEqual([{ type: documentConstants.FETCH_PAGE_REQUEST }])
@@ -52,7 +52,7 @@ test("sign document action", () => {
 
     const store = mockStore({})
 
-    fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/sign', {
+    fetchMock.post('https://nibbs-mail-merge.herokuapp.com/documents/sign', {
         'Authorization': 'Bearer ' + "token123",
         'Accept': applicationJson,
         'Content-Type': applicationJson
@@ -67,7 +67,7 @@ test("sign new document action", () => {
 
     const store = mockStore({})
 
-    fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/sign', {
+    fetchMock.post('https://nibbs-mail-merge.herokuapp.com/documents/sign', {
         'Authorization': 'Bearer ' + "token123",
         'Accept': applicationJson,
         'Content-Type': applicationJson
@@ -82,7 +82,7 @@ test("sign new document action", () => {
 
     const store = mockStore({})
 
-    fetchMock.post('https://nibss-mail-merge.natterbase.com/documents/prepare', {
+    fetchMock.post('https://nibbs-mail-merge.herokuapp.com/documents/prepare', {
         'Authorization': 'Bearer ' + "token123",
         'Accept': applicationJson,
         'Content-Type': applicationJson
