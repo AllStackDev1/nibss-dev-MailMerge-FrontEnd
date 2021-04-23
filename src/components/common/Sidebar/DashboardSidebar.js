@@ -7,6 +7,8 @@ import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
 const DashboardSidebar = ({ routes, logout, location, user = {} }) => {
+
+    // List route paths
     const routePath = route => {
         if (route.path.includes("/:")) {
             return route.path.split("/:")[0]
@@ -15,6 +17,7 @@ const DashboardSidebar = ({ routes, logout, location, user = {} }) => {
         return route.path;
     }
 
+    // Get active route link
     const routeActiveClass = route => {
         let activeLink = "";
 

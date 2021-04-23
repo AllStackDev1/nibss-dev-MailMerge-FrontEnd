@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 
+
+// submit add recipient 
 const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
     const editRecipientConstant = "edit-recipient";
 

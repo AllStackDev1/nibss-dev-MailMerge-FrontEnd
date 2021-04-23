@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 
+
+// New tag modal
 const CreateTag = ({ tag, onChange, onSubmit, creating }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='create-tag-component'>

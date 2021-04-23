@@ -2,6 +2,8 @@ import { getColor } from 'helpers/getColor';
 import decode from 'jwt-decode';
 import React from 'react'
 
+
+// handle signature click
 const Trigger = ({ signatory, signDocumentConst, index, setModal, user, userToken }) => (
     <div
         onClick={() => setModal(signDocumentConst)}

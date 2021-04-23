@@ -1,6 +1,7 @@
 import React from "react"
 import SaveSignature from "components/onboarding/steps/saveSignature";
 
+// handle add signature
 const AddSignature = () => {
     return (
         <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>

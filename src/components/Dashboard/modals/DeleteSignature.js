@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
+// Delete signature modal
 const DeleteSignature = ({ onSubmit, deleting, closeModal }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='delete-signature-component'>

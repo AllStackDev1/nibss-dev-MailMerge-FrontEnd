@@ -13,9 +13,11 @@ const DashboardIndex = () => {
     const page = useRef(null);
     const dispatch = useDispatch();
 
+    // on page load fetch documents
     useEffect(() => {
         dispatch(documentActions.fetch());
     }, [dispatch]);
+
 
     useEffect(() => {
         if (documents.fetching === false) {
@@ -23,6 +25,7 @@ const DashboardIndex = () => {
         }
     }, [documents.fetching]);
 
+    // Show pagination
     const viewPage = p => {
         if (p <= documents?.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
             page.current.scrollTo({ top: 0, behavior: 'smooth' });
@@ -31,6 +34,7 @@ const DashboardIndex = () => {
         }
     }
 
+    // handle document signing
     const viewDocument = (document) => {
         dispatch(documentActions.setDocument(document));
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
+// Delet recipient modal
 const DeleteRecipient = ({ onSubmit, deleting, closeModal }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='delete-recipient-component'>

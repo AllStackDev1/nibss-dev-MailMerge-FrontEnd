@@ -21,20 +21,24 @@ const DocumentInstance = ({ user }) => {
     const { documentId } = useParams();
     const dispatch = useDispatch();
 
+    // get single document information
     useEffect(() => {
         dispatch(documentActions.fetchSingle(documentId));
     }, [dispatch, documentId]);
 
+    // on document update, fetch document
     useEffect(() => {
         if (documents.fetchingSingle === false && documents.document) {
             setDocument(documents.document);
         }
     }, [documents.fetchingSingle, documents.document]);
 
+    // handle back button click
     const goBack = () => {
         dispatch(push('/dashboard/documents'));
     }
 
+    // 
     function onDocumentLoadSuccess({ numPages: num }) {
         setNumPages(num);
     }
@@ -65,6 +69,7 @@ const DocumentInstance = ({ user }) => {
         </Document>
     }
 
+    // Display logs to user
     const renderLogs = () => {
         if (!document.logs) {
             return "Loading ...."

@@ -31,6 +31,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
     const refs = useRef([React.createRef(), React.createRef()]);
     const refsFull = useRef([React.createRef(), React.createRef()]);
 
+    // update document information
     useEffect(() => {
         function setDocumentData(d) {
             setDocument(d);
@@ -48,6 +49,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         }
     });
 
+    // handle signing of document
     const signDocument = () => {
         if (signatureCanvas?.current?.isEmpty() && signature.signature === "" && documentSignature === "") {
             toast.warning("Please sign to proceed");
@@ -74,6 +76,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         }
     }
 
+    // upload signature file
     const uploadSignatureFile = file => {
         dispatch(documentActions.signDocumentNew(file.target.files[0], document.document._id, userToken));
     }
@@ -88,6 +91,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
         return <div></div>;
     }
 
+    // display signature to user
     const renderSignatureInterface = () => {
         const isNumPagesSet = numPages === undefined;
 

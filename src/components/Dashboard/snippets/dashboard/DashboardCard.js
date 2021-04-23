@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'styles/styled-components/DashboardCards'
 import Loader from 'styles/styled-components/Loader';
 
+
 const DashboardCard = ({ documents, image, keyed, label }) => (
     <Card className="padding-20 border-box">
         <div className="full-width display-flex space-between align-items-center">

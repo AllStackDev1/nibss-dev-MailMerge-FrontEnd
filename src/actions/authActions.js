@@ -14,6 +14,7 @@ export const authActions = {
     updateProfile,
 };
 
+// Handle user login
 function login(user) {
     const data = {
         ...user,
@@ -64,6 +65,7 @@ function login(user) {
     }
 }
 
+// Handle user log out
 function logout() {
     authService.logout();
 
@@ -74,6 +76,7 @@ function reset() {
     return { type: authConstants.RESET_UPLOAD };
 }
 
+// Save signature action
 function saveSignature(file, add) {
     return dispatch => {
         dispatch(startUpload());
@@ -132,6 +135,7 @@ function saveSignature(file, add) {
     }
 }
 
+// Delete user saved signature
 function deleteSignature(signature) {
     return dispatch => {
         dispatch(request(signature));
@@ -163,6 +167,7 @@ function deleteSignature(signature) {
     }
 }
 
+// Get user profile from server
 function fetchProfile() {
     return dispatch => {
         dispatch(request());
@@ -193,6 +198,7 @@ function fetchProfile() {
     }
 }
 
+// Update user profile
 function updateProfile(user) {
     return dispatch => {
         dispatch(request());

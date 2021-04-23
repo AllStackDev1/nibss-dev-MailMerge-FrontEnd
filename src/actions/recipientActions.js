@@ -15,6 +15,7 @@ export const recipientActions = {
     deleteRecipient
 };
 
+// Add recipients to document list
 function add(recipients, multiple) {
     return dispatch => {
         dispatch(request());
@@ -50,6 +51,7 @@ function add(recipients, multiple) {
     }
 }
 
+// Remove recipient from signature list
 function deleteRecipient(recipient) {
     return dispatch => {
         dispatch(request(recipient));
@@ -80,6 +82,7 @@ function deleteRecipient(recipient) {
     }
 }
 
+// Remove tag from recipient
 function deleteTag(tag) {
     return dispatch => {
         dispatch(request(tag));
@@ -110,6 +113,7 @@ function deleteTag(tag) {
     }
 }
 
+// Edit recipient
 function edit(recipient) {
     return dispatch => {
         dispatch(request());
@@ -140,6 +144,7 @@ function edit(recipient) {
     }
 }
 
+// Add tag to recipient list
 function addTag(tag) {
     return dispatch => {
         dispatch(request());
@@ -174,6 +179,7 @@ function addTag(tag) {
     }
 }
 
+// Add tag to recipient
 function addTagsToRecipient(recipient, tags) {
     return dispatch => {
         dispatch(request());
@@ -204,6 +210,7 @@ function addTagsToRecipient(recipient, tags) {
     }
 }
 
+// Get recipient
 function fetch(src) {
     return dispatch => {
         dispatch(request());
@@ -232,6 +239,7 @@ function fetch(src) {
     }
 }
 
+// Search for list recipient
 function search(searchTerm, filter, src) {
     return dispatch => {
         dispatch(request());
@@ -288,6 +296,7 @@ function fetchPage(page, src) {
     }
 }
 
+// Get tags
 function fetchTags() {
     return dispatch => {
         dispatch(request());

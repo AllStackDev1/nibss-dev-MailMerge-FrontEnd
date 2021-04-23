@@ -30,6 +30,7 @@ class DashboardLayout extends React.Component {
         document.scrollingElement.scrollTop = 0;
     }
 
+    // Get page routes
     getRoutes = r => {
         return r.map((prop, key) => {
             return (
@@ -45,6 +46,7 @@ class DashboardLayout extends React.Component {
         });
     };
 
+    // Handle user logout
     logout = () => {
         this.props.authActions.logout();
         this.props.push("/");
@@ -62,7 +64,7 @@ class DashboardLayout extends React.Component {
                         innerLink: "/admin/index",
                         imgAlt: "..."
                     }}
-                data-test="sidebar"/>
+                    data-test="sidebar" />
                 <div className="flex-grow-1 full-width">
                     <Switch>
                         {this.getRoutes(routes)}
