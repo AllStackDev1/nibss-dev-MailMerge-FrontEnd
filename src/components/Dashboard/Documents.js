@@ -41,6 +41,8 @@ const Documents = withRouter(({ location }) => {
     const documentContainerClass = 'height-auto bottom-margin-50';
     const completeClass = "complete";
 
+
+    // parse url query
     useEffect(() => {
         const type = qs.parse(location?.search, { ignoreQueryPrefix: true }).type;
         const typeTabs = { "pending": 2, "signed": 3, "rejected": 4 };
@@ -55,12 +57,14 @@ const Documents = withRouter(({ location }) => {
         }
     }, [dispatch, pageId]);
 
+    // update fetching state
     useEffect(() => {
         if (documents?.fetching === false) {
             setFetching(false);
         }
     }, [documents?.fetching]);
 
+    // update docuement tab and placeholder state
     useEffect(() => {
         if (documents?.preparing === false) {
             setDocument({ signatories: [], recipients: [] });
@@ -74,6 +78,7 @@ const Documents = withRouter(({ location }) => {
         }
     }, [documents?.preparing]);
 
+    // handle user select
     const selectUser = (user, nibss) => {
         setDocument({
             ...document,
@@ -87,6 +92,7 @@ const Documents = withRouter(({ location }) => {
         });
     }
 
+    // handle add recipient
     const addRecipient = recipient => {
         setDocument(d => {
             d.recipients.findIndex(rec => rec._id === recipient._id) !== -1 ?
@@ -97,6 +103,7 @@ const Documents = withRouter(({ location }) => {
         });
     }
 
+    // handle file reading
     const onDrop = useCallback(acceptedFiles => {
         var r = new FileReader();
         r.onloadend = function (e) {
@@ -120,6 +127,7 @@ const Documents = withRouter(({ location }) => {
         dispatch(documentActions.prepare(document, placeholders));
     };
 
+    // get document
     const fetch = type => {
         setFetching(true);
         dispatch(documentActions.fetch(type ? type : ''));
@@ -130,12 +138,14 @@ const Documents = withRouter(({ location }) => {
         }
     };
 
+    // view page and Pagination
     const viewPage = p => {
         if (p <= documents.documents.pagination.number_of_pages && p !== documents.documents.pagination.current) {
             dispatch(push(`/dashboard/documents/${p}`));
         }
     }
 
+    // fetch and display document
     const viewDocument = (d) => {
         dispatch(documentActions.setDocument(d));
 
@@ -146,6 +156,7 @@ const Documents = withRouter(({ location }) => {
         }
     }
 
+    // view document status
     const viewStats = (e, d) => {
         e.stopPropagation();
         dispatch(documentActions.setDocument(d));
@@ -160,6 +171,7 @@ const Documents = withRouter(({ location }) => {
         return 'SKIP';
     }
 
+    // handle next content
     const renderNextContent = () => {
         if (documents?.preparing) {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>

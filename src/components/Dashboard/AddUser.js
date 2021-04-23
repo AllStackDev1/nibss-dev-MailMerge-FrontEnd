@@ -1,6 +1,8 @@
 import React from "react"
 import InviteUsers from "components/onboarding/steps/inviteUsers";
 
+
+// add user component
 const AddUser = () => {
     return (
         <div className={`full-width full-height overflow-scroll-y custom-scrollbar`}>

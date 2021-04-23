@@ -14,6 +14,7 @@ export const documentActions = {
     signDocumentNew
 };
 
+// Get save document service
 function fetch(type) {
     return dispatch => {
         dispatch(request());
@@ -42,6 +43,7 @@ function fetch(type) {
     }
 }
 
+// Get single save document
 function fetchSingle(id, userToken) {
     return dispatch => {
         dispatch(request());
@@ -69,6 +71,7 @@ function fetchSingle(id, userToken) {
         return { type: documentConstants.FETCH_SINGLE_FAILURE, error };
     }
 }
+
 
 function fetchPage(type, page) {
     return dispatch => {
@@ -98,6 +101,7 @@ function fetchPage(type, page) {
     }
 }
 
+// Handle sign document
 function signDocument(data, userToken) {
     return dispatch => {
         dispatch(request());
@@ -130,6 +134,7 @@ function signDocument(data, userToken) {
     }
 }
 
+// Handle new sign document
 function signDocumentNew(file, documentId, userToken) {
     return dispatch => {
         dispatch(request());
@@ -181,6 +186,7 @@ function signDocumentNew(file, documentId, userToken) {
     }
 }
 
+// Handle sign documenet form
 function prepare(document, signatories) {
     return dispatch => {
         dispatch(startUpload());

@@ -16,6 +16,7 @@ export const userActions = {
     exportDocument
 };
 
+// Invite user action
 function invite(users, add) {
     return dispatch => {
         dispatch(request());
@@ -51,6 +52,7 @@ function invite(users, add) {
     }
 }
 
+// Edit users list
 function edit(user) {
     return dispatch => {
         dispatch(request());
@@ -81,6 +83,7 @@ function edit(user) {
     }
 }
 
+// Delete user
 function deleteUser(user) {
     return dispatch => {
         dispatch(request(user));
@@ -111,6 +114,7 @@ function deleteUser(user) {
     }
 }
 
+// Export document action
 function exportDocument(type) {
     return dispatch => {
         dispatch(request());
@@ -145,6 +149,7 @@ function exportDocument(type) {
     }
 }
 
+// Update user role
 function updateRole(user) {
     return dispatch => {
         dispatch(request(user));
@@ -175,6 +180,7 @@ function updateRole(user) {
     }
 }
 
+// Get user
 function fetchUsers() {
     return dispatch => {
         dispatch(request());
@@ -231,6 +237,7 @@ function fetchPage(page) {
     }
 }
 
+// Search user service
 function search(searchParam, filter) {
     return dispatch => {
         dispatch(request());

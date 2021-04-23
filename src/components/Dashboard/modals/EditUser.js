@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 
+
+// Edit user modal
 const EditUser = ({ user, onChange, onSubmit, editing }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='edit-user-component'>

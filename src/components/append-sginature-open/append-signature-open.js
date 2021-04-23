@@ -5,10 +5,12 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 
+
 const AppendSignatureOpen = () => {
     const { documentId, userToken } = useParams();
     const dispatch = useDispatch();
 
+    // Get document id from url
     useEffect(() => {
         if (!documentId) {
             dispatch(push('/dashboard/documents'))

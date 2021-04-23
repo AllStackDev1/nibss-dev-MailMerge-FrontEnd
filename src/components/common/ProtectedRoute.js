@@ -5,6 +5,7 @@ import { authActions } from 'actions'
 import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 
+// Logout user from redirect
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const dispatch = useDispatch();
 

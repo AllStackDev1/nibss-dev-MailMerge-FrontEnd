@@ -2,6 +2,8 @@ import React from 'react';
 import styled from "styled-components";
 import { useDropzone } from 'react-dropzone'
 
+
+// handle new document creation
 const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

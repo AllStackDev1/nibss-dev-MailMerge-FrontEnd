@@ -8,12 +8,14 @@ const Login = props => {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
 
+    // hanlde user login function
     const login = e => {
         e.preventDefault();
 
         dispatch(authActions.login(user));
     }
 
+    // update text field paramters
     const onChange = event => {
         const { name, value } = event.target;
 

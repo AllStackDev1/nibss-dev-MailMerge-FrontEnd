@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 
+
+// Delete user modal
 const DeleteUser = ({ onSubmit, deleting, closeModal }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='delete-user-component'>
