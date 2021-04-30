@@ -22,7 +22,6 @@ const FontAwesomeCloseButton = ({ closeToast }) => (
 
 render(
     <Provider store={store}>
-        {console.log("MAINAIN::>>", store.getState())}
         <ConnectedRouter history={history}>
             <div>
                 <ToastContainer
