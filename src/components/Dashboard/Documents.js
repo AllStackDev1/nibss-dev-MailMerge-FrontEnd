@@ -103,7 +103,7 @@ const Documents = withRouter(({ location }) => {
         });
     }
 
-    // handle file reading
+    // handle file reading by drag and drop
     const onDrop = useCallback(acceptedFiles => {
         var r = new FileReader();
         r.onloadend = function (e) {
@@ -112,6 +112,7 @@ const Documents = withRouter(({ location }) => {
                 e.target.result
             ]);
         }
+        console.log("BALL::>>>>", acceptedFiles[0], "::::>>>>", documentFiles);
         r.readAsDataURL(acceptedFiles[0], "UTF-8");
 
         setDocument(d => ({

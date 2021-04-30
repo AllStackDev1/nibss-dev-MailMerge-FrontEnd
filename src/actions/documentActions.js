@@ -153,7 +153,6 @@ function signDocumentNew(file, documentId, userToken) {
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
                     const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
-                    console.log(loaded);
                 },
                 headers
             })
