@@ -182,7 +182,9 @@ const Users = ({ user: localUser }) => {
                         viewPage={viewPage}
                         filter={filter}
                         search={search}
-                        users={users} />}
+                        users={users}
+                        localUserRole={localUser}
+                    />}
                 </div>
             </div>
         </>

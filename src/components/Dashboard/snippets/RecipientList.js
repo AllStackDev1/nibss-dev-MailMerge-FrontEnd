@@ -4,7 +4,7 @@ import Pagination from './Pagination';
 import Recipient from './Recipient';
 
 const RecipientList = ({ recipients, search, filter, setModal, setEditRecipient, initiateDeleteRecipient, toAddTag,
-    initiateEdit, viewPage }) => {
+    initiateEdit, viewPage, localUserRole }) => {
     const renderRecipients = () => {
         if (recipients?.recipients === undefined || (recipients?.searching)) {
             return <EmptyRecipient />;
@@ -24,7 +24,9 @@ const RecipientList = ({ recipients, search, filter, setModal, setEditRecipient,
                     recipient={r}
                     toAddTag={toAddTag}
                     initiateEdit={initiateEdit}
-                    recipientBeingDeleted={recipients.deleting} />
+                    recipientBeingDeleted={recipients.deleting}
+                    localUserRole={localUserRole}
+                />
             )}
             <Pagination
                 data={toLoop}

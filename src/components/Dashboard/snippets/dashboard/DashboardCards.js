@@ -13,7 +13,7 @@ const DashboardCards = ({ documents }) => (
             image={require(`images/icons/dashboard/analytics/archived-documents.svg`)}
             documents={documents}
             keyed={"archived_document"}
-            label="Archived Documents" />
+            label="Rejected Documents" />
         <DashboardCard
             image={require(`images/icons/dashboard/analytics/signed-documents.svg`)}
             documents={documents}

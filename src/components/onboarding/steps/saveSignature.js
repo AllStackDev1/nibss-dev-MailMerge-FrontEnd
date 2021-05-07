@@ -104,7 +104,7 @@ const SaveSignature = ({ add }) => {
                 </div>
                 <div className="display-flex justify-center">
                     <div className={`${signatureType === 'write' ? 'hide' : ''} display-flex flex-direction-column cursor-pointer no-select justify-center`}>
-                        <SignatureCanvas ref={signatureCanvas} penColor='green'
+                        <SignatureCanvas ref={signatureCanvas} penColor='black'
                             canvasProps={{ width: 600, height: 200, className: 'gray top-margin-30 margin-auto' }} />
                         <div onClick={() => clearCanvas()} className="display-inline-flex margin-auto top-margin-20 align-items-center red-color bold">
                             <img src={require(`images/icons/undo.svg`)} className="height-12 right-margin-10" alt="Invite users" />

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { getColor } from 'helpers/getColor';
 import { getInitials } from 'helpers/getInitials';
 
-const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModal }) => {
+const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModal, localUserRole }) => {
     return (
         <UserInstance
             className={`
@@ -49,19 +49,21 @@ const User = ({ user, setUser, updateRole, userBeingUpdated, deleteUser, setModa
                         <div className="width-30 height-35"></div>
                         Edit User
                     </div>
-                    <div className="smooth display-flex align-items-center" onClick={() => updateRole(user)} data-test="update-role">
-                        <div className="width-30 height-35"></div>
+                    {localUserRole?.data?.role === "administrator" &&
+                        (<><div className="smooth display-flex align-items-center" onClick={() => updateRole(user)} data-test="update-role">
+                            <div className="width-30 height-35"></div>
                         Assign as {user.role === "administrator" ? "user" : "admin"}
-                    </div>
-                    <Delete onClick={() => {
-                        deleteUser(user);
-                        setModal('delete-user')
-                    }} className="smooth display-flex align-items-center" data-test="delete-user">
-                        <div className="width-30 height-35 display-flex align-items-center justify-center">
-                            <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />
                         </div>
+
+                            <Delete onClick={() => {
+                                deleteUser(user);
+                                setModal('delete-user')
+                            }} className="smooth display-flex align-items-center" data-test="delete-user">
+                                <div className="width-30 height-35 display-flex align-items-center justify-center">
+                                    <img src={require(`images/icons/dashboard/delete-recipient.svg`)} className="height-15" alt="Delete recipient" />
+                                </div>
                         Delete User
-                    </Delete>
+                    </Delete></>)}
                 </div>
             </Menu>
         </UserInstance>

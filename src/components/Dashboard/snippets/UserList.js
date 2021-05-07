@@ -3,7 +3,7 @@ import EmptyUser from '../empty-states/EmptyUser'
 import Pagination from './Pagination'
 import User from './User'
 
-const UserList = ({ users, search, filter, setModal, setUser, initiateDeleteUser, updateRole, viewPage }) => {
+const UserList = ({ users, search, filter, setModal, setUser, initiateDeleteUser, updateRole, viewPage, localUserRole }) => {
     const renderUsers = () => {
         if (users?.platformUsers === undefined || (users.searching)) {
             return <EmptyUser />;
@@ -22,7 +22,9 @@ const UserList = ({ users, search, filter, setModal, setUser, initiateDeleteUser
                     deleteUser={initiateDeleteUser}
                     updateRole={updateRole}
                     userBeingUpdated={users.deleting || users.updatingRole}
-                    user={u} />
+                    user={u}
+                    localUserRole={localUserRole}
+                />
             )}
             <Pagination
                 data={toLoop}

@@ -1,7 +1,7 @@
 import React from 'react'
 import ToolboxMenu from 'styles/styled-components/ToolboxMenu';
 
-const Download = ({role, userLabel, rightMargin50, renderDownloading, exportDocument}) => (
+const Download = ({ role, userLabel, rightMargin50, renderDownloading, exportDocument }) => (
     <ToolboxMenu
         className={`display-flex 
                     align-items-center 
@@ -14,7 +14,7 @@ const Download = ({role, userLabel, rightMargin50, renderDownloading, exportDocu
                     box-shadow-less2 
                     size-pointeight-rem 
                     mustard-color 
-                    ${role !== userLabel && rightMargin50}`}>
+                    ${role === userLabel && rightMargin50}`}>
         Export as
         {renderDownloading()}
         <div className="top-padding-10">

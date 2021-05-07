@@ -30,15 +30,19 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
                 <img src={require(`images/icons/email-send.svg`)} className="height-15" alt="Invite users" />
                 <span className="mustard-color bold size-pointeightfive-rem left-padding-10">INVITE</span>
             </button>
-            <button
-                type="button"
-                onClick={() => { document.getElementById('csv_file').click() }}
-                className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
-                <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
-                <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
-            </button>
+            <div>
+                <button
+                    type="button"
+                    onClick={() => { document.getElementById('csv_file').click() }}
+                    className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">
+                    <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
+                    <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
+                </button>
+                <a href="#" class="">Download csv sample template</a>
+            </div>
             <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
         </div>
+
     </form>
 )
 

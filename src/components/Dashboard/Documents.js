@@ -112,7 +112,6 @@ const Documents = withRouter(({ location }) => {
                 e.target.result
             ]);
         }
-        console.log("BALL::>>>>", acceptedFiles[0], "::::>>>>", documentFiles);
         r.readAsDataURL(acceptedFiles[0], "UTF-8");
 
         setDocument(d => ({
@@ -148,6 +147,7 @@ const Documents = withRouter(({ location }) => {
 
     // fetch and display document
     const viewDocument = (d) => {
+
         dispatch(documentActions.setDocument(d));
 
         if (d.signed) {
