@@ -35,7 +35,7 @@ const AppendSignatureDocument = ({ pageWidth, docRef, refs, refsFull, signatorie
             })
         }, 1000);
     }
-    
+
     return (
         <Document
             file={document?.document.file}

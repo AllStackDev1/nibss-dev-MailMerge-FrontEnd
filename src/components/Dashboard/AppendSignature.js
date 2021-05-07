@@ -93,6 +93,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
 
     // display signature to user
     const renderSignatureInterface = () => {
+
         const isNumPagesSet = numPages === undefined;
 
         if (imageError === false) {

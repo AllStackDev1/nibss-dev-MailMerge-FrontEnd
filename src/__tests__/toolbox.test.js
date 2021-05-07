@@ -33,7 +33,7 @@ it("should click first active button false viewingTags", () => {
 
 it("recipient button", () => {
 
-    const wrapper = shallowSetup({ adding: true, downloading: true, setModal: jest.fn() });
+    const wrapper = shallowSetup({ adding: true, downloading: true, setModal: jest.fn(), user: { data: { role: "administrator" } } });
     const recBtn = wrapper.find("RecipientButton");
 
     recBtn.simulate('click')
@@ -42,7 +42,7 @@ it("recipient button", () => {
 
 it("runn", () => {
 
-    const wrapper = shallowSetup({ adding: true, downloading: true, setModal: jest.fn() });
+    const wrapper = shallowSetup({ adding: true, downloading: true, setModal: jest.fn(), user: { data: { role: "administrator" } } });
     const recBtn = wrapper.find("RecipientButton");
 
     recBtn.simulate('click')

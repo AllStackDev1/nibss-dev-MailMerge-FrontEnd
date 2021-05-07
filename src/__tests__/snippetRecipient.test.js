@@ -21,7 +21,7 @@ it("should render properly", () => {
 it("should click edit recipients", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ setModal: jest.fn(), setEditRecipient: jest.fn(), recipient: { _id: "123", tag: ["tag"] } })
+    const wrapper = shallowSetup({ setModal: jest.fn(), setEditRecipient: jest.fn(), recipient: { _id: "123", tag: ["tag"] }, localUserRole: { data: { role: "administrator" } } })
     const divElem = wrapper.find("[data-testid='edit-recipient']")
 
     let result = clicker();
@@ -34,7 +34,7 @@ it("should click edit recipients", () => {
 it("should click initiate edit", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ initiateEdit: jest.fn(), recipient: { _id: "123", tag: ["tag"] } })
+    const wrapper = shallowSetup({ initiateEdit: jest.fn(), recipient: { _id: "123", tag: ["tag"] }, localUserRole: { data: { role: "administrator" } } })
     const divElem = wrapper.find("[data-testid='initiate-edit']")
 
     let result = clicker();
@@ -48,7 +48,7 @@ it("should click initiate edit", () => {
 it("should click delete recipient", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ deleteRecipient: jest.fn(), recipient: { _id: "123", tag: ["tag"] } })
+    const wrapper = shallowSetup({ deleteRecipient: jest.fn(), recipient: { _id: "123", tag: ["tag"] }, localUserRole: { data: { role: "administrator" } } })
     const divElem = wrapper.find("[data-testid='delete-recipient']").at(0)
 
     let result = clicker();

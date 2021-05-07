@@ -34,7 +34,7 @@ it("should click edit recipients", () => {
 it("should click update role", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ updateRole: jest.fn(), user: { _id: "123" } })
+    const wrapper = shallowSetup({ updateRole: jest.fn(), user: { _id: "123" }, localUserRole: { data: { role: "administrator" } } })
     const divElem = wrapper.find("[data-test='update-role']")
 
     let result = clicker();
@@ -48,7 +48,7 @@ it("should click update role", () => {
 it("should click delete user", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ deleteUser: jest.fn(), setModal: jest.fn(), user: { _id: "123" } })
+    const wrapper = shallowSetup({ deleteUser: jest.fn(), setModal: jest.fn(), user: { _id: "123" }, localUserRole: { data: { role: "administrator" } } })
     const divElem = wrapper.find("[data-test='delete-user']").at(0)
 
     let result = clicker();

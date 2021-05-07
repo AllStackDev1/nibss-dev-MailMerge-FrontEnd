@@ -32,7 +32,7 @@ const Toolbox = ({ user,
     const dispatch = useDispatch();
 
     const recipients = useSelector(state => state.recipient);
-    const userLabel = "user";
+    const userLabel = "administrator";
     const rightMargin50 = 'right-margin-50';
 
     useEffect(() => {
@@ -152,8 +152,9 @@ const Toolbox = ({ user,
                             className={`
                                 ${adding && 'active-button width-80'} 
                                 smooth display-flex align-items-center justify-center cursor-pointer left-padding-15 
-                                right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color 
-                                ${user?.data?.role !== userLabel && rightMargin50}`
+                                right-padding-10 white border-radius-5 box-shadow-less2 size-pointeight-rem mustard-color
+                                ${user?.data?.role === userLabel ? rightMargin50 : ""}`
+
                             } data-test="active-btn2">
                             {renderAdditionText()}
                         </ActionButton>
@@ -165,7 +166,7 @@ const Toolbox = ({ user,
                             onChange={parseCSV}
                             className="width-0 height-0 border-box hide" />
                     </>}
-                {user?.data?.role !== userLabel &&
+                {user?.data?.role === userLabel &&
                     renderRecipientButton()}
             </div>
         </ToolBox>

@@ -29,8 +29,8 @@ const AppendSignatureImage = ({ imageRef, isNumPagesSet, width75percent, documen
                 .map((signatory, index) =>
                     signatory.absolute_x_coordinate !== undefined ?
                         <Trigger signatory={signatory} signDocumentConst={signDocumentConst} index={index} setModal={setModal}
-                            user={user} userToken={userToken} />
-                        : <div></div>
+                            user={user} userToken={userToken} key={index} />
+                        : <div key={index}></div>
                 )}
         </PageContainer>
     )

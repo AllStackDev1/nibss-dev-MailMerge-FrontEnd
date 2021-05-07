@@ -218,7 +218,7 @@ const Recipients = ({ user }) => {
                         deleteTag={initiateDeleteTag} />
                     <RecipientList recipients={recipients} search={search} filter={filter}
                         setModal={setModal} setEditRecipient={setEditRecipient} initiateDeleteRecipient={initiateDeleteRecipient}
-                        toAddTag={toAddTag} initiateEdit={initiateEdit} viewPage={viewPage} />
+                        toAddTag={toAddTag} initiateEdit={initiateEdit} viewPage={viewPage} localUserRole={user} />
                 </div>
             </div>
         </>
