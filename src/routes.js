@@ -3,7 +3,7 @@ import DashboardIndex from "components/Dashboard/DashboardIndex.js";
 import Documents from "components/Dashboard/Documents.js";
 import Users from "components/Dashboard/Users.js";
 import Recipients from "components/Dashboard/Recipients";
-import Help from "components/Dashboard/Help";
+// import Help from "components/Dashboard/Help";
 
 var routes = [
     {
@@ -35,11 +35,10 @@ var routes = [
         user: true
     },
     {
-        path: "/help",
-        name: "Help",
-        component: (props) => <Help {...props} />,
-        icon: 'help',
-        support: true
+        path: '#',
+        name: "Version 0.1",
+        component: (props) => null,
+        icon: 'settings',
     }
 ];
 

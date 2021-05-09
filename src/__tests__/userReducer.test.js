@@ -7,6 +7,7 @@ describe("user reducer", () => {
 
     test("empty state", () => {
         expect(user(undefined)).toEqual({
+            searching: false,
             invitingUsers: false
         })
     })

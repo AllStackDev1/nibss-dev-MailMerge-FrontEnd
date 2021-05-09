@@ -4,13 +4,13 @@ import { useDropzone } from 'react-dropzone'
 
 
 // handle new document creation
-const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => {
+const CreateDocument = ({ setUploadingDocument, setModal, setStep, closeModal, onDrop }) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='create-document-component'>
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
-                <BackButton className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
+                <BackButton onClick={closeModal} className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                     BACK
                 </BackButton>

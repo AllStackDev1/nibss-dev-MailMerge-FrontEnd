@@ -1,5 +1,5 @@
-import { getColor } from 'helpers/getColor';
 import React from 'react'
+import { getColor } from 'helpers/getColor';
 import Panel from 'styles/styled-components/SignatoriesPanel';
 import Draggable from './Draggable';
 import { getImageSize, getPage } from "helpers";
@@ -62,37 +62,41 @@ const SignatoriesPanel = ({ signatories, documentContainer, refs, refsFull, setP
 
         const info = getPage(refs.current, y - pdfContainer.current.getBoundingClientRect().top);
 
-        setPlaceholders(p => {
-            const userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
-
-            if (userSigned !== -1) {
-                p[userSigned] = {
-                    ...p[userSigned],
-                    page: info.page,
-                    absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
-                    absolute_y_coordinate: info.offset,
-                    x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
-                        refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
-                    y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight
+        if(info){
+            setPlaceholders(p => {
+                const userSigned = p.findIndex(user => user.name === signatoryDragged.name && user.email === signatoryDragged.email);
+    
+                if (userSigned !== -1) {
+                    p[userSigned] = {
+                        ...p[userSigned],
+                        page: info.page,
+                        absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
+                        absolute_y_coordinate: info.offset,
+                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
+                            refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
+                        y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight
+                    }
+    
+                    return p;
                 }
+    
+                return [
+                    ...p,
+                    {
+                        page: info.page,
+                        absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
+                        absolute_y_coordinate: info.offset,
+                        x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
+                            refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
+                        y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
+                        name: signatoryDragged.name,
+                        email: signatoryDragged.email
+                    }
+                ];
+            });
+        }
 
-                return p;
-            }
-
-            return [
-                ...p,
-                {
-                    page: info.page,
-                    absolute_x_coordinate: x - pdfContainer.current.getBoundingClientRect().left,
-                    absolute_y_coordinate: info.offset,
-                    x_coordinate: ((x - pdfContainer.current.getBoundingClientRect().left) /
-                        refs.current[info.page].current.offsetWidth) * refsFull.current[info.page].current.offsetWidth,
-                    y_coordinate: ((info.offset) / refs.current[info.page].current.offsetHeight) * refsFull.current[info.page].current.offsetHeight,
-                    name: signatoryDragged.name,
-                    email: signatoryDragged.email
-                }
-            ];
-        });
+       
     }
 
     return (

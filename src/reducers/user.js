@@ -1,7 +1,8 @@
 import { userConstants } from '../constants';
 
 const initialState = {
-    invitingUsers: false
+    searching: false,
+    invitingUsers: false,
 };
 
 export default function user(state, action) {

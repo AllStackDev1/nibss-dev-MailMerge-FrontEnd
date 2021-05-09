@@ -1,13 +1,14 @@
 import React from 'react'
 
-const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) => (
+const InviteForm = ({ addInvite, invite, onChange, isValid, checkEmailValidity, role, setRole, parseCSV }) => (
     <form onSubmit={addInvite}>
         <div className="full-width display-flex">
             <div className="width-50-percent right-margin-20">
-                <input type="text" name="name" onChange={onChange} value={invite?.name || ""} placeholder="Full Name" required />
+                <input type="text" name="name" onChange={(e)=>onChange(e)} value={invite?.name || ""} placeholder="Full Name" required />
             </div>
             <div className="width-50-percent">
-                <input type="email" name="email" onChange={onChange} value={invite?.email || ""} placeholder="Email Address" required />
+                <input type="email" name="email" style={{borderColor: isValid ? '': '#f82e2e'}} onChange={(e)=>onChange(e)} onBlur={checkEmailValidity} value={invite?.email || ""} placeholder="Email Address" required />
+                {!isValid && <p className="size-pointseven-rem red-color">Provide a valid email</p>}
             </div>
         </div>
         <div className="full-width display-flex top-margin-30 space-between">
@@ -38,7 +39,7 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
                     <img src={require(`images/icons/import.svg`)} className="height-20" alt="Invite users" />
                     <span className="mustard-color bold size-pointeightfive-rem left-padding-10">Upload CSV</span>
                 </button>
-                <a href="#" class="">Download csv sample template</a>
+                <a href="/NIBSS-Recipients.csv" className="size-pointeight-rem" download>Download csv sample template</a>
             </div>
             <input type="file" name="csv_file" id="csv_file" accept=".csv" onChange={parseCSV} className="width-0 height-0 border-box hide"></input>
         </div>
