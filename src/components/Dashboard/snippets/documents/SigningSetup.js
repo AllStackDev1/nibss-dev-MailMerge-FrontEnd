@@ -7,6 +7,8 @@ import SignatoriesPanel from "./SignatoriesPanel";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const SigningSetup = ({
+  initials,
+  setInitials,
   signatories,
   placeholders,
   setPlaceholders,
@@ -120,6 +122,22 @@ const SigningSetup = ({
                   )}
                 </React.Fragment>
               ))}
+              {initials.map((initial, initialIndex) => (
+                <React.Fragment key={initialIndex}>
+                  {initial.page === i ? (
+                    <div
+                      className="width-180 height-40 absolute"
+                      style={{
+                        left: initial.absolute_x_coordinate,
+                        top: initial.absolute_y_coordinate,
+                        backgroundColor: getColor(initial.name),
+                      }}
+                    ></div>
+                  ) : (
+                    <div></div>
+                  )}
+                </React.Fragment>
+              ))}
             </PageContainer>
           ))}
         </Document>
@@ -178,13 +196,15 @@ const SigningSetup = ({
           ))}
         </div>
         <SignatoriesPanel
-          signatories={signatories}
-          documentContainer={documentContainer}
           refs={refs}
           refsFull={refsFull}
+          initials={initials}
+          signatories={signatories}
+          setInitials={setInitials}
           pdfContainer={pdfContainer}
           setPlaceholders={setPlaceholders}
           signatoryDragged={signatoryDragged}
+          documentContainer={documentContainer}
           setSignatoryDragged={setSignatoryDragged}
         />
       </div>

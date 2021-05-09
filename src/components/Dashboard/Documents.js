@@ -33,6 +33,7 @@ const Documents = withRouter(({ location }) => {
   const [uploadingDocument, setUploadingDocument] = useState(false);
   const [modal, setModal] = useState("");
   const [placeholders, setPlaceholders] = useState([]);
+  const [initials, setInitials] = useState([]);
 
   const dispatch = useDispatch();
   const page = useRef(null);
@@ -72,6 +73,7 @@ const Documents = withRouter(({ location }) => {
       setStep(1);
       setUploadingDocument(false);
       setPlaceholders([]);
+      setInitials([]);
 
       dispatch(documentActions.fetch());
     }
@@ -131,6 +133,7 @@ const Documents = withRouter(({ location }) => {
   }, []);
 
   const prepareDocument = () => {
+    // initials
     dispatch(documentActions.prepare(document, placeholders));
   };
 
@@ -235,9 +238,11 @@ const Documents = withRouter(({ location }) => {
             )}
             {step === 3 && (
               <SigningSetup
-                signatories={document.signatories}
-                placeholders={placeholders}
-                documentFiles={documentFiles}
+              initials={initials}
+              setInitials={setInitials}
+              placeholders={placeholders}
+              documentFiles={documentFiles}
+              signatories={document.signatories}
                 setPlaceholders={setPlaceholders}
               />
             )}

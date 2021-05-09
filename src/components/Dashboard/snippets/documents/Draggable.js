@@ -32,7 +32,7 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
         var elemPos = $(e.target).offset()
 
         setDragging(true);
-        setSignatoryDragged(user);
+        user && setSignatoryDragged(user);
         setRel({
             x: e.pageX - (elemPos?.left || 0),
             y: e.pageY - (elemPos?.top || 0)
