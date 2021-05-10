@@ -106,7 +106,7 @@ const SigningSetup = ({
               data-test="page-containe-1"
             >
               <Page width={550} pageNumber={i + 1} />
-              {placeholders.map((placeholder, placeholderIndex) => (
+              {placeholders?.map((placeholder, placeholderIndex) => (
                 <React.Fragment key={placeholderIndex}>
                   {placeholder.page === i ? (
                     <div
@@ -122,7 +122,7 @@ const SigningSetup = ({
                   )}
                 </React.Fragment>
               ))}
-              {initials.map((initial, initialIndex) => (
+              {initials?.map((initial, initialIndex) => (
                 <React.Fragment key={initialIndex}>
                   {initial.page === i ? (
                     <div
@@ -178,23 +178,24 @@ const SigningSetup = ({
       </p>
       <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
 
-      <div 
-          style={{ height: "50vh", overflowY: "scroll" }}
-          className="display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
-        <div
-          ref={pdfContainer}
-          className={`${
-            numPages === undefined || numPages === null
-              ? "min-width-70-percent"
-              : ""
-          } right-margin-50`}
-        >
-          {documentFiles?.map((documentFile, index) => (
-            <React.Fragment key={index}>
-              {renderFiles(documentFile, index)}
-            </React.Fragment>
-          ))}
-        </div>
+      <div className="display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
+        <div style={{ height: "50vh", overflowY: "scroll" }}>
+          <div
+            ref={pdfContainer}
+            className={`${
+              numPages === undefined || numPages === null
+                ? "min-width-70-percent"
+                : ""
+              } right-margin-30`}
+            >
+              {documentFiles?.map((documentFile, index) => (
+                <React.Fragment key={index}>
+                  {renderFiles(documentFile, index)}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        
         <SignatoriesPanel
           refs={refs}
           refsFull={refsFull}

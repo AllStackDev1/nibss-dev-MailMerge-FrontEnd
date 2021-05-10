@@ -287,7 +287,13 @@ const Documents = withRouter(({ location }) => {
                                     above display-flex align-items-center space-between`}
               >
                 <p
-                  onClick={() => setStep((s) => (s < 3 ? s + 1 : s - 1))}
+                  onClick={() => {
+                    if (step > 2) {
+                      setPlaceholders([]);
+                      setInitials([]);
+                    }
+                    setStep((s) => (s < 3 ? s + 1 : s - 1))
+                  }}
                   className="size-pointnine-rem mustard-color no-select cursor-pointer bold"
                 >
                   {renderSkipText()}
@@ -314,7 +320,6 @@ const Documents = withRouter(({ location }) => {
                   onDrop={onDrop}
                   setModal={setModal}
                   setStep={setStep}
-                  closeModal={() => setModal("")}
                   setUploadingDocument={setUploadingDocument}
                 />
               )}

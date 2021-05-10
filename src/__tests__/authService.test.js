@@ -43,8 +43,7 @@ describe("handle authservice services", () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         })
-            .then(res => res.json())
-            .then(result => { })
+            .then(result => {})
     })
 
     it("should run updateProfile", () => {
@@ -68,7 +67,6 @@ describe("handle authservice services", () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: {} })
         })
-            .then(res => res.json())
             .then(result => { })
     })
 

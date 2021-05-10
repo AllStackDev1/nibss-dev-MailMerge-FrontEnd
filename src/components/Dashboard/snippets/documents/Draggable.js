@@ -48,9 +48,10 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
         document.removeEventListener('mousemove', onMouseMove)
         document.removeEventListener('mouseup', onMouseUp)
 
-        mouseUp(posRef.current.x, posRef.current.y);
-        setPosRef.current({ x: 0, y: 0 });
-
+        if(posRef.current){
+            mouseUp(posRef.current.x, posRef.current.y);
+            setPosRef.current({ x: 0, y: 0 });
+        }
         e.stopPropagation()
         e.preventDefault()
     };

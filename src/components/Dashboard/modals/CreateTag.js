@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 
 // New tag modal
-const CreateTag = ({ tag, onChange, onSubmit, creating }) => {
+const CreateTag = ({ tag, onChange, onSubmit, closeModal, creating }) => {
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='create-tag-component'>
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
-                <BackButton className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
+                <BackButton role='button' onClick={closeModal}  className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                     BACK
                 </BackButton>
@@ -17,7 +17,7 @@ const CreateTag = ({ tag, onChange, onSubmit, creating }) => {
             <form onSubmit={onSubmit}>
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50">
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Create Tag</p>
-                    <input type="text" name="name" value={tag.name || ""} onChange={onChange} placeholder="Enter Tag Name" className="bottom-margin-20" required />
+                    <input type="text" name="name" value={tag.name || ""} onChange={(e)=>onChange(e)} placeholder="Enter Tag Name" className="bottom-margin-20" required />
                     <button
                         type="submit"
                         disabled={creating}

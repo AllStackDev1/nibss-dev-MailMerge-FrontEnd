@@ -38,7 +38,7 @@ it('should match snapshot', () => {
 
 it("should render files", () => {
 
-    const wrapper = shallowSetup({ documentFiles: ["file ;base64 imagees"], placeholders: [{ page: "placeholder" }] });
+    const wrapper = shallowSetup({ documentFiles: ["file ;base64 imagees"], placeholders: [{ page: "placeholder" }], initials: [{ page: "initials" }] });
     const pdfContElem = wrapper.find(".min-width-70-percent");
 
     expect(pdfContElem.length).toBe(1)

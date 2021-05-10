@@ -11,7 +11,7 @@ it("should  run edit without  errors", () => {
 
 })
 
-it("should run addTag without  errors", () => {
+it("should run addTag without errors", () => {
     fetch.mockResponseOnce(JSON.stringify({ addRecipient: {} }))
 
 
@@ -19,10 +19,8 @@ it("should run addTag without  errors", () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tag: {} })
-    }).then(res => res.json())
-        .then(result => {
-            console.log(result);
-        })
+    })
+        .then(result => {})
 })
 
 it("should run addTagsToRecipient without  errors", () => {
