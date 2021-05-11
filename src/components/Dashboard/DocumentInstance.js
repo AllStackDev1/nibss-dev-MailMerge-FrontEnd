@@ -28,10 +28,12 @@ const DocumentInstance = ({ user }) => {
 
   // on document update, fetch document
   useEffect(() => {
-    if (documents?.fetchingSingle === false && documents.document) {
-      setDocument(documents.document);
+    if(documents){
+      if (documents.fetchingSingle === false && documents.document) {
+        setDocument(documents.document);
+      }
     }
-  }, [documents.fetchingSingle, documents.document]);
+  }, [documents]);
 
   // handle back button click
   const goBack = () => {
