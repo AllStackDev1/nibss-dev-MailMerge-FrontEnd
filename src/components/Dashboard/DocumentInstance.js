@@ -31,7 +31,7 @@ const DocumentInstance = ({ user }) => {
     if (documents?.fetchingSingle === false && documents.document) {
       setDocument(documents.document);
     }
-  }, [documents?.fetchingSingle, documents?.document]);
+  }, [documents.fetchingSingle, documents.document]);
 
   // handle back button click
   const goBack = () => {
