@@ -1,6 +1,6 @@
-projectKey=nibss-dev_MailMerge-FrontEnd
+projectKey=nibss-3
 serverUrl=http://localhost:9000
-serverVersion=8.6.1.40680
-dashboardUrl=http://localhost:9000/dashboard?id=nibss-dev_MailMerge-FrontEnd
-ceTaskId=AXed2tOes72BRO28GUir
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXed2tOes72BRO28GUir
+serverVersion=8.9.0.43852
+dashboardUrl=http://localhost:9000/dashboard?id=nibss-3
+ceTaskId=AXlgKgvDbq1w0KHG7Hiw
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXlgKgvDbq1w0KHG7Hiw
