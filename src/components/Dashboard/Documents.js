@@ -33,7 +33,7 @@ const Documents = withRouter(({ location }) => {
   const [uploadingDocument, setUploadingDocument] = useState(false);
   const [modal, setModal] = useState("");
   const [placeholders, setPlaceholders] = useState([]);
-  const [initials, setInitials] = useState([]);
+  const [documentProperties, setDocumentProperties] = useState([]);
 
   const dispatch = useDispatch();
   const page = useRef(null);
@@ -73,7 +73,7 @@ const Documents = withRouter(({ location }) => {
       setStep(1);
       setUploadingDocument(false);
       setPlaceholders([]);
-      setInitials([]);
+      setDocumentProperties([]);
 
       dispatch(documentActions.fetch());
     }
@@ -81,16 +81,20 @@ const Documents = withRouter(({ location }) => {
 
   // handle user select
   const selectUser = (user, nibss) => {
-    setDocument({
-      ...document,
-      signatories: [
-        ...document.signatories,
-        {
-          ...user,
-          nibss: nibss ? nibss : false,
-        },
-      ],
-    });
+    const check = document.signatories.find((e) => e.email === user.email);
+
+    if (!check) {
+      setDocument({
+        ...document,
+        signatories: [
+          ...document.signatories,
+          {
+            ...user,
+            nibss: nibss ? nibss : false,
+          },
+        ],
+      });
+    }
   };
 
   // handle add recipient
@@ -107,13 +111,13 @@ const Documents = withRouter(({ location }) => {
     });
   };
 
-    // handle add recipient
-    const addAllRecipient = (recipients) => {
-      setDocument((d) => {
-        d.recipients = recipients
-        return { ...d };
-      });
-    };
+  // handle add recipient
+  const addAllRecipient = (recipients) => {
+    setDocument((d) => {
+      d.recipients = recipients;
+      return { ...d };
+    });
+  };
 
   // handle file reading by drag and drop
   const onDrop = useCallback((acceptedFiles) => {
@@ -133,8 +137,9 @@ const Documents = withRouter(({ location }) => {
   }, []);
 
   const prepareDocument = () => {
-    // initials
-    dispatch(documentActions.prepare(document, placeholders));
+    dispatch(
+      documentActions.prepare(document, placeholders, documentProperties)
+    );
   };
 
   // get document
@@ -238,11 +243,11 @@ const Documents = withRouter(({ location }) => {
             )}
             {step === 3 && (
               <SigningSetup
-              initials={initials}
-              setInitials={setInitials}
-              placeholders={placeholders}
-              documentFiles={documentFiles}
-              signatories={document.signatories}
+                documentProperties={documentProperties}
+                setDocumentProperties={setDocumentProperties}
+                placeholders={placeholders}
+                documentFiles={documentFiles}
+                signatories={document.signatories}
                 setPlaceholders={setPlaceholders}
               />
             )}
@@ -265,15 +270,14 @@ const Documents = withRouter(({ location }) => {
                 <p className="bottom-margin-20 top-margin-30 size-pointnine-rem bold">
                   Document Attachment
                 </p>
-                {documentFiles &&
-                  documentFiles.map((documentFile, index) => (
-                    <img
-                      src={documentFile}
-                      key={index}
-                      className="height-100 bottom-margin-30"
-                      alt="NIBSS Upload Document"
-                    />
-                  ))}
+                {documentFiles?.map((documentFile, index) => (
+                  <iframe
+                    src={documentFile}
+                    key={index}
+                    className="min-height-200 bottom-margin-30"
+                    alt="NIBSS Upload Document"
+                  />
+                ))}
               </div>
             )}
             {step === 5 && (
@@ -290,9 +294,9 @@ const Documents = withRouter(({ location }) => {
                   onClick={() => {
                     if (step > 2) {
                       setPlaceholders([]);
-                      setInitials([]);
+                      setDocumentProperties([]);
                     }
-                    setStep((s) => (s < 3 ? s + 1 : s - 1))
+                    setStep((s) => (s < 3 ? s + 1 : s - 1));
                   }}
                   className="size-pointnine-rem mustard-color no-select cursor-pointer bold"
                 >

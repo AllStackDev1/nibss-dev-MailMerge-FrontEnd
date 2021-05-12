@@ -28,7 +28,7 @@ const DocumentInstance = ({ user }) => {
 
   // on document update, fetch document
   useEffect(() => {
-    if(documents){
+    if (documents) {
       if (documents.fetchingSingle === false && documents.document) {
         setDocument(documents.document);
       }
@@ -44,6 +44,15 @@ const DocumentInstance = ({ user }) => {
   function onDocumentLoadSuccess({ numPages: num }) {
     setNumPages(num);
   }
+
+  const LoadingComp = () => (
+    <Loader className="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </Loader>
+  );
 
   // RENDER HELPER
   const renderFile = () => {
@@ -65,14 +74,7 @@ const DocumentInstance = ({ user }) => {
     return (
       <Document
         file={document.document?.file}
-        loading={
-          <Loader className="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </Loader>
-        }
+        loading={<LoadingComp />}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         {[...Array(numPages)].map((el, index) => (
@@ -98,7 +100,7 @@ const DocumentInstance = ({ user }) => {
   // Display logs to user
   const renderLogs = () => {
     if (!document.logs) {
-      return "Loading ....";
+      return <LoadingComp />;
     }
 
     return document.logs?.map((log, index) => <Log log={log} />);
@@ -106,12 +108,12 @@ const DocumentInstance = ({ user }) => {
 
   const renderDeliveryReport = () => {
     if (!document.document) {
-      return <span>Loading ...</span>;
+      return <LoadingComp />;
     }
 
     return (
       <>
-        <div className="full-width display-flex">
+        <div className="full-width display-none">
           <div className="width-70-percent border-box right-margin-50 display-flex">
             <BorderGray className="width-25-percent top-padding-30 bottom-padding-30 right-margin-15 text-center">
               <p className="mustard-color bold size-pointnine">
@@ -171,7 +173,7 @@ const DocumentInstance = ({ user }) => {
             </div>
           </BorderGray>
         </div>
-        <div className="full-width top-margin-50">
+        <div className="full-width">
           <div className="full-width display-flex bottom-margin-20">
             <div className="width-30-percent size-pointnine-rem no-shrink bold">
               Recipient Name

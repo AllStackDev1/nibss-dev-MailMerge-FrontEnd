@@ -15,6 +15,8 @@ const SetupSignatories = ({ selectUser, document }) => {
     const onChange = event => {
         const { name, value } = event.target;
 
+        
+
         setSignatory({
             ...signatory,
             [name]: value

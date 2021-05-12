@@ -7,8 +7,8 @@ import SignatoriesPanel from "./SignatoriesPanel";
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const SigningSetup = ({
-  initials,
-  setInitials,
+  documentProperties,
+  setDocumentProperties,
   signatories,
   placeholders,
   setPlaceholders,
@@ -16,6 +16,7 @@ const SigningSetup = ({
 }) => {
   const [hovering, setHovering] = useState(false);
   const [signatoryDragged, setSignatoryDragged] = useState(false);
+  const [documentPropertyDragged, setDocumentPropertyDragged] = useState(null);
   const [numPages, setNumPages] = useState(null);
 
   const documentContainer = useRef(null);
@@ -39,6 +40,16 @@ const SigningSetup = ({
       (item) => item || React.createRef()
     );
   }
+
+  const handleRemove = (index, type) => {
+    if (type === "documentProperty") {
+      const newDate = documentProperties.filter((e, idx) => idx !== index);
+      setDocumentProperties(newDate);
+    } else {
+      const newDate = placeholders.filter((e, idx) => idx !== index);
+      setPlaceholders(newDate);
+    }
+  };
 
   const renderFiles = (documentFile, index) => {
     const isNumPages =
@@ -65,13 +76,75 @@ const SigningSetup = ({
           {placeholders.map((placeholder, i) => (
             <div
               key={i}
-              className="width-180 height-40 absolute"
+              className="width-180 height-40 size-pointeightfive-rem absolute"
               style={{
                 left: placeholder.absolute_x_coordinate,
                 top: placeholder.absolute_y_coordinate,
-                backgroundColor: getColor(placeholder.name),
+                // backgroundColor: getColor(placeholder.name),
+                border: `2px solid ${getColor(placeholder.name)}`,
               }}
-            ></div>
+            >
+              <div className="relative full-width full-height display-flex justify-center align-items-center">
+                <div
+                  role="button"
+                  className="absolute"
+                  style={{
+                    top: 0,
+                    right: 0,
+                    padding: "2px 5px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleRemove(i, "placeholders")}
+                >
+                  <span
+                    className="material-icons smooth"
+                    style={{
+                      fontSize: 20,
+                      color: "red",
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
+                {placeholder.name} signs
+              </div>
+            </div>
+          ))}
+          {documentProperties?.map((documentProperty, i) => (
+            <div
+              key={i}
+              className="width-180 height-40 size-pointeightfive-rem absolute"
+              style={{
+                left: documentProperty.absolute_x_coordinate,
+                top: documentProperty.absolute_y_coordinate,
+                border: "2px solid gray",
+              }}
+            >
+              <div className="relative full-width full-height display-flex justify-center align-items-center">
+                <div
+                  role="button"
+                  className="absolute"
+                  style={{
+                    top: 0,
+                    right: 0,
+                    padding: "2px 5px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleRemove(i, "placeholders")}
+                >
+                  <span
+                    className="material-icons smooth"
+                    style={{
+                      fontSize: 20,
+                      color: "red",
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
+                {documentProperty.name} Here
+              </div>
+            </div>
           ))}
         </PageContainer>
       );
@@ -110,29 +183,85 @@ const SigningSetup = ({
                 <React.Fragment key={placeholderIndex}>
                   {placeholder.page === i ? (
                     <div
-                      className="width-180 height-40 absolute"
+                      className="width-180 height-40 size-pointeightfive-rem absolute"
                       style={{
                         left: placeholder.absolute_x_coordinate,
                         top: placeholder.absolute_y_coordinate,
-                        backgroundColor: getColor(placeholder.name),
+                        // backgroundColor: getColor(placeholder.name),
+                        border: `2px solid ${getColor(placeholder.name)}`,
                       }}
-                    ></div>
+                    >
+                      <div className="relative full-width full-height display-flex justify-center align-items-center">
+                        <div
+                          role="button"
+                          className="absolute"
+                          style={{
+                            top: 0,
+                            right: 0,
+                            padding: "2px 5px",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            handleRemove(placeholderIndex, "placeholders")
+                          }
+                        >
+                          <span
+                            className="material-icons smooth"
+                            style={{
+                              fontSize: 20,
+                              color: "red",
+                            }}
+                          >
+                            delete
+                          </span>
+                        </div>
+                        {placeholder.name} signs
+                      </div>
+                    </div>
                   ) : (
                     <div></div>
                   )}
                 </React.Fragment>
               ))}
-              {initials?.map((initial, initialIndex) => (
+              {documentProperties?.map((documentProperty, initialIndex) => (
                 <React.Fragment key={initialIndex}>
-                  {initial.page === i ? (
+                  {documentProperty.page === i ? (
                     <div
-                      className="width-180 height-40 absolute"
+                      className="width-180 height-40 size-pointeightfive-rem absolute"
                       style={{
-                        left: initial.absolute_x_coordinate,
-                        top: initial.absolute_y_coordinate,
-                        backgroundColor: getColor(initial.name),
+                        textTransform: "capitalize",
+                        left: documentProperty.absolute_x_coordinate,
+                        top: documentProperty.absolute_y_coordinate,
+                        border: "2px solid gray",
                       }}
-                    ></div>
+                    >
+                      <div className="relative full-width full-height display-flex justify-center align-items-center">
+                        <div
+                          role="button"
+                          className="absolute"
+                          style={{
+                            top: 0,
+                            right: 0,
+                            padding: "2px 5px",
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            handleRemove(initialIndex, "documentProperty")
+                          }
+                        >
+                          <span
+                            className="material-icons smooth"
+                            style={{
+                              fontSize: 20,
+                              color: "red",
+                            }}
+                          >
+                            delete
+                          </span>
+                        </div>
+                        {documentProperty.name} Here
+                      </div>
+                    </div>
                   ) : (
                     <div></div>
                   )}
@@ -186,27 +315,28 @@ const SigningSetup = ({
               numPages === undefined || numPages === null
                 ? "min-width-70-percent"
                 : ""
-              } right-margin-30`}
-            >
-              {documentFiles?.map((documentFile, index) => (
-                <React.Fragment key={index}>
-                  {renderFiles(documentFile, index)}
-                </React.Fragment>
-              ))}
-            </div>
+            } right-margin-30`}
+          >
+            {documentFiles?.map((documentFile, index) => (
+              <React.Fragment key={index}>
+                {renderFiles(documentFile, index)}
+              </React.Fragment>
+            ))}
           </div>
-        
+        </div>
+
         <SignatoriesPanel
           refs={refs}
           refsFull={refsFull}
-          initials={initials}
           signatories={signatories}
-          setInitials={setInitials}
+          setDocumentProperties={setDocumentProperties}
           pdfContainer={pdfContainer}
           setPlaceholders={setPlaceholders}
           signatoryDragged={signatoryDragged}
           documentContainer={documentContainer}
           setSignatoryDragged={setSignatoryDragged}
+          documentPropertyDragged={documentPropertyDragged}
+          setDocumentPropertyDragged={setDocumentPropertyDragged}
         />
       </div>
     </>

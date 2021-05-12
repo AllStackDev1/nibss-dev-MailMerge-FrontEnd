@@ -5,36 +5,21 @@ import Draggable from "./Draggable";
 import { getImageSize, getPage } from "helpers";
 
 const SignatoriesPanel = ({
-  signatories,
-  documentContainer,
   refs,
   refsFull,
-  initials,
-  setInitials,
-  setPlaceholders,
+  setDocumentProperties,
+  signatories,
   pdfContainer,
+  setPlaceholders,
   signatoryDragged,
+  documentContainer,
   setSignatoryDragged,
+  documentPropertyDragged,
+  setDocumentPropertyDragged
 }) => {
   const mouseUp = async (x, y) => {
     if (documentContainer.current) {
       setPlaceholders((currentPlaceholders) => {
-        const userSigned = currentPlaceholders.findIndex(
-          (user) =>
-            user.name === signatoryDragged.name &&
-            user.email === signatoryDragged.email
-        );
-        if (userSigned !== -1) {
-          currentPlaceholders[userSigned] = {
-            ...currentPlaceholders[userSigned],
-            absolute_x_coordinate:
-              x - documentContainer.current.getBoundingClientRect().left,
-            absolute_y_coordinate:
-              y - documentContainer.current.getBoundingClientRect().top,
-          };
-
-          return currentPlaceholders;
-        } else {
           return [
             ...currentPlaceholders,
             {
@@ -46,7 +31,6 @@ const SignatoriesPanel = ({
               email: signatoryDragged.email,
             },
           ];
-        }
       });
 
       const imageSize = await getImageSize(
@@ -54,27 +38,6 @@ const SignatoriesPanel = ({
       );
 
       setPlaceholders((currentPlaceholders) => {
-        const userSigned = currentPlaceholders.findIndex(
-          (user) =>
-            user.name === signatoryDragged.name &&
-            user.email === signatoryDragged.email
-        );
-
-        if (userSigned !== -1) {
-          currentPlaceholders[userSigned] = {
-            ...currentPlaceholders[userSigned],
-            x_coordinate:
-              ((x - documentContainer.current.getBoundingClientRect().left) /
-                documentContainer.current.offsetWidth) *
-              imageSize.width,
-            y_coordinate:
-              ((y - documentContainer.current.getBoundingClientRect().top) /
-                documentContainer.current.offsetHeight) *
-              imageSize.height,
-          };
-
-          return currentPlaceholders;
-        } else {
           return [
             ...currentPlaceholders,
             {
@@ -90,7 +53,6 @@ const SignatoriesPanel = ({
               email: signatoryDragged.email,
             },
           ];
-        }
       });
 
       return;
@@ -103,31 +65,6 @@ const SignatoriesPanel = ({
 
     if (info) {
       setPlaceholders((p) => {
-        const userSigned = p.findIndex(
-          (user) =>
-            user.name === signatoryDragged.name &&
-            user.email === signatoryDragged.email
-        );
-
-        if (userSigned !== -1) {
-          p[userSigned] = {
-            ...p[userSigned],
-            page: info.page,
-            absolute_x_coordinate:
-              x - pdfContainer.current.getBoundingClientRect().left,
-            absolute_y_coordinate: info.offset,
-            x_coordinate:
-              ((x - pdfContainer.current.getBoundingClientRect().left) /
-                refs.current[info.page].current.offsetWidth) *
-              refsFull.current[info.page].current.offsetWidth,
-            y_coordinate:
-              (info.offset / refs.current[info.page].current.offsetHeight) *
-              refsFull.current[info.page].current.offsetHeight,
-          };
-
-          return p;
-        }
-
         return [
           ...p,
           {
@@ -150,16 +87,17 @@ const SignatoriesPanel = ({
     }
   };
 
-  const mouseUpInitial = async (x, y) => {
+  const mouseUpDocumentProperty = async (x, y) => {
     if (documentContainer.current) {
-        setInitials((currentinitials) => {
+        setDocumentProperties((documentProperties) => {
           return [
-            ...currentinitials,
+            ...documentProperties,
             {
               absolute_x_coordinate:
                 x - documentContainer.current.getBoundingClientRect().left,
               absolute_y_coordinate:
                 y - documentContainer.current.getBoundingClientRect().top,
+              name: documentPropertyDragged
             },
           ];
       });
@@ -168,9 +106,9 @@ const SignatoriesPanel = ({
         documentContainer.current.querySelector("img")
       );
 
-      setInitials((currentinitials) => {
+      setDocumentProperties((documentProperties) => {
           return [
-            ...currentinitials,
+            ...documentProperties,
             {
               x_coordinate:
                 ((x - documentContainer.current.getBoundingClientRect().left) /
@@ -179,7 +117,8 @@ const SignatoriesPanel = ({
               y_coordinate:
                 ((y - documentContainer.current.getBoundingClientRect().top) /
                   documentContainer.current.offsetHeight) *
-                imageSize.height
+                imageSize.height,
+              name: documentPropertyDragged
             },
           ];
       });
@@ -193,7 +132,7 @@ const SignatoriesPanel = ({
     );
 
     if (info) {
-        setInitials((p) => {
+        setDocumentProperties((p) => {
         return [
           ...p,
           {
@@ -208,6 +147,7 @@ const SignatoriesPanel = ({
             y_coordinate:
               (info.offset / refs.current[info.page].current.offsetHeight) *
               refsFull.current[info.page].current.offsetHeight,
+            name: documentPropertyDragged
           },
         ];
       });
@@ -226,7 +166,8 @@ const SignatoriesPanel = ({
         </div>
         <span className="size-pointeight-rem">Signature</span>
       </div>
-      <div className="display-flex align-items-center">
+      <div className="display-flex align-items-center bottom-margin-80">
+      <Draggable mouseUp={mouseUpDocumentProperty} setName={setDocumentPropertyDragged} name='dateStamp'>
         <div className="width-40 height-40 display-flex align-items-center">
           <img
             src={require(`images/icons/document/date.svg`)}
@@ -235,9 +176,10 @@ const SignatoriesPanel = ({
           />
         </div>
         <span className="size-pointeight-rem">Date Stamp</span>
+        </Draggable>
       </div>
-      <div className="display-flex align-items-center bottom-margin-70">
-        <Draggable mouseUp={mouseUpInitial}>
+      <div className="display-flex align-items-center bottom-margin-80">
+        <Draggable mouseUp={mouseUpDocumentProperty} setName={setDocumentPropertyDragged} name='initials'>
           <div className="width-40 height-40 display-flex align-items-center">
             <img
               src={require(`images/icons/document/initials.svg`)}

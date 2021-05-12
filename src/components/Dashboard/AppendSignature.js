@@ -126,6 +126,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                 width75percent={width75percent}
                 setDocument={setDocument}
                 setNumPages={setNumPages}
+                numPages={numPages}
                 user={user}
                 userToken={userToken}
                 setModal={setModal}
@@ -142,6 +143,7 @@ const AppendSignature = ({ user, documentId: urlDocumentId, userToken }) => {
                     width75percent={width75percent}
                     setDocument={setDocument}
                     setNumPages={setNumPages}
+                    numPages={numPages}
                     user={user}
                     userToken={userToken}
                 />

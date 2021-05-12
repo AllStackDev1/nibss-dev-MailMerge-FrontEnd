@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import $ from 'jquery'
 import styled from "styled-components"
 
-const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged }) => {
+const Draggable = ({ initialPos, children, mouseUp, user, name, setName, setSignatoryDragged }) => {
     const [pos, setPos] = useState(initialPos);
     const [dragging, setDragging] = useState(false);
     const [rel, setRel] = useState(null);
@@ -33,11 +33,11 @@ const Draggable = ({ initialPos, children, mouseUp, user, setSignatoryDragged })
 
         setDragging(true);
         user && setSignatoryDragged(user);
+        name && setName(name);
         setRel({
             x: e.pageX - (elemPos?.left || 0),
             y: e.pageY - (elemPos?.top || 0)
         });
-
         e.stopPropagation()
         e.preventDefault()
     }
