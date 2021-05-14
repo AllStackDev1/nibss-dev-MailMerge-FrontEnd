@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 
 // handle new document creation
 const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => {
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({  accept: 'image/*, application/pdf', onDrop });
 
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='create-document-component'>

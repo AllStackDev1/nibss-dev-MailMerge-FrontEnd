@@ -7,53 +7,69 @@ import { getImageSize, getPage } from "helpers";
 const SignatoriesPanel = ({
   refs,
   refsFull,
-  setDocumentProperties,
   signatories,
   pdfContainer,
   setPlaceholders,
   signatoryDragged,
   documentContainer,
   setSignatoryDragged,
+  setDocumentProperties,
   documentPropertyDragged,
   setDocumentPropertyDragged
 }) => {
   const mouseUp = async (x, y) => {
-    if (documentContainer.current) {
-      setPlaceholders((currentPlaceholders) => {
-          return [
-            ...currentPlaceholders,
-            {
-              absolute_x_coordinate:
-                x - documentContainer.current.getBoundingClientRect().left,
-              absolute_y_coordinate:
-                y - documentContainer.current.getBoundingClientRect().top,
-              name: signatoryDragged.name,
-              email: signatoryDragged.email,
-            },
-          ];
-      });
 
+    if (documentContainer.current) {
       const imageSize = await getImageSize(
         documentContainer.current.querySelector("img")
       );
 
-      setPlaceholders((currentPlaceholders) => {
-          return [
-            ...currentPlaceholders,
-            {
+      if(imageSize){
+        setPlaceholders((currentPlaceholders) => {
+          const updateIndex = currentPlaceholders.findIndex(e=> e.email === signatoryDragged.email)
+          if(updateIndex !== -1){
+            currentPlaceholders[updateIndex].coordinates.push({
+              absolute_x_coordinate:
+              x - documentContainer.current.getBoundingClientRect().left,
+              absolute_y_coordinate:
+                y - documentContainer.current.getBoundingClientRect().top,
               x_coordinate:
-                ((x - documentContainer.current.getBoundingClientRect().left) /
-                  documentContainer.current.offsetWidth) *
-                imageSize.width,
+              ((x - documentContainer.current.getBoundingClientRect().left) /
+                documentContainer.current.offsetWidth) *
+              imageSize.width,
               y_coordinate:
                 ((y - documentContainer.current.getBoundingClientRect().top) /
                   documentContainer.current.offsetHeight) *
                 imageSize.height,
-              name: signatoryDragged.name,
-              email: signatoryDragged.email,
-            },
-          ];
-      });
+            }) 
+            return currentPlaceholders
+          }else{
+            return [
+              ...currentPlaceholders,
+              {
+                name: signatoryDragged.name,
+                email: signatoryDragged.email,
+                coordinates: [
+                  {
+                    absolute_x_coordinate:
+                    x - documentContainer.current.getBoundingClientRect().left,
+                    absolute_y_coordinate:
+                      y - documentContainer.current.getBoundingClientRect().top,
+                    x_coordinate:
+                    ((x - documentContainer.current.getBoundingClientRect().left) /
+                      documentContainer.current.offsetWidth) *
+                    imageSize.width,
+                    y_coordinate:
+                      ((y - documentContainer.current.getBoundingClientRect().top) /
+                        documentContainer.current.offsetHeight) *
+                      imageSize.height,
+                  }
+                ]
+              },
+            ];
+          }
+        });
+      }
 
       return;
     }
@@ -65,9 +81,9 @@ const SignatoriesPanel = ({
 
     if (info) {
       setPlaceholders((p) => {
-        return [
-          ...p,
-          {
+        const updateIndex = p.findIndex(e=> e.email === signatoryDragged.email)
+        if(updateIndex !== -1){
+          p[updateIndex].coordinates.push({
             page: info.page,
             absolute_x_coordinate:
               x - pdfContainer.current.getBoundingClientRect().left,
@@ -79,37 +95,51 @@ const SignatoriesPanel = ({
             y_coordinate:
               (info.offset / refs.current[info.page].current.offsetHeight) *
               refsFull.current[info.page].current.offsetHeight,
-            name: signatoryDragged.name,
-            email: signatoryDragged.email,
-          },
-        ];
+          }) 
+          return p
+        }else{
+          return [
+            ...p,
+            {
+              name: signatoryDragged.name,
+              email: signatoryDragged.email,
+              coordinates: [
+                {
+                  page: info.page,
+                  absolute_x_coordinate:
+                    x - pdfContainer.current.getBoundingClientRect().left,
+                  absolute_y_coordinate: info.offset,
+                  x_coordinate:
+                    ((x - pdfContainer.current.getBoundingClientRect().left) /
+                      refs.current[info.page].current.offsetWidth) *
+                    refsFull.current[info.page].current.offsetWidth,
+                  y_coordinate:
+                    (info.offset / refs.current[info.page].current.offsetHeight) *
+                    refsFull.current[info.page].current.offsetHeight,
+                }
+              ]
+            },
+          ];
+        }
       });
     }
   };
 
   const mouseUpDocumentProperty = async (x, y) => {
     if (documentContainer.current) {
+      const imageSize = await getImageSize(
+        documentContainer.current.querySelector("img")
+      );
+
+      if(imageSize){
         setDocumentProperties((documentProperties) => {
           return [
             ...documentProperties,
             {
               absolute_x_coordinate:
-                x - documentContainer.current.getBoundingClientRect().left,
-              absolute_y_coordinate:
-                y - documentContainer.current.getBoundingClientRect().top,
-              name: documentPropertyDragged
-            },
-          ];
-      });
-
-      const imageSize = await getImageSize(
-        documentContainer.current.querySelector("img")
-      );
-
-      setDocumentProperties((documentProperties) => {
-          return [
-            ...documentProperties,
-            {
+              x - documentContainer.current.getBoundingClientRect().left,
+            absolute_y_coordinate:
+              y - documentContainer.current.getBoundingClientRect().top,
               x_coordinate:
                 ((x - documentContainer.current.getBoundingClientRect().left) /
                   documentContainer.current.offsetWidth) *
@@ -122,6 +152,7 @@ const SignatoriesPanel = ({
             },
           ];
       });
+      }
 
       return;
     }
