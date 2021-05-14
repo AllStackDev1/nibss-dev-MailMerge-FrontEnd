@@ -213,7 +213,15 @@ const Documents = withRouter(({ location }) => {
         <>
           {step < 5 && (
             <BackButton
-              onClick={() => setUploadingDocument(false)}
+              onClick={() => {
+                setDocument({ signatories: [], recipients: [] });
+                setDocumentFiles([]);
+                setTab(1);
+                setStep(1);
+                setPlaceholders([]);
+                setDocumentProperties([]);
+                setUploadingDocument(false)
+              }}
               className="cursor-pointer display-flex size-pointnine-rem align-items-center mustard-color left above bold"
               data-test="docs-backbtn"
             >
@@ -271,12 +279,23 @@ const Documents = withRouter(({ location }) => {
                   Document Attachment
                 </p>
                 {documentFiles?.map((documentFile, index) => (
-                  <iframe
-                    src={documentFile}
-                    key={index}
-                    className="min-height-200 bottom-margin-30"
-                    alt="NIBSS Upload Document"
-                  />
+                  <>
+                    {documentFile?.match('data:image/*') ? (
+                      <img
+                        key={index} 
+                        src={documentFile}
+                        className="width-200 height-200 bottom-margin-30"
+                        alt='NIBSS Upload Document'
+                      />
+                    ) : (
+                      <iframe
+                        key={index} 
+                        src={documentFile}
+                        className="width-200 height-200 bottom-margin-30"
+                        alt='NIBSS Upload Document'
+                      />
+                    )}
+                  </>
                 ))}
               </div>
             )}
@@ -292,7 +311,7 @@ const Documents = withRouter(({ location }) => {
               >
                 <p
                   onClick={() => {
-                    if (step > 2) {
+                    if (step === 3) {
                       setPlaceholders([]);
                       setDocumentProperties([]);
                     }
