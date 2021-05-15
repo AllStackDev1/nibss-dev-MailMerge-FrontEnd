@@ -16,9 +16,9 @@ const EditUser = ({ user, onChange, onSubmit, editing }) => {
             <form onSubmit={onSubmit}>
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50">
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Full Name</p>
-                    <input type="text" name="name" onChange={onChange} value={user.name || ""} placeholder="Full Name" className="bottom-margin-20" required />
+                    <input type="text" name="name" onChange={e => onChange(e)} value={user.name || ""} placeholder="Full Name" className="bottom-margin-20" required />
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Email address</p>
-                    <input type="email" name="email" onChange={onChange} value={user.email || ""} placeholder="Email address" className="bottom-margin-20" required />
+                    <input type="email" name="email" onChange={e => onChange(e)} value={user.email || ""} placeholder="Email address" className="bottom-margin-20" required />
                     <button
                         type="submit"
                         disabled={editing}

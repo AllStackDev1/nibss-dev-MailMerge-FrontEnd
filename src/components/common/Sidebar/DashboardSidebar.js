@@ -10,7 +10,7 @@ const DashboardSidebar = ({ routes, logout, location, user = {} }) => {
 
     // List route paths
     const routePath = route => {
-        if (route.path.includes("/:")) {
+        if (route.path?.includes("/:")) {
             return route.path.split("/:")[0]
         }
 

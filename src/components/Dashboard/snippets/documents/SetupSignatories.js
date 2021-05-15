@@ -15,6 +15,8 @@ const SetupSignatories = ({ selectUser, document }) => {
     const onChange = event => {
         const { name, value } = event.target;
 
+        
+
         setSignatory({
             ...signatory,
             [name]: value
@@ -30,8 +32,7 @@ const SetupSignatories = ({ selectUser, document }) => {
                 <div className="width-50-percent border-box left-padding-10 overflow-auto-y custom-scrollbar border-right-gray-1 right-padding-60">
                     <p className="size-pointnine-rem bold bottom-margin-15">NIBSS members</p>
                     <form>
-                        <UserSearch
-                            selectUser={selectUser} />
+                        <UserSearch selectUser={selectUser} />
                         <DocumentButton
                             type="submit"
                             className="width-90 height-35 top-margin-15 box-shadow-less2 border-radius-5 display-flex align-items-center justify-center">

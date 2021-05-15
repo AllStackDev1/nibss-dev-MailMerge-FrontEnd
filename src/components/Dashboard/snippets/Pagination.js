@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Pagination = ({ data, viewPage }) => {
     // RENDER HELPER
+
     const renderPage = index => {
         if (index + 1 <= data.pagination.number_of_pages) {
             return <Page
@@ -14,7 +15,7 @@ const Pagination = ({ data, viewPage }) => {
                 {index + 1}
             </Page>
         }
-        return <div></div>;
+        return <div key={index}></div>;
     }
 
     return (

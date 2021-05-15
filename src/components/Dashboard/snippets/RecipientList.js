@@ -40,7 +40,7 @@ const RecipientList = ({ recipients, search, filter, setModal, setEditRecipient,
             <div className="full-width display-flex space-between top-padding-30">
                 <div className="width-40 height-40 right-margin-20 left-margin-10"></div>
                 <div className="no-shrink width-25-percent size-one-rem bold gray-color opacity-0-5">
-                    #
+                    Full Name
                 </div>
                 <div className="no-shrink width-20-percent size-one-rem bold gray-color opacity-0-5">
                     Email address

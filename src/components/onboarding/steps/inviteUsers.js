@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import Invite from './snippets/invite';
 import InviteForm from './snippets/inviteForm';
 
+import validator from 'validator';
+
 const InviteUsers = ({ add }) => {
+    const [isValid, setEmailVaild] = useState(true);
     const [invite, setInvite] = useState({});
     const [role, setRole] = useState('user');
     const [invited, setInvited] = useState([]);
@@ -80,6 +83,14 @@ const InviteUsers = ({ add }) => {
         file.target.value = null;
     }
 
+    const checkEmailValidity = (e) => {
+        if(validator.isEmail(e.target.value)){
+            setEmailVaild(true)
+        }else{
+            setEmailVaild(false)
+        }
+    }
+
     return (
         <>
             <div className="left-padding-80 right-padding-80">
@@ -90,10 +101,10 @@ const InviteUsers = ({ add }) => {
                     <div className="bottom-padding-30">
                         <p className="size-onepointtwo-rem bold bottom-padding-10 mid-gray-color">Invited</p>
                         {invited.map((inviteInstance, index) =>
-                            <Invite inviteInstance={inviteInstance} index={index} invited={invited} setInvited={setInvited} />
+                            <Invite inviteInstance={inviteInstance} key={index} index={index} invited={invited} setInvited={setInvited} />
                         )}
                     </div>}
-                <InviteForm addInvite={addInvite} invite={invite} onChange={onChange} role={role} setRole={setRole} parseCSV={parseCSV} />
+                <InviteForm addInvite={addInvite} invite={invite} onChange={onChange} checkEmailValidity={checkEmailValidity} isValid={isValid} role={role} setRole={setRole} parseCSV={parseCSV} />
             </div>
             <div
                 className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 

@@ -10,7 +10,7 @@ const DashboardCard = ({ documents, image, keyed, label }) => (
                 <img src={image} className="height-20" alt="NIBSS Empty" />
             </div>
             {documents?.documents && documents.fetching !== true ?
-                <span className="bold size-two-rem">{documents?.documents?.[keyed] || 0}</span>
+                <span className="bold size-two-rem">{documents?.documents?.[keyed] || documents?.documents?.document_stats?.[keyed]}</span>
                 :
                 <Loader className="lds-ring"><div></div><div></div><div></div><div></div></Loader>}
         </div>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 // submit add recipient 
-const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit, onSubmit, creating }) => {
+const AddRecipient = ({ modal, editRecipient, recipient, closeModal, onChange, onChangeEdit, onSubmit, creating }) => {
     const editRecipientConstant = "edit-recipient";
 
     const renderButtonContent = () => {
@@ -21,7 +21,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='recipient-component'>
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
-                <BackButton className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
+                <BackButton role='button' onClick={closeModal}  className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                     BACK
                 </BackButton>
@@ -34,7 +34,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
                     <input
                         type="text"
                         name="name"
-                        onChange={modal === editRecipientConstant ? onChangeEdit : onChange}
+                        onChange={(e)=> modal === editRecipientConstant ? onChangeEdit(e) : onChange(e)}
                         value={modal === editRecipientConstant ? editRecipient?.name : recipient?.name || ""}
                         placeholder="Enter Recipient Full Name"
                         className="bottom-margin-20" required />
@@ -42,7 +42,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, onChange, onChangeEdit,
                     <input
                         type="email"
                         name="email"
-                        onChange={modal === editRecipientConstant ? onChangeEdit : onChange}
+                        onChange={(e)=> modal === editRecipientConstant ? onChangeEdit(e) : onChange(e)}
                         value={modal === editRecipientConstant ? editRecipient?.email : recipient?.email || ""}
                         placeholder="Enter Recipient Email address"
                         className="bottom-margin-20" required />

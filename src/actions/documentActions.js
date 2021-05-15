@@ -153,6 +153,7 @@ function signDocumentNew(file, documentId, userToken) {
             .post(uploadendpoint, data, {
                 onUploadProgress: ProgressEvent => {
                     const loaded = (ProgressEvent.loaded / ProgressEvent.total * 100);
+                    console.log(loaded);
                 },
                 headers
             })
@@ -186,7 +187,7 @@ function signDocumentNew(file, documentId, userToken) {
 }
 
 // Handle sign documenet form
-function prepare(document, signatories) {
+function prepare(document, signatories, documentProperties) {
     return dispatch => {
         dispatch(startUpload());
 
@@ -196,6 +197,7 @@ function prepare(document, signatories) {
         data.append('documentBody', document.documentBody);
         data.append('recipients', JSON.stringify(document.recipients));
         data.append('signatories', JSON.stringify(signatories));
+        data.append('documentProperty', JSON.stringify(documentProperties));
 
         const uploadendpoint = `${process.env.REACT_APP_API_URL}/documents/prepare`;
         const headers = {

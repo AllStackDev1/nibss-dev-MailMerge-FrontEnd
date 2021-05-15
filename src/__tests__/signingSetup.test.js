@@ -38,8 +38,8 @@ it('should match snapshot', () => {
 
 it("should render files", () => {
 
-    const wrapper = shallowSetup({ documentFiles: ["file ;base64 imagees"], placeholders: [{ page: "placeholder" }] });
-    const pdfContElem = wrapper.find(".min-width-70-percent");
+    const wrapper = shallowSetup({ documentFiles: ["file ;base64 imagees"], placeholders: [{ page: "placeholder", coordinates: [] }], documentProperties: [{ page: "documentProperties" }] });
+    const pdfContElem = wrapper.find(".width-70-percent");
 
     expect(pdfContElem.length).toBe(1)
 
@@ -49,8 +49,8 @@ it("should render files", () => {
 
 it("should handle page container", () => {
 
-    const wrapper = shallowSetup({ documentFiles: ["data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO 9TXL0Y4OHwAAAABJRU5ErkJggg=="], placeholders: [{ page: "placeholder" }] });
-    const pdfContElem = wrapper.find(".min-width-70-percent");
+    const wrapper = shallowSetup({ documentFiles: ["data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO 9TXL0Y4OHwAAAABJRU5ErkJggg=="], placeholders: [{ page: "placeholder", coordinates: []  }] });
+    const pdfContElem = wrapper.find(".width-70-percent");
 
     expect(pdfContElem.length).toBe(1)
 
@@ -65,8 +65,8 @@ it("should handle page container", () => {
 
 it("should handle page container 1", () => {
 
-    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder" }] });
-    const pdfContElem = wrapper.find(".min-width-70-percent");
+    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder", coordinates: [] }] });
+    const pdfContElem = wrapper.find(".width-70-percent");
 
     expect(pdfContElem.length).toBe(1)
 
@@ -81,8 +81,8 @@ it("should handle page container 1", () => {
 
 it("should handle page container 2", () => {
 
-    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder" }] });
-    const pdfContElem = wrapper.find(".min-width-70-percent");
+    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder", coordinates: [] }] });
+    const pdfContElem = wrapper.find(".width-70-percent");
 
     expect(pdfContElem.length).toBe(1)
 
@@ -97,8 +97,8 @@ it("should handle page container 2", () => {
 
 it("should load document on success", () => {
 
-    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder" }] });
-    const pdfContElem = wrapper.find(".min-width-70-percent");
+    const wrapper = shallowSetup({ documentFiles: [""], placeholders: [{ page: "placeholder", coordinates: [] }] });
+    const pdfContElem = wrapper.find(".width-70-percent");
 
     expect(pdfContElem.length).toBe(1)
 
