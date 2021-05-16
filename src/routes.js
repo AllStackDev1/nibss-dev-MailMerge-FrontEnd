@@ -3,7 +3,6 @@ import DashboardIndex from "components/Dashboard/DashboardIndex.js";
 import Documents from "components/Dashboard/Documents.js";
 import Users from "components/Dashboard/Users.js";
 import Recipients from "components/Dashboard/Recipients";
-// import Help from "components/Dashboard/Help";
 
 var routes = [
     {

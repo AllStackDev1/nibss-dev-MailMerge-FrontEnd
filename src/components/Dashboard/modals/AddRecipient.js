@@ -21,7 +21,10 @@ const AddRecipient = ({ modal, editRecipient, recipient, closeModal, onChange, o
     return (
         <div onClick={e => e.stopPropagation()} className="width-40-percent" data-test='recipient-component'>
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
-                <BackButton role='button' onClick={closeModal}  className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
+                <BackButton 
+                  role='button' 
+                  onClick={closeModal}  
+                  className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                     BACK
                 </BackButton>
