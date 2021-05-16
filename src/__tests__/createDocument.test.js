@@ -6,7 +6,7 @@ import CreateDocument from "../components/Dashboard/modals/CreateDocument"
 
 const shallowSetup = (props = {}) => {
 
-    return shallow(<CreateDocument />)
+    return shallow(<CreateDocument {...props} />)
 }
 
 it('should match snapshot', () => {
@@ -32,14 +32,30 @@ it("handle recipient click", () => {
 
 })
 
-it("should mock useDropzone", () => {
+it("should mock onDrop", () => {
 
-    const useDropzoneMock = jest.fn();
+    const onDrop = jest.fn();
 
-    const wrapper = mount(<CreateDocument useDropzone={useDropzoneMock} />)
+    const wrapper = mount(<CreateDocument onDrop={onDrop} />)
     expect(wrapper).toBeTruthy();
 
 })
+
+
+
+it("should click Back", () => {
+    const clicker = jest.fn();
+    const wrapper = shallowSetup({
+      setModal: jest.fn(),
+    });
+    const divElem = wrapper.find("[data-testid='back-click']");
+  
+    let result = clicker();
+  
+    divElem.simulate("click");
+    expect(result).toBeUndefined();
+    expect(clicker.mock.calls.length).toEqual(1);
+});
 
 
 

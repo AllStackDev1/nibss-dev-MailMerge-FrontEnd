@@ -4,7 +4,7 @@ import { useDropzone } from 'react-dropzone'
 
 
 // handle new document creation
-const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => {
+const CreateDocument = ({ setModal, onDrop }) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({  accept: 'image/*, application/pdf', onDrop });
 
     return (
@@ -12,6 +12,7 @@ const CreateDocument = ({ setUploadingDocument, setModal, setStep, onDrop }) => 
             <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
                 <BackButton 
                     role='button' 
+                    data-testid='back-click'
                     onClick={() => setModal("")} 
                     className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                     <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
