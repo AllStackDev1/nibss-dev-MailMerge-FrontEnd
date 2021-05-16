@@ -69,7 +69,6 @@ const Recipient = ({
     );
   };
 
-
   return (
     <RecipientInstance
       className={`${

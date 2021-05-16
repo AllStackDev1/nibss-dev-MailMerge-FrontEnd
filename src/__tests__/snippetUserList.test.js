@@ -10,11 +10,14 @@ const shallowSetup = (props = {}) => {
     )
 }
 
-it("should render properly", () => {
-
-    const wrapper = shallowSetup({ users: { platformUsers: "123", searching: true, searchResults: "result", platformUsers: "users" } });
+it("should render properly with searching true", () => {
+    const wrapper = shallowSetup({ users: { platformUsers: "123", searching: true, searchResults: "result", deleting: true } });
     expect(wrapper).toMatchSnapshot();
+})
 
+it("should render properly with searching false", () => {
+    const wrapper = shallowSetup({ users: { platformUsers: "123", searching: false, updatingRole: true} });
+    expect(wrapper).toMatchSnapshot();
 })
 
 

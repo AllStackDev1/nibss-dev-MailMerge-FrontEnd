@@ -5,7 +5,7 @@ const Pagination = ({ data, viewPage }) => {
     // RENDER HELPER
 
     const renderPage = index => {
-        if (index + 1 <= data.pagination.number_of_pages) {
+        if (index + 1 <= data?.pagination?.number_of_pages) {
             return <Page
                 key={index}
                 onClick={() => viewPage(index + 1)}

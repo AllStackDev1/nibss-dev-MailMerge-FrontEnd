@@ -86,7 +86,6 @@ it("should handle add invite", () => {
 })
 
 it("should click save button", () => {
-
     const wrapper = shallowSetup(<InviteUsers add={true} />)
     const saveBtn = wrapper.find("[data-test='save-btn']");
 

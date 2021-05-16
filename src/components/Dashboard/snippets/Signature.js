@@ -39,7 +39,6 @@ const Signature = ({ signature }) => {
                     setToDelete({});
                 }} data-test="delete-signature" />
         }
-        return <div></div>
     }
 
     return (

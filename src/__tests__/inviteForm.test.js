@@ -62,3 +62,15 @@ describe('Email Validation', () => {
     });
   });
 
+  it('calls parse CSV', () => {
+    const wrapper = shallowSetup({});
+    const fileContents = 'contents 1,contents 2,contents 3';
+    const file = new File([fileContents], { type: 'text/csv;charset=utf-8;' });
+    const readAsText = jest.fn();
+    const dummyFileReader = {readAsText, result: fileContents};
+    window.FileReader = jest.fn(() => dummyFileReader);
+    wrapper.find("[data-test='upload-csv-input']").simulate('change', {target: {files: [file]}});
+    expect(FileReader).toHaveBeenCalled();
+    expect(readAsText).toHaveBeenCalled()
+});
+

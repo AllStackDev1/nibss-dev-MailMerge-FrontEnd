@@ -22,3 +22,19 @@ it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
+it('should match snapshot step 2', () => {
+    const wrapper = shallowSetup({step: 2})
+    expect(wrapper).toMatchSnapshot();
+})
+
+
+it('should match snapshot step 3', () => {
+    const wrapper = shallowSetup({step: 3})
+    expect(wrapper).toMatchSnapshot();
+})
+
+
+it('should match snapshot step 4', () => {
+    const wrapper = shallowSetup({step: 4})
+    expect(wrapper).toMatchSnapshot();
+})

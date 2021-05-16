@@ -26,7 +26,7 @@ it("should click view document container", () => {
 it("should click view document button", () => {
 
     const clicker = jest.fn();
-    const wrapper = shallowSetup({ document: { documentTitle: "sample docs" }, viewDocument: jest.fn(), viewStats: jest.fn() })
+    const wrapper = shallowSetup({ dashboard: true, document: { documentTitle: "sample docs" }, viewDocument: jest.fn(), viewStats: jest.fn() })
 
     const documentEle = wrapper.find("[data-test='view-doc-btn']").at(0)
 

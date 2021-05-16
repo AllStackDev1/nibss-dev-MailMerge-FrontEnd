@@ -48,38 +48,6 @@ const InviteUsers = ({ add }) => {
         dispatch(userActions.invite(invitedUsers, add));
     }
 
-    const parseCSV = file => {
-        var reader = new FileReader();
-        reader.readAsText(file.target.files[0], "UTF-8");
-
-        reader.onload = function (e) {
-            var csv = e.target.result;
-            var allTextLines = csv.split('\n');
-
-            const invitedArr = [];
-
-            for (const textLine of allTextLines) {
-                var data = textLine.split(',');
-
-                var row = {
-                    name: data[0].replace(/[\r\n]+/gm, ""),
-                    email: data[1].replace(/[\r\n]+/gm, ""),
-                    role: data[2].toLowerCase().replace(/[\r\n]+/gm, "")
-                };
-
-                if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
-                    row.administrator = true;
-                }
-
-                invitedArr.push(row);
-            }
-
-            setInvited(invitedArr);
-        }
-
-        file.target.value = null;
-    }
-
     return (
         <>
             <div className="left-padding-80 right-padding-80">
@@ -99,7 +67,7 @@ const InviteUsers = ({ add }) => {
                     onChange={onChange}
                     role={role} 
                     setRole={setRole} 
-                    parseCSV={parseCSV} />
+                    setInvited={setInvited} />
             </div>
             <div
                 className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 

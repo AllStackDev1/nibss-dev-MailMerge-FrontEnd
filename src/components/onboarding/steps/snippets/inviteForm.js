@@ -1,7 +1,7 @@
 import React from 'react'
 import validator from 'validator';
 
-const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>{
+const InviteForm = ({ addInvite, invite, setInvited, onChange, role, setRole }) =>{
     const [isValid, setEmailVaild] = React.useState(true);
     const ref = React.useRef(null)
 
@@ -11,6 +11,38 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
         }else{
             setEmailVaild(false)
         }
+    }
+
+    const parseCSV = file => {
+        var reader = new FileReader();
+        reader.readAsText(file.target.files[0], "UTF-8");
+
+        reader.onload = function (e) {
+            var csv = e.target.result;
+            var allTextLines = csv.split('\n');
+
+            const invitedArr = [];
+
+            for (const textLine of allTextLines) {
+                var data = textLine.split(',');
+
+                var row = {
+                    name: data[0].replace(/[\r\n]+/gm, ""),
+                    email: data[1].replace(/[\r\n]+/gm, ""),
+                    role: data[2].toLowerCase().replace(/[\r\n]+/gm, "")
+                };
+
+                if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
+                    row.administrator = true;
+                }
+
+                invitedArr.push(row);
+            }
+
+            setInvited(invitedArr);
+        }
+
+        file.target.value = null;
     }
 
     return (
@@ -47,7 +79,6 @@ const InviteForm = ({ addInvite, invite, onChange, role, setRole, parseCSV }) =>
             <div>
                 <button
                     type="button"
-                    // onClick={() => document.getElementById('csv_file').click()}
                     onClick={() => ref.current.click()}
                     data-test='upload-csv-button'
                     className="left-padding-30 right-padding-30 height-45 border-mustard border-radius-2 display-flex align-items-center">

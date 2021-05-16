@@ -18,14 +18,11 @@ describe('handle setup signatoies component', () => {
     }));
 
     useSelector.mockImplementation(callback => {
-        return callback({ recipients: {} });
+        return callback({ recipients: {}, auth:{deletingSignature: false}  });
     });
 
     const wrapper = shallowSetup({ signature: {url:"Signature", _id: '1'} })
     expect(wrapper).toBeTruthy();
-
-
-
 })
 
 it('should match snapshot', () => {
@@ -34,7 +31,6 @@ it('should match snapshot', () => {
 })
 
 it("should handle sign document", () => {
-
     const onClickMock = jest.fn()
 
     const wrapper = shallowSetup({ signature: {url:"Signature", _id: '1'} })
@@ -44,11 +40,8 @@ it("should handle sign document", () => {
     const signDocument = wrapper.find("button")
     signDocument.simulate('click')
 
-
-
     expect(result).toBeUndefined();
     expect(onClickMock.mock.calls.length).toEqual(1);
-
 })
 
 it("should handle delete signature", () => {
@@ -81,4 +74,20 @@ it("should handle modal container", () => {
     wrapper.update()
 
 })
+
+describe('handle setup signatoies component with auth state true', () => {
+
+    jest.mock("react-redux", () => ({
+        ...jest.requireActual("react-redux"),
+        useSelector: jest.fn()
+    }));
+
+    useSelector.mockImplementation(callback => {
+        return callback({ recipients: {}, auth:{deletingSignature: true}  });
+    });
+
+    const wrapper = shallowSetup({ signature: {url:"Signature", _id: '1'} })
+    expect(wrapper).toBeTruthy();
+})
+
 

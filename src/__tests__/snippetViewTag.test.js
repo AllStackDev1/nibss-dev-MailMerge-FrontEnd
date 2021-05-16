@@ -4,14 +4,12 @@ import ViewTag from "../components/Dashboard/snippets/ViewTag"
 
 
 const shallowSetup = (props = {}) => {
-
     return mount(
         <ViewTag {...props} />
     )
 }
 
 it("should render properly", () => {
-
     const wrapper = shallowSetup();
     expect(wrapper).toMatchSnapshot();
 
@@ -47,7 +45,7 @@ it("should handle create tag click", () => {
 
 it("should render add tags", () => {
 
-    const wrapper = shallowSetup({ toAddTag: "123", recipients: { data: [{ _id: "123", name: "name" }] }, updating: true });
+    const wrapper = shallowSetup({ toAddTag: "123",deleting: 'XXX', tags: ['XXX'], recipients: { data: [{ _id: "123", name: "name" }] }, updating: false });
     expect(wrapper.find("[data-test='add-tag']").length).toBe(1);
 
 })
@@ -55,8 +53,25 @@ it("should render add tags", () => {
 it("should add tags", () => {
 
     const wrapper = shallowSetup({
-        toAddTag: "123",
+        // toAddTag: "123",
         toAddTags: [],
+        setToAddTags: jest.fn(),
+        recipients: { data: [{ _id: "123", name: "name" }] },
+        updating: true, tags: [{ name: "tag-name" }]
+    });
+    expect(wrapper.find("[data-test='tag']").length).toBe(2);
+
+    const tagEle = wrapper.find("[data-test='tag']").at(0)
+
+    tagEle.simulate("click")
+
+})
+
+it("should add tags", () => {
+
+    const wrapper = shallowSetup({
+        toAddTag: "123",
+        toAddTags: ["aaa"],
         setToAddTags: jest.fn(),
         recipients: { data: [{ _id: "123", name: "name" }] },
         updating: true, tags: [{ name: "tag-name" }]

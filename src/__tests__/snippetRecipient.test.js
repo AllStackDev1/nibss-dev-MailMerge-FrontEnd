@@ -30,7 +30,8 @@ it("should render No tag", () => {
       setEditRecipient: jest.fn(),
       recipient: { _id: "123", tag: [] },
       localUserRole: { data: { role: "administrator" } },
-      toAddTag: '1234'
+      toAddTag: '1234',
+      recipientBeingDeleted: { _id: "123" },
     });
 
     const divElem = wrapper.find("[data-testid='no-tag']");
