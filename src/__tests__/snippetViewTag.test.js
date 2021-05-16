@@ -55,16 +55,21 @@ it("should add tags", () => {
     const wrapper = shallowSetup({
         // toAddTag: "123",
         toAddTags: [],
-        setToAddTags: jest.fn(),
+        deleteTag: jest.fn(),
+        setToAddTags: ()=> {},
         recipients: { data: [{ _id: "123", name: "name" }] },
         updating: true, tags: [{ name: "tag-name" }]
     });
     expect(wrapper.find("[data-test='tag']").length).toBe(2);
 
     const tagEle = wrapper.find("[data-test='tag']").at(0)
+    const removeTag = wrapper.find('[data-test="remove-tag"]').at(0)
 
     tagEle.simulate("click")
+    removeTag.simulate("click")
 
+    expect(tagEle).toBeTruthy()
+    expect(removeTag).toBeTruthy()
 })
 
 it("should add tags", () => {
@@ -72,7 +77,8 @@ it("should add tags", () => {
     const wrapper = shallowSetup({
         toAddTag: "123",
         toAddTags: ["aaa"],
-        setToAddTags: jest.fn(),
+        viewingTags: ["aaa"],
+        setToAddTags: ()=> {},
         recipients: { data: [{ _id: "123", name: "name" }] },
         updating: true, tags: [{ name: "tag-name" }]
     });
@@ -83,3 +89,20 @@ it("should add tags", () => {
     tagEle.simulate("click")
 
 })
+
+// it("should add tags", () => {
+
+//     const wrapper = shallowSetup({
+//         toAddTag: "123",
+//         toAddTags: ["aaa"],
+//         setToAddTags: jest.fn(),
+//         recipients: { data: [{ _id: "123", name: "name" }] },
+//         updating: true, tags: [{ name: "tag-name" }]
+//     });
+//     expect(wrapper.find("[data-test='tag']").length).toBe(2);
+
+//     const tagEle = wrapper.find("[data-test='tag']").at(0)
+
+//     tagEle.simulate("click")
+
+// })

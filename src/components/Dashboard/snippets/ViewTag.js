@@ -55,14 +55,16 @@ const ViewTag = ({
                 : [...toAddTags, tag.name]
             );
         }}
-        className={`${deleting === tag ? "opacity-0-5" : ""} 
-                            ${toAddTags?.includes(tag.name) ? "active-tag" : ""} 
-                            no-select uppercase`}
+        className={
+          `${deleting === tag ? "opacity-0-5" : ""} 
+          ${toAddTags?.includes(tag.name) ? "active-tag" : ""} 
+           no-select uppercase`
+        }
         data-test="tag"
       >
         {tag.name}
         {!toAddTag ? (
-          <span className="material-icons" onClick={() => deleteTag(tag)}>
+          <span className="material-icons" data-test="remove-tag" onClick={() => deleteTag(tag)}>
             remove_circle
           </span>
         ) : (
