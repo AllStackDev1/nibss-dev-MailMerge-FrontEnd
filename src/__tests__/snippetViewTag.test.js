@@ -56,7 +56,7 @@ it("should add tags", () => {
         // toAddTag: "123",
         toAddTags: [],
         deleteTag: jest.fn(),
-        setToAddTags: ()=> {},
+        setToAddTags: jest.fn(),
         recipients: { data: [{ _id: "123", name: "name" }] },
         updating: true, tags: [{ name: "tag-name" }]
     });
@@ -78,7 +78,7 @@ it("should add tags", () => {
         toAddTag: "123",
         toAddTags: ["aaa"],
         viewingTags: ["aaa"],
-        setToAddTags: ()=> {},
+        setToAddTags: jest.fn(),
         recipients: { data: [{ _id: "123", name: "name" }] },
         updating: true, tags: [{ name: "tag-name" }]
     });
