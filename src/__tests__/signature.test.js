@@ -21,7 +21,7 @@ describe('handle setup signatoies component', () => {
         return callback({ recipients: {} });
     });
 
-    const wrapper = shallowSetup({ signature: "Signature" })
+    const wrapper = shallowSetup({ signature: {url:"Signature", _id: '1'} })
     expect(wrapper).toBeTruthy();
 
 
@@ -37,7 +37,7 @@ it("should handle sign document", () => {
 
     const onClickMock = jest.fn()
 
-    const wrapper = shallowSetup({ signature: "Signature" })
+    const wrapper = shallowSetup({ signature: {url:"Signature", _id: '1'} })
 
     let result = onClickMock("e");
 

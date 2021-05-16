@@ -178,9 +178,7 @@ function deleteSignature(signature) {
             'Content-Type': requestFormat,
             'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify({
-            signature
-        })
+        body: JSON.stringify(signature)
     };
 
     const url = `${process.env.REACT_APP_API_URL}/users/remove/signature`;
