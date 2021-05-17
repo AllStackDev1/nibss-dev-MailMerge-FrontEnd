@@ -19,7 +19,7 @@ it("handle EditUser click", () => {
     const onClickMock = jest.fn();
 
     const wrapper = mount(
-        <EditUser onClick={onClickMock} user={{ name: "abcd" }} />
+        <EditUser onClick={onClickMock} user={{ name: "abcd" }} editing={true} />
     )
 
     let result = onClickMock("e");

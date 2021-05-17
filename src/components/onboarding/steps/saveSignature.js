@@ -11,12 +11,11 @@ const SaveSignature = ({ add }) => {
     const [signatureType, setSignatureType] = useState('draw');
     const [signature, setSignature] = useState({ signature: "" });
     const signatureCanvas = useRef(null);
+    const uploadSignInputRef = useRef(null);
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const clearCanvas = () => {
-        signatureCanvas.current.clear()
-    }
+    const clearCanvas = () => signatureCanvas.current?.clear()
 
     const logout = () => {
         dispatch(authActions.logout());
@@ -51,15 +50,13 @@ const SaveSignature = ({ add }) => {
     }
 
     const uploadSignatureFile = file => {
-        dispatch(authActions.saveSignature(file.target.files[0], add));
+       return dispatch(authActions.saveSignature(file.target.files[0], add));
     }
 
     const renderUploadProgress = () => {
         if (!auth?.uploading) {
             return <span>SAVE</span>;
-        }
-
-        if (auth.uploadProgress) {
+        }else if (auth.uploadProgress) {
             return <span>{`${auth.uploadProgress}%`}</span>
         } else {
             return <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -87,26 +84,24 @@ const SaveSignature = ({ add }) => {
                         signatureType={signatureType}
                         onClick={() => {
                             setSignatureType("write");
-                            signatureCanvas.current.clear();
+                         return  signatureCanvas.current?.clear();
                         }}
                         optionType="write"
                         image={require(`images/icons/write-signature.svg`)} />
                     <SignatureOption
                         label="Upload Signature"
                         signatureType={signatureType}
-                        onClick={() => {
-                            document.getElementById('signature_file').click()
-                        }}
+                        onClick={() => uploadSignInputRef.current?.click()}
                         optionType="upload"
                         icon="cloud_upload" />
 
-                    <input type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
+                    <input ref={uploadSignInputRef} type="file" name="signature_file" id="signature_file" accept="image/*" onChange={uploadSignatureFile} className="width-0 height-0 border-box hide" />
                 </div>
                 <div className="display-flex justify-center">
                     <div className={`${signatureType === 'write' ? 'hide' : ''} display-flex flex-direction-column cursor-pointer no-select justify-center`}>
                         <SignatureCanvas ref={signatureCanvas} penColor='black'
                             canvasProps={{ width: 600, height: 200, className: 'gray top-margin-30 margin-auto' }} />
-                        <div onClick={() => clearCanvas()} className="display-inline-flex margin-auto top-margin-20 align-items-center red-color bold">
+                        <div onClick={clearCanvas} className="display-inline-flex margin-auto top-margin-20 align-items-center red-color bold">
                             <img src={require(`images/icons/undo.svg`)} className="height-12 right-margin-10" alt="Invite users" />
                             undo
                         </div>

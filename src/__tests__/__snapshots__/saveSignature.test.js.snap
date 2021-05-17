@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`component renders should match snapshot 1`] = `ShallowWrapper {}`;
+exports[`component renders and uploading false  should match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`component renders and uploading true  should match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`component renders and uploading true with progress  should match snapshot 1`] = `ShallowWrapper {}`;

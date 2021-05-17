@@ -37,6 +37,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, closeModal, onChange, o
                     <input
                         type="text"
                         name="name"
+                        data-test="name-input"
                         onChange={(e)=> modal === editRecipientConstant ? onChangeEdit(e) : onChange(e)}
                         value={modal === editRecipientConstant ? editRecipient?.name : recipient?.name || ""}
                         placeholder="Enter Recipient Full Name"
@@ -45,6 +46,7 @@ const AddRecipient = ({ modal, editRecipient, recipient, closeModal, onChange, o
                     <input
                         type="email"
                         name="email"
+                        data-test="email-input"
                         onChange={(e)=> modal === editRecipientConstant ? onChangeEdit(e) : onChange(e)}
                         value={modal === editRecipientConstant ? editRecipient?.email : recipient?.email || ""}
                         placeholder="Enter Recipient Email address"
