@@ -35,7 +35,7 @@ var routes = [
     },
     {
         path: '#',
-        name: "Version 0.1",
+        name: "Version 0.2",
         component: (props) => null,
         icon: 'settings',
     }
