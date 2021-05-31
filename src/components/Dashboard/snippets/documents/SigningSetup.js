@@ -41,26 +41,33 @@ const SigningSetup = ({
     );
   }
 
-  const handleRemove = (index, type) => {
+  const handleRemove = (index, type, coorIdx) => {
     if (type === "documentProperty") {
       const newDate = documentProperties.filter((e, idx) => idx !== index);
       setDocumentProperties(newDate);
     } else {
-      const newDate = placeholders.filter((e, idx) => idx !== index);
-      setPlaceholders(newDate);
+        const placeholder = placeholders.find((e, idx) => idx === index);
+        if(placeholder){
+          if(placeholder.coordinates.length > 1){
+            const newPlaceholders = placeholders.filter((e, idx) => idx !== index);
+            placeholder.coordinates = placeholder.coordinates.filter((e, idx) => idx !== coorIdx);
+            setPlaceholders([...newPlaceholders, placeholder ]);
+          }else{
+            const newPlaceholders = placeholders.filter((e, idx) => idx !== index);
+            setPlaceholders(newPlaceholders);
+          }
+        }
     }
   };
 
-  const renderFiles = (documentFile, index) => {
+  const renderFiles = (documentFile) => {
     const isNumPages =
       numPages === undefined || numPages === null ? "width-75-percent" : "";
 
     if (isFileImage(documentFile)) {
       return (
         <PageContainer
-          key={index}
           ref={documentContainer}
-          className={isNumPages}
           onMouseOver={(e) => {
             e.preventDefault();
             setHovering(true);
@@ -74,41 +81,44 @@ const SigningSetup = ({
             alt="NIBSS Upload Document"
           />
           {placeholders.map((placeholder, i) => (
-            <div
-              key={i}
-              className="width-180 height-40 size-pointeightfive-rem absolute"
-              style={{
-                left: placeholder.absolute_x_coordinate,
-                top: placeholder.absolute_y_coordinate,
-                // backgroundColor: getColor(placeholder.name),
-                border: `2px solid ${getColor(placeholder.name)}`,
-              }}
-            >
-              <div className="relative full-width full-height display-flex justify-center align-items-center">
-                <div
-                  role="button"
-                  className="absolute"
-                  style={{
-                    top: 0,
-                    right: 0,
-                    padding: "2px 5px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleRemove(i, "placeholders")}
-                >
-                  <span
-                    className="material-icons smooth"
+              placeholder.coordinates.map((c, _i) => {
+                return (
+                  <div
+                    key={_i}
+                    className="width-180 height-40 size-pointeightfive-rem absolute"
                     style={{
-                      fontSize: 20,
-                      color: "red",
+                      left: c.absolute_x_coordinate,
+                      top: c.absolute_y_coordinate,
+                      border: `2px solid ${getColor(placeholder.name)}`,
                     }}
                   >
-                    delete
-                  </span>
-                </div>
-                {placeholder.name} signs
-              </div>
-            </div>
+                    <div className="relative full-width full-height display-flex justify-center align-items-center">
+                      <div
+                        role="button"
+                        className="absolute"
+                        style={{
+                          top: 0,
+                          right: 0,
+                          padding: "2px 5px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleRemove(i, "placeholders", _i)}
+                      >
+                        <span
+                          className="material-icons smooth"
+                          style={{
+                            fontSize: 20,
+                            color: "red",
+                          }}
+                        >
+                          delete
+                        </span>
+                      </div>
+                      {placeholder.name} signs
+                    </div>
+                  </div>
+                )
+            })
           ))}
           {documentProperties?.map((documentProperty, i) => (
             <div
@@ -130,7 +140,7 @@ const SigningSetup = ({
                     padding: "2px 5px",
                     cursor: "pointer",
                   }}
-                  onClick={() => handleRemove(i, "placeholders")}
+                  onClick={() => handleRemove(i, "documentProperty")}
                 >
                   <span
                     className="material-icons smooth"
@@ -181,46 +191,49 @@ const SigningSetup = ({
               <Page width={550} pageNumber={i + 1} />
               {placeholders?.map((placeholder, placeholderIndex) => (
                 <React.Fragment key={placeholderIndex}>
-                  {placeholder.page === i ? (
-                    <div
-                      className="width-180 height-40 size-pointeightfive-rem absolute"
-                      style={{
-                        left: placeholder.absolute_x_coordinate,
-                        top: placeholder.absolute_y_coordinate,
-                        // backgroundColor: getColor(placeholder.name),
-                        border: `2px solid ${getColor(placeholder.name)}`,
-                      }}
-                    >
-                      <div className="relative full-width full-height display-flex justify-center align-items-center">
+                  {placeholder.coordinates.map((c, _i) => {
+                    return (
+                      c.page === i && (
                         <div
-                          role="button"
-                          className="absolute"
+                          key={_i}
+                          className="width-180 height-40 size-pointeightfive-rem absolute"
                           style={{
-                            top: 0,
-                            right: 0,
-                            padding: "2px 5px",
-                            cursor: "pointer",
+                            left: c.absolute_x_coordinate,
+                            top: c.absolute_y_coordinate,
+                            // backgroundColor: getColor(placeholder.name),
+                            border: `2px solid ${getColor(placeholder.name)}`,
                           }}
-                          onClick={() =>
-                            handleRemove(placeholderIndex, "placeholders")
-                          }
                         >
-                          <span
-                            className="material-icons smooth"
-                            style={{
-                              fontSize: 20,
-                              color: "red",
-                            }}
-                          >
-                            delete
-                          </span>
+                          <div className="relative full-width full-height display-flex justify-center align-items-center">
+                            <div
+                              role="button"
+                              className="absolute"
+                              style={{
+                                top: 0,
+                                right: 0,
+                                padding: "2px 5px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() =>
+                                handleRemove(placeholderIndex, "placeholders", _i)
+                              }
+                            >
+                              <span
+                                className="material-icons smooth"
+                                style={{
+                                  fontSize: 20,
+                                  color: "red",
+                                }}
+                              >
+                                delete
+                              </span>
+                            </div>
+                            {placeholder.name} signs
+                          </div>
                         </div>
-                        {placeholder.name} signs
-                      </div>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
+                      )
+                    )
+                  })}
                 </React.Fragment>
               ))}
               {documentProperties?.map((documentProperty, initialIndex) => (
@@ -308,18 +321,21 @@ const SigningSetup = ({
       <div className="width-100 height-1 border-bottom-gray top-margin-20"></div>
 
       <div className="display-flex width-85-percent top-margin-40 border-box bottom-padding-30">
-        <div style={{ height: "50vh", overflowY: "scroll" }}>
+        <div 
+          style={{ height: "50vh", overflowY: "scroll" }}
+          className={`${
+            numPages === undefined || numPages === null
+              ? "width-70-percent "
+              : " "
+          }right-margin-30`}
+          >
           <div
             ref={pdfContainer}
-            className={`${
-              numPages === undefined || numPages === null
-                ? "min-width-70-percent"
-                : ""
-            } right-margin-30`}
+            className='right-margin-30'
           >
             {documentFiles?.map((documentFile, index) => (
               <React.Fragment key={index}>
-                {renderFiles(documentFile, index)}
+                {renderFiles(documentFile)}
               </React.Fragment>
             ))}
           </div>

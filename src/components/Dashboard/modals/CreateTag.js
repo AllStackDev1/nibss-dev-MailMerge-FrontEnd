@@ -17,7 +17,7 @@ const CreateTag = ({ tag, onChange, onSubmit, closeModal, creating }) => {
             <form onSubmit={onSubmit}>
                 <div className="action-modal no-select white full-width border-box left-padding-50 right-padding-50 bottom-padding-50 border-radius-10 top-padding-50">
                     <p className="size-pointeight-rem bottom-margin-10 gray-color bold">Create Tag</p>
-                    <input type="text" name="name" value={tag.name || ""} onChange={(e)=>onChange(e)} placeholder="Enter Tag Name" className="bottom-margin-20" required />
+                    <input type="text" name="name" value={tag.name || ""} onChange={onChange} placeholder="Enter Tag Name" className="bottom-margin-20" required />
                     <button
                         type="submit"
                         disabled={creating}

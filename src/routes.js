@@ -3,7 +3,6 @@ import DashboardIndex from "components/Dashboard/DashboardIndex.js";
 import Documents from "components/Dashboard/Documents.js";
 import Users from "components/Dashboard/Users.js";
 import Recipients from "components/Dashboard/Recipients";
-// import Help from "components/Dashboard/Help";
 
 var routes = [
     {
@@ -36,7 +35,7 @@ var routes = [
     },
     {
         path: '#',
-        name: "Version 0.1",
+        name: "Version 0.2",
         component: (props) => null,
         icon: 'settings',
     }

@@ -5,16 +5,16 @@ import User from './User'
 
 const UserList = ({ users, search, filter, setModal, setUser, initiateDeleteUser, updateRole, viewPage, localUserRole }) => {
     const renderUsers = () => {
-        if (users?.platformUsers === undefined || (users.searching)) {
+        if ((users?.platformUsers === undefined) || users.searching) {
             return <EmptyUser />;
         }
 
-        const toLoop = (search.search !== "" || filter !== false) && users.searchResults ?
+        const toLoop = (search?.search !== "" || filter !== false) && users.searchResults ?
             users.searchResults :
             users.platformUsers;
 
         return <>
-            {(toLoop).data.map((u, index) =>
+            {(toLoop)?.data?.map((u, index) =>
                 <User
                     key={index}
                     setModal={setModal}

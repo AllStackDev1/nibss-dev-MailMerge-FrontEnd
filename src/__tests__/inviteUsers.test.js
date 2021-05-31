@@ -25,7 +25,7 @@ const shallowSetup = (props = {}) => {
     return mount(
         <Provider store={store}>
             <BrowserRouter>
-                <InviteUsers />
+                <InviteUsers {...props}/>
             </BrowserRouter>
         </Provider>
     )
@@ -86,7 +86,6 @@ it("should handle add invite", () => {
 })
 
 it("should click save button", () => {
-
     const wrapper = shallowSetup(<InviteUsers add={true} />)
     const saveBtn = wrapper.find("[data-test='save-btn']");
 
@@ -94,5 +93,3 @@ it("should click save button", () => {
     expect(saveBtn.prop("onClick")).toBeTruthy()
 
 })
-
-

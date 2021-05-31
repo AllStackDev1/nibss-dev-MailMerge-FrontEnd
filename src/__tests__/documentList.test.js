@@ -12,7 +12,7 @@ const shallowSetup = (props = {}) => {
 
 it("should render properly", () => {
 
-    const wrapper = shallowSetup({ documents: { documents: { data: [] } }, fetching: true });
+    const wrapper = shallowSetup({ documents: { documents: { } }, fetching: true });
     expect(wrapper).toMatchSnapshot();
 
 })

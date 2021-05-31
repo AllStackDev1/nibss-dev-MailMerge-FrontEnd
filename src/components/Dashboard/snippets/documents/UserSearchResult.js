@@ -1,6 +1,7 @@
 import React from 'react'
 
-const UserSearchResult = ({index,user, selectUser, setSearchTerm, length }) => (
+const UserSearchResult = ({index,user, selectUser, setSearchTerm, length }) => {
+    return(
     <div
         onClick={() => {
             selectUser(user, true);
@@ -10,13 +11,13 @@ const UserSearchResult = ({index,user, selectUser, setSearchTerm, length }) => (
                     ${index !== length - 1 ? 'border-light-gray-2-dashed' : ''}`} data-testid="search-result">
         <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
             <i className="material-icons right-margin-10 size-pointnine-rem">person</i>
-            <span className="uppercase size-pointeight-rem">{user.name}</span>
+            <span className="uppercase size-pointeight-rem">{user?.name}</span>
         </div>
         <div className="display-flex align-items-center right-margin-50 bottom-padding-10 left-padding-10">
             <i className="material-icons right-margin-10 size-pointnine-rem">email</i>
-            <span className="lowercase size-pointeight-rem">{user.email}</span>
+            <span className="lowercase size-pointeight-rem">{user?.email}</span>
         </div>
     </div>
-)
+)}
 
 export default UserSearchResult;

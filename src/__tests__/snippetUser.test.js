@@ -10,9 +10,10 @@ const shallowSetup = (props = {}) => {
     )
 }
 
+
 it("should render properly", () => {
 
-    const wrapper = shallowSetup({ user: { _id: "123" } });
+    const wrapper = shallowSetup({ userBeingUpdated: { _id: "123" }, user: { _id: "123", role: 'administrator' } });
     expect(wrapper).toMatchSnapshot();
 
 })

@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import Invite from './snippets/invite';
 import InviteForm from './snippets/inviteForm';
 
-import validator from 'validator';
-
 const InviteUsers = ({ add }) => {
-    const [isValid, setEmailVaild] = useState(true);
     const [invite, setInvite] = useState({});
     const [role, setRole] = useState('user');
     const [invited, setInvited] = useState([]);
@@ -51,46 +48,6 @@ const InviteUsers = ({ add }) => {
         dispatch(userActions.invite(invitedUsers, add));
     }
 
-    const parseCSV = file => {
-        var reader = new FileReader();
-        reader.readAsText(file.target.files[0], "UTF-8");
-
-        reader.onload = function (e) {
-            var csv = e.target.result;
-            var allTextLines = csv.split('\n');
-
-            const invitedArr = [];
-
-            for (const textLine of allTextLines) {
-                var data = textLine.split(',');
-
-                var row = {
-                    name: data[0].replace(/[\r\n]+/gm, ""),
-                    email: data[1].replace(/[\r\n]+/gm, ""),
-                    role: data[2].toLowerCase().replace(/[\r\n]+/gm, "")
-                };
-
-                if (data[2].toLowerCase().replace(/\s/g, '') === "administrator") {
-                    row.administrator = true;
-                }
-
-                invitedArr.push(row);
-            }
-
-            setInvited(invitedArr);
-        }
-
-        file.target.value = null;
-    }
-
-    const checkEmailValidity = (e) => {
-        if(validator.isEmail(e.target.value)){
-            setEmailVaild(true)
-        }else{
-            setEmailVaild(false)
-        }
-    }
-
     return (
         <>
             <div className="left-padding-80 right-padding-80">
@@ -104,7 +61,13 @@ const InviteUsers = ({ add }) => {
                             <Invite inviteInstance={inviteInstance} key={index} index={index} invited={invited} setInvited={setInvited} />
                         )}
                     </div>}
-                <InviteForm addInvite={addInvite} invite={invite} onChange={onChange} checkEmailValidity={checkEmailValidity} isValid={isValid} role={role} setRole={setRole} parseCSV={parseCSV} />
+                <InviteForm 
+                    addInvite={addInvite} 
+                    invite={invite} 
+                    onChange={onChange}
+                    role={role} 
+                    setRole={setRole} 
+                    setInvited={setInvited} />
             </div>
             <div
                 className={`height-80 white full-width absolute bottom border-top-lightgray left-padding-80 right-padding-60 border-box display-flex align-items-center 

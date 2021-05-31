@@ -39,7 +39,6 @@ const Signature = ({ signature }) => {
                     setToDelete({});
                 }} data-test="delete-signature" />
         }
-        return <div></div>
     }
 
     return (
@@ -49,12 +48,12 @@ const Signature = ({ signature }) => {
                     {renderModals()}
                 </ModalContainer>
                 : <div className="modal-t"></div>}
-            <SignatureContainer url={signature} className="bottom-margin-20 display-flex flex-direction-column">
+            <SignatureContainer url={signature?.url} className="bottom-margin-20 display-flex flex-direction-column">
                 <div className="full-width full-height display-flex align-items-center justify-center">
                     <div className="width-80-percent height-60-percent"></div>
                 </div>
                 <button
-                    onClick={() => initiateDeleteSignature(signature)}
+                    onClick={() => initiateDeleteSignature(signature?._id)}
                     className="cursor-pointer no-select full-width height-40 no-shrink display-flex align-items-center justify-center">
                     <img src={require(`images/icons/dashboard/delete.svg`)} className="height-15 right-margin-10" alt="NIBSS Empty" />
                 Delete

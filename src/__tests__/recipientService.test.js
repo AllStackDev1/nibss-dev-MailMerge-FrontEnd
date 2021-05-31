@@ -20,7 +20,8 @@ it("should run addTag without errors", () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tag: {} })
     })
-        .then(result => {})
+    .then(res => res.json())
+    .then(result => { })
 })
 
 it("should run addTagsToRecipient without  errors", () => {
