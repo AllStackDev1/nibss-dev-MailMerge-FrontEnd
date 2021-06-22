@@ -10,8 +10,8 @@ const Trigger = ({ signatory, signDocumentConst, index, setModal, user, userToke
         key={index}
         className="width-150 height-35 absolute cursor-pointer"
         style={{
-            left: signatory?.absolute_x_coordinate,
-            top: signatory?.absolute_y_coordinate,
+            left: signatory?.x_coordinate,
+            top: signatory?.y_coordinate,
             backgroundColor: getColor(user?.data?.email || decode(userToken)?.data?.email)
         }}></div>
 );

@@ -11,6 +11,7 @@ const SignDocument = ({
     setSignature,
     signatureCanvas,
     user,
+    closeModal,
     signingDocument,
     documentSignature,
     setDocumentSignature,
@@ -150,7 +151,8 @@ const SignDocument = ({
         <div className="full-height full-width overflow-auto-y custom-scrollbar display-flex justify-center top-padding-50">
             <div onClick={e => e.stopPropagation()} className="width-50-percent">
                 <div className="display-flex full-width flex-direction-column justify-center bottom-margin-30 text-center">
-                    <BackButton className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
+                    <BackButton 
+                        onClick={closeModal}  className="center-item-vertically cursor-pointer display-flex size-pointseven-rem align-items-center white-color left above">
                         <span className="material-icons right-margin-5 smooth">keyboard_arrow_left</span>
                         BACK
                     </BackButton>
